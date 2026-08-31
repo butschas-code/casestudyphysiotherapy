@@ -250,12 +250,13 @@ export default function PhysiotherapyConceptPage() {
 
             {/* Warm Studio Photography */}
             <div className="relative">
-              <div style={{ backgroundColor: "#EAE3D9" }} className="relative h-[340px] sm:h-[420px] w-full overflow-hidden rounded-3xl shadow-[0_16px_40px_-12px_rgba(35,45,41,0.12)]">
+              <div style={{ backgroundColor: "#EAE3D9", position: "relative", height: "380px", width: "100%", overflow: "hidden", borderRadius: "1.5rem" }} className="shadow-[0_16px_40px_-12px_rgba(35,45,41,0.12)]">
                 <Image
                   src="/concept-physio/hero-treatment.jpg"
                   alt="Fizioterapijas nodarbība KUSTĪBA mājīgajā praksē"
                   fill
                   priority
+                  sizes="(max-width: 1024px) 100vw, 500px"
                   className="object-cover object-center"
                 />
               </div>
@@ -276,11 +277,12 @@ export default function PhysiotherapyConceptPage() {
       <section id="stasts" style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-            <div style={{ backgroundColor: "#F4EFEB" }} className="relative h-[340px] sm:h-[440px] w-full overflow-hidden rounded-3xl shadow-sm">
+            <div style={{ backgroundColor: "#F4EFEB", position: "relative", height: "420px", width: "100%", overflow: "hidden", borderRadius: "1.5rem" }} className="shadow-sm">
               <Image
                 src="/concept-physio/practitioner-primary.jpg"
                 alt="Elīna Vītola, vadošā fizioterapeite"
                 fill
+                sizes="(max-width: 1024px) 100vw, 420px"
                 className="object-cover object-top"
               />
             </div>
@@ -377,12 +379,12 @@ export default function PhysiotherapyConceptPage() {
                   </div>
                 </div>
 
-                <div className={`relative h-[260px] sm:h-[320px] lg:h-[360px] w-full overflow-hidden rounded-2xl ${idx % 2 === 1 ? "order-2 lg:order-1" : ""}`}>
+                <div style={{ position: "relative", height: "320px", width: "100%", overflow: "hidden", borderRadius: "1.25rem", backgroundColor: "#EAE3D9" }} className={idx % 2 === 1 ? "order-2 lg:order-1" : ""}>
                   <Image
                     src={path.image}
                     alt={path.title}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 45vw"
+                    sizes="(max-width: 1024px) 100vw, 450px"
                     className="object-cover"
                   />
                 </div>
@@ -415,12 +417,12 @@ export default function PhysiotherapyConceptPage() {
                 className="flex flex-col justify-between overflow-hidden rounded-3xl border p-6 shadow-xs"
               >
                 <div>
-                  <div className="relative h-[280px] sm:h-[320px] w-full overflow-hidden rounded-2xl bg-[#EAE3D9]">
+                  <div style={{ position: "relative", height: "300px", width: "100%", overflow: "hidden", borderRadius: "1rem", backgroundColor: "#EAE3D9" }}>
                     <Image
                       src={person.image}
                       alt={person.name}
                       fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
+                      sizes="(max-width: 768px) 100vw, 300px"
                       className="object-cover object-top"
                     />
                   </div>
