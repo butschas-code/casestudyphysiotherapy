@@ -945,8 +945,9 @@ h1 {
 }
 
 
+
 /* ==========================================================================
-   Saiteo Brand Design System — Dedicated Case Study Page Styles
+   Saiteo Brand Design System — Editorial Case Study Page Styles
    ========================================================================== */
 
 .saiteo-case-study {
@@ -963,9 +964,9 @@ h1 {
   width: 100%;
 }
 
-/* --- Header --- */
+/* Header */
 .saiteo-header {
-  background: rgba(8, 16, 32, 0.88);
+  background: rgba(8, 16, 32, 0.9);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -1039,26 +1040,16 @@ h1 {
   gap: 1.25rem;
 }
 
-.saiteo-back-link {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-
-.saiteo-back-link:hover {
-  color: #00C9A7;
-}
-
+.saiteo-back-link,
 .saiteo-demo-btn {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;
   transition: color 0.15s ease;
 }
 
+.saiteo-back-link:hover,
 .saiteo-demo-btn:hover {
   color: #00C9A7;
 }
@@ -1072,27 +1063,26 @@ h1 {
   font-weight: 700;
   padding: 0.55rem 1.25rem;
   text-decoration: none;
-  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .saiteo-cta-btn:hover {
   box-shadow: 0 4px 16px rgba(0, 201, 167, 0.4);
-  opacity: 0.95;
   transform: translateY(-1px);
 }
 
-/* --- Hero Chapter (Dark Navy Theme) --- */
+/* Hero Section */
 .saiteo-hero-section {
   background: #081020;
   color: #FFFFFF;
-  padding-block: clamp(4.5rem, 8vw, 7rem) clamp(4rem, 6vw, 5.5rem);
+  padding-block: clamp(4.5rem, 8vw, 7rem) clamp(3.5rem, 6vw, 5rem);
   position: relative;
 }
 
 .saiteo-glow {
   border-radius: 9999px;
   filter: blur(80px);
-  opacity: 0.25;
+  opacity: 0.22;
   pointer-events: none;
   position: absolute;
   z-index: 0;
@@ -1159,7 +1149,7 @@ h1 {
 .saiteo-hero-title {
   color: #FFFFFF;
   font-family: var(--font-heading), sans-serif;
-  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  font-size: clamp(2.4rem, 5.5vw, 4.25rem);
   font-weight: 800;
   letter-spacing: -0.035em;
   line-height: 1.05;
@@ -1170,11 +1160,11 @@ h1 {
 }
 
 .saiteo-hero-desc {
-  color: rgba(255, 255, 255, 0.78);
-  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
   line-height: 1.6;
   margin: 0 0 2.5rem;
-  max-width: 56ch;
+  max-width: 54ch;
   position: relative;
   z-index: 1;
 }
@@ -1200,12 +1190,11 @@ h1 {
   gap: 0.5rem;
   padding: 0.85rem 1.65rem;
   text-decoration: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .saiteo-primary-cta:hover {
   box-shadow: 0 8px 24px rgba(0, 201, 167, 0.4);
-  opacity: 0.95;
   transform: translateY(-1px);
 }
 
@@ -1221,70 +1210,56 @@ h1 {
   font-weight: 600;
   padding: 0.85rem 1.65rem;
   text-decoration: none;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition: background 0.15s ease;
 }
 
 .saiteo-secondary-cta:hover {
   background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
 }
 
-.saiteo-outcomes-grid {
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+.saiteo-meta-strip {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  padding-top: 2.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  padding-top: 2rem;
   position: relative;
   z-index: 1;
 }
 
-.saiteo-outcome-card {
-  align-items: flex-start;
-  display: flex;
-  gap: 1rem;
+.saiteo-meta-label {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.25rem;
+  text-transform: uppercase;
 }
 
-.saiteo-check-icon {
-  align-items: center;
-  background: rgba(0, 201, 167, 0.18);
-  border-radius: 9999px;
-  color: #00C9A7;
-  display: flex;
-  font-size: 0.85rem;
-  font-weight: 800;
-  height: 1.5rem;
-  justify-content: center;
-  margin-top: 0.15rem;
-  width: 1.5rem;
-  flex-shrink: 0;
-}
-
-.saiteo-outcome-card h3 {
+.saiteo-meta-val {
   color: #FFFFFF;
   font-family: var(--font-heading), sans-serif;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  margin: 0 0 0.35rem;
-}
-
-.saiteo-outcome-card p {
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 0.875rem;
-  line-height: 1.5;
   margin: 0;
 }
 
-/* --- Strategic Breakdown Chapter (Light Theme) --- */
-.saiteo-breakdown-section {
-  background: #F5F7FA;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+.saiteo-meta-val.accent {
+  color: #00C9A7;
+}
+
+/* Strategic Problem Section */
+.saiteo-problem-section {
+  background: #FFFFFF;
+  border-bottom: 1px solid rgba(8, 16, 32, 0.06);
   padding-block: clamp(4.5rem, 8vw, 6.5rem);
 }
 
-.saiteo-section-intro {
-  margin-bottom: 3.5rem;
-  max-width: 680px;
+.saiteo-narrative-layout {
+  display: grid;
+  gap: 3.5rem;
+  grid-template-columns: 1fr 1.25fr;
+  align-items: start;
 }
 
 .saiteo-section-eyebrow {
@@ -1300,120 +1275,204 @@ h1 {
 .saiteo-section-title {
   color: #081020;
   font-family: var(--font-heading), sans-serif;
-  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-size: clamp(2rem, 3.8vw, 2.75rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.12;
-  margin: 0 0 1rem;
+  margin: 0 0 1.25rem;
 }
 
 .saiteo-section-desc {
   color: #64748B;
   font-size: 1.05rem;
   line-height: 1.6;
-  margin: 0;
+  margin: 0 0 1.75rem;
 }
 
-.saiteo-comparison-grid {
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+.saiteo-quote-card {
+  background: #F5F7FA;
+  border-left: 3px solid #00C9A7;
+  border-radius: 8px;
+  padding: 1.5rem;
 }
 
-.saiteo-col-header {
-  margin-bottom: 1.5rem;
-}
-
-.saiteo-col-badge {
-  border-radius: 9999px;
-  display: inline-block;
-  font-family: monospace;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.5rem;
-  padding: 0.25rem 0.75rem;
-  text-transform: uppercase;
-}
-
-.saiteo-col-badge.error {
-  background: #FEE2E2;
-  color: #991B1B;
-}
-
-.saiteo-col-badge.success {
-  background: #D1FAE5;
-  color: #065F46;
-}
-
-.saiteo-col-header h3 {
+.saiteo-quote-card p {
   color: #081020;
   font-family: var(--font-heading), sans-serif;
-  font-size: 1.35rem;
-  font-weight: 700;
-  margin: 0;
-}
-
-.saiteo-cards-stack {
-  display: grid;
-  gap: 1.25rem;
-}
-
-.saiteo-card {
-  background: #FFFFFF;
-  border: 1px solid rgba(8, 16, 32, 0.08);
-  border-radius: 12px;
-  box-shadow: 0 4px 16px -4px rgba(8, 16, 32, 0.04);
-  padding: 1.75rem;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.saiteo-card:hover {
-  box-shadow: 0 10px 28px -6px rgba(8, 16, 32, 0.08);
-  transform: translateY(-2px);
-}
-
-.saiteo-card.success-card {
-  background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF9 100%);
-  border-color: rgba(0, 201, 167, 0.3);
-}
-
-.saiteo-card-tag {
-  border-radius: 4px;
-  display: inline-block;
-  font-family: monospace;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-  padding: 0.15rem 0.5rem;
-}
-
-.saiteo-card-tag.error {
-  background: #FEE2E2;
-  color: #B91C1C;
-}
-
-.saiteo-card-tag.success {
-  background: rgba(0, 201, 167, 0.15);
-  color: #008770;
-}
-
-.saiteo-card h4 {
-  color: #081020;
-  font-family: var(--font-heading), sans-serif;
-  font-size: 1.05rem;
-  font-weight: 700;
-  margin: 0 0 0.5rem;
-}
-
-.saiteo-card p {
-  color: #64748B;
-  font-size: 0.875rem;
+  font-size: 0.95rem;
+  font-style: italic;
+  font-weight: 600;
   line-height: 1.55;
   margin: 0;
 }
 
-/* --- Live Concept Showcase Chapter --- */
+.saiteo-comparison-stack {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.saiteo-compare-box {
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.saiteo-compare-box.old-way {
+  background: #F8FAFC;
+  border: 1px solid rgba(8, 16, 32, 0.08);
+}
+
+.saiteo-compare-box.new-way {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF9 100%);
+  border: 1px solid rgba(0, 201, 167, 0.35);
+}
+
+.saiteo-compare-box h3 {
+  color: #081020;
+  font-family: var(--font-heading), sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 1.25rem;
+}
+
+.saiteo-compare-box ul {
+  display: grid;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.saiteo-compare-box li {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.icon-cross {
+  color: #EF4444;
+  font-weight: 800;
+}
+
+.icon-check {
+  color: #008770;
+  font-weight: 800;
+}
+
+/* 3 Interventions Section */
+.saiteo-interventions-section {
+  background: #F5F7FA;
+  padding-block: clamp(4.5rem, 8vw, 6.5rem);
+}
+
+.saiteo-interventions-list {
+  display: grid;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.saiteo-intervention-card {
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid rgba(8, 16, 32, 0.08);
+  border-radius: 16px;
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: 1.1fr 0.9fr;
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  box-shadow: 0 4px 20px -4px rgba(8, 16, 32, 0.04);
+}
+
+.saiteo-intervention-card.reverse {
+  grid-template-columns: 0.9fr 1.1fr;
+}
+
+.saiteo-intervention-card.reverse .saiteo-intervention-text {
+  order: 2;
+}
+
+.saiteo-intervention-card.reverse .saiteo-intervention-media {
+  order: 1;
+}
+
+.saiteo-intervention-tag {
+  color: #008770;
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.saiteo-intervention-text h3 {
+  color: #081020;
+  font-family: var(--font-heading), sans-serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0.5rem 0 1rem;
+}
+
+.saiteo-intervention-text p {
+  color: #64748B;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+}
+
+.saiteo-pill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.saiteo-pill-group span {
+  background: #F5F7FA;
+  border-radius: 6px;
+  color: #081020;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+}
+
+.saiteo-intervention-footnote {
+  border-top: 1px solid rgba(8, 16, 32, 0.08);
+  color: #64748B;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding-top: 1rem;
+}
+
+.saiteo-demo-inline-btn {
+  background: #081020;
+  border-radius: 6px;
+  color: #FFFFFF;
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.6rem 1.1rem;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.saiteo-demo-inline-btn:hover {
+  background: #173B3F;
+}
+
+.saiteo-intervention-media {
+  aspect-ratio: 16 / 10;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.saiteo-intervention-media img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Showcase Section */
 .saiteo-showcase-section {
   background: #FFFFFF;
   border-top: 1px solid rgba(8, 16, 32, 0.08);
@@ -1429,28 +1488,21 @@ h1 {
   margin-bottom: 3rem;
 }
 
-.saiteo-mockups-layout {
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: 1.6fr 0.8fr;
-}
-
-.saiteo-browser-frame,
-.saiteo-mobile-frame {
+.saiteo-browser-frame {
   background: #081020;
   border: 1px solid rgba(8, 16, 32, 0.12);
-  border-radius: 12px;
-  box-shadow: 0 24px 56px -16px rgba(8, 16, 32, 0.18);
+  border-radius: 14px;
+  box-shadow: 0 28px 64px -20px rgba(8, 16, 32, 0.22);
   overflow: hidden;
 }
 
 .saiteo-browser-bar {
   align-items: center;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   gap: 0.6rem;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1.25rem;
 }
 
 .saiteo-browser-dots {
@@ -1461,12 +1513,12 @@ h1 {
 .saiteo-browser-dots span {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 9999px;
-  height: 0.5rem;
-  width: 0.5rem;
+  height: 0.55rem;
+  width: 0.55rem;
 }
 
 .saiteo-browser-url {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.65);
   font-family: monospace;
   font-size: 0.75rem;
   margin-left: 0.3rem;
@@ -1477,10 +1529,10 @@ h1 {
   border-radius: 4px;
   color: #00C9A7;
   font-family: monospace;
-  font-size: 0.6875rem;
+  font-size: 0.7rem;
   font-weight: 700;
   margin-left: auto;
-  padding: 0.15rem 0.45rem;
+  padding: 0.15rem 0.5rem;
 }
 
 .saiteo-mockup-wrapper {
@@ -1497,7 +1549,7 @@ h1 {
 }
 
 .saiteo-mockup-wrapper:hover img {
-  transform: scale(1.02);
+  transform: scale(1.015);
 }
 
 .saiteo-mockup-hover {
@@ -1521,13 +1573,13 @@ h1 {
   border-radius: 6px;
   color: #081020;
   font-family: var(--font-heading), sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  padding: 0.65rem 1.4rem;
+  padding: 0.75rem 1.6rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* --- Conversion Chapter (Dark Navy Theme) --- */
+/* Conversion Section */
 .saiteo-conversion-section {
   background: #081020;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -1602,10 +1654,17 @@ h1 {
   margin: 0;
 }
 
-/* --- Responsive Adjustments --- */
 @media (max-width: 960px) {
-  .saiteo-mockups-layout {
+  .saiteo-narrative-layout,
+  .saiteo-intervention-card,
+  .saiteo-intervention-card.reverse {
     grid-template-columns: 1fr;
+  }
+  .saiteo-intervention-card.reverse .saiteo-intervention-text {
+    order: 1;
+  }
+  .saiteo-intervention-card.reverse .saiteo-intervention-media {
+    order: 2;
   }
 }
 
@@ -1613,8 +1672,5 @@ h1 {
   .saiteo-nav-actions .saiteo-back-link,
   .saiteo-nav-actions .saiteo-demo-btn {
     display: none;
-  }
-  .saiteo-hero-title {
-    max-width: none;
   }
 }

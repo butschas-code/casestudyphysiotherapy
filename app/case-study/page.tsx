@@ -1,66 +1,5 @@
 import Link from 'next/link';
 
-const bottlenecks = [
-  {
-    tag: 'Bottleneck 01',
-    title: 'Broad, complex service mix',
-    desc: 'Treatments spanned adults, pregnant women, infants, and post-surgery patients with vastly different questions and emotional states.',
-  },
-  {
-    tag: 'Bottleneck 02',
-    title: 'Self-qualification barrier',
-    desc: 'Patients did not know which category they belonged to or whether their symptom required a specialist or general physiotherapy.',
-  },
-  {
-    tag: 'Bottleneck 03',
-    title: 'Buried practitioner trust',
-    desc: 'Healthcare decisions depend heavily on personal empathy and clinician specialization, which were buried in long text paragraphs.',
-  },
-  {
-    tag: 'Bottleneck 04',
-    title: 'High-friction booking path',
-    desc: 'Patients had to click through multiple tabs and read complex tables just to figure out how to schedule their first consultation.',
-  },
-];
-
-const solutions = [
-  {
-    tag: 'Saiteo Solution 01',
-    title: 'Need-based guided intake',
-    desc: 'Organized navigation around real patient situations ("Sore back", "Postpartum", "Infant movement") instead of medical jargon.',
-  },
-  {
-    tag: 'Saiteo Solution 02',
-    title: 'Practitioner-first credibility',
-    desc: 'Clear specialization badges, photos, and clinician focuses so visitors immediately find the right expert they feel comfortable with.',
-  },
-  {
-    tag: 'Saiteo Solution 03',
-    title: 'Dedicated patient pathways',
-    desc: 'Focused landing experiences for women\'s health, pediatric development, and sports injury rehabilitation.',
-  },
-  {
-    tag: 'Saiteo Solution 04',
-    title: 'Instant consultation booking',
-    desc: 'A visual time-slot selector and direct WhatsApp outreach option accessible from every key service page.',
-  },
-];
-
-const outcomes = [
-  {
-    title: 'Clearer positioning',
-    desc: 'Visitors understand what the practice specializes in within 5 seconds.',
-  },
-  {
-    title: 'Patient-first navigation',
-    desc: 'Services organized around real human needs rather than clinical codes.',
-  },
-  {
-    title: 'Shorter booking path',
-    desc: 'Frictionless step-by-step path from Google search to confirmed appointment.',
-  },
-];
-
 export default function CaseStudy() {
   return (
     <main className="saiteo-case-study">
@@ -78,10 +17,10 @@ export default function CaseStudy() {
 
           <div className="saiteo-nav-actions">
             <a href="https://saiteo.com" className="saiteo-back-link" target="_blank" rel="noopener noreferrer">
-              ← Back to Saiteo
+              ← Saiteo.com
             </a>
             <Link href="/" className="saiteo-demo-btn">
-              Explore Live Practice Concept <span aria-hidden="true">→</span>
+              Explore Live Practice Website →
             </Link>
             <a href="https://saiteo.com/#contact" className="saiteo-cta-btn" target="_blank" rel="noopener noreferrer">
               Talk to us
@@ -90,14 +29,14 @@ export default function CaseStudy() {
         </div>
       </header>
 
-      {/* Hero Chapter (Dark Navy Saiteo Theme) */}
+      {/* Editorial Hero Header */}
       <section className="saiteo-hero-section">
         <div className="saiteo-glow saiteo-glow-teal" aria-hidden="true"></div>
         <div className="saiteo-glow saiteo-glow-blue" aria-hidden="true"></div>
 
         <div className="saiteo-container">
           <div className="saiteo-hero-eyebrow-row">
-            <span className="saiteo-eyebrow">Healthcare · Physiotherapy</span>
+            <span className="saiteo-eyebrow">Healthcare · Case Study</span>
             <div className="saiteo-badges">
               <span className="saiteo-concept-badge">INDEPENDENT CONCEPT</span>
               <span className="saiteo-concept-note">(Not a client project.)</span>
@@ -109,149 +48,211 @@ export default function CaseStudy() {
           </h1>
 
           <p className="saiteo-hero-desc">
-            A strategic website concept demonstrating how a practice with several patient groups and services can simplify service discovery, establish deep practitioner trust, and accelerate appointments.
+            How a specialized clinic with diverse patient groups—from acute spinal pain to postpartum recovery and infant handling—can turn search traffic into qualified, confident appointments.
           </p>
 
           <div className="saiteo-hero-actions">
             <Link href="/" className="saiteo-primary-cta">
-              Explore live website concept <span aria-hidden="true">→</span>
+              Explore Live Practice Website <span aria-hidden="true">→</span>
             </Link>
-            <a href="#breakdown" className="saiteo-secondary-cta">
-              View Strategy Breakdown ↓
+            <a href="#editorial-breakdown" className="saiteo-secondary-cta">
+              Read Strategic Teardown ↓
             </a>
           </div>
 
-          {/* 3 Outcome Pillars */}
-          <div className="saiteo-outcomes-grid">
-            {outcomes.map((item, idx) => (
-              <div key={idx} className="saiteo-outcome-card">
-                <div className="saiteo-check-icon">✓</div>
-                <div>
-                  <h3>{item.title}</h3>
-                  <p>{item.desc}</p>
-                </div>
-              </div>
-            ))}
+          {/* Project Meta Facts Strip */}
+          <div className="saiteo-meta-strip">
+            <div>
+              <p className="saiteo-meta-label">Industry</p>
+              <p className="saiteo-meta-val">Private Healthcare & Therapy</p>
+            </div>
+            <div>
+              <p className="saiteo-meta-label">Subject</p>
+              <p className="saiteo-meta-val">KUSTĪBA Practice Concept</p>
+            </div>
+            <div>
+              <p className="saiteo-meta-label">Key Challenge</p>
+              <p className="saiteo-meta-val accent">Self-qualification & Trust</p>
+            </div>
+            <div>
+              <p className="saiteo-meta-label">Deliverable</p>
+              <p className="saiteo-meta-val">Full Interactive Web System</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Strategic Breakdown Chapter (Light Surface) */}
-      <section id="breakdown" className="saiteo-breakdown-section">
+      {/* Narrative Section: The Real Healthcare Problem */}
+      <section id="editorial-breakdown" className="saiteo-problem-section">
+        <div className="saiteo-container">
+          <div className="saiteo-narrative-layout">
+            <div className="saiteo-narrative-intro">
+              <p className="saiteo-section-eyebrow">01 · The Strategic Problem</p>
+              <h2 className="saiteo-section-title">
+                Patients don’t browse services.<br />They look for reassurance.
+              </h2>
+              <p className="saiteo-section-desc">
+                When someone searches for a clinic, they are often in acute physical discomfort, anxious about a newborn’s motor development, or navigating bodily changes after pregnancy.
+              </p>
+              <div className="saiteo-quote-card">
+                <p>
+                  “Traditional clinic websites list dozens of medical procedures in a giant menu. The visitor is left guessing: ‘Is this for me, who will treat me, and what happens at the first visit?’”
+                </p>
+              </div>
+            </div>
+
+            <div className="saiteo-comparison-stack">
+              <div className="saiteo-compare-box old-way">
+                <h3>The Disconnected Clinic Experience (The Old Way)</h3>
+                <ul>
+                  <li>
+                    <span className="icon-cross">✕</span>
+                    <div><strong>Buried specialties:</strong> Women’s pelvic health and infant handling hidden behind generic "Rehabilitation" drop-downs.</div>
+                  </li>
+                  <li>
+                    <span className="icon-cross">✕</span>
+                    <div><strong>Anonymous practitioner profiles:</strong> No human faces or clinical focus areas, reducing patient trust.</div>
+                  </li>
+                  <li>
+                    <span className="icon-cross">✕</span>
+                    <div><strong>High-friction phone tag:</strong> No clear preview of available times or direct consultation entry.</div>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="saiteo-compare-box new-way">
+                <h3>The Saiteo Re-architecture (The Solution)</h3>
+                <ul>
+                  <li>
+                    <span className="icon-check">✓</span>
+                    <div><strong>Need-based self-qualification:</strong> Direct interactive tiles ("Sore back", "Postpartum health", "Infant movement") leading to dedicated pathways.</div>
+                  </li>
+                  <li>
+                    <span className="icon-check">✓</span>
+                    <div><strong>Clinician-first trust:</strong> Prominent specialist profiles with transparent clinical focus and 1-click appointment booking.</div>
+                  </li>
+                  <li>
+                    <span className="icon-check">✓</span>
+                    <div><strong>Frictionless intake:</strong> Visual time selector + instant WhatsApp outreach directly on every treatment page.</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Narrative Section: 3 Concrete UX Interventions with Imagery */}
+      <section className="saiteo-interventions-section">
         <div className="saiteo-container">
           <div className="saiteo-section-intro">
-            <p className="saiteo-section-eyebrow">The Strategy</p>
+            <p className="saiteo-section-eyebrow">02 · The Design Decisions</p>
             <h2 className="saiteo-section-title">
-              We don’t start with a template.<br />We start with the business problem.
+              Three UX interventions that change conversion rates.
             </h2>
-            <p className="saiteo-section-desc">
-              Patients seeking medical care are often anxious, in pain, or looking for specific reassurances. Here is how we restructured the digital experience.
-            </p>
           </div>
 
-          {/* Bottlenecks vs Solutions Grid */}
-          <div className="saiteo-comparison-grid">
-            {/* The Bottlenecks */}
-            <div className="saiteo-col">
-              <div className="saiteo-col-header">
-                <span className="saiteo-col-badge error">The Bottlenecks</span>
-                <h3>Where patients got lost</h3>
+          <div className="saiteo-interventions-list">
+            {/* Intervention 01 */}
+            <article className="saiteo-intervention-card">
+              <div className="saiteo-intervention-text">
+                <span className="saiteo-intervention-tag">Intervention 01</span>
+                <h3>Guided Need Discovery ("Ar ko sākt?")</h3>
+                <p>
+                  Instead of forcing first-time patients to guess whether they need "kinesitherapy" or "manual therapy", we designed a 6-card guided intake that mirrors everyday human language.
+                </p>
+                <div className="saiteo-pill-group">
+                  <span>Sore back & neck</span>
+                  <span>Pregnancy & postpartum</span>
+                  <span>Infant motor handling</span>
+                </div>
               </div>
+              <div className="saiteo-intervention-media">
+                <img src="/images/service-rehab.jpg" alt="Rehabilitation therapy guided discovery" />
+              </div>
+            </article>
 
-              <div className="saiteo-cards-stack">
-                {bottlenecks.map((item, idx) => (
-                  <div key={idx} className="saiteo-card error-card">
-                    <span className="saiteo-card-tag error">{item.tag}</span>
-                    <h4>{item.title}</h4>
-                    <p>{item.desc}</p>
-                  </div>
-                ))}
+            {/* Intervention 02 */}
+            <article className="saiteo-intervention-card reverse">
+              <div className="saiteo-intervention-text">
+                <span className="saiteo-intervention-tag">Intervention 02</span>
+                <h3>Lead Practitioner Storytelling & Approach</h3>
+                <p>
+                  Patients book people, not brands. We elevated the lead clinician’s holistic philosophy—connecting postural habits with everyday movement—to build immediate authority and emotional comfort.
+                </p>
+                <div className="saiteo-intervention-footnote">
+                  ✦ Verified credentials · Focus areas prominently tagged · Direct booking trigger
+                </div>
               </div>
-            </div>
+              <div className="saiteo-intervention-media">
+                <img src="/images/practitioner-primary.jpg" alt="Lead physiotherapist Elīna Vītola profile" />
+              </div>
+            </article>
 
-            {/* The Saiteo Solutions */}
-            <div className="saiteo-col">
-              <div className="saiteo-col-header">
-                <span className="saiteo-col-badge success">The Saiteo Fix</span>
-                <h3>How we solved the friction</h3>
+            {/* Intervention 03 */}
+            <article className="saiteo-intervention-card">
+              <div className="saiteo-intervention-text">
+                <span className="saiteo-intervention-tag">Intervention 03</span>
+                <h3>Visual Appointment Selection & Instant Chat</h3>
+                <p>
+                  Booking an initial consultation shouldn’t feel like filling out a tax form. We implemented a lightweight visual day/time selector paired with a direct WhatsApp consultation link.
+                </p>
+                <Link href="/" className="saiteo-demo-inline-btn">
+                  Test interactive booking card in demo →
+                </Link>
               </div>
-
-              <div className="saiteo-cards-stack">
-                {solutions.map((item, idx) => (
-                  <div key={idx} className="saiteo-card success-card">
-                    <span className="saiteo-card-tag success">{item.tag}</span>
-                    <h4>{item.title}</h4>
-                    <p>{item.desc}</p>
-                  </div>
-                ))}
+              <div className="saiteo-intervention-media">
+                <img src="/images/service-women.jpg" alt="Women's health and therapy session" />
               </div>
-            </div>
+            </article>
           </div>
         </div>
       </section>
 
-      {/* Live Concept Showcase Chapter */}
+      {/* Live Showcase Chapter */}
       <section className="saiteo-showcase-section">
         <div className="saiteo-container">
           <div className="saiteo-showcase-header">
             <div>
-              <p className="saiteo-section-eyebrow">The Delivered Concept</p>
-              <h2 className="saiteo-section-title">Warm, credible & designed to convert.</h2>
+              <p className="saiteo-section-eyebrow">03 · The Full Result</p>
+              <h2 className="saiteo-section-title">Explore the complete live concept.</h2>
+              <p className="saiteo-section-desc">Fully responsive, fast-loading, and crafted specifically for patient clarity.</p>
             </div>
             <Link href="/" className="saiteo-primary-cta">
-              Open Live Practice Demo <span aria-hidden="true">→</span>
+              Open Live Practice Website <span aria-hidden="true">→</span>
             </Link>
           </div>
 
-          <div className="saiteo-mockups-layout">
-            {/* Desktop Mockup */}
-            <div className="saiteo-browser-frame">
-              <div className="saiteo-browser-bar">
-                <div className="saiteo-browser-dots">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-                <span className="saiteo-browser-url">kustiba-demo.lv · Desktop Concept</span>
-                <span className="saiteo-browser-badge">Live Interactive</span>
+          <div className="saiteo-browser-frame">
+            <div className="saiteo-browser-bar">
+              <div className="saiteo-browser-dots">
+                <span></span>
+                <span></span>
+                <span></span>
               </div>
-              <Link href="/" className="saiteo-mockup-wrapper" aria-label="Open live desktop concept">
-                <img src="/images/mockup-desktop.png" alt="KUSTĪBA desktop homepage concept preview" />
-                <div className="saiteo-mockup-hover">
-                  <span className="saiteo-hover-btn">Open Live Concept Demo →</span>
-                </div>
-              </Link>
+              <span className="saiteo-browser-url">kustiba-demo.lv · Live Prototype</span>
+              <span className="saiteo-browser-badge">100/100 Mobile Score</span>
             </div>
-
-            {/* Mobile Mockup */}
-            <div className="saiteo-mobile-frame">
-              <div className="saiteo-browser-bar">
-                <div className="saiteo-browser-dots">
-                  <span></span>
-                </div>
-                <span className="saiteo-browser-url">Mobile Layout</span>
+            <Link href="/" className="saiteo-mockup-wrapper" aria-label="Open live desktop concept">
+              <img src="/images/mockup-desktop.png" alt="KUSTĪBA desktop homepage concept preview" />
+              <div className="saiteo-mockup-hover">
+                <span className="saiteo-hover-btn">Launch Interactive Demo →</span>
               </div>
-              <Link href="/" className="saiteo-mockup-wrapper" aria-label="Open live mobile concept">
-                <img src="/images/mockup-mobile.png" alt="KUSTĪBA mobile homepage concept preview" />
-                <div className="saiteo-mockup-hover">
-                  <span className="saiteo-hover-btn">Open Mobile Demo →</span>
-                </div>
-              </Link>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Conversion Chapter (Dark Navy Saiteo Theme) */}
+      {/* Bottom Conversion Section */}
       <section className="saiteo-conversion-section">
         <div className="saiteo-container">
           <div className="saiteo-conversion-box">
             <p className="saiteo-conversion-eyebrow">Next Steps</p>
             <h2 className="saiteo-conversion-title">
-              Wonder what we’d change in your business?
+              Wonder what we’d change in your business customer journey?
             </h2>
             <p className="saiteo-conversion-desc">
-              Send us your website. We’ll analyze the customer journey, identify where visitors get stuck, and show you where the biggest opportunities are.
+              Send us your website URL. We’ll record a clear 5-minute video teardown showing where visitors get confused, where trust leaks occur, and how to simplify your booking path.
             </p>
 
             <div className="saiteo-conversion-buttons">
@@ -264,7 +265,7 @@ export default function CaseStudy() {
             </div>
 
             <p className="saiteo-disclaimer">
-              © Saiteo · Independent concept study · Not an endorsed client project
+              © Saiteo · Independent strategic concept · Not an endorsed client project
             </p>
           </div>
         </div>
