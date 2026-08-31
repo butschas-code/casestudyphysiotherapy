@@ -32,8 +32,8 @@ export default function PhysiotherapyConceptPage() {
         "Mēs neaprobežojamies ar īslaicīgu masāžu. Nodarbībā rūpīgi pārbaudām mugurkaula mobilitāti, iegurņa stabilitāti un elpošanas modeli, lai novērstu sāpju patieso cēloni.",
       points: [
         "Padziļināta primārā kustību un stājas diagnostika (60 min)",
-        "Saudzīga manuālā terapija un audu atbrīvošana",
-        "Mērķtiecīgi vingrojumi, ko viegli integrēt mājas vai darba dienas ritmā",
+        "Saudzīga manuālā terapija un sasprindzināto audu atbrīvošana",
+        "Mērķtiecīgi vingrojumi, ko viegli integrēt mājas vai darba ritmā",
       ],
       price: "50 € / 60 min",
     },
@@ -44,7 +44,7 @@ export default function PhysiotherapyConceptPage() {
       image: "/concept-physio/service-women.jpg",
       quote: "Mierīgs, zinātniski pamatots atbalsts sievietes ķermenim pirms un pēc bērniņa piedzimšanas.",
       description:
-        "Grūtniecības laikā palīdzam atslogot jostas daļu un sagatavot iegurni. Pēcdzemdību vizītē pārbaudām vēdera muskuļu diastāzi, iegurņa pamatni un atgriežam ķermenim spēku.",
+        "Grūtniecības laikā palīdzam atslogot jostas daļu un sagatavot iegurni. Pēcdzemdību vizītē pārbaudām vēdera taisnā muskuļa diastāzi, iegurņa pamatni un atgriežam ķermenim spēku.",
       points: [
         "Pēcdzemdību funkcionālā pārbaude no 6. nedēļas pēc dzemdībām",
         "Diastāzes (vēdera taisnā muskuļa šķirtnes) saudzīga korekcija",
@@ -59,7 +59,7 @@ export default function PhysiotherapyConceptPage() {
       image: "/concept-physio/service-children.jpg",
       quote: "Mierīga vide, kur mazulis jūtas droši un vecāki gūst skaidru pārliecību par bērna attīstību.",
       description:
-        "Praktiska apmācība pareizā hendlingā — kā mazuli celt, turēt un ģērbt, lai dabiski veicinātu velšanos, rāpošanu un simetrisku kustību kvalitāti bez asarām.",
+        "Praktiska apmācība pareizā hendlingā — kā mazuli celt, turēt un ģērbt, lai dabiski veicinātu velšanos, rāpošanu un simetrisku kustību kvalitāti bez asarām un lieka stresa.",
       points: [
         "Zīdaiņa motorās attīstības un muskuļu tonusa novērtēšana",
         "Praktiska hendlinga apmācība vecākiem ikdienas aprūpei",
@@ -80,7 +80,7 @@ export default function PhysiotherapyConceptPage() {
     },
     {
       name: "Marta Liepa",
-      role: "Fizioterapeite",
+      role: "Sertificēta fizioterapeite",
       experience: "8 gadu pieredze · Pēctraumu un sporta rehabilitācija",
       focus: "Akūtas muguras un kakla sāpes · Saišu un locītavu atjaunošanās · Kustību testi",
       image: "/concept-physio/practitioner-2.jpg",
@@ -107,7 +107,7 @@ export default function PhysiotherapyConceptPage() {
     },
     {
       q: "Vai pieņemat veselības apdrošināšanas polises?",
-      a: "Jā, mēs izsniedzam oficiālu čeku un ārstniecības personas atskaiti ar visiem kodiem, ko apmaksā Balta, BTA, Compensa, Ergo, Gjensidige u.c.",
+      a: "Jā, mēs izsniedzam oficiālu čeku un ārstniecības personas izrakstu ar visiem kodiem, ko apmaksā Balta, BTA, Compensa, Ergo, Gjensidige u.c.",
     },
     {
       q: "Kā nokļūt praksē un vai pieejams lifts?",
@@ -116,9 +116,9 @@ export default function PhysiotherapyConceptPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#1E2B27] font-sans antialiased selection:bg-[#C86D51]/20">
+    <div style={{ backgroundColor: "#FAF7F2", color: "#232D29" }} className="min-h-screen w-full font-sans antialiased">
       {/* Top Persistent Saiteo Context Strip */}
-      <aside className="sticky top-0 z-50 flex items-center justify-between border-b border-[#1E2B27]/10 bg-[#1E2B27] px-4 py-2 text-xs text-[#FAF8F5] shadow-sm">
+      <aside style={{ backgroundColor: "#2D3732", color: "#FAF7F2" }} className="sticky top-0 z-50 flex items-center justify-between border-b border-white/10 px-4 py-2 text-xs shadow-sm">
         <div className="flex items-center gap-2">
           <Link href="/" className="font-heading font-bold text-[#00C9A7]">
             saiteo
@@ -141,44 +141,46 @@ export default function PhysiotherapyConceptPage() {
           </Link>
           <Link
             href="/#contact"
-            className="hidden rounded bg-[#00C9A7] px-3 py-1 font-bold text-[#1E2B27] transition-transform hover:scale-105 min-[540px]:inline-block"
+            className="hidden rounded bg-[#00C9A7] px-3 py-1 font-bold text-[#081020] transition-transform hover:scale-105 min-[540px]:inline-block"
           >
             Pieteikt savu mājaslapu
           </Link>
         </div>
       </aside>
 
-      {/* Warm Boutique Clinic Header */}
-      <header className="border-b border-[#1E2B27]/08 bg-[#FAF8F5]/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 lg:px-8">
+      {/* Warm Sunlit Clinic Header */}
+      <header style={{ backgroundColor: "rgba(250, 247, 242, 0.95)", borderColor: "rgba(35, 45, 41, 0.08)" }} className="sticky top-[37px] z-40 border-b backdrop-blur-md">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 lg:px-8">
           <Link href="#top" className="group">
-            <span className="font-heading text-2xl font-bold tracking-tight text-[#1E2B27]">
+            <span style={{ color: "#232D29" }} className="font-heading text-2xl font-bold tracking-tight">
               KUSTĪBA
             </span>
-            <span className="block text-xs tracking-wider text-[#7A968C] uppercase font-semibold">
+            <span style={{ color: "#6E8B82" }} className="block text-[11px] font-semibold tracking-wider uppercase">
               Fizioterapijas & Kustību Prakse
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-8 text-sm font-medium text-[#1E2B27]/75 md:flex">
-            <a href="#stasts" className="transition-colors hover:text-[#1E2B27]">Par praksi</a>
-            <a href="#virzieni" className="transition-colors hover:text-[#1E2B27]">Pakalpojumi</a>
-            <a href="#specialisti" className="transition-colors hover:text-[#1E2B27]">Speciālisti</a>
-            <a href="#vizite" className="transition-colors hover:text-[#1E2B27]">Pirmā vizīte</a>
-            <a href="#cenas" className="transition-colors hover:text-[#1E2B27]">Cenas</a>
-            <a href="#kontakti" className="transition-colors hover:text-[#1E2B27]">Kontakti</a>
+          <nav style={{ color: "rgba(35, 45, 41, 0.75)" }} className="hidden items-center gap-8 text-sm font-medium md:flex">
+            <a href="#stasts" className="transition-colors hover:text-[#232D29]">Par praksi</a>
+            <a href="#virzieni" className="transition-colors hover:text-[#232D29]">Pakalpojumi</a>
+            <a href="#specialisti" className="transition-colors hover:text-[#232D29]">Speciālisti</a>
+            <a href="#vizite" className="transition-colors hover:text-[#232D29]">Pirmā vizīte</a>
+            <a href="#cenas" className="transition-colors hover:text-[#232D29]">Cenrādis</a>
+            <a href="#kontakti" className="transition-colors hover:text-[#232D29]">Kontakti</a>
           </nav>
 
           <div className="flex items-center gap-3">
             <a
               href="tel:+37167000000"
-              className="hidden font-mono text-xs font-semibold text-[#1E2B27]/70 hover:text-[#C86D51] sm:inline-block"
+              style={{ color: "rgba(35, 45, 41, 0.75)" }}
+              className="hidden font-mono text-xs font-semibold sm:inline-block"
             >
               +371 67 000 000
             </a>
             <a
               href="#pieteikt"
-              className="rounded-full bg-[#1E2B27] px-5 py-2.5 text-xs font-bold text-[#FAF8F5] shadow-xs transition-all hover:bg-[#2B3B36]"
+              style={{ backgroundColor: "#232D29", color: "#FAF7F2" }}
+              className="rounded-full px-5 py-2.5 text-xs font-bold shadow-xs transition-all hover:bg-[#384842]"
             >
               Pieteikt vizīti
             </a>
@@ -186,29 +188,30 @@ export default function PhysiotherapyConceptPage() {
         </div>
       </header>
 
-      {/* Sunlit Warm Organic Hero */}
-      <section id="top" className="relative overflow-hidden py-16 sm:py-24 lg:py-28">
+      {/* Sunlit Warm Organic Hero (Zero Black, 100% Light & Warmth) */}
+      <section id="top" style={{ backgroundColor: "#FAF7F2" }} className="relative overflow-hidden py-14 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-[#E3EAE6] px-3.5 py-1 text-xs font-semibold text-[#2B3B36]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#C86D51]" />
+              <div style={{ backgroundColor: "#EAE3D9", color: "#3B4D46" }} className="inline-flex items-center gap-2 rounded-full px-3.5 py-1 text-xs font-semibold">
+                <span style={{ backgroundColor: "#C86D51" }} className="h-2 w-2 rounded-full" />
                 <span>Miera iela 24, Rīga · Pieņemšana 2–3 dienu laikā</span>
               </div>
 
-              <h1 className="mt-6 font-heading text-4xl font-extrabold leading-[1.12] tracking-tight text-[#1E2B27] sm:text-5xl lg:text-[3.5rem]">
+              <h1 style={{ color: "#232D29" }} className="mt-6 font-heading text-4xl font-extrabold leading-[1.12] tracking-tight sm:text-5xl lg:text-[3.4rem]">
                 Droša, mierīga vieta,<br />
                 kur atgūt kustību brīvību.
               </h1>
 
-              <p className="mt-6 max-w-xl text-base leading-relaxed text-[#1E2B27]/75 sm:text-lg">
-                Fizioterapija un rehabilitācija pieaugušajiem, sievietēm gaidību un pēcdzemdību periodā, kā arī zīdaiņu attīstība. Rūpīga iedziļināšanās cēloņos — bez steigas un bez virspusējiem šabloniem.
+              <p style={{ color: "rgba(35, 45, 41, 0.78)" }} className="mt-6 max-w-xl text-base leading-relaxed sm:text-lg">
+                Fizioterapija un rehabilitācija pieaugušajiem, sievietēm gaidību un pēcdzemdību periodā, kā arī zīdaiņu attīstība. Rūpīga iedziļināšanās cēloņos — mājīgā vidē, bez steigas un bez virspusējiem šabloniem.
               </p>
 
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
                   href="#pieteikt"
-                  className="rounded-full bg-[#C86D51] px-7 py-3.5 text-sm font-bold text-white shadow-md transition-transform hover:-translate-y-0.5 hover:bg-[#B85C42]"
+                  style={{ backgroundColor: "#C86D51", color: "#FFFFFF" }}
+                  className="rounded-full px-7 py-3.5 text-sm font-bold shadow-md transition-transform hover:-translate-y-0.5 hover:bg-[#B85C42]"
                 >
                   Pieteikt pirmo vizīti (60 min) →
                 </a>
@@ -216,7 +219,8 @@ export default function PhysiotherapyConceptPage() {
                   href="https://wa.me/37120000000"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-[#1E2B27]/20 bg-white px-6 py-3.5 text-sm font-semibold text-[#1E2B27] transition-colors hover:bg-[#FAF8F5]"
+                  style={{ borderColor: "rgba(35, 45, 41, 0.2)", backgroundColor: "#FFFFFF", color: "#232D29" }}
+                  className="inline-flex items-center gap-2 rounded-full border px-6 py-3.5 text-sm font-semibold transition-colors hover:bg-[#F4EFEB]"
                 >
                   <span>💬</span>
                   <span>Jautāt WhatsApp</span>
@@ -224,43 +228,43 @@ export default function PhysiotherapyConceptPage() {
               </div>
 
               {/* Ambient Reassurance Strip */}
-              <div className="mt-12 grid grid-cols-2 gap-4 border-t border-[#1E2B27]/10 pt-6 sm:grid-cols-4 text-xs font-medium text-[#1E2B27]/70">
+              <div style={{ borderColor: "rgba(35, 45, 41, 0.1)", color: "rgba(35, 45, 41, 0.75)" }} className="mt-12 grid grid-cols-2 gap-4 border-t pt-6 sm:grid-cols-4 text-xs font-medium">
                 <div className="flex items-center gap-2">
-                  <span className="text-[#C86D51] font-bold">🌿</span>
+                  <span style={{ color: "#C86D51" }} className="font-bold">🌿</span>
                   <span>1-pret-1 darbs kabinetā</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[#C86D51] font-bold">🩺</span>
+                  <span style={{ color: "#C86D51" }} className="font-bold">🩺</span>
                   <span>Sertificētas speciālistes</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[#C86D51] font-bold">☕</span>
+                  <span style={{ color: "#C86D51" }} className="font-bold">☕</span>
                   <span>Klusa, mājīga vide</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[#C86D51] font-bold">🛡️</span>
+                  <span style={{ color: "#C86D51" }} className="font-bold">🛡️</span>
                   <span>Visas apdrošināšanas</span>
                 </div>
               </div>
             </div>
 
-            {/* Warm Studio Photography Composition */}
+            {/* Warm Studio Photography */}
             <div className="relative">
-              <div className="relative aspect-[4/3.8] overflow-hidden rounded-3xl bg-[#E3EAE6] shadow-[0_20px_48px_-16px_rgba(30,43,39,0.15)]">
+              <div style={{ backgroundColor: "#EAE3D9" }} className="relative h-[340px] sm:h-[420px] w-full overflow-hidden rounded-3xl shadow-[0_16px_40px_-12px_rgba(35,45,41,0.12)]">
                 <Image
                   src="/concept-physio/hero-treatment.jpg"
-                  alt="Fizioterapijas un kustību nodarbība KUSTĪBA mājīgajā praksē"
+                  alt="Fizioterapijas nodarbība KUSTĪBA mājīgajā praksē"
                   fill
                   priority
-                  className="object-cover"
+                  className="object-cover object-center"
                 />
               </div>
-              <div className="absolute -bottom-6 -left-6 hidden sm:block rounded-2xl border border-[#1E2B27]/10 bg-white p-5 shadow-lg max-w-[260px]">
-                <p className="font-heading text-xs font-bold text-[#1E2B27]">
+              <div style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="absolute -bottom-6 -left-6 hidden sm:block rounded-2xl border p-5 shadow-lg max-w-[260px]">
+                <p style={{ color: "#232D29" }} className="font-heading text-xs font-bold">
                   “Sāpes nav jāpacieš.”
                 </p>
-                <p className="mt-1 text-[11px] leading-relaxed text-[#1E2B27]/60">
-                  Pareizi izvēlētas kustības palīdz ķermenim atgūt dabisko balansu jau pēc pirmajām nodarbībām.
+                <p style={{ color: "rgba(35, 45, 41, 0.65)" }} className="mt-1 text-[11px] leading-relaxed">
+                  Pareizi izvēlētas saudzīgas kustības palīdz ķermenim atgūt dabisko balansu.
                 </p>
               </div>
             </div>
@@ -268,11 +272,11 @@ export default function PhysiotherapyConceptPage() {
         </div>
       </section>
 
-      {/* Human Philosophy Section ("Kāpēc KUSTĪBA?") */}
-      <section id="stasts" className="border-t border-[#1E2B27]/08 bg-white py-16 sm:py-24">
+      {/* Human Story & Philosophy ("Mūsu Filozofija") */}
+      <section id="stasts" style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-            <div className="relative aspect-[4/4.5] overflow-hidden rounded-3xl bg-[#FAF8F5]">
+          <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+            <div style={{ backgroundColor: "#F4EFEB" }} className="relative h-[340px] sm:h-[440px] w-full overflow-hidden rounded-3xl shadow-sm">
               <Image
                 src="/concept-physio/practitioner-primary.jpg"
                 alt="Elīna Vītola, vadošā fizioterapeite"
@@ -282,26 +286,26 @@ export default function PhysiotherapyConceptPage() {
             </div>
 
             <div>
-              <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#C86D51]">
+              <span style={{ color: "#C86D51" }} className="text-xs font-bold uppercase tracking-[0.18em]">
                 Prakses filozofija
               </span>
-              <h2 className="mt-2 font-heading text-3xl font-extrabold tracking-tight text-[#1E2B27] sm:text-4xl">
+              <h2 style={{ color: "#232D29" }} className="mt-2 font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">
                 Mēs nesteidzinām.<br />
                 Mēs uzklausām un meklējam cēloni.
               </h2>
 
-              <p className="mt-5 text-sm leading-relaxed text-[#1E2B27]/75 sm:text-base">
-                Lielākā daļa cilvēku pie mums vēršas brīdī, kad muguras sāpes, spranda stīvums vai nogurums jau kļuvis par ikdienas fonu. Bieži vien cilvēks ir izmēģinājis pretsāpju medikamentus vai vispārīgus vingrojumu video internetā, taču sāpes atgriežas.
+              <p style={{ color: "rgba(35, 45, 41, 0.78)" }} className="mt-5 text-sm leading-relaxed sm:text-base">
+                Lielākā daļa cilvēku pie mums vēršas brīdī, kad muguras sāpes, spranda stīvums vai nogurums jau kļuvis par ikdienas fonu. Bieži vien cilvēks ir izmēģinājis pretsāpju zāles vai vispārīgus vingrojumus no interneta, taču sāpes atgriežas.
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-[#1E2B27]/75 sm:text-base">
-                Mūsu pieejas pamatā ir izpratne par ķermeni kā vienotu biomehānisku un emocionālu sistēmu. Mēs analizējam, kā Jūs elpojat, kā sēžat pie sava darba galda un kādas ikdienas kustības rada pārslodzi.
+              <p style={{ color: "rgba(35, 45, 41, 0.78)" }} className="mt-3 text-sm leading-relaxed sm:text-base">
+                Mūsu pieejas pamatā ir izpratne par ķermeni kā vienotu biomehānisku sistēmu. Mēs analizējam, kā Jūs elpojat, kā sēžat pie datora un kādas ikdienas kustības rada slodzi.
               </p>
 
-              <div className="mt-8 border-l-2 border-[#C86D51] pl-5">
-                <p className="font-heading text-sm font-semibold italic text-[#1E2B27]">
+              <div style={{ borderLeftColor: "#C86D51" }} className="mt-8 border-l-3 pl-5">
+                <p style={{ color: "#232D29" }} className="font-heading text-sm font-semibold italic">
                   “Fizioterapija nav tikai vingrošana — tā ir atbrīvošanās no bailēm par savu ķermeni un atgriešanās pie dzīvesprieka.”
                 </p>
-                <span className="mt-2 block text-xs font-bold text-[#7A968C]">
+                <span style={{ color: "#6E8B82" }} className="mt-2 block text-xs font-bold">
                   — Elīna Vītola, prakses vadītāja
                 </span>
               </div>
@@ -310,73 +314,75 @@ export default function PhysiotherapyConceptPage() {
         </div>
       </section>
 
-      {/* 3 Core Care Pathways (Editorial Stories) */}
-      <section id="virzieni" className="border-t border-[#1E2B27]/08 py-16 sm:py-24 bg-[#F4EFEA]/60">
+      {/* 3 Core Care Pathways (Warm Editorial Cards with Clear Daylight Images) */}
+      <section id="virzieni" style={{ backgroundColor: "#F4EFEB", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           <div className="max-w-xl">
-            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#C86D51]">
+            <span style={{ color: "#C86D51" }} className="text-xs font-bold uppercase tracking-[0.18em]">
               Aprūpes virzieni
             </span>
-            <h2 className="mt-2 font-heading text-3xl font-extrabold tracking-tight text-[#1E2B27] sm:text-4xl">
+            <h2 style={{ color: "#232D29" }} className="mt-2 font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">
               Kam mēs varam palīdzēt?
             </h2>
-            <p className="mt-3 text-sm text-[#1E2B27]/70 sm:text-base">
-              Trīs specializētas programmas, kas pielāgotas konkrētām dzīves situācijām un vecuma posmiem:
+            <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-3 text-sm sm:text-base">
+              Trīs specializētas programmas, kas pielāgotas konkrētām dzīves situācijām:
             </p>
           </div>
 
-          <div className="mt-12 space-y-12">
+          <div className="mt-12 space-y-10">
             {carePaths.map((path, idx) => (
               <article
                 key={path.id}
                 id={path.id}
-                className={`grid gap-8 overflow-hidden rounded-3xl border border-[#1E2B27]/08 bg-white p-7 sm:p-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center shadow-sm ${
-                  idx % 2 === 1 ? "lg:grid-cols-[0.85fr_1.15fr]" : ""
+                style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }}
+                className={`grid gap-8 overflow-hidden rounded-3xl border p-6 sm:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center shadow-xs ${
+                  idx % 2 === 1 ? "lg:grid-cols-[0.9fr_1.1fr]" : ""
                 }`}
               >
                 <div className={idx % 2 === 1 ? "order-1 lg:order-2" : ""}>
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#C86D51]">
+                  <span style={{ color: "#C86D51" }} className="text-xs font-bold uppercase tracking-wider">
                     {path.subtitle}
                   </span>
-                  <h3 className="mt-2 font-heading text-2xl font-bold text-[#1E2B27] sm:text-3xl">
+                  <h3 style={{ color: "#232D29" }} className="mt-2 font-heading text-2xl font-bold sm:text-3xl">
                     {path.title}
                   </h3>
-                  <p className="mt-3 font-heading text-sm font-semibold italic text-[#7A968C]">
+                  <p style={{ color: "#6E8B82" }} className="mt-3 font-heading text-sm font-semibold italic">
                     “{path.quote}”
                   </p>
-                  <p className="mt-4 text-sm leading-relaxed text-[#1E2B27]/75">
+                  <p style={{ color: "rgba(35, 45, 41, 0.78)" }} className="mt-4 text-sm leading-relaxed">
                     {path.description}
                   </p>
 
-                  <ul className="mt-6 space-y-2 border-t border-[#1E2B27]/08 pt-5">
+                  <ul style={{ borderColor: "rgba(35, 45, 41, 0.08)" }} className="mt-6 space-y-2 border-t pt-5">
                     {path.points.map((pt, pIdx) => (
-                      <li key={pIdx} className="flex items-start gap-3 text-xs sm:text-sm font-medium text-[#1E2B27]/85">
-                        <span className="text-[#C86D51] font-bold">✓</span>
+                      <li key={pIdx} style={{ color: "#232D29" }} className="flex items-start gap-3 text-xs sm:text-sm font-medium">
+                        <span style={{ color: "#C86D51" }} className="font-bold">✓</span>
                         <span>{pt}</span>
                       </li>
                     ))}
                   </ul>
 
-                  <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[#1E2B27]/08 pt-6">
-                    <span className="font-mono text-sm font-bold text-[#1E2B27]">
+                  <div style={{ borderColor: "rgba(35, 45, 41, 0.08)" }} className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t pt-6">
+                    <span style={{ color: "#232D29" }} className="font-mono text-sm font-bold">
                       {path.price}
                     </span>
                     <a
                       href="#pieteikt"
                       onClick={() => setSelectedService(path.id)}
-                      className="rounded-full bg-[#1E2B27] px-6 py-2.5 text-xs font-bold text-white transition-colors hover:bg-[#C86D51]"
+                      style={{ backgroundColor: "#232D29", color: "#FAF7F2" }}
+                      className="rounded-full px-6 py-2.5 text-xs font-bold transition-colors hover:bg-[#C86D51]"
                     >
                       Pieteikt šo vizīti →
                     </a>
                   </div>
                 </div>
 
-                <div className={`relative aspect-[4/3.2] overflow-hidden rounded-2xl bg-[#E3EAE6] ${idx % 2 === 1 ? "order-2 lg:order-1" : ""}`}>
+                <div className={`relative h-[260px] sm:h-[320px] lg:h-[360px] w-full overflow-hidden rounded-2xl ${idx % 2 === 1 ? "order-2 lg:order-1" : ""}`}>
                   <Image
                     src={path.image}
                     alt={path.title}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    sizes="(max-width: 1024px) 100vw, 45vw"
                     className="object-cover"
                   />
                 </div>
@@ -387,16 +393,16 @@ export default function PhysiotherapyConceptPage() {
       </section>
 
       {/* Specialist Team (Warm Dignified Portraits) */}
-      <section id="specialisti" className="border-t border-[#1E2B27]/08 bg-white py-16 sm:py-24">
+      <section id="specialisti" style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           <div className="max-w-xl">
-            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#C86D51]">
+            <span style={{ color: "#C86D51" }} className="text-xs font-bold uppercase tracking-[0.18em]">
               Speciālisti
             </span>
-            <h2 className="mt-2 font-heading text-3xl font-extrabold tracking-tight text-[#1E2B27] sm:text-4xl">
+            <h2 style={{ color: "#232D29" }} className="mt-2 font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">
               Cilvēki, kuru rokās Jūs varat justies droši
             </h2>
-            <p className="mt-3 text-sm text-[#1E2B27]/70 sm:text-base">
+            <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-3 text-sm sm:text-base">
               Mūsu komandā ir sertificētas ārstniecības personas ar regulāru starptautisku tālākizglītību un patiesu mīlestību pret savu darbu.
             </p>
           </div>
@@ -405,10 +411,11 @@ export default function PhysiotherapyConceptPage() {
             {team.map((person, idx) => (
               <div
                 key={idx}
-                className="flex flex-col justify-between overflow-hidden rounded-3xl border border-[#1E2B27]/08 bg-[#FAF8F5] p-6 shadow-xs"
+                style={{ backgroundColor: "#FAF7F2", borderColor: "rgba(35, 45, 41, 0.08)" }}
+                className="flex flex-col justify-between overflow-hidden rounded-3xl border p-6 shadow-xs"
               >
                 <div>
-                  <div className="relative aspect-[4/4.2] overflow-hidden rounded-2xl bg-[#E3EAE6]">
+                  <div className="relative h-[280px] sm:h-[320px] w-full overflow-hidden rounded-2xl bg-[#EAE3D9]">
                     <Image
                       src={person.image}
                       alt={person.name}
@@ -418,26 +425,27 @@ export default function PhysiotherapyConceptPage() {
                     />
                   </div>
 
-                  <h3 className="mt-5 font-heading text-xl font-bold text-[#1E2B27]">
+                  <h3 style={{ color: "#232D29" }} className="mt-5 font-heading text-xl font-bold">
                     {person.name}
                   </h3>
-                  <p className="text-xs font-bold text-[#C86D51]">{person.role}</p>
-                  <p className="mt-1 font-mono text-[11px] text-[#7A968C]">
+                  <p style={{ color: "#C86D51" }} className="text-xs font-bold">{person.role}</p>
+                  <p style={{ color: "#6E8B82" }} className="mt-1 font-mono text-[11px]">
                     {person.experience}
                   </p>
 
-                  <p className="mt-3 text-xs leading-relaxed text-[#1E2B27]/70 italic">
+                  <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-3 text-xs leading-relaxed italic">
                     {person.quote}
                   </p>
 
-                  <div className="mt-4 rounded-xl bg-white p-3.5 text-[11px] font-medium text-[#1E2B27]/80 border border-[#1E2B27]/06">
+                  <div style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.06)", color: "#232D29" }} className="mt-4 rounded-xl border p-3.5 text-[11px] font-medium">
                     ✦ {person.focus}
                   </div>
                 </div>
 
                 <a
                   href="#pieteikt"
-                  className="mt-6 block text-center rounded-full border border-[#1E2B27]/20 bg-white py-2.5 text-xs font-bold text-[#1E2B27] transition-colors hover:bg-[#1E2B27] hover:text-white"
+                  style={{ borderColor: "rgba(35, 45, 41, 0.2)", backgroundColor: "#FFFFFF", color: "#232D29" }}
+                  className="mt-6 block text-center rounded-full border py-2.5 text-xs font-bold transition-colors hover:bg-[#232D29] hover:text-white"
                 >
                   Pieteikt vizīti pie speciālistes →
                 </a>
@@ -447,54 +455,54 @@ export default function PhysiotherapyConceptPage() {
         </div>
       </section>
 
-      {/* First Visit Anxiety Removal ("Kā norit pirmā vizīte?") */}
-      <section id="vizite" className="border-t border-[#1E2B27]/08 py-16 sm:py-24 bg-[#E3EAE6]/50">
+      {/* First Visit Guide ("Ko sagaidīt pirmajā reizē?") */}
+      <section id="vizite" style={{ backgroundColor: "#EAE3D9", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           <div className="max-w-xl">
-            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#C86D51]">
+            <span style={{ color: "#C86D51" }} className="text-xs font-bold uppercase tracking-[0.18em]">
               Pirmā vizīte
             </span>
-            <h2 className="mt-2 font-heading text-3xl font-extrabold tracking-tight text-[#1E2B27] sm:text-4xl">
+            <h2 style={{ color: "#232D29" }} className="mt-2 font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">
               Ko sagaidīt pirmajā tikšanās reizē?
             </h2>
-            <p className="mt-3 text-sm text-[#1E2B27]/70 sm:text-base">
+            <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-3 text-sm sm:text-base">
               Ja nekad iepriekš neesat bijis pie fizioterapeita, lūk, kā norit pirmā 60 minūšu vizīte:
             </p>
           </div>
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
-            <div className="rounded-3xl border border-[#1E2B27]/08 bg-white p-7 shadow-xs">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FAF8F5] font-heading text-sm font-bold text-[#C86D51] border border-[#1E2B27]/08">
+            <div style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="rounded-3xl border p-7 shadow-xs">
+              <span style={{ backgroundColor: "#FAF7F2", color: "#C86D51", borderColor: "rgba(35, 45, 41, 0.08)" }} className="flex h-10 w-10 items-center justify-center rounded-full font-heading text-sm font-bold border">
                 01
               </span>
-              <h3 className="mt-5 font-heading text-lg font-bold text-[#1E2B27]">
+              <h3 style={{ color: "#232D29" }} className="mt-5 font-heading text-lg font-bold">
                 Mierīga saruna & kustību testi (20 min)
               </h3>
-              <p className="mt-2 text-xs leading-relaxed text-[#1E2B27]/70">
+              <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-2 text-xs leading-relaxed">
                 Mēs uzklausām Jūsu sūdzības, izvērtējam stāju, locītavu kustīgumu, muskuļu tonusu un elpošanas paradumus.
               </p>
             </div>
 
-            <div className="rounded-3xl border border-[#1E2B27]/08 bg-white p-7 shadow-xs">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FAF8F5] font-heading text-sm font-bold text-[#C86D51] border border-[#1E2B27]/08">
+            <div style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="rounded-3xl border p-7 shadow-xs">
+              <span style={{ backgroundColor: "#FAF7F2", color: "#C86D51", borderColor: "rgba(35, 45, 41, 0.08)" }} className="flex h-10 w-10 items-center justify-center rounded-full font-heading text-sm font-bold border">
                 02
               </span>
-              <h3 className="mt-5 font-heading text-lg font-bold text-[#1E2B27]">
+              <h3 style={{ color: "#232D29" }} className="mt-5 font-heading text-lg font-bold">
                 Terapija & pareizās kustības sajūta (30 min)
               </h3>
-              <p className="mt-2 text-xs leading-relaxed text-[#1E2B27]/70">
+              <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-2 text-xs leading-relaxed">
                 Saudzīgs manuālais darbs ar sasprindzinātajiem audiem un precīzi vingrojumi fizioterapeites vadībā.
               </p>
             </div>
 
-            <div className="rounded-3xl border border-[#1E2B27]/08 bg-white p-7 shadow-xs">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FAF8F5] font-heading text-sm font-bold text-[#C86D51] border border-[#1E2B27]/08">
+            <div style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="rounded-3xl border p-7 shadow-xs">
+              <span style={{ backgroundColor: "#FAF7F2", color: "#C86D51", borderColor: "rgba(35, 45, 41, 0.08)" }} className="flex h-10 w-10 items-center justify-center rounded-full font-heading text-sm font-bold border">
                 03
               </span>
-              <h3 className="mt-5 font-heading text-lg font-bold text-[#1E2B27]">
+              <h3 style={{ color: "#232D29" }} className="mt-5 font-heading text-lg font-bold">
                 Skaidrs mājas plāns 5 minūtēm dienā (10 min)
               </h3>
-              <p className="mt-2 text-xs leading-relaxed text-[#1E2B27]/70">
+              <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-2 text-xs leading-relaxed">
                 Jūs saņemat 2–3 vienkāršus vingrojumus mājas videi, lai nostiprinātu sasniegto rezultātu ilgtermiņā.
               </p>
             </div>
@@ -503,99 +511,100 @@ export default function PhysiotherapyConceptPage() {
       </section>
 
       {/* Transparent Pricing Table & Insurance */}
-      <section id="cenas" className="border-t border-[#1E2B27]/08 bg-white py-16 sm:py-24">
+      <section id="cenas" style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
         <div className="mx-auto max-w-4xl px-6 lg:px-8">
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#C86D51]">
+            <span style={{ color: "#C86D51" }} className="text-xs font-bold uppercase tracking-[0.18em]">
               Cenrādis
             </span>
-            <h2 className="mt-2 font-heading text-3xl font-extrabold tracking-tight text-[#1E2B27] sm:text-4xl">
+            <h2 style={{ color: "#232D29" }} className="mt-2 font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">
               Caurspīdīgas pakalpojumu cenas
             </h2>
-            <p className="mt-2 text-xs text-[#1E2B27]/70">
+            <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-2 text-xs">
               Visi nodarbībai nepieciešamie materiāli (teipošana, palīglīdzekļi) ir iekļauti vizītes cenā.
             </p>
           </div>
 
-          <div className="mt-10 overflow-hidden rounded-3xl border border-[#1E2B27]/10 bg-[#FAF8F5] shadow-xs">
-            <div className="divide-y divide-[#1E2B27]/08 text-sm">
+          <div style={{ backgroundColor: "#FAF7F2", borderColor: "rgba(35, 45, 41, 0.1)" }} className="mt-10 overflow-hidden rounded-3xl border shadow-xs">
+            <div style={{ borderColor: "rgba(35, 45, 41, 0.08)" }} className="divide-y text-sm">
               <div className="flex items-center justify-between p-5 sm:p-6">
                 <div>
-                  <p className="font-heading font-bold text-[#1E2B27]">Pirmreizēja fizioterapeita konsultācija & diagnostika</p>
-                  <p className="text-xs text-[#1E2B27]/60">Pilna kustību pārbaude, manuālie testi, pirmā terapija un mājas plāns (60 min)</p>
+                  <p style={{ color: "#232D29" }} className="font-heading font-bold">Pirmreizēja fizioterapeita konsultācija & diagnostika</p>
+                  <p style={{ color: "rgba(35, 45, 41, 0.65)" }} className="text-xs">Pilna kustību pārbaude, manuālie testi, pirmā terapija un mājas plāns (60 min)</p>
                 </div>
-                <span className="font-mono text-base font-bold text-[#1E2B27]">50 €</span>
+                <span style={{ color: "#232D29" }} className="font-mono text-base font-bold">50 €</span>
               </div>
 
               <div className="flex items-center justify-between p-5 sm:p-6">
                 <div>
-                  <p className="font-heading font-bold text-[#1E2B27]">Atkārtota individuālā fizioterapijas nodarbība</p>
-                  <p className="text-xs text-[#1E2B27]/60">Manuāla terapija un koriģējošie vingrojumi ar speciālisti (60 min)</p>
+                  <p style={{ color: "#232D29" }} className="font-heading font-bold">Atkārtota individuālā fizioterapijas nodarbība</p>
+                  <p style={{ color: "rgba(35, 45, 41, 0.65)" }} className="text-xs">Manuāla terapija un koriģējošie vingrojumi ar speciālisti (60 min)</p>
                 </div>
-                <span className="font-mono text-base font-bold text-[#1E2B27]">45 €</span>
+                <span style={{ color: "#232D29" }} className="font-mono text-base font-bold">45 €</span>
               </div>
 
               <div className="flex items-center justify-between p-5 sm:p-6">
                 <div>
-                  <p className="font-heading font-bold text-[#1E2B27]">Sieviešu veselības un pēcdzemdību vizīte</p>
-                  <p className="text-xs text-[#1E2B27]/60">Diastāzes pārbaude, iegurņa pamatnes muskuļu atjaunošana (60 min)</p>
+                  <p style={{ color: "#232D29" }} className="font-heading font-bold">Sieviešu veselības un pēcdzemdību vizīte</p>
+                  <p style={{ color: "rgba(35, 45, 41, 0.65)" }} className="text-xs">Diastāzes pārbaude, iegurņa pamatnes muskuļu atjaunošana (60 min)</p>
                 </div>
-                <span className="font-mono text-base font-bold text-[#1E2B27]">50 €</span>
+                <span style={{ color: "#232D29" }} className="font-mono text-base font-bold">50 €</span>
               </div>
 
               <div className="flex items-center justify-between p-5 sm:p-6">
                 <div>
-                  <p className="font-heading font-bold text-[#1E2B27]">Zīdaiņu motorā attīstība & hendlinga apmācība</p>
-                  <p className="text-xs text-[#1E2B27]/60">Praktiska vecāku apmācība un mazuļa kustību harmonizācija (45 min)</p>
+                  <p style={{ color: "#232D29" }} className="font-heading font-bold">Zīdaiņu motorā attīstība & hendlinga apmācība</p>
+                  <p style={{ color: "rgba(35, 45, 41, 0.65)" }} className="text-xs">Praktiska vecāku apmācība un mazuļa kustību harmonizācija (45 min)</p>
                 </div>
-                <span className="font-mono text-base font-bold text-[#1E2B27]">40 €</span>
+                <span style={{ color: "#232D29" }} className="font-mono text-base font-bold">40 €</span>
               </div>
 
-              <div className="flex items-center justify-between p-5 sm:p-6 bg-white">
+              <div style={{ backgroundColor: "#FFFFFF" }} className="flex items-center justify-between p-5 sm:p-6">
                 <div>
-                  <p className="font-heading font-bold text-[#C86D51]">5 nodarbību kurss (abonements)</p>
-                  <p className="text-xs text-[#1E2B27]/60">Derīgs 3 mēnešus no iegādes brīža (ietaupījums 25 €)</p>
+                  <p style={{ color: "#C86D51" }} className="font-heading font-bold">5 nodarbību kurss (abonements)</p>
+                  <p style={{ color: "rgba(35, 45, 41, 0.65)" }} className="text-xs">Derīgs 3 mēnešus no iegādes brīža (ietaupījums 25 €)</p>
                 </div>
-                <span className="font-mono text-base font-bold text-[#C86D51]">200 €</span>
+                <span style={{ color: "#C86D51" }} className="font-mono text-base font-bold">200 €</span>
               </div>
             </div>
           </div>
 
-          <div className="mt-8 rounded-2xl border border-[#1E2B27]/08 bg-[#FAF8F5] p-5 text-center text-xs text-[#1E2B27]/75">
+          <div style={{ backgroundColor: "#FAF7F2", borderColor: "rgba(35, 45, 41, 0.08)", color: "rgba(35, 45, 41, 0.8)" }} className="mt-8 rounded-2xl border p-5 text-center text-xs">
             🛡️ <strong>Veselības apdrošināšana:</strong> Pēc vizītes izsniedzam čeku un ārstniecības personas izrakstu, ko pieņem <strong>Balta</strong>, <strong>BTA</strong>, <strong>Compensa</strong>, <strong>Ergo</strong>, <strong>Gjensidige</strong> un citas apdrošināšanas kompānijas.
           </div>
         </div>
       </section>
 
-      {/* Warm Interactive Booking & WhatsApp Intake */}
-      <section id="pieteikt" className="border-t border-[#1E2B27]/08 bg-[#1E2B27] py-16 sm:py-24 text-[#FAF8F5]">
+      {/* Warm Interactive Booking Card (Warm Linen & Sage, Zero Dark Pitch Black) */}
+      <section id="pieteikt" style={{ backgroundColor: "#F4EFEB", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
         <div className="mx-auto max-w-4xl px-6 lg:px-8">
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#A9D8D5]">
+            <span style={{ color: "#C86D51" }} className="text-xs font-bold uppercase tracking-[0.2em]">
               Pieteikties vizītei
             </span>
-            <h2 className="mt-3 font-heading text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            <h2 style={{ color: "#232D29" }} className="mt-3 font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">
               Izvēlieties sev ērtāko laiku
             </h2>
-            <p className="mt-3 text-sm text-[#FAF8F5]/75">
+            <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-3 text-sm">
               Aizpildiet pieteikumu vai rakstiet mums tieši WhatsApp — mēs atbildēsim 2 stundu laikā.
             </p>
           </div>
 
-          <div className="mt-10 rounded-3xl border border-white/15 bg-white/5 p-7 backdrop-blur-md sm:p-10">
+          <div style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="mt-10 rounded-3xl border p-7 sm:p-10 shadow-sm">
             {submitted ? (
-              <div className="rounded-2xl border border-[#00C9A7]/30 bg-[#00C9A7]/10 p-8 text-center">
-                <span className="text-4xl">✓</span>
-                <h3 className="mt-3 font-heading text-xl font-bold text-white">
+              <div style={{ backgroundColor: "#EAE3D9", borderColor: "rgba(35, 45, 41, 0.1)" }} className="rounded-2xl border p-8 text-center">
+                <span style={{ color: "#C86D51" }} className="text-4xl">✓</span>
+                <h3 style={{ color: "#232D29" }} className="mt-3 font-heading text-xl font-bold">
                   Paldies! Jūsu pieteikums ir saņemts.
                 </h3>
-                <p className="mt-2 text-sm text-[#FAF8F5]/80">
+                <p style={{ color: "rgba(35, 45, 41, 0.8)" }} className="mt-2 text-sm">
                   Mēs sazināsimies pa norādīto tālruni, lai apstiprinātu vizītes laiku: <strong>{selectedDay} plkst. {selectedTime}</strong>.
                 </p>
                 <button
                   type="button"
                   onClick={() => setSubmitted(false)}
-                  className="mt-6 rounded-full bg-white/20 px-5 py-2 text-xs font-bold text-white hover:bg-white/30"
+                  style={{ backgroundColor: "#232D29", color: "#FAF7F2" }}
+                  className="mt-6 rounded-full px-5 py-2 text-xs font-bold"
                 >
                   Pieteikt citu laiku
                 </button>
@@ -609,7 +618,7 @@ export default function PhysiotherapyConceptPage() {
               >
                 {/* 1. Day Selector */}
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#A9D8D5]">
+                  <label style={{ color: "#232D29" }} className="block text-xs font-bold uppercase tracking-wider">
                     1. Izvēlieties vēlamo dienu
                   </label>
                   <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-5">
@@ -618,11 +627,12 @@ export default function PhysiotherapyConceptPage() {
                         key={day.full}
                         type="button"
                         onClick={() => setSelectedDay(day.full)}
-                        className={`rounded-2xl p-3 text-center border transition-all ${
+                        style={
                           selectedDay === day.full
-                            ? "border-[#C86D51] bg-[#C86D51] text-white shadow-md"
-                            : "border-white/15 bg-white/5 text-white/80 hover:bg-white/10"
-                        }`}
+                            ? { backgroundColor: "#C86D51", color: "#FFFFFF", borderColor: "#C86D51" }
+                            : { backgroundColor: "#FAF7F2", color: "#232D29", borderColor: "rgba(35, 45, 41, 0.1)" }
+                        }
+                        className="rounded-2xl p-3 text-center border transition-all"
                       >
                         <p className="text-[11px] font-semibold">{day.label}</p>
                         <p className="mt-0.5 font-heading text-xs font-bold">{day.date}</p>
@@ -633,7 +643,7 @@ export default function PhysiotherapyConceptPage() {
 
                 {/* 2. Time Selector */}
                 <div className="mt-6">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#A9D8D5]">
+                  <label style={{ color: "#232D29" }} className="block text-xs font-bold uppercase tracking-wider">
                     2. Izvēlieties sākuma laiku
                   </label>
                   <div className="mt-3 flex flex-wrap gap-2">
@@ -642,11 +652,12 @@ export default function PhysiotherapyConceptPage() {
                         key={t}
                         type="button"
                         onClick={() => setSelectedTime(t)}
-                        className={`rounded-xl px-4 py-2 font-mono text-xs font-bold transition-all ${
+                        style={
                           selectedTime === t
-                            ? "bg-[#00C9A7] text-[#1E2B27] shadow-sm scale-105"
-                            : "border border-white/15 bg-white/5 text-white/80 hover:bg-white/10"
-                        }`}
+                            ? { backgroundColor: "#232D29", color: "#FAF7F2", borderColor: "#232D29" }
+                            : { backgroundColor: "#FAF7F2", color: "#232D29", borderColor: "rgba(35, 45, 41, 0.1)" }
+                        }
+                        className="rounded-xl px-4 py-2 font-mono text-xs font-bold transition-all border"
                       >
                         {t}
                       </button>
@@ -655,41 +666,44 @@ export default function PhysiotherapyConceptPage() {
                 </div>
 
                 {/* 3. Patient Details Form */}
-                <div className="mt-8 border-t border-white/10 pt-6">
+                <div style={{ borderColor: "rgba(35, 45, 41, 0.08)" }} className="mt-8 border-t pt-6">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
-                      <label className="block text-xs font-semibold text-white/80">
+                      <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
                         Vārds, Uzvārds *
                       </label>
                       <input
                         type="text"
                         required
                         placeholder="Anna Bērziņa"
-                        className="mt-1.5 w-full rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm text-white placeholder:text-white/35 focus:border-[#00C9A7] focus:outline-hidden"
+                        style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FAF7F2", color: "#232D29" }}
+                        className="mt-1.5 w-full rounded-xl border px-4 py-2.5 text-sm placeholder:text-[#232D29]/40 focus:outline-hidden"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-white/80">
+                      <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
                         Tālruņa numurs *
                       </label>
                       <input
                         type="tel"
                         required
                         placeholder="+371 20 000 000"
-                        className="mt-1.5 w-full rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm text-white placeholder:text-white/35 focus:border-[#00C9A7] focus:outline-hidden"
+                        style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FAF7F2", color: "#232D29" }}
+                        className="mt-1.5 w-full rounded-xl border px-4 py-2.5 text-sm placeholder:text-[#232D29]/40 focus:outline-hidden"
                       />
                     </div>
                   </div>
 
                   <div className="mt-4 grid gap-4 sm:grid-cols-2">
                     <div>
-                      <label className="block text-xs font-semibold text-white/80">
+                      <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
                         Pakalpojuma virziens
                       </label>
                       <select
                         value={selectedService}
                         onChange={(e) => setSelectedService(e.target.value)}
-                        className="mt-1.5 w-full rounded-xl border border-white/20 bg-[#1E2B27] px-4 py-2.5 text-sm text-white focus:border-[#00C9A7] focus:outline-hidden"
+                        style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FAF7F2", color: "#232D29" }}
+                        className="mt-1.5 w-full rounded-xl border px-4 py-2.5 text-sm focus:outline-hidden"
                       >
                         <option value="rehab">Muguras, kakla vai locītavu sāpes</option>
                         <option value="women">Sieviešu veselība & pēcdzemdības</option>
@@ -697,10 +711,13 @@ export default function PhysiotherapyConceptPage() {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-white/80">
+                      <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
                         Vēlamā speciāliste (pēc izvēles)
                       </label>
-                      <select className="mt-1.5 w-full rounded-xl border border-white/20 bg-[#1E2B27] px-4 py-2.5 text-sm text-white focus:border-[#00C9A7] focus:outline-hidden">
+                      <select
+                        style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FAF7F2", color: "#232D29" }}
+                        className="mt-1.5 w-full rounded-xl border px-4 py-2.5 text-sm focus:outline-hidden"
+                      >
                         <option value="">Jebkura pieejamā speciāliste</option>
                         <option value="elina">Elīna Vītola (vadošā fizioterapeite)</option>
                         <option value="marta">Marta Liepa (muguras sāpes, sports)</option>
@@ -710,13 +727,14 @@ export default function PhysiotherapyConceptPage() {
                   </div>
 
                   <div className="mt-4">
-                    <label className="block text-xs font-semibold text-white/80">
+                    <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
                       Īss situācijas apraksts (kas sāp, cik ilgi?)
                     </label>
                     <textarea
                       rows={3}
                       placeholder="Kas Jums rada diskomfortu, vai ir bijusi trauma vai izmeklējumi?"
-                      className="mt-1.5 w-full rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm text-white placeholder:text-white/35 focus:border-[#00C9A7] focus:outline-hidden"
+                      style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FAF7F2", color: "#232D29" }}
+                      className="mt-1.5 w-full rounded-xl border px-4 py-2.5 text-sm placeholder:text-[#232D29]/40 focus:outline-hidden"
                     />
                   </div>
                 </div>
@@ -724,7 +742,8 @@ export default function PhysiotherapyConceptPage() {
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <button
                     type="submit"
-                    className="rounded-full bg-[#C86D51] px-8 py-3.5 text-sm font-bold text-white shadow-lg transition-transform hover:-translate-y-0.5 hover:bg-[#B85C42]"
+                    style={{ backgroundColor: "#C86D51", color: "#FFFFFF" }}
+                    className="rounded-full px-8 py-3.5 text-sm font-bold shadow-lg transition-transform hover:-translate-y-0.5 hover:bg-[#B85C42]"
                   >
                     Pieteikt vizīti ({selectedDay.split(",")[0]}, {selectedTime})
                   </button>
@@ -732,14 +751,15 @@ export default function PhysiotherapyConceptPage() {
                     href="https://wa.me/37120000000"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+                    style={{ borderColor: "rgba(35, 45, 41, 0.2)", backgroundColor: "#FFFFFF", color: "#232D29" }}
+                    className="inline-flex items-center gap-2 rounded-full border px-6 py-3.5 text-sm font-semibold transition-colors hover:bg-[#FAF7F2]"
                   >
                     <span>💬</span>
                     <span>Rakstīt WhatsApp</span>
                   </a>
                 </div>
 
-                <p className="mt-4 text-[11px] text-white/45">
+                <p style={{ color: "rgba(35, 45, 41, 0.5)" }} className="mt-4 text-[11px]">
                   Demo koncepts: forma simulē pierakstu. Dati netiek saglabāti vai nodoti trešajām personām.
                 </p>
               </form>
@@ -749,13 +769,13 @@ export default function PhysiotherapyConceptPage() {
       </section>
 
       {/* FAQ Accordions */}
-      <section className="border-t border-[#1E2B27]/08 bg-white py-16 sm:py-20">
+      <section style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-20">
         <div className="mx-auto max-w-3xl px-6 lg:px-8">
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#C86D51]">
+            <span style={{ color: "#C86D51" }} className="text-xs font-bold uppercase tracking-[0.18em]">
               Jautājumi
             </span>
-            <h2 className="mt-2 font-heading text-3xl font-extrabold tracking-tight text-[#1E2B27]">
+            <h2 style={{ color: "#232D29" }} className="mt-2 font-heading text-3xl font-extrabold tracking-tight">
               Biežāk uzdotie jautājumi
             </h2>
           </div>
@@ -764,20 +784,22 @@ export default function PhysiotherapyConceptPage() {
             {faqs.map((faq, idx) => (
               <div
                 key={idx}
-                className="overflow-hidden rounded-2xl border border-[#1E2B27]/08 bg-[#FAF8F5]"
+                style={{ backgroundColor: "#FAF7F2", borderColor: "rgba(35, 45, 41, 0.08)" }}
+                className="overflow-hidden rounded-2xl border"
               >
                 <button
                   type="button"
                   onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
-                  className="flex w-full items-center justify-between p-5 text-left font-heading text-sm font-bold text-[#1E2B27]"
+                  style={{ color: "#232D29" }}
+                  className="flex w-full items-center justify-between p-5 text-left font-heading text-sm font-bold"
                 >
                   <span>{faq.q}</span>
-                  <span className="ml-2 font-mono text-base text-[#C86D51]">
+                  <span style={{ color: "#C86D51" }} className="ml-2 font-mono text-base">
                     {activeFaq === idx ? "−" : "+"}
                   </span>
                 </button>
                 {activeFaq === idx && (
-                  <div className="border-t border-[#1E2B27]/08 px-5 py-4 text-xs sm:text-sm leading-relaxed text-[#1E2B27]/75">
+                  <div style={{ borderColor: "rgba(35, 45, 41, 0.08)", color: "rgba(35, 45, 41, 0.78)" }} className="border-t px-5 py-4 text-xs sm:text-sm leading-relaxed">
                     {faq.a}
                   </div>
                 )}
@@ -788,21 +810,21 @@ export default function PhysiotherapyConceptPage() {
       </section>
 
       {/* Location & Contacts */}
-      <footer id="kontakti" className="border-t border-[#1E2B27]/10 bg-[#FAF8F5] py-16 text-[#1E2B27]">
+      <footer id="kontakti" style={{ backgroundColor: "#FAF7F2", borderColor: "rgba(35, 45, 41, 0.1)", color: "#232D29" }} className="border-t py-16">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           <div className="grid gap-10 md:grid-cols-3">
             <div>
-              <strong className="font-heading text-xl font-bold text-[#1E2B27]">KUSTĪBA</strong>
-              <p className="mt-1 text-xs text-[#7A968C]">Fizioterapijas un kustību prakse</p>
-              <p className="mt-4 text-xs leading-relaxed text-[#1E2B27]/70">
+              <strong style={{ color: "#232D29" }} className="font-heading text-xl font-bold">KUSTĪBA</strong>
+              <p style={{ color: "#6E8B82" }} className="mt-1 text-xs">Fizioterapijas un kustību prakse</p>
+              <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-4 text-xs leading-relaxed">
                 Miera iela 24, Rīga, LV-1001.<br />
-                Ieeja no Miera ielas pagalma, 2. stāvs, pieejams ērts lifts bērnu ratiņiem.
+                Ieeja no Miera ielas pagalma, 2. stāvs, pieejams ērts lifts bērnu ratiņiem un personām ar kustību ierobežojumiem.
               </p>
             </div>
 
             <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[#7A968C]">Darba laiks</p>
-              <ul className="mt-3 space-y-1.5 text-xs text-[#1E2B27]/80 font-mono">
+              <p style={{ color: "#6E8B82" }} className="text-xs font-bold uppercase tracking-wider">Darba laiks</p>
+              <ul style={{ color: "rgba(35, 45, 41, 0.85)" }} className="mt-3 space-y-1.5 text-xs font-mono">
                 <li>Pirmdiena – Piektdiena: 08:00 – 20:00</li>
                 <li>Sestdiena: 09:00 – 15:00 (pēc pieraksta)</li>
                 <li>Svētdiena: Slēgts</li>
@@ -810,26 +832,26 @@ export default function PhysiotherapyConceptPage() {
             </div>
 
             <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[#7A968C]">Saziņa</p>
-              <p className="mt-3 text-xs text-[#1E2B27]/80">
-                Tālrunis: <a href="tel:+37167000000" className="text-[#C86D51] font-mono hover:underline">+371 67 000 000</a>
+              <p style={{ color: "#6E8B82" }} className="text-xs font-bold uppercase tracking-wider">Saziņa</p>
+              <p className="mt-3 text-xs">
+                Tālrunis: <a href="tel:+37167000000" style={{ color: "#C86D51" }} className="font-mono hover:underline font-bold">+371 67 000 000</a>
               </p>
-              <p className="mt-1 text-xs text-[#1E2B27]/80">
-                E-pasts: <a href="mailto:sveiki@kustiba-demo.lv" className="text-[#C86D51] hover:underline">sveiki@kustiba-demo.lv</a>
+              <p className="mt-1 text-xs">
+                E-pasts: <a href="mailto:sveiki@kustiba-demo.lv" style={{ color: "#C86D51" }} className="hover:underline font-bold">sveiki@kustiba-demo.lv</a>
               </p>
-              <p className="mt-1 text-xs text-[#1E2B27]/80">
-                WhatsApp: <a href="https://wa.me/37120000000" className="text-[#C86D51] hover:underline">+371 20 000 000</a>
+              <p className="mt-1 text-xs">
+                WhatsApp: <a href="https://wa.me/37120000000" style={{ color: "#C86D51" }} className="hover:underline font-bold">+371 20 000 000</a>
               </p>
             </div>
           </div>
 
-          <div className="mt-12 border-t border-[#1E2B27]/08 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#1E2B27]/50">
+          <div style={{ borderColor: "rgba(35, 45, 41, 0.08)", color: "rgba(35, 45, 41, 0.5)" }} className="mt-12 border-t pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
             <p>© {new Date().getFullYear()} KUSTĪBA. Demonstrācijas koncepts.</p>
             <div className="flex items-center gap-4">
-              <Link href="/case-studies/physiotherapy" className="text-[#C86D51] hover:underline font-medium">
+              <Link href="/case-studies/physiotherapy" style={{ color: "#C86D51" }} className="hover:underline font-bold">
                 Lasīt Saiteo stratēģijas analīzi →
               </Link>
-              <Link href="/" className="text-[#1E2B27]/70 hover:underline">
+              <Link href="/" className="hover:underline">
                 Saiteo.com
               </Link>
             </div>
