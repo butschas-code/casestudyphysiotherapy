@@ -690,7 +690,7 @@ export default function PhysiotherapyCallingCardPage() {
                 />
               </div>
 
-              {/* FLOATING MINI BOOKING CARD (Overlaps lower image on mobile without massive blank space) */}
+              {/* FLOATING MINI BOOKING CARD */}
               <motion.div
                 style={{ y: heroCardY }}
                 initial={{ opacity: 0, scale: 0.97, y: 20 }}
@@ -769,7 +769,7 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 2. PATIENT RECOGNITION SECTION — NOT A SERVICES GRID */}
+      {/* 2. PATIENT RECOGNITION SECTION */}
       {/* ============================================================ */}
       <section
         id="atpazisana"
@@ -918,7 +918,7 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 3. THERAPIST STORY SECTION — EMOTIONAL CENTER OF PAGE */}
+      {/* 3. THERAPIST STORY SECTION */}
       {/* ============================================================ */}
       <section
         id="elina"
@@ -2156,7 +2156,7 @@ export default function PhysiotherapyCallingCardPage() {
                                 key={d.date}
                                 type="button"
                                 onClick={() => { setSelectedDayIndex(i); setSelectedTimeSlot(d.slots[0]); }}
-                                className={`rounded-2xl border p-2 sm:p-3 text-center transition-all min-h-[54px] flex flex-col justify-center items-center ${
+                                className={`rounded-2xl border p-2.5 sm:p-3 text-center transition-all min-h-[54px] flex flex-col justify-center items-center ${
                                   selectedDayIndex === i
                                     ? "border-[#24302D] bg-[#24302D] text-white shadow-xs"
                                     : "border-black/[0.08] bg-[#FFF9F4] text-[#24302D] hover:bg-white"
