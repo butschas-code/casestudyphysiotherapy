@@ -176,51 +176,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
         },
       ];
 
-  const firstVisitSteps = isEn
-    ? [
-        {
-          num: "01",
-          title: "Let's talk.",
-          copy: "Tell us what brought you in and what you hope to regain. We listen to your story first without rushing into exercises.",
-        },
-        {
-          num: "02",
-          title: "Let's observe movement.",
-          copy: "An unhurried functional check: how you breathe, stand, sit, and how load distributes across your whole body.",
-        },
-        {
-          num: "03",
-          title: "We explain everything.",
-          copy: "You'll understand what we see and how it connects to your symptoms, accompanied by gentle manual relief.",
-        },
-        {
-          num: "04",
-          title: "We agree on next steps.",
-          copy: "A plan that realistically fits into your life. 2–3 simple home habits without overwhelm.",
-        },
-      ]
-    : [
-        {
-          num: "01",
-          title: "Parunāsim.",
-          copy: "Pastāstiet, kas Jūs atveda un ko gribētu mainīt. Mēs vispirms mierīgi uzklausām Jūsu situāciju, nevis steidzamies pie vingrojumiem.",
-        },
-        {
-          num: "02",
-          title: "Paskatīsimies, kā ķermenis kustas.",
-          copy: "Nesteidzīga kustību pārbaude: kā Jūs elpojat, stāvat, apsēžaties un kā slodze sadalās visā ķermenī.",
-        },
-        {
-          num: "03",
-          title: "Izskaidrosim.",
-          copy: "Jums būs skaidrs, ko redzam un kā tas saistīts ar Jūsu pašsajūtu. Saudzīga manuāla atbrīvošana un pirmās terapeitiskās kustības.",
-        },
-        {
-          num: "04",
-          title: "Vienosimies par nākamo soli.",
-          copy: "Plāns, kas ir reāli izpildāms Jūsu ikdienā. 2–3 vienkārši paradumi vai vingrojumi mājas videi bez pārslodzes.",
-        },
-      ];
+
 
   const experienceScenarios = isEn
     ? [
@@ -1518,7 +1474,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
       </section>
 
       {/* ============================================================ */}
-      {/* 5. FIRST-VISIT CONTINUOUS JOURNEY (NO CARD BOXES)            */}
+      {/* 5. FIRST-VISIT CONTINUOUS HUMAN JOURNEY (NO CARD BOXES)      */}
       {/* ============================================================ */}
       <section
         id="vizite"
@@ -1541,97 +1497,236 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
             </p>
           </div>
 
-          {/* Horizontal Visual Journey with Photographic Detail Vignettes */}
-          <div className="relative mt-16 sm:mt-20">
+          {/* DESKTOP: 1200px-wide Horizontal Storytelling Canvas with Continuous Organic Coral Line */}
+          <div className="hidden lg:block relative mt-20 max-w-[1200px]">
             
-            {/* Desktop Curved Movement Line */}
-            <div className="absolute top-10 left-0 right-0 hidden lg:block pointer-events-none z-0">
-              <svg className="w-full h-12" viewBox="0 0 1100 48" fill="none" preserveAspectRatio="none">
+            {/* Continuous Organic Curved SVG Movement Line */}
+            <div className="absolute top-12 left-0 right-0 pointer-events-none z-0">
+              <svg className="w-full h-24" viewBox="0 0 1200 96" fill="none" preserveAspectRatio="none">
                 <motion.path
-                  d="M 20,24 C 280,4 550,44 1080,24"
+                  d="M 30,50 C 220,10 400,90 600,45 C 800,5 980,85 1170,40"
                   stroke="#D87967"
-                  strokeWidth="1.5"
-                  strokeDasharray="4 6"
+                  strokeWidth="2"
+                  strokeDasharray="4 8"
                   initial={{ pathLength: 0, opacity: 0 }}
-                  whileInView={{ pathLength: 1, opacity: 0.35 }}
+                  whileInView={{ pathLength: 1, opacity: 0.45 }}
                   viewport={{ once: true }}
-                  transition={{ duration: shouldReduceMotion ? 0.01 : 1.5, ease: easeOrganic }}
+                  transition={{ duration: shouldReduceMotion ? 0.01 : 1.8, ease: easeOrganic }}
                 />
               </svg>
             </div>
 
-            {/* 4 Steps + 2 In-Between Photographic Details */}
-            <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 relative z-10">
-              {firstVisitSteps.map((step, idx) => (
-                <div key={step.num} className="flex flex-col justify-between">
-                  <div>
-                    <span className="font-mono text-3xl sm:text-4xl font-light text-[#D87967]/80 block">
-                      {step.num}
-                    </span>
-
-                    <h3 className="mt-3 text-xl sm:text-2xl font-medium text-[#24302D]">
-                      {step.title}
-                    </h3>
-
-                    <p className="mt-3 text-base sm:text-[17px] leading-relaxed text-[#4A5D57]">
-                      {step.copy}
-                    </p>
-                  </div>
-
-                  {/* Photo Vignette 1 (Under Step 1) */}
-                  {idx === 0 && (
-                    <div className="mt-6 relative h-28 w-full sm:h-32 rounded-2xl overflow-hidden bg-[#F8E9E3] hidden sm:block">
-                      <Image
-                        src="/concept-physio/warm-guidance.jpg"
-                        alt="Attentive listening & consultation"
-                        fill
-                        sizes="250px"
-                        className="object-cover object-center"
-                      />
-                    </div>
-                  )}
-
-                  {/* Photo Vignette 2 (Under Step 3) */}
-                  {idx === 2 && (
-                    <div className="mt-6 relative h-28 w-full sm:h-32 rounded-2xl overflow-hidden bg-[#F8E9E3] hidden sm:block">
-                      <Image
-                        src="/concept-physio/hands-care.jpg"
-                        alt="Gentle assessment & manual therapy"
-                        fill
-                        sizes="250px"
-                        className="object-cover object-center"
-                      />
-                    </div>
-                  )}
+            {/* 4 Story Moments Interspersed with 2 Tactile Detail Images */}
+            <div className="grid grid-cols-4 gap-8 relative z-10">
+              
+              {/* Step 01 */}
+              <div className="flex flex-col justify-between pr-4">
+                <div>
+                  <span className="font-mono text-4xl sm:text-5xl font-light text-[#D87967] block">
+                    01
+                  </span>
+                  <h3 className="mt-4 text-xl font-medium text-[#24302D]">
+                    {isEn ? "Let's talk first." : "Parunāsim."}
+                  </h3>
+                  <p className="mt-3 text-base leading-relaxed text-[#4A5D57]">
+                    {isEn
+                      ? "You share your history, daily routine, and what feels uncomfortable or restricted."
+                      : "Jūs izstāstāt savu pieredzi, ikdienas slodzi un to, kas šobrīd rada diskomfortu."}
+                  </p>
                 </div>
-              ))}
+                {/* Small Candid Image 1 */}
+                <div className="mt-8 relative h-32 w-full rounded-2xl overflow-hidden bg-[#F8E9E3] shadow-xs">
+                  <Image
+                    src="/concept-physio/warm-guidance.jpg"
+                    alt="Attentive listening and consultation"
+                    fill
+                    sizes="260px"
+                    className="object-cover object-center"
+                  />
+                </div>
+              </div>
+
+              {/* Step 02 */}
+              <div className="flex flex-col justify-between px-2 pt-6">
+                <div>
+                  <span className="font-mono text-4xl sm:text-5xl font-light text-[#D87967] block">
+                    02
+                  </span>
+                  <h3 className="mt-4 text-xl font-medium text-[#24302D]">
+                    {isEn ? "Let's see how your body moves." : "Paskatīsimies, kā ķermenis kustas."}
+                  </h3>
+                  <p className="mt-3 text-base leading-relaxed text-[#4A5D57]">
+                    {isEn
+                      ? "A gentle evaluation of movement patterns, posture, and muscular balance without provoking pain."
+                      : "Saudzīgs kustību, stājas un muskuļu balansa novērtējums bez sāpju provocēšanas."}
+                  </p>
+                </div>
+                <div className="mt-8 pt-6 border-t border-black/[0.06] text-xs text-[#D87967] font-medium">
+                  {isEn ? "Gentle movement observation" : "Saudzīga kustību vērošana"}
+                </div>
+              </div>
+
+              {/* Step 03 */}
+              <div className="flex flex-col justify-between px-2">
+                <div>
+                  <span className="font-mono text-4xl sm:text-5xl font-light text-[#D87967] block">
+                    03
+                  </span>
+                  <h3 className="mt-4 text-xl font-medium text-[#24302D]">
+                    {isEn ? "We explain what is happening." : "Izskaidrosim."}
+                  </h3>
+                  <p className="mt-3 text-base leading-relaxed text-[#4A5D57]">
+                    {isEn
+                      ? "In simple, clear human language, we explain why your body is reacting this way."
+                      : "Vienkāršā, cilvēcīgā valodā izskaidrojam, kāpēc ķermenis reaģē tieši šādi."}
+                  </p>
+                </div>
+                {/* Small Tactile Detail Image 2 */}
+                <div className="mt-8 relative h-32 w-full rounded-2xl overflow-hidden bg-[#F8E9E3] shadow-xs">
+                  <Image
+                    src="/concept-physio/hands-care.jpg"
+                    alt="Tactile explanation and gentle therapy"
+                    fill
+                    sizes="260px"
+                    className="object-cover object-center"
+                  />
+                </div>
+              </div>
+
+              {/* Step 04 */}
+              <div className="flex flex-col justify-between pl-4 pt-6">
+                <div>
+                  <span className="font-mono text-4xl sm:text-5xl font-light text-[#D87967] block">
+                    04
+                  </span>
+                  <h3 className="mt-4 text-xl font-medium text-[#24302D]">
+                    {isEn ? "We agree on the next step." : "Vienosimies par nākamo soli."}
+                  </h3>
+                  <p className="mt-3 text-base leading-relaxed text-[#4A5D57]">
+                    {isEn
+                      ? "A plan that realistically fits your daily life. 2–3 simple home habits without overwhelming routines."
+                      : "Plāns, kas ir reāli izpildāms Jūsu ikdienā. 2–3 vienkārši paradumi vai vingrojumi mājas videi bez pārslodzes."}
+                  </p>
+                </div>
+                <div className="mt-8 pt-6 border-t border-black/[0.06] text-xs text-[#D87967] font-medium">
+                  {isEn ? "Realistic daily routine" : "Reāls ikdienas plāns"}
+                </div>
+              </div>
+
             </div>
           </div>
 
-          {/* Practical Reassurance Editorial Strip (No Floating White Card) */}
-          <div className="mt-16 border-t border-black/[0.08] pt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-6">
-            <div className="space-y-2 text-base sm:text-[17px] text-[#3D4F4A]">
-              <p>
-                👕 <strong>{isEn ? "What to wear?" : "Ko vilkt mugurā?"}</strong>{" "}
-                {isEn
-                  ? "Comfortable sportswear (t-shirt and leggings/shorts) that allows free movement."
-                  : "Ērtu sporta vai brīvā laika apģērbu (t-kreklu un legingus/šortus), kas neierobežo kustības."}
-              </p>
-              <p>
-                📍 <strong>{isEn ? "Location & access:" : "Atrašanās vieta:"}</strong>{" "}
-                {isEn
-                  ? "Riga · demonstration location (convenient access)"
-                  : "Rīga · demonstrācijas lokācija (ērta piekļuve)"}
+          {/* MOBILE / TABLET: Vertical Flow with Organic Line Down Left Side */}
+          <div className="lg:hidden relative mt-14 pl-8 sm:pl-10">
+            {/* Vertical Organic Dashed Line */}
+            <div className="absolute top-2 bottom-6 left-3 sm:left-4 w-[2px] bg-gradient-to-b from-[#D87967]/60 via-[#D87967]/30 to-transparent pointer-events-none" />
+
+            <div className="space-y-12">
+              {/* Step 01 */}
+              <div className="relative">
+                <span className="absolute -left-8 sm:-left-10 top-0 font-mono text-2xl font-semibold text-[#D87967] bg-[#FFF9F4] pr-2">
+                  01
+                </span>
+                <h3 className="text-xl font-medium text-[#24302D]">
+                  {isEn ? "Let's talk first." : "Parunāsim."}
+                </h3>
+                <p className="mt-2 text-base leading-relaxed text-[#4A5D57]">
+                  {isEn
+                    ? "You share your history, daily routine, and what feels uncomfortable or restricted."
+                    : "Jūs izstāstāt savu pieredzi, ikdienas slodzi un to, kas šobrīd rada diskomfortu."}
+                </p>
+                <div className="mt-4 relative h-40 w-full rounded-2xl overflow-hidden bg-[#F8E9E3]">
+                  <Image
+                    src="/concept-physio/warm-guidance.jpg"
+                    alt="Attentive listening and consultation"
+                    fill
+                    sizes="100vw"
+                    className="object-cover object-center"
+                  />
+                </div>
+              </div>
+
+              {/* Step 02 */}
+              <div className="relative">
+                <span className="absolute -left-8 sm:-left-10 top-0 font-mono text-2xl font-semibold text-[#D87967] bg-[#FFF9F4] pr-2">
+                  02
+                </span>
+                <h3 className="text-xl font-medium text-[#24302D]">
+                  {isEn ? "Let's see how your body moves." : "Paskatīsimies, kā ķermenis kustas."}
+                </h3>
+                <p className="mt-2 text-base leading-relaxed text-[#4A5D57]">
+                  {isEn
+                    ? "A gentle evaluation of movement patterns, posture, and muscular balance without provoking pain."
+                    : "Saudzīgs kustību, stājas un muskuļu balansa novērtējums bez sāpju provocēšanas."}
+                </p>
+              </div>
+
+              {/* Step 03 */}
+              <div className="relative">
+                <span className="absolute -left-8 sm:-left-10 top-0 font-mono text-2xl font-semibold text-[#D87967] bg-[#FFF9F4] pr-2">
+                  03
+                </span>
+                <h3 className="text-xl font-medium text-[#24302D]">
+                  {isEn ? "We explain what is happening." : "Izskaidrosim."}
+                </h3>
+                <p className="mt-2 text-base leading-relaxed text-[#4A5D57]">
+                  {isEn
+                    ? "In simple, clear human language, we explain why your body is reacting this way."
+                    : "Vienkāršā, cilvēcīgā valodā izskaidrojam, kāpēc ķermenis reaģē tieši šādi."}
+                </p>
+                <div className="mt-4 relative h-40 w-full rounded-2xl overflow-hidden bg-[#F8E9E3]">
+                  <Image
+                    src="/concept-physio/hands-care.jpg"
+                    alt="Tactile explanation and gentle therapy"
+                    fill
+                    sizes="100vw"
+                    className="object-cover object-center"
+                  />
+                </div>
+              </div>
+
+              {/* Step 04 */}
+              <div className="relative">
+                <span className="absolute -left-8 sm:-left-10 top-0 font-mono text-2xl font-semibold text-[#D87967] bg-[#FFF9F4] pr-2">
+                  04
+                </span>
+                <h3 className="text-xl font-medium text-[#24302D]">
+                  {isEn ? "We agree on the next step." : "Vienosimies par nākamo soli."}
+                </h3>
+                <p className="mt-2 text-base leading-relaxed text-[#4A5D57]">
+                  {isEn
+                    ? "A plan that realistically fits your daily life. 2–3 simple home habits without overwhelming routines."
+                    : "Plāns, kas ir reāli izpildāms Jūsu ikdienā. 2–3 vienkārši paradumi vai vingrojumi mājas videi bez pārslodzes."}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Information Below: Elegant Single Text Bar (No Emojis, No Cards) */}
+          <div className="mt-16 sm:mt-20 border-t border-black/[0.08] pt-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm sm:text-base text-[#3D4F4A]">
+              <span className="font-semibold uppercase tracking-wider text-[#D87967] text-xs sm:text-sm">
+                {isEn ? "Before your visit" : "Pirms vizītes"}
+              </span>
+              <span className="hidden sm:inline text-black/30">|</span>
+              <p className="leading-relaxed">
+                <span>{isEn ? "Comfortable clothing" : "Ērts apģērbs"}</span>
+                <span className="mx-2 text-[#D87967]">·</span>
+                <span>{isEn ? "Bring previous medical imaging if available" : "Ja ir izmeklējumi, paņemiet tos līdzi"}</span>
+                <span className="mx-2 text-[#D87967]">·</span>
+                <span>{isEn ? "Arrive 5 minutes before your time" : "Ierodieties 5 minūtes agrāk"}</span>
               </p>
             </div>
+
             <a
               href="#pieraksts"
               style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-              className="rounded-full px-8 py-4 text-center text-sm font-semibold whitespace-nowrap hover:bg-[#C26553] min-h-[48px] flex items-center justify-center"
+              className="rounded-full px-8 py-3.5 text-center text-sm font-semibold whitespace-nowrap hover:bg-[#C26553] shadow-xs min-h-[46px] flex items-center justify-center self-start md:self-auto"
             >
-              {isEn ? "Book 60 min session →" : "Pieteikt 60 min vizīti →"}
+              {isEn ? "Book first visit →" : "Pieteikt pirmo vizīti →"}
             </a>
           </div>
+
         </div>
       </section>
 
