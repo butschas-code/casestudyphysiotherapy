@@ -26,16 +26,17 @@ export default function PhysiotherapyCallingCardPage() {
   // Testimonial Stories State (User Controlled)
   const [activeStoryIdx, setActiveStoryIdx] = useState<number>(0);
 
-  // Booking State
-  const [selectedSpecialist, setSelectedSpecialist] = useState<string>("elina");
-  const [selectedDate, setSelectedDate] = useState<string>("2026-09-02");
-  const [selectedTime, setSelectedTime] = useState<string>("11:30");
+  // Premium Booking State
+  const [bookingStep, setBookingStep] = useState<1 | 2 | 3>(3);
   const [selectedService, setSelectedService] = useState<string>("first");
+  const [selectedSpecialist, setSelectedSpecialist] = useState<string>("elina");
+  const [selectedDayIndex, setSelectedDayIndex] = useState<number>(1); // Otrdiena
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>("13:00");
   const [patientName, setPatientName] = useState<string>("");
   const [patientPhone, setPatientPhone] = useState<string>("");
-  const [patientEmail, setPatientEmail] = useState<string>("");
   const [patientNote, setPatientNote] = useState<string>("");
-  const [bookingConfirmed, setBookingConfirmed] = useState<boolean>(false);
+  const [bookingCompleted, setBookingCompleted] = useState<boolean>(false);
+  const [showIntakeForm, setShowIntakeForm] = useState<boolean>(false);
 
   // Direct Inquiry State
   const [inquiryName, setInquiryName] = useState<string>("");
@@ -175,16 +176,23 @@ export default function PhysiotherapyCallingCardPage() {
     },
   ];
 
+  const servicesList = [
+    { id: "first", title: "Pirmreizēja fizioterapeita konsultācija & diagnostika", duration: "60 min", price: "50 €" },
+    { id: "rehab", title: "Atkārtota individuālā fizioterapijas nodarbība", duration: "60 min", price: "45 €" },
+    { id: "women", title: "Sieviešu veselības un pēcdzemdību vizīte", duration: "60 min", price: "50 €" },
+    { id: "infant", title: "Zīdaiņu motorā attīstība & hendlinga apmācība", duration: "45 min", price: "40 €" },
+  ];
+
   const specialists = [
     {
       id: "elina",
       name: "Elīna Vītola",
-      role: "Vadošā fizioterapeite & prakses dibinātāja",
+      role: "Vadošā fizioterapeite & dibinātāja",
       experience: "12 gadu klīniskā pieredze",
       specialty: "Mugurkaula biomehānika, sieviešu veselība un pēcdzemdību aprūpe",
       education: "RSU Rehabilitācijas fakultāte · Starptautiskie DNS un Mulligan kursi",
       image: "/concept-physio/practitioner-primary.jpg",
-      badge: "Pieņem Pirmd., Trešd., Piektd.",
+      badge: "Pirmd., Trešd., Piektd.",
       personalNote: "“Lielākā daļa cilvēku pie mums ienāk brīdī, kad sāpes vai nogurums jau mēnešiem ir kļuvis par ikdienas fonu. Mūsu pieeja nav ātra 15 minūšu procedūra. Mēs vispirms uzklausām, saprotam, kā Jūs elpojat un kustaties, un tikai tad saudzīgi palīdzam ķermenim atgūt dabisko balansu.”",
     },
     {
@@ -195,7 +203,7 @@ export default function PhysiotherapyCallingCardPage() {
       specialty: "Akūtas muguras sāpes, sporta un pēctraumu rehabilitācija",
       education: "RSU bakalaurs · K-Active funkcionālās teipošanas sertifikāts",
       image: "/concept-physio/practitioner-2.jpg",
-      badge: "Pieņem Otrd., Ceturtd., Sestd.",
+      badge: "Otrd., Ceturtd., Sestd.",
       personalNote: "“Skaidra kustību tehnika un saudzīga slodzes dozēšana ļauj locītavām un saitēm dabiski un droši atjaunoties bez bailēm par atkārtotu traumu.”",
     },
     {
@@ -206,20 +214,43 @@ export default function PhysiotherapyCallingCardPage() {
       specialty: "Zīdaiņu motorā attīstība, muskuļu tonusa harmonizācija un bērnu stāja",
       education: "RSU fizioterapija · Bobath un Emmi Pikleres metodes sertifikācija",
       image: "/concept-physio/practitioner-3.jpg",
-      badge: "Pieņem darba dienās pēc pieraksta",
+      badge: "Darba dienās pēc pieraksta",
       personalNote: "“Mierīga, silta un mīloša vide nodarbībā ļauj mazulim atvērties kustībai dabiskā, priecīgā veidā — bez stresa un bez asarām.”",
     },
   ];
 
-  const dates = [
-    { value: "2026-09-02", day: "Trešd.", full: "Trešdiena, 2. septembris", slots: 5 },
-    { value: "2026-09-03", day: "Ceturtd.", full: "Ceturtdiena, 3. septembris", slots: 4 },
-    { value: "2026-09-04", day: "Piektd.", full: "Piektdiena, 4. septembris", slots: 2 },
-    { value: "2026-09-07", day: "Pirmd.", full: "Pirmdiena, 7. septembris", slots: 6 },
-    { value: "2026-09-08", day: "Otrd.", full: "Otrdiena, 8. septembris", slots: 3 },
+  const bookingDays = [
+    {
+      date: "2026-09-07",
+      dayName: "Pirmd.",
+      fullDay: "Pirmdiena, 7. septembris",
+      slots: ["09:00", "11:30", "15:00"],
+    },
+    {
+      date: "2026-09-08",
+      dayName: "Otrd.",
+      fullDay: "Otrdiena, 8. septembris",
+      slots: ["10:30", "13:00", "16:30"],
+    },
+    {
+      date: "2026-09-09",
+      dayName: "Trešd.",
+      fullDay: "Trešdiena, 9. septembris",
+      slots: ["09:30", "14:00", "17:30"],
+    },
+    {
+      date: "2026-09-10",
+      dayName: "Ceturtd.",
+      fullDay: "Ceturtdiena, 10. septembris",
+      slots: ["11:00", "15:30", "18:00"],
+    },
+    {
+      date: "2026-09-11",
+      dayName: "Piektd.",
+      fullDay: "Piektdiena, 11. septembris",
+      slots: ["08:30", "12:00", "14:30"],
+    },
   ];
-
-  const timeSlots = ["08:30", "09:45", "11:00", "11:30", "14:00", "15:30", "17:00", "18:30"];
 
   const insuranceCompanies: Record<string, { name: string; coverage: string; details: string }> = {
     balta: {
@@ -271,7 +302,8 @@ export default function PhysiotherapyCallingCardPage() {
   const activeRec = recognitionItems[hoveredSituation] || recognitionItems[0];
   const activeStory = demoStories[activeStoryIdx] || demoStories[0];
   const currentSpecialistObj = specialists.find((s) => s.id === selectedSpecialist) || specialists[0];
-  const currentDateObj = dates.find((d) => d.value === selectedDate) || dates[0];
+  const currentServiceObj = servicesList.find((s) => s.id === selectedService) || servicesList[0];
+  const currentDayObj = bookingDays[selectedDayIndex] || bookingDays[1];
 
   const schemaJsonLd = {
     "@context": "https://schema.org",
@@ -599,8 +631,8 @@ export default function PhysiotherapyCallingCardPage() {
                       key={slot}
                       href="#pieraksts"
                       onClick={() => {
-                        setSelectedDate("2026-09-08");
-                        setSelectedTime(slot);
+                        setSelectedDayIndex(1);
+                        setSelectedTimeSlot(slot);
                         setSelectedSpecialist("elina");
                       }}
                       className="rounded-xl border border-black/10 bg-[#FFF9F4] px-2.5 py-1.5 font-mono text-xs font-medium text-[#24302D] transition-colors hover:border-[#D87967] hover:bg-[#D87967] hover:text-white"
@@ -1044,7 +1076,7 @@ export default function PhysiotherapyCallingCardPage() {
                 <div className="mt-8 flex items-center gap-6">
                   <a
                     href="#pieraksts"
-                    onClick={() => setSelectedService("rehab")}
+                    onClick={() => { setSelectedService("rehab"); setBookingStep(3); }}
                     style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
                     className="rounded-full px-7 py-3 text-xs font-semibold hover:bg-[#C26553]"
                   >
@@ -1104,7 +1136,7 @@ export default function PhysiotherapyCallingCardPage() {
                 <div className="mt-8 flex items-center gap-6">
                   <a
                     href="#pieraksts"
-                    onClick={() => { setSelectedService("women"); setSelectedSpecialist("elina"); }}
+                    onClick={() => { setSelectedService("women"); setSelectedSpecialist("elina"); setBookingStep(3); }}
                     style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
                     className="rounded-full px-7 py-3 text-xs font-semibold hover:bg-[#D87967]"
                   >
@@ -1189,7 +1221,7 @@ export default function PhysiotherapyCallingCardPage() {
                 <div className="mt-8 flex items-center gap-6">
                   <a
                     href="#pieraksts"
-                    onClick={() => { setSelectedService("women"); setSelectedSpecialist("elina"); }}
+                    onClick={() => { setSelectedService("women"); setSelectedSpecialist("elina"); setBookingStep(3); }}
                     style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
                     className="rounded-full px-7 py-3 text-xs font-semibold hover:bg-[#C26553]"
                   >
@@ -1247,7 +1279,7 @@ export default function PhysiotherapyCallingCardPage() {
                 <div className="mt-8 flex items-center gap-6">
                   <a
                     href="#pieraksts"
-                    onClick={() => { setSelectedService("infant"); setSelectedSpecialist("anna"); }}
+                    onClick={() => { setSelectedService("infant"); setSelectedSpecialist("anna"); setBookingStep(3); }}
                     style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
                     className="rounded-full px-7 py-3 text-xs font-semibold hover:bg-[#D87967]"
                   >
@@ -1463,7 +1495,7 @@ export default function PhysiotherapyCallingCardPage() {
 
                 <a
                   href="#pieraksts"
-                  onClick={() => setSelectedSpecialist(person.id)}
+                  onClick={() => { setSelectedSpecialist(person.id); setBookingStep(3); }}
                   style={{
                     borderColor: "rgba(36, 48, 45, 0.15)",
                     backgroundColor: "#FFF9F4",
@@ -1722,236 +1754,403 @@ export default function PhysiotherapyCallingCardPage() {
         </div>
       </section>
 
-      {/* 9. ACTION: Interactive Online Booking Engine */}
-      <section id="pieraksts" className="py-20 lg:py-28 border-b border-[#24302D]/08">
-        <div className="mx-auto max-w-5xl px-6 lg:px-12">
-          <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
-              Tiešsaistes pieraksts
-            </span>
-            <h2 className="mt-2 font-sans text-3xl sm:text-5xl font-medium text-[#24302D]">
-              Rezervējiet vizīti tiešsaistē
-            </h2>
-            <p className="mt-2 text-sm text-[#5A6D67]">
-              Izvēlieties vēlamo speciālisti, datumu un pulksteņa laiku. Apstiprinājums uzreiz tiks nosūtīts uz Jūsu tālruni.
-            </p>
-          </div>
+      {/* ============================================================ */}
+      {/* 9. PREMIUM BOOKING SECTION (DEEP WARM GREEN #243A36 MOMENT) */}
+      {/* ============================================================ */}
+      <section
+        id="pieraksts"
+        style={{
+          backgroundColor: "#243A36",
+          backgroundImage: `
+            radial-gradient(circle at 80% 20%, rgba(159, 184, 166, 0.18), transparent 45%),
+            radial-gradient(circle at 15% 85%, rgba(216, 121, 103, 0.12), transparent 50%)
+          `,
+        }}
+        className="py-28 lg:py-36 text-[#FFF9F4] relative overflow-hidden"
+      >
+        <div className="mx-auto max-w-7xl px-6 lg:px-12">
+          <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            
+            {/* LEFT: Reassuring Human Guidance & Direct Channels */}
+            <div>
+              <span className="text-xs font-semibold uppercase tracking-widest text-[#9FB8A6]">
+                PIETEIKT VIZĪTI
+              </span>
+              <h2 className="mt-3 font-sans text-3xl sm:text-5xl font-medium text-[#FFF9F4] leading-[1.15]">
+                Sāksim ar pirmo soli.
+              </h2>
 
-          <div
-            style={{
-              backgroundColor: "#FFFFFF",
-              borderColor: "rgba(36, 48, 45, 0.08)",
-              boxShadow: "0 16px 40px -12px rgba(36, 48, 45, 0.08)",
-              borderRadius: "2rem",
-            }}
-            className="mt-12 border p-8 sm:p-12"
-          >
-            {bookingConfirmed ? (
-              <div className="p-8 text-center max-w-lg mx-auto">
-                <span
-                  style={{ backgroundColor: "#F8E9E3", color: "#D87967" }}
-                  className="inline-flex h-16 w-16 items-center justify-center rounded-full text-3xl font-serif"
-                >
-                  ✓
-                </span>
-                <h3 className="mt-4 font-sans text-3xl font-medium text-[#24302D]">
-                  Paldies, {patientName || "cien. pacient"}!
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-[#5A6D67]">
-                  Jūsu pieteikums ir veiksmīgi reģistrēts uz <strong>{currentDateObj.full} plkst. {selectedTime}</strong> pie speciālistes <strong>{currentSpecialistObj.name}</strong>.
+              <div className="mt-6 space-y-4 text-base sm:text-lg leading-relaxed text-[#FFF9F4]/80">
+                <p>
+                  Ja zināt, ko vēlaties rezervēt — izvēlieties vizītes laiku blakus esošajā kalendārā.
                 </p>
-                <div
-                  style={{ backgroundColor: "#FFF9F4", borderColor: "rgba(36, 48, 45, 0.06)" }}
-                  className="mt-6 rounded-2xl p-5 text-xs text-left border"
+                <p>
+                  Ja neesat pārliecināta, ar ko sākt — īsi pastāstiet par savu situāciju, un mēs palīdzēsim izvēlēties piemērotāko speciālisti.
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <a
+                  href="#booking-card"
+                  style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
+                  className="rounded-full px-8 py-3.5 text-xs font-semibold shadow-md transition-all hover:bg-[#C26553] hover:-translate-y-0.5"
                 >
-                  <p>📍 <strong>Adrese:</strong> Rīga, Miera iela 24, 2. stāvs (pieejams ērts lifts)</p>
-                  <p className="mt-1">📞 <strong>Tālrunis saziņai:</strong> +371 67 000 000</p>
-                  <p className="mt-1">🔔 <strong>Atgādinājums:</strong> SMS tiks nosūtīta 24h pirms vizītes.</p>
-                </div>
-                <div className="mt-8 flex justify-center gap-4">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setBookingConfirmed(false);
-                      setPatientName("");
-                      setPatientPhone("");
-                    }}
-                    style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
-                    className="rounded-full px-7 py-3 text-xs font-semibold hover:bg-[#D87967]"
-                  >
-                    Pieteikt citu laiku
-                  </button>
+                  Izvēlēties vizītes laiku
+                </a>
+                <a
+                  href="#jautajums"
+                  className="text-xs sm:text-sm font-medium text-[#FFF9F4] underline decoration-white/30 underline-offset-4 hover:text-[#9FB8A6]"
+                >
+                  Man vajag palīdzību izvēlēties →
+                </a>
+              </div>
+
+              {/* Direct Quick Contact Options */}
+              <div className="mt-12 border-t border-white/10 pt-8 space-y-3 text-xs text-[#FFF9F4]/70">
+                <p className="font-semibold uppercase tracking-wider text-[#9FB8A6]">
+                  Tiešā saziņa ar speciālisti:
+                </p>
+                <div className="flex flex-wrap gap-4 pt-1">
                   <a
                     href="https://wa.me/37120000000"
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                    className="rounded-full px-7 py-3 text-xs font-semibold"
+                    className="flex items-center gap-1.5 rounded-full bg-white/10 px-4 py-2 text-white hover:bg-white/20 transition-colors"
                   >
-                    Rakstīt WhatsApp
+                    <span>💬 WhatsApp</span>
+                  </a>
+                  <a
+                    href="tel:+37167000000"
+                    className="flex items-center gap-1.5 rounded-full bg-white/10 px-4 py-2 text-white hover:bg-white/20 transition-colors"
+                  >
+                    <span>📞 Zvanīt</span>
+                  </a>
+                  <a
+                    href="mailto:sveiki@kustiba-demo.lv"
+                    className="flex items-center gap-1.5 rounded-full bg-white/10 px-4 py-2 text-white hover:bg-white/20 transition-colors"
+                  >
+                    <span>✉️ E-pasts</span>
                   </a>
                 </div>
               </div>
-            ) : (
-              <form onSubmit={(e) => { e.preventDefault(); setBookingConfirmed(true); }}>
-                {/* 1. Specialist Selector */}
+            </div>
+
+            {/* RIGHT: LARGE INTERACTIVE BOOKING CARD (3D Depth Transition) */}
+            <motion.div
+              id="booking-card"
+              initial={{ opacity: 0, y: 30, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: easePremium }}
+              style={{
+                backgroundColor: "#FFFFFF",
+                borderRadius: "2.5rem 1.5rem 2.5rem 1.5rem",
+                boxShadow: "0 25px 60px -15px rgba(0, 0, 0, 0.35)",
+              }}
+              className="p-7 sm:p-10 text-[#24302D] border border-white/80"
+            >
+              {/* Header & Step Navigation */}
+              <div className="flex items-center justify-between border-b border-black/[0.06] pb-5">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#24302D]">
-                    1. Izvēlieties speciālisti
-                  </label>
-                  <div className="mt-3 grid gap-3 sm:grid-cols-3">
-                    {specialists.map((spec) => (
-                      <button
-                        key={spec.id}
-                        type="button"
-                        onClick={() => setSelectedSpecialist(spec.id)}
-                        className={`flex items-center gap-3.5 rounded-2xl border p-4 text-left transition-all ${
-                          selectedSpecialist === spec.id
-                            ? "border-[#D87967] bg-[#F8E9E3]/50 shadow-xs"
-                            : "border-black/[0.08] bg-[#FFF9F4] hover:bg-white"
-                        }`}
-                      >
-                        <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border border-black/[0.08] bg-[#F8E9E3]">
-                          <Image src={spec.image} alt={spec.name} fill sizes="48px" className="object-cover" />
-                        </div>
-                        <div>
-                          <p className="font-sans text-sm font-medium text-[#24302D]">{spec.name}</p>
-                          <span className="text-[11px] font-medium text-[#D87967] block">{spec.badge.split(" ")[0]} {spec.badge.split(" ")[1]}</span>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
+                  <h3 className="font-sans text-2xl font-medium text-[#24302D]">Pieteikt vizīti</h3>
+                  <span className="text-xs text-[#5A6D67]">KUSTĪBA telpā · Miera iela 24</span>
                 </div>
-
-                {/* 2. Date & Time */}
-                <div className="mt-8 border-t border-black/[0.06] pt-8">
-                  <div className="flex items-center justify-between">
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[#24302D]">
-                      2. Izvēlieties datumu un laiku (Septembris 2026)
-                    </label>
-                    <span className="text-xs text-[#5A6D67]">{currentDateObj.full}</span>
-                  </div>
-
-                  <div className="mt-3 grid grid-cols-2 sm:grid-cols-5 gap-2.5">
-                    {dates.map((d) => (
-                      <button
-                        key={d.value}
-                        type="button"
-                        onClick={() => setSelectedDate(d.value)}
-                        className={`rounded-2xl border p-3.5 text-center transition-all ${
-                          selectedDate === d.value
-                            ? "border-[#D87967] bg-[#D87967] text-white shadow-xs"
-                            : "border-black/[0.08] bg-[#FFF9F4] text-[#24302D] hover:bg-white"
-                        }`}
-                      >
-                        <p className="text-[11px] opacity-80">{d.day}</p>
-                        <p className="font-sans text-lg font-medium mt-0.5">{d.full.split(" ")[1]}</p>
-                        <p className="text-[10px] opacity-80 mt-0.5">{d.slots} brīvi laiki</p>
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {timeSlots.map((t) => (
-                      <button
-                        key={t}
-                        type="button"
-                        onClick={() => setSelectedTime(t)}
-                        className={`rounded-xl border px-4 py-2 font-mono text-xs font-medium transition-all ${
-                          selectedTime === t
-                            ? "border-[#24302D] bg-[#24302D] text-white"
-                            : "border-black/[0.08] bg-[#FFF9F4] text-[#24302D] hover:bg-white"
-                        }`}
-                      >
-                        {t}
-                      </button>
-                    ))}
-                  </div>
+                <div className="flex items-center gap-2 text-xs font-semibold">
+                  {[
+                    { num: 1, label: "Pakalpojums" },
+                    { num: 2, label: "Speciālists" },
+                    { num: 3, label: "Laiks" },
+                  ].map((s) => (
+                    <button
+                      key={s.num}
+                      type="button"
+                      onClick={() => { setBookingStep(s.num as 1 | 2 | 3); setShowIntakeForm(false); }}
+                      className={`flex items-center gap-1 rounded-full px-2.5 py-1 transition-colors ${
+                        bookingStep === s.num
+                          ? "bg-[#24302D] text-white"
+                          : "text-[#5A6D67] hover:bg-black/[0.04]"
+                      }`}
+                    >
+                      <span className="text-[10px] opacity-75">{s.num}</span>
+                      <span className="hidden sm:inline">{s.label}</span>
+                    </button>
+                  ))}
                 </div>
+              </div>
 
-                {/* 3. Patient Details Form */}
-                <div className="mt-8 border-t border-black/[0.06] pt-8">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#24302D] mb-4">
-                    3. Jūsu kontaktinformācija
-                  </label>
+              {bookingCompleted ? (
+                /* Completed Screen */
+                <div className="py-10 text-center">
+                  <span
+                    style={{ backgroundColor: "#F8E9E3", color: "#D87967" }}
+                    className="inline-flex h-16 w-16 items-center justify-center rounded-full text-3xl font-serif"
+                  >
+                    ✓
+                  </span>
+                  <h4 className="mt-4 font-sans text-2xl sm:text-3xl font-medium text-[#24302D]">
+                    Vizītes pieteikums reģistrēts!
+                  </h4>
+                  <p className="mt-2 text-sm text-[#5A6D67]">
+                    <strong>{currentDayObj.fullDay} plkst. {selectedTimeSlot}</strong> pie speciālistes <strong>{currentSpecialistObj.name}</strong>.
+                  </p>
 
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <label className="block text-xs font-medium text-[#24302D]">Vārds, Uzvārds *</label>
-                      <input
-                        type="text"
-                        required
-                        value={patientName}
-                        onChange={(e) => setPatientName(e.target.value)}
-                        placeholder="Anna Bērziņa"
-                        className="mt-1.5 w-full rounded-xl border border-black/15 bg-[#FFF9F4] px-4 py-2.5 text-sm text-[#24302D] focus:border-[#D87967] focus:outline-hidden"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-[#24302D]">Tālruņa numurs *</label>
-                      <input
-                        type="tel"
-                        required
-                        value={patientPhone}
-                        onChange={(e) => setPatientPhone(e.target.value)}
-                        placeholder="+371 20 000 000"
-                        className="mt-1.5 w-full rounded-xl border border-black/15 bg-[#FFF9F4] px-4 py-2.5 text-sm text-[#24302D] focus:border-[#D87967] focus:outline-hidden"
-                      />
-                    </div>
+                  <div
+                    style={{ backgroundColor: "#FFF9F4" }}
+                    className="mt-6 rounded-2xl p-4 text-xs text-left border border-black/[0.06] text-[#24302D]"
+                  >
+                    <p>📍 Miera iela 24, 2. stāvs (ērts lifts ratiņiem)</p>
+                    <p className="mt-1">🔔 SMS atgādinājums tiks nosūtīts 24h pirms vizītes.</p>
+                    <p className="mt-2 font-semibold text-[#D87967]">
+                      * Šis ir demonstrācijas pieraksts koncepta izvērtēšanai.
+                    </p>
                   </div>
 
-                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <label className="block text-xs font-medium text-[#24302D]">Vizītes veids</label>
-                      <select
-                        value={selectedService}
-                        onChange={(e) => setSelectedService(e.target.value)}
-                        className="mt-1.5 w-full rounded-xl border border-black/15 bg-[#FFF9F4] px-4 py-2.5 text-sm text-[#24302D] focus:border-[#D87967] focus:outline-hidden"
-                      >
-                        <option value="first">Pirmreizēja diagnostika & terapija (50 € / 60 min)</option>
-                        <option value="rehab">Atkārtota individuālā nodarbība (45 € / 60 min)</option>
-                        <option value="women">Sieviešu veselība & pēcdzemdības (50 € / 60 min)</option>
-                        <option value="infant">Zīdaiņu attīstība & hendlings (40 € / 45 min)</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-[#24302D]">E-pasts (atgādinājumam)</label>
-                      <input
-                        type="email"
-                        value={patientEmail}
-                        onChange={(e) => setPatientEmail(e.target.value)}
-                        placeholder="anna@piemers.lv"
-                        className="mt-1.5 w-full rounded-xl border border-black/15 bg-[#FFF9F4] px-4 py-2.5 text-sm text-[#24302D] focus:border-[#D87967] focus:outline-hidden"
-                      />
-                    </div>
+                  <button
+                    type="button"
+                    onClick={() => { setBookingCompleted(false); setShowIntakeForm(false); }}
+                    style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
+                    className="mt-6 rounded-full px-7 py-2.5 text-xs font-semibold hover:bg-[#D87967]"
+                  >
+                    Pieteikt citu laiku
+                  </button>
+                </div>
+              ) : showIntakeForm ? (
+                /* Intake Form Step */
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setBookingCompleted(true);
+                  }}
+                  className="mt-6 space-y-4"
+                >
+                  <div className="rounded-xl bg-[#FFF9F4] p-3 text-xs text-[#24302D] border border-black/[0.06]">
+                    <strong>Izvēlēts:</strong> {currentDayObj.fullDay} plkst. {selectedTimeSlot} · {currentSpecialistObj.name} ({currentServiceObj.title})
                   </div>
 
-                  <div className="mt-4">
-                    <label className="block text-xs font-medium text-[#24302D]">Sūdzības vai piezīmes (pēc izvēles)</label>
+                  <div>
+                    <label className="block text-xs font-medium text-[#24302D]">Jūsu vārds, uzvārds *</label>
+                    <input
+                      type="text"
+                      required
+                      value={patientName}
+                      onChange={(e) => setPatientName(e.target.value)}
+                      placeholder="Anna Bērziņa"
+                      className="mt-1 w-full rounded-xl border border-black/15 bg-[#FFF9F4] px-4 py-2.5 text-sm text-[#24302D] focus:border-[#D87967] focus:outline-hidden"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium text-[#24302D]">Tālruņa numurs (SMS atgādinājumam) *</label>
+                    <input
+                      type="tel"
+                      required
+                      value={patientPhone}
+                      onChange={(e) => setPatientPhone(e.target.value)}
+                      placeholder="+371 20 000 000"
+                      className="mt-1 w-full rounded-xl border border-black/15 bg-[#FFF9F4] px-4 py-2.5 text-sm text-[#24302D] focus:border-[#D87967] focus:outline-hidden"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium text-[#24302D]">Piezīmes ārstei (pēc izvēles)</label>
                     <input
                       type="text"
                       value={patientNote}
                       onChange={(e) => setPatientNote(e.target.value)}
-                      placeholder="Kas šobrīd sagādā vislielākās grūtības?"
-                      className="mt-1.5 w-full rounded-xl border border-black/15 bg-[#FFF9F4] px-4 py-2.5 text-sm text-[#24302D] focus:border-[#D87967] focus:outline-hidden"
+                      placeholder="Īsi par sāpēm vai sūdzībām"
+                      className="mt-1 w-full rounded-xl border border-black/15 bg-[#FFF9F4] px-4 py-2.5 text-sm text-[#24302D] focus:border-[#D87967] focus:outline-hidden"
                     />
                   </div>
 
-                  <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-black/[0.06] pt-6">
-                    <span className="text-xs text-[#5A6D67]">
-                      Izvēlēts: <strong>{currentDateObj.full} plkst. {selectedTime}</strong> ({currentSpecialistObj.name})
-                    </span>
+                  <div className="flex items-center justify-between border-t border-black/[0.06] pt-4">
+                    <button
+                      type="button"
+                      onClick={() => setShowIntakeForm(false)}
+                      className="text-xs text-[#5A6D67] hover:underline"
+                    >
+                      ← Mainīt laiku
+                    </button>
                     <button
                       type="submit"
                       style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                      className="rounded-full px-9 py-3.5 text-sm font-semibold shadow-md transition-all hover:bg-[#C26553] hover:shadow-lg hover:-translate-y-0.5"
+                      className="rounded-full px-8 py-3 text-xs font-semibold shadow-xs hover:bg-[#C26553]"
                     >
-                      Apstiprināt vizītes pieteikumu →
+                      Apstiprināt pieteikumu →
                     </button>
                   </div>
+                </form>
+              ) : (
+                /* Step by Step Booking Engine */
+                <div className="mt-6 space-y-6">
+                  
+                  {/* Step 1: Service Selector */}
+                  {bookingStep === 1 && (
+                    <div className="space-y-3">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
+                        Izvēlieties vizītes veidu:
+                      </p>
+                      <div className="grid gap-2.5">
+                        {servicesList.map((srv) => (
+                          <button
+                            key={srv.id}
+                            type="button"
+                            onClick={() => { setSelectedService(srv.id); setBookingStep(2); }}
+                            className={`flex items-center justify-between rounded-2xl border p-4 text-left transition-all ${
+                              selectedService === srv.id
+                                ? "border-[#D87967] bg-[#F8E9E3]/50"
+                                : "border-black/[0.08] hover:bg-[#FFF9F4]"
+                            }`}
+                          >
+                            <div>
+                              <p className="text-xs sm:text-sm font-semibold text-[#24302D]">{srv.title}</p>
+                              <span className="text-[11px] text-[#5A6D67]">{srv.duration}</span>
+                            </div>
+                            <span className="font-sans font-medium text-sm text-[#24302D]">{srv.price}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Step 2: Specialist Selector */}
+                  {bookingStep === 2 && (
+                    <div className="space-y-3">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
+                        Izvēlieties speciālisti:
+                      </p>
+                      <div className="grid gap-2.5">
+                        {specialists.map((spec) => (
+                          <button
+                            key={spec.id}
+                            type="button"
+                            onClick={() => { setSelectedSpecialist(spec.id); setBookingStep(3); }}
+                            className={`flex items-center gap-3.5 rounded-2xl border p-4 text-left transition-all ${
+                              selectedSpecialist === spec.id
+                                ? "border-[#D87967] bg-[#F8E9E3]/50"
+                                : "border-black/[0.08] hover:bg-[#FFF9F4]"
+                            }`}
+                          >
+                            <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border border-black/10 bg-[#F8E9E3]">
+                              <Image src={spec.image} alt={spec.name} fill sizes="48px" className="object-cover" />
+                            </div>
+                            <div>
+                              <p className="text-xs sm:text-sm font-semibold text-[#24302D]">{spec.name}</p>
+                              <p className="text-[11px] text-[#5A6D67]">{spec.role}</p>
+                              <span className="text-[10px] text-[#D87967] font-medium">{spec.badge}</span>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Step 3: Date & Live Time Slots (Default & Main View) */}
+                  {bookingStep === 3 && (
+                    <div>
+                      {/* Active Selection Summary Strip */}
+                      <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-[#FFF9F4] p-3.5 border border-black/[0.06] text-xs text-[#24302D]">
+                        <div>
+                          <p className="font-semibold">{currentServiceObj.title}</p>
+                          <span className="text-[11px] text-[#5A6D67]">
+                            {currentServiceObj.duration} · {currentSpecialistObj.name}
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setBookingStep(1)}
+                          className="text-[11px] font-medium text-[#D87967] hover:underline"
+                        >
+                          Mainīt →
+                        </button>
+                      </div>
+
+                      {/* Week Selector Header */}
+                      <div className="mt-5 flex items-center justify-between">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-[#24302D]">
+                          Nedēļa: 7.–11. septembris 2026
+                        </span>
+                        <span className="text-xs text-[#5A6D67]">
+                          {currentDayObj.fullDay}
+                        </span>
+                      </div>
+
+                      {/* Days Strip */}
+                      <div className="mt-3 grid grid-cols-5 gap-2">
+                        {bookingDays.map((d, i) => (
+                          <button
+                            key={d.date}
+                            type="button"
+                            onClick={() => { setSelectedDayIndex(i); setSelectedTimeSlot(d.slots[0]); }}
+                            className={`rounded-2xl border p-2.5 sm:p-3 text-center transition-all ${
+                              selectedDayIndex === i
+                                ? "border-[#24302D] bg-[#24302D] text-white shadow-xs"
+                                : "border-black/[0.08] bg-[#FFF9F4] text-[#24302D] hover:bg-white"
+                            }`}
+                          >
+                            <p className="text-[10px] sm:text-[11px] opacity-75">{d.dayName}</p>
+                            <p className="font-sans font-medium text-sm sm:text-base mt-0.5">
+                              {d.fullDay.split(" ")[1]}
+                            </p>
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Available Time Slots Chips */}
+                      <div className="mt-5">
+                        <p className="text-xs font-medium text-[#5A6D67] mb-2.5">
+                          Pieejamie laiki šajā dienā:
+                        </p>
+                        <div className="grid grid-cols-3 gap-2.5">
+                          {currentDayObj.slots.map((slot) => (
+                            <button
+                              key={slot}
+                              type="button"
+                              onClick={() => setSelectedTimeSlot(slot)}
+                              className={`rounded-xl border py-3 text-center font-mono text-xs sm:text-sm font-medium transition-all ${
+                                selectedTimeSlot === slot
+                                  ? "border-[#D87967] bg-[#D87967] text-white shadow-xs"
+                                  : "border-black/[0.08] bg-[#FFF9F4] text-[#24302D] hover:border-black/20"
+                              }`}
+                            >
+                              {slot}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Active Confirmation Preview Panel */}
+                      <div className="mt-6 border-t border-black/[0.06] pt-5">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                          <div>
+                            <span className="text-xs font-semibold text-[#24302D]">
+                              {currentDayObj.fullDay} · plkst. {selectedTimeSlot}
+                            </span>
+                            <p className="text-xs text-[#5A6D67]">
+                              {currentSpecialistObj.name} · {currentServiceObj.title} ({currentServiceObj.price})
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setShowIntakeForm(true)}
+                            style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
+                            className="rounded-full px-8 py-3 text-xs font-semibold shadow-xs hover:bg-[#C26553] whitespace-nowrap"
+                          >
+                            Turpināt →
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Microcopy & Demo disclaimer */}
+                  <div className="border-t border-black/[0.06] pt-3 flex items-center justify-between text-[11px] text-[#5A6D67]">
+                    <span>Nezināt, ko izvēlēties? Uzrakstiet mums — palīdzēsim.</span>
+                    <span className="opacity-60 italic">Demo pieraksts</span>
+                  </div>
                 </div>
-              </form>
-            )}
+              )}
+            </motion.div>
           </div>
         </div>
       </section>
