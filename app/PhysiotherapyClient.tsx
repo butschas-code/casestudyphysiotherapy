@@ -1232,38 +1232,56 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
       </section>
 
       {/* ============================================================ */}
-      {/* 4. FOUR SPECIALISM STORYTELLING CHAPTERS                     */}
+      {/* 4. FOUR BESPOKE SPECIALISM STORYTELLING CHAPTERS            */}
       {/* ============================================================ */}
       <section id="nodalas" className="relative">
         
-        {/* CHAPTER 1: SĀPES & ATVESEĻOŠANĀS */}
-        <div id="sapes" className="py-16 sm:py-24 lg:py-32 bg-[#FFF9F4]">
+        {/* CHAPTER 1: SĀPES & ATVESEĻOŠANĀS (Movement-Oriented Landscape + Overlap) */}
+        <div
+          id="sapes"
+          style={{
+            background: "linear-gradient(180deg, #FFF9F4 0%, #FAF1EC 100%)",
+          }}
+          className="py-20 sm:py-28 lg:py-36 overflow-hidden"
+        >
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
-            <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+            <div className="grid lg:grid-cols-[1.15fr_0.85fr] items-center">
               
-              {/* Photo */}
+              {/* Large Landscape Image (~60% width) without heavy card frame */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={chapterImageVariants}
-                style={{
-                  borderRadius: "2.5rem",
-                }}
-                className="relative h-[340px] sm:h-[460px] lg:h-[520px] w-full overflow-hidden bg-[#F8E9E3]"
+                className="relative h-[360px] sm:h-[480px] lg:h-[540px] w-full overflow-hidden rounded-3xl lg:rounded-l-3xl lg:rounded-r-none bg-[#F8E9E3]"
               >
                 <Image
                   src="/concept-physio/gentle-movement.jpg"
                   alt={isEn ? "Physical recovery & gentle rehabilitation" : "Mugurkaula un locītavu atveseļošana"}
                   fill
-                  sizes="(max-width: 768px) 100vw, 520px"
+                  sizes="(max-width: 1024px) 100vw, 60vw"
                   className="object-cover object-center"
                 />
               </motion.div>
 
-              {/* Narrative Content */}
-              <div>
-                <h2 className="text-2xl sm:text-4xl lg:text-[2.75rem] font-medium text-[#24302D] leading-[1.2]">
+              {/* Text Partially Overlapping Cream Background */}
+              <div className="mt-8 lg:mt-0 lg:-ml-16 relative z-10 lg:bg-[#FFF9F4]/95 lg:backdrop-blur-md lg:p-10 lg:rounded-3xl">
+                
+                {/* Subtle Motion Trace Line */}
+                <svg className="w-36 h-8 mb-3 text-[#D87967]" viewBox="0 0 160 32" fill="none">
+                  <motion.path
+                    d="M 5,20 C 45,5 115,28 155,14"
+                    stroke="#D87967"
+                    strokeWidth="1.5"
+                    strokeDasharray="4 4"
+                    initial={{ pathLength: 0 }}
+                    whileInView={{ pathLength: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, ease: easeOrganic }}
+                  />
+                </svg>
+
+                <h2 className="text-2xl sm:text-4xl lg:text-[2.6rem] font-medium text-[#24302D] leading-[1.16]">
                   {isEn ? "Return to movement you can trust again." : "Atgriezties pie kustības, kurai atkal var uzticēties."}
                 </h2>
 
@@ -1291,7 +1309,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     href="#pieraksts"
                     onClick={() => { setSelectedService("rehab"); changeBookingStep(3); }}
                     style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                    className="rounded-full px-8 py-4 text-center text-sm font-semibold hover:bg-[#C26553] min-h-[48px] flex items-center justify-center"
+                    className="rounded-full px-8 py-4 text-center text-sm font-semibold hover:bg-[#C26553] min-h-[48px] flex items-center justify-center shadow-xs"
                   >
                     {isEn ? "Book rehabilitation session →" : "Pieteikt rehabilitācijas vizīti →"}
                   </a>
@@ -1304,20 +1322,24 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           </div>
         </div>
 
-        {/* CHAPTER 2: GRŪTNIECĪBA */}
+        {/* CHAPTER 2: GRŪTNIECĪBA (Quiet Left Column + Viewport-Touching Right Portrait) */}
         <div
           id="grutnieciba"
           style={{
-            backgroundColor: "#F8E9E3",
+            background: "linear-gradient(180deg, #FAF1EC 0%, #F8E9E3 50%, #FAF0EB 100%)",
           }}
-          className="py-16 sm:py-24 lg:py-32"
+          className="py-20 sm:py-28 lg:py-36 overflow-hidden"
         >
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
-            <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               
-              {/* Narrative Content */}
+              {/* Quiet Left Column */}
               <div>
-                <h2 className="text-2xl sm:text-4xl lg:text-[2.75rem] font-medium text-[#24302D] leading-[1.2]">
+                <p className="font-serif italic text-lg text-[#D87967] mb-2.5">
+                  {isEn ? "more room to breathe" : "vairāk vietas elpai"}
+                </p>
+
+                <h2 className="text-2xl sm:text-4xl lg:text-[2.6rem] font-medium text-[#24302D] leading-[1.16]">
                   {isEn ? "Your body is changing. You don't have to navigate it alone." : "Ķermenis mainās. Jums nav tas jāizdzīvo vienai."}
                 </h2>
 
@@ -1329,15 +1351,15 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                   </p>
                   <p>
                     {isEn
-                      ? "We gently unload tension, teach breathing and relaxation techniques, and prepare your body for a smooth, confident birth."
-                      : "Mēs palīdzam saudzīgi atslogot sasprindzinātās zonas, iemācām elpošanas un atslābināšanās tehnikas un sagatavojam ķermeni vieglām, harmoniskām dzemdībām."}
+                      ? "We help you discover more comfortable movement, breathing, and relaxation techniques throughout pregnancy and birth preparation."
+                      : "Mēs palīdzam atrast ērtākas kustības, elpošanas un atslābināšanās paņēmienus grūtniecības un dzemdību sagatavošanās laikā."}
                   </p>
                 </div>
 
                 <p className="mt-6 text-base font-medium text-[#4A5D57]">
                   {isEn
-                    ? "Pelvic & lumbar relief · Birth prep breathing · Kinesio taping"
-                    : "Iegurņa un muguras atslogošana · Elpošana dzemdībām · Teipošana"}
+                    ? "Pelvic & lumbar relief · Birth prep breathing · Gentle taping"
+                    : "Iegurņa un muguras atslogošana · Elpošana dzemdību sagatavošanai · Saudzīga teipošana"}
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-6">
@@ -1353,22 +1375,19 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 </div>
               </div>
 
-              {/* Photo */}
+              {/* Portrait Touching Viewport Edge */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={chapterImageVariants}
-                style={{
-                  borderRadius: "2.5rem",
-                }}
-                className="relative h-[340px] sm:h-[460px] lg:h-[520px] w-full overflow-hidden bg-[#FFF9F4]"
+                className="relative h-[380px] sm:h-[500px] lg:h-[580px] w-full overflow-hidden rounded-3xl lg:rounded-l-[80px] lg:rounded-r-none bg-[#FFF9F4]"
               >
                 <Image
                   src="/concept-physio/service-women.jpg"
                   alt={isEn ? "Prenatal gentle physiotherapy" : "Grūtnieču saudzīgā fizioterapija un aprūpe"}
                   fill
-                  sizes="(max-width: 768px) 100vw, 520px"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
                   className="object-cover object-[center_25%]"
                 />
               </motion.div>
@@ -1376,34 +1395,49 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           </div>
         </div>
 
-        {/* CHAPTER 3: PĒC DZEMDĪBĀM */}
-        <div id="pecdzemdibam" className="py-16 sm:py-24 lg:py-32 bg-[#FFF7EF]">
+        {/* CHAPTER 3: PĒC DZEMDĪBĀM (Intimate Two-Image Bodily Focus) */}
+        <div
+          id="pecdzemdibam"
+          style={{
+            background: "linear-gradient(180deg, #FAF0EB 0%, #FFF7EF 50%, #F5EDE6 100%)",
+          }}
+          className="py-20 sm:py-28 lg:py-36 overflow-hidden"
+        >
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
-            <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+            <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
               
-              {/* Photo */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={chapterImageVariants}
-                style={{
-                  borderRadius: "2.5rem",
-                }}
-                className="relative h-[340px] sm:h-[460px] lg:h-[520px] w-full overflow-hidden bg-[#F8E9E3]"
-              >
-                <Image
-                  src="/concept-physio/hands-care.jpg"
-                  alt={isEn ? "Postnatal recovery and core assessment" : "Pēcdzemdību atjaunošanās un diastāzes pārbaude"}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 520px"
-                  className="object-cover object-center"
-                />
-              </motion.div>
+              {/* Two Visuals: Large Tactile Close-up + Smaller Lifestyle Vignette */}
+              <div className="grid grid-cols-2 gap-4 lg:grid-cols-1 lg:gap-6">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={chapterImageVariants}
+                  className="relative h-[240px] sm:h-[320px] lg:h-[340px] w-full overflow-hidden rounded-3xl bg-[#F8E9E3]"
+                >
+                  <Image
+                    src="/concept-physio/hands-care.jpg"
+                    alt={isEn ? "Tactile assessment and postpartum care" : "Diastāzes izvērtēšana un saudzīgs pieskāriens"}
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 35vw"
+                    className="object-cover object-center"
+                  />
+                </motion.div>
+
+                <div className="relative h-[180px] sm:h-[220px] w-full overflow-hidden rounded-2xl bg-[#FFF9F4] hidden sm:block">
+                  <Image
+                    src="/concept-physio/service-movement.jpg"
+                    alt={isEn ? "Quiet postural reconnection" : "Mierīga kustību atjaunošana"}
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 35vw"
+                    className="object-cover object-center"
+                  />
+                </div>
+              </div>
 
               {/* Narrative Content */}
-              <div>
-                <h2 className="text-2xl sm:text-4xl lg:text-[2.75rem] font-medium text-[#24302D] leading-[1.2]">
+              <div className="lg:pl-6">
+                <h2 className="text-2xl sm:text-4xl lg:text-[2.6rem] font-medium text-[#24302D] leading-[1.16]">
                   {isEn ? "Returning to yourself is not a race." : "Atgriešanās pie sevis nav sacensība."}
                 </h2>
 
@@ -1415,15 +1449,15 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                   </p>
                   <p>
                     {isEn
-                      ? "We evaluate rectus diastasis, support C-section scar healing, and establish a gradual return to active life."
-                      : "Mēs pārbaudām taisnā vēdera muskuļa diastāzi, izvērtējam rētu sadzīšanu pēc ķeizargrieziena un veidojam pakāpenisku, drošu plānu atgriešanās brīdim pie ikdienas aktivitātēm un sporta."}
+                      ? "We evaluate rectus diastasis, support C-section scar recovery, and establish a gradual, safe return to daily activities and movement."
+                      : "Mēs veicam taisnā vēdera muskuļa diastāzes izvērtēšanu, atbalstām rētu sadzīšanu pēc ķeizargrieziena un veidojam pakāpenisku, drošu atgriešanās plānu ikdienas aktivitātēm."}
                   </p>
                 </div>
 
                 <p className="mt-6 text-base font-medium text-[#4A5D57]">
                   {isEn
                     ? "Diastasis assessment · Pelvic floor core · Scar care"
-                    : "Diastāzes diagnostika · Iegurņa pamatne · Ķeizargrieziena rētas aprūpe"}
+                    : "Diastāzes izvērtēšana · Iegurņa pamatnes muskuļi · Rētas aprūpe"}
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-6">
@@ -1431,51 +1465,75 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     href="#pieraksts"
                     onClick={() => { setSelectedService("women"); setSelectedSpecialist("elina"); changeBookingStep(3); }}
                     style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                    className="rounded-full px-8 py-4 text-center text-sm font-semibold hover:bg-[#C26553] min-h-[48px] flex items-center justify-center"
+                    className="rounded-full px-8 py-4 text-center text-sm font-semibold hover:bg-[#C26553] min-h-[48px] flex items-center justify-center shadow-xs"
                   >
                     {isEn ? "Book postpartum checkup →" : "Pieteikt pēcdzemdību pārbaudi →"}
                   </a>
                   <span className="text-base text-[#4A5D57]">{isEn ? "Recommended from week 6 postpartum" : "Ieteicams no 6. nedēļas pēc dzemdībām"}</span>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
 
-        {/* CHAPTER 4: MAZUĻI & BĒRNI */}
+        {/* CHAPTER 4: MAZUĻI & BĒRNI (Playful Energy, Asymmetric Crop & 3 Parent Questions) */}
         <div
           id="berniem"
           style={{
-            backgroundColor: "#E5ECE5",
+            background: "linear-gradient(180deg, #F5EDE6 0%, #E5ECE5 50%, #FFF9F4 100%)",
           }}
-          className="py-16 sm:py-24 lg:py-32"
+          className="py-20 sm:py-28 lg:py-36 overflow-hidden"
         >
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
             <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
               
-              {/* Narrative Content */}
+              {/* Narrative Content with 3 Parent Thought Prompts */}
               <div>
-                <h2 className="text-2xl sm:text-4xl lg:text-[2.75rem] font-medium text-[#24302D] leading-[1.2]">
+                <h2 className="text-2xl sm:text-4xl lg:text-[2.6rem] font-medium text-[#24302D] leading-[1.16]">
                   {isEn ? "A small body. A monumental developmental journey." : "Mazs ķermenis. Milzīgs attīstības ceļš."}
                 </h2>
 
-                <div className="mt-5 space-y-4 text-lg sm:text-[19px] leading-relaxed text-[#3D4F4A]">
+                {/* 3 Real Parent Thought Questions */}
+                <div className="mt-6 flex flex-wrap gap-2.5">
+                  {(isEn
+                    ? [
+                        "“Is baby rolling symmetrically to both sides?”",
+                        "“When should sitting happen naturally?”",
+                        "“How to lift and hold baby comfortably?”",
+                      ]
+                    : [
+                        "“Vai viņš veļas uz abām pusēm?”",
+                        "“Kad jāsāk sēdēt?”",
+                        "“Kā pareizi celt mazuli?”",
+                      ]
+                  ).map((thought) => (
+                    <span
+                      key={thought}
+                      className="rounded-full bg-white/70 px-4 py-2 text-xs sm:text-sm font-medium text-[#4A5D57] border border-black/[0.06]"
+                    >
+                      {thought}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-6 space-y-4 text-lg sm:text-[19px] leading-relaxed text-[#3D4F4A]">
                   <p>
                     {isEn
-                      ? "In their first year, babies master life's cornerstone movements — rolling, crawling, sitting, and taking first steps. Parent handling is the finest foundation for balanced growth."
-                      : "Pirmajā dzīves gadā mazulis apgūst svarīgākās dzīves kustības — velšanos, rāpošanu, sēdēšanu un pirmos soļus. Vecāku pareizs hendlings (ikdienas celšana, turēšana un ģērbšana) ir labākais atbalsts simetriskai attīstībai."}
+                      ? "In their first year, babies master life's cornerstone movements — rolling, crawling, sitting, and taking first steps. Parent handling in everyday care is the finest foundation for balanced growth."
+                      : "Pirmajā dzīves gadā mazulis apgūst svarīgākās dzīves kustības — velšanos, rāpošanu, sēdēšanu un pirmos soļus. Vecāku saudzīgs hendlings ikdienas aprūpē ir labākais atbalsts simetriskai attīstībai."}
                   </p>
                   <p>
                     {isEn
-                      ? "In playful, calm sessions, Anna Ozola evaluates infant motor tone and provides practical techniques for everyday comfort at home."
-                      : "Nodarbībā Anna Ozola mierīgā un rotaļīgā veidā novērtē mazuļa motoriku, muskuļu tonusu un iemāca vecākiem praktiskus paņēmienus, kā ikdienā palīdzēt mazulim justies brīvi un droši."}
+                      ? "In playful, calm sessions, Anna Ozola evaluates infant motor development and teaches parents practical everyday techniques to support confident movement at home."
+                      : "Nodarbībā Anna Ozola rotaļīgā un mierīgā veidā novērtē mazuļa motoriku un iemāca vecākiem praktiskus paņēmienus, kā ikdienā palīdzēt mazulim kustēties brīvi un droši."}
                   </p>
                 </div>
 
                 <p className="mt-6 text-base font-medium text-[#4A5D57]">
                   {isEn
-                    ? "Infant handling · Muscle tone harmony · Motor milestones"
-                    : "Zīdaiņu hendlings · Muskuļu tonuss · Motorā attīstība · Bērnu stāja"}
+                    ? "Infant handling · Motor development · Milestone guidance · Posture support"
+                    : "Zīdaiņu hendlings · Kustību attīstība · Vecāku apmācība · Bērnu stāja"}
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-6">
@@ -1491,22 +1549,19 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 </div>
               </div>
 
-              {/* Photo */}
+              {/* Asymmetric Cropped Action Photography */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={chapterImageVariants}
-                style={{
-                  borderRadius: "2.5rem",
-                }}
-                className="relative h-[340px] sm:h-[460px] lg:h-[520px] w-full overflow-hidden bg-[#FFF9F4]"
+                className="relative h-[360px] sm:h-[480px] lg:h-[540px] w-full overflow-hidden rounded-3xl lg:rounded-tr-[90px] lg:rounded-bl-[90px] bg-[#FFF9F4]"
               >
                 <Image
                   src="/concept-physio/service-children.jpg"
                   alt={isEn ? "Infant development & parent handling" : "Zīdaiņu attīstība un mīlošs hendlings"}
                   fill
-                  sizes="(max-width: 768px) 100vw, 520px"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
                   className="object-cover object-center"
                 />
               </motion.div>
