@@ -3,24 +3,34 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+  Variants,
+} from "framer-motion";
 
-const easePremium = [0.22, 1, 0.36, 1] as const;
+const easeOrganic = [0.22, 1, 0.36, 1] as const;
 
 export default function PhysiotherapyCallingCardPage() {
-  // Parallax on scroll for Hero
+  const shouldReduceMotion = useReducedMotion();
+
+  // Scroll Tracking for Hero & Therapist Story
   const { scrollY } = useScroll();
-  const heroImageY = useTransform(scrollY, [0, 800], [0, 80]);
-  const heroCardY = useTransform(scrollY, [0, 800], [0, 40]);
-  const heroOpacity = useTransform(scrollY, [0, 600], [1, 0.2]);
+  
+  // Parallax transforms (gracefully disabled when reduced motion is preferred)
+  const heroImageY = useTransform(scrollY, [0, 700], shouldReduceMotion ? [0, 0] : [0, 45]);
+  const heroCardY = useTransform(scrollY, [0, 700], shouldReduceMotion ? [0, 0] : [0, 25]);
+  const heroOpacity = useTransform(scrollY, [0, 500], [1, 0.3]);
+  const storyImageY = useTransform(scrollY, [700, 1600], shouldReduceMotion ? [0, 0] : [-15, 25]);
+  const storyDetailY = useTransform(scrollY, [700, 1600], shouldReduceMotion ? [0, 0] : [10, -20]);
 
   // Header scroll state & mobile bottom bar visibility
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [showMobileBottomBar, setShowMobileBottomBar] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-
-  // Parallax for Therapist Story
-  const storyImageY = useTransform(scrollY, [600, 1600], [-20, 30]);
 
   // Recognition / Situations State
   const [hoveredSituation, setHoveredSituation] = useState<number>(0);
@@ -33,6 +43,7 @@ export default function PhysiotherapyCallingCardPage() {
 
   // Premium Booking State
   const [bookingStep, setBookingStep] = useState<1 | 2 | 3>(3);
+  const [prevStep, setPrevStep] = useState<number>(3);
   const [selectedService, setSelectedService] = useState<string>("first");
   const [selectedSpecialist, setSelectedSpecialist] = useState<string>("elina");
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(1); // Otrdiena
@@ -54,6 +65,12 @@ export default function PhysiotherapyCallingCardPage() {
 
   // Insurance Calculator State
   const [selectedInsurance, setSelectedInsurance] = useState<string>("balta");
+
+  const changeBookingStep = (newStep: 1 | 2 | 3) => {
+    setPrevStep(bookingStep);
+    setBookingStep(newStep);
+    setShowIntakeForm(false);
+  };
 
   // Track header scroll and active chapter
   useEffect(() => {
@@ -314,6 +331,34 @@ export default function PhysiotherapyCallingCardPage() {
   const currentServiceObj = servicesList.find((s) => s.id === selectedService) || servicesList[0];
   const currentDayObj = bookingDays[selectedDayIndex] || bookingDays[1];
 
+  // Motion Variants
+  const revealLineVariants: Variants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+    visible: (i: number = 0) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: shouldReduceMotion ? 0.01 : 0.8,
+        delay: shouldReduceMotion ? 0 : i * 0.12,
+        ease: easeOrganic,
+      },
+    }),
+  };
+
+  const chapterImageVariants: Variants = {
+    hidden: { opacity: 0, scale: shouldReduceMotion ? 1 : 1.04 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: shouldReduceMotion ? 0.01 : 1.0,
+        ease: easeOrganic,
+      },
+    },
+  };
+
+  const stepDirection = bookingStep >= prevStep ? 1 : -1;
+
   const schemaJsonLd = {
     "@context": "https://schema.org",
     "@type": ["Physiotherapy", "MedicalBusiness", "LocalBusiness"],
@@ -438,48 +483,56 @@ export default function PhysiotherapyCallingCardPage() {
         </div>
 
         {/* Mobile Slide-down Menu Drawer */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-black/[0.08] bg-[#FFF9F4] px-6 py-6 space-y-4">
-            <a
-              href="#atpazisana"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-medium text-[#24302D]"
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: easeOrganic }}
+              className="lg:hidden overflow-hidden border-t border-black/[0.08] bg-[#FFF9F4] px-6 py-6 space-y-4"
             >
-              Kā varam palīdzēt
-            </a>
-            <a
-              href="#elina"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-medium text-[#24302D]"
-            >
-              Elīna
-            </a>
-            <a
-              href="#nodalas"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-medium text-[#24302D]"
-            >
-              Pakalpojumi
-            </a>
-            <a
-              href="#vizite"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-medium text-[#24302D]"
-            >
-              Pirmā vizīte
-            </a>
-            <div className="pt-3 border-t border-black/[0.06]">
               <a
-                href="#pieraksts"
+                href="#atpazisana"
                 onClick={() => setMobileMenuOpen(false)}
-                style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                className="block text-center rounded-full py-3 text-sm font-semibold"
+                className="block text-base font-medium text-[#24302D]"
               >
-                Pieteikt vizīti →
+                Kā varam palīdzēt
               </a>
-            </div>
-          </div>
-        )}
+              <a
+                href="#elina"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block text-base font-medium text-[#24302D]"
+              >
+                Elīna
+              </a>
+              <a
+                href="#nodalas"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block text-base font-medium text-[#24302D]"
+              >
+                Pakalpojumi
+              </a>
+              <a
+                href="#vizite"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block text-base font-medium text-[#24302D]"
+              >
+                Pirmā vizīte
+              </a>
+              <div className="pt-3 border-t border-black/[0.06]">
+                <a
+                  href="#pieraksts"
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
+                  className="block text-center rounded-full py-3 text-sm font-semibold"
+                >
+                  Pieteikt vizīti →
+                </a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* ============================================================ */}
@@ -503,26 +556,14 @@ export default function PhysiotherapyCallingCardPage() {
             {/* LEFT: Main Message & Emotional Flow */}
             <motion.div
               style={{ opacity: heroOpacity }}
-              initial="hidden"
-              animate="visible"
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: {
-                    staggerChildren: 0.12,
-                    delayChildren: 0.1,
-                  },
-                },
-              }}
               className="z-10 flex flex-col justify-center"
             >
               {/* Context Line */}
               <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 10 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easePremium } },
-                }}
+                custom={0}
+                initial="hidden"
+                animate="visible"
+                variants={revealLineVariants}
                 className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium tracking-wide text-[#5A6D67]"
               >
                 <span>Fizioterapija</span>
@@ -534,12 +575,12 @@ export default function PhysiotherapyCallingCardPage() {
                 <span>rehabilitācijai</span>
               </motion.div>
 
-              {/* Main Headline (Revealed by line with intentional break) */}
+              {/* Main Headline (Revealed with intentional human breath) */}
               <motion.h1
-                variants={{
-                  hidden: { opacity: 0, y: 16 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: easePremium } },
-                }}
+                custom={1}
+                initial="hidden"
+                animate="visible"
+                variants={revealLineVariants}
                 className="mt-5 font-sans text-4xl sm:text-5xl lg:text-[4.2rem] font-medium leading-[1.12] tracking-tight text-[#24302D]"
               >
                 <span>Jūsu ķermenim nav jāpielāgojas terapijai.</span>
@@ -550,10 +591,10 @@ export default function PhysiotherapyCallingCardPage() {
 
               {/* Supporting Copy */}
               <motion.p
-                variants={{
-                  hidden: { opacity: 0, y: 14 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: easePremium } },
-                }}
+                custom={2}
+                initial="hidden"
+                animate="visible"
+                variants={revealLineVariants}
                 className="mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-[#5A6D67]"
               >
                 Individuāla fizioterapija cilvēkiem dažādos dzīves posmos — no sāpēm un rehabilitācijas līdz grūtniecībai, pēcdzemdību atjaunošanai un bērna attīstībai.
@@ -561,10 +602,10 @@ export default function PhysiotherapyCallingCardPage() {
 
               {/* Primary & Secondary Action Group */}
               <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 12 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easePremium } },
-                }}
+                custom={3}
+                initial="hidden"
+                animate="visible"
+                variants={revealLineVariants}
                 className="mt-8 flex flex-wrap items-center gap-5"
               >
                 <a
@@ -584,22 +625,22 @@ export default function PhysiotherapyCallingCardPage() {
 
               {/* Reassuring Microcopy */}
               <motion.p
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: { opacity: 1, transition: { duration: 0.8, delay: 0.4 } },
-                }}
+                custom={4}
+                initial="hidden"
+                animate="visible"
+                variants={revealLineVariants}
                 className="mt-5 text-xs text-[#5A6D67]"
               >
                 Nav nepieciešams ārsta nosūtījums · palīdzēsim izvēlēties piemērotāko vizīti
               </motion.p>
             </motion.div>
 
-            {/* RIGHT: Photography Composition with Grid-Breaking Layering & Floating Booking Card */}
+            {/* RIGHT: Photography Composition with Breathing Motion & Floating Booking Card */}
             <motion.div
               style={{ y: heroImageY }}
-              initial={{ opacity: 0, scale: 0.96 }}
+              initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.1, ease: easePremium, delay: 0.2 }}
+              transition={{ duration: shouldReduceMotion ? 0.01 : 1.0, ease: easeOrganic, delay: 0.15 }}
               className="relative lg:translate-x-4"
             >
               {/* Main Portrait Photography with Asymmetric Organic Radius */}
@@ -644,12 +685,12 @@ export default function PhysiotherapyCallingCardPage() {
                 animate={{
                   opacity: 1,
                   scale: 1,
-                  y: [0, -6, 0],
+                  y: shouldReduceMotion ? 0 : [0, -6, 0],
                 }}
                 transition={{
-                  opacity: { duration: 0.7, delay: 0.6, ease: easePremium },
-                  scale: { duration: 0.7, delay: 0.6, ease: easePremium },
-                  y: { repeat: Infinity, duration: 6, ease: "easeInOut" },
+                  opacity: { duration: 0.7, delay: 0.4, ease: easeOrganic },
+                  scale: { duration: 0.7, delay: 0.4, ease: easeOrganic },
+                  y: shouldReduceMotion ? { duration: 0 } : { repeat: Infinity, duration: 6, ease: "easeInOut" },
                 }}
                 className="static sm:absolute -bottom-8 -right-2 sm:-right-4 mt-6 sm:mt-0 w-full sm:w-[310px] rounded-3xl bg-[#FFFFFF] p-5 border border-[#24302D]/08 shadow-xl"
               >
@@ -752,7 +793,7 @@ export default function PhysiotherapyCallingCardPage() {
           {/* Flowing Editorial Grid (Varied Sizes & Interactive Image Anchor) */}
           <div className="mt-14 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
             
-            {/* LEFT: 6 Flowing Patient Statements with Micro-Interactions */}
+            {/* LEFT: 6 Flowing Patient Statements with Staggered Motion */}
             <div className="space-y-4">
               {recognitionItems.map((item, idx) => {
                 const isHovered = hoveredSituation === idx;
@@ -761,10 +802,10 @@ export default function PhysiotherapyCallingCardPage() {
                     key={item.id}
                     onMouseEnter={() => setHoveredSituation(idx)}
                     onClick={() => setHoveredSituation(idx)}
-                    initial={{ opacity: 0, y: 15 }}
+                    initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: idx * 0.08, ease: easePremium }}
+                    transition={{ duration: shouldReduceMotion ? 0.01 : 0.5, delay: shouldReduceMotion ? 0 : idx * 0.08, ease: easeOrganic }}
                     style={{
                       backgroundColor: isHovered ? "#FFFFFF" : "rgba(255, 255, 255, 0.6)",
                       borderColor: isHovered ? "#D87967" : "rgba(36, 48, 45, 0.08)",
@@ -819,10 +860,10 @@ export default function PhysiotherapyCallingCardPage() {
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeRec.id}
-                    initial={{ opacity: 0, scale: 1.04 }}
+                    initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 1.03 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5, ease: easePremium }}
+                    transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, ease: easeOrganic }}
                     className="absolute inset-0"
                   >
                     <Image
@@ -885,13 +926,13 @@ export default function PhysiotherapyCallingCardPage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div className="grid gap-14 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
             
-            {/* LEFT: Candid, Natural Photography Composition with Detail Overlay */}
+            {/* LEFT: Candid Photography with Subtle Parallax */}
             <motion.div
               style={{ y: storyImageY }}
-              initial={{ opacity: 0, scale: 0.96 }}
+              initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.97 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.9, ease: easePremium }}
+              transition={{ duration: shouldReduceMotion ? 0.01 : 0.8, ease: easeOrganic }}
               className="relative"
             >
               {/* Main Candid Portrait (45% Width Scale, Relaxed In Treatment Room) */}
@@ -911,17 +952,14 @@ export default function PhysiotherapyCallingCardPage() {
                 />
               </div>
 
-              {/* Second Small Image: Gentle Treatment / Hands Detail Overlapping Edge */}
+              {/* Second Small Image: Gentle Treatment / Hands Detail with Differential Movement */}
               <motion.div
-                initial={{ opacity: 0, y: 15 }}
+                style={{ y: storyDetailY }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.3, ease: easePremium }}
-                style={{
-                  borderRadius: "1.75rem",
-                  boxShadow: "0 14px 30px -8px rgba(36, 48, 45, 0.16)",
-                }}
-                className="absolute -bottom-6 -right-4 hidden sm:block h-36 w-36 overflow-hidden border-4 border-white bg-white"
+                transition={{ duration: shouldReduceMotion ? 0.01 : 0.7, delay: 0.2, ease: easeOrganic }}
+                className="absolute -bottom-6 -right-4 hidden sm:block h-36 w-36 overflow-hidden rounded-3xl border-4 border-white bg-white shadow-lg"
               >
                 <Image
                   src="/concept-physio/service-rehab.jpg"
@@ -933,52 +971,20 @@ export default function PhysiotherapyCallingCardPage() {
               </motion.div>
             </motion.div>
 
-            {/* RIGHT: Intimate Monologue & Philosophy */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: {
-                    staggerChildren: 0.12,
-                    delayChildren: 0.15,
-                  },
-                },
-              }}
-            >
+            {/* RIGHT: Stable Intimate Monologue & Philosophy */}
+            <div>
               {/* Small Label */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 10 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easePremium } },
-                }}
-                className="text-xs font-semibold uppercase tracking-widest text-[#D87967]"
-              >
+              <div className="text-xs font-semibold uppercase tracking-widest text-[#D87967]">
                 IEPAZĪSTIET ELĪNU
-              </motion.div>
+              </div>
 
               {/* Headline */}
-              <motion.h2
-                variants={{
-                  hidden: { opacity: 0, y: 14 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: easePremium } },
-                }}
-                className="mt-3 font-sans text-3xl sm:text-4xl lg:text-[2.9rem] font-medium leading-[1.18] tracking-tight text-[#24302D]"
-              >
+              <h2 className="mt-3 font-sans text-3xl sm:text-4xl lg:text-[2.9rem] font-medium leading-[1.18] tracking-tight text-[#24302D]">
                 “Vispirms es gribu saprast Jūsu stāstu.”
-              </motion.h2>
+              </h2>
 
               {/* Intimate Body Copy */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 12 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: easePremium } },
-                }}
-                className="mt-6 space-y-4 text-base sm:text-lg leading-relaxed text-[#4A5D57]"
-              >
+              <div className="mt-6 space-y-4 text-base sm:text-lg leading-relaxed text-[#4A5D57]">
                 <p>
                   Katrs cilvēks kustas citādi — un katrs atnāk ar savu pieredzi, ikdienu un iemeslu, kāpēc ķermenis šobrīd prasa vairāk uzmanības.
                 </p>
@@ -988,27 +994,15 @@ export default function PhysiotherapyCallingCardPage() {
                 <p className="font-medium text-[#24302D]">
                   Tikai tad veidojam plānu, kas iederas Jūsu dzīvē.
                 </p>
-              </motion.div>
+              </div>
 
               {/* Subtle Human Details Line */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: { opacity: 1, transition: { duration: 0.7, delay: 0.3 } },
-                }}
-                className="mt-8 border-t border-[#24302D]/12 pt-5 text-xs text-[#5A6D67] italic"
-              >
+              <div className="mt-8 border-t border-[#24302D]/12 pt-5 text-xs text-[#5A6D67] italic">
                 Kustība · darbs ar sievietēm · bērnu attīstība · rehabilitācija · laba kafija pēc garas pastaigas
-              </motion.div>
+              </div>
 
-              {/* Quiet Horizontal Credentials Strip (Not Badges) */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 10 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easePremium } },
-                }}
-                className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold uppercase tracking-wider text-[#24302D]"
-              >
+              {/* Quiet Horizontal Credentials Strip */}
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold uppercase tracking-wider text-[#24302D]">
                 <span>Fizioterapija</span>
                 <span className="text-[#D87967]">•</span>
                 <span>Kustību terapija</span>
@@ -1018,16 +1012,10 @@ export default function PhysiotherapyCallingCardPage() {
                 <span>Darbs ar bērniem</span>
                 <span className="text-[#D87967]">•</span>
                 <span>Rehabilitācija</span>
-              </motion.div>
+              </div>
 
               {/* Quiet CTA */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 10 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easePremium } },
-                }}
-                className="mt-9"
-              >
+              <div className="mt-9">
                 <a
                   href="#nodalas"
                   className="inline-flex items-center gap-2 text-sm font-semibold text-[#D87967] hover:underline"
@@ -1035,8 +1023,8 @@ export default function PhysiotherapyCallingCardPage() {
                   <span>Iepazīt prakses virzienus</span>
                   <span>→</span>
                 </a>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1085,8 +1073,12 @@ export default function PhysiotherapyCallingCardPage() {
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
             <div className="grid gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
               
-              {/* Oversized Photo */}
-              <div
+              {/* Oversized Photo with Organic Scale Reveal */}
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={chapterImageVariants}
                 style={{
                   borderRadius: "80px 20px 80px 20px",
                   boxShadow: "0 20px 40px -15px rgba(36, 48, 45, 0.10)",
@@ -1100,7 +1092,7 @@ export default function PhysiotherapyCallingCardPage() {
                   sizes="(max-width: 1024px) 100vw, 520px"
                   className="object-cover"
                 />
-              </div>
+              </motion.div>
 
               {/* Narrative Content */}
               <div>
@@ -1135,7 +1127,7 @@ export default function PhysiotherapyCallingCardPage() {
                 <div className="mt-8 flex items-center gap-6">
                   <a
                     href="#pieraksts"
-                    onClick={() => { setSelectedService("rehab"); setBookingStep(3); }}
+                    onClick={() => { setSelectedService("rehab"); changeBookingStep(3); }}
                     style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
                     className="rounded-full px-7 py-3 text-xs font-semibold hover:bg-[#C26553]"
                   >
@@ -1195,7 +1187,7 @@ export default function PhysiotherapyCallingCardPage() {
                 <div className="mt-8 flex items-center gap-6">
                   <a
                     href="#pieraksts"
-                    onClick={() => { setSelectedService("women"); setSelectedSpecialist("elina"); setBookingStep(3); }}
+                    onClick={() => { setSelectedService("women"); setSelectedSpecialist("elina"); changeBookingStep(3); }}
                     style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
                     className="rounded-full px-7 py-3 text-xs font-semibold hover:bg-[#D87967]"
                   >
@@ -1205,8 +1197,12 @@ export default function PhysiotherapyCallingCardPage() {
                 </div>
               </div>
 
-              {/* Oversized Photo */}
-              <div
+              {/* Oversized Photo with Organic Scale Reveal */}
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={chapterImageVariants}
                 style={{
                   borderRadius: "20px 80px 20px 80px",
                   boxShadow: "0 20px 40px -15px rgba(216, 121, 103, 0.18)",
@@ -1220,7 +1216,7 @@ export default function PhysiotherapyCallingCardPage() {
                   sizes="(max-width: 1024px) 100vw, 520px"
                   className="object-cover"
                 />
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
@@ -1230,8 +1226,12 @@ export default function PhysiotherapyCallingCardPage() {
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
             <div className="grid gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
               
-              {/* Oversized Photo */}
-              <div
+              {/* Oversized Photo with Organic Scale Reveal */}
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={chapterImageVariants}
                 style={{
                   borderRadius: "80px 20px 80px 20px",
                   boxShadow: "0 20px 40px -15px rgba(36, 48, 45, 0.10)",
@@ -1245,7 +1245,7 @@ export default function PhysiotherapyCallingCardPage() {
                   sizes="(max-width: 1024px) 100vw, 520px"
                   className="object-cover"
                 />
-              </div>
+              </motion.div>
 
               {/* Narrative Content */}
               <div>
@@ -1280,7 +1280,7 @@ export default function PhysiotherapyCallingCardPage() {
                 <div className="mt-8 flex items-center gap-6">
                   <a
                     href="#pieraksts"
-                    onClick={() => { setSelectedService("women"); setSelectedSpecialist("elina"); setBookingStep(3); }}
+                    onClick={() => { setSelectedService("women"); setSelectedSpecialist("elina"); changeBookingStep(3); }}
                     style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
                     className="rounded-full px-7 py-3 text-xs font-semibold hover:bg-[#C26553]"
                   >
@@ -1338,7 +1338,7 @@ export default function PhysiotherapyCallingCardPage() {
                 <div className="mt-8 flex items-center gap-6">
                   <a
                     href="#pieraksts"
-                    onClick={() => { setSelectedService("infant"); setSelectedSpecialist("anna"); setBookingStep(3); }}
+                    onClick={() => { setSelectedService("infant"); setSelectedSpecialist("anna"); changeBookingStep(3); }}
                     style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
                     className="rounded-full px-7 py-3 text-xs font-semibold hover:bg-[#D87967]"
                   >
@@ -1348,8 +1348,12 @@ export default function PhysiotherapyCallingCardPage() {
                 </div>
               </div>
 
-              {/* Oversized Photo */}
-              <div
+              {/* Oversized Photo with Organic Scale Reveal */}
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={chapterImageVariants}
                 style={{
                   borderRadius: "20px 80px 20px 80px",
                   boxShadow: "0 20px 40px -15px rgba(36, 48, 45, 0.12)",
@@ -1363,7 +1367,7 @@ export default function PhysiotherapyCallingCardPage() {
                   sizes="(max-width: 1024px) 100vw, 520px"
                   className="object-cover"
                 />
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
@@ -1394,7 +1398,7 @@ export default function PhysiotherapyCallingCardPage() {
             </p>
           </div>
 
-          {/* Horizontal Visual Journey (Desktop) with Animated Connecting Movement Path */}
+          {/* Horizontal Visual Journey with Animated SVG Connecting Path */}
           <div className="relative mt-20">
             
             {/* Desktop Animated SVG Movement Path */}
@@ -1408,7 +1412,7 @@ export default function PhysiotherapyCallingCardPage() {
                   initial={{ pathLength: 0, opacity: 0 }}
                   whileInView={{ pathLength: 1, opacity: 0.5 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 1.5, ease: easePremium }}
+                  transition={{ duration: shouldReduceMotion ? 0.01 : 1.5, ease: easeOrganic }}
                 />
               </svg>
             </div>
@@ -1418,10 +1422,10 @@ export default function PhysiotherapyCallingCardPage() {
               {firstVisitSteps.map((step, idx) => (
                 <motion.div
                   key={step.number}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: idx * 0.12, ease: easePremium }}
+                  transition={{ duration: shouldReduceMotion ? 0.01 : 0.6, delay: shouldReduceMotion ? 0 : idx * 0.12, ease: easeOrganic }}
                   style={{
                     backgroundColor: "#FFFFFF",
                     borderRadius: "2rem",
@@ -1554,7 +1558,7 @@ export default function PhysiotherapyCallingCardPage() {
 
                 <a
                   href="#pieraksts"
-                  onClick={() => { setSelectedSpecialist(person.id); setBookingStep(3); }}
+                  onClick={() => { setSelectedSpecialist(person.id); changeBookingStep(3); }}
                   style={{
                     borderColor: "rgba(36, 48, 45, 0.15)",
                     backgroundColor: "#FFF9F4",
@@ -1718,10 +1722,10 @@ export default function PhysiotherapyCallingCardPage() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeStory.id}
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.5, ease: easePremium }}
+                exit={{ opacity: 0, x: shouldReduceMotion ? 0 : -20 }}
+                transition={{ duration: shouldReduceMotion ? 0.01 : 0.5, ease: easeOrganic }}
                 style={{
                   backgroundColor: "#FFFFFF",
                   borderRadius: "2.5rem 1.5rem 2.5rem 1.5rem",
@@ -1898,10 +1902,10 @@ export default function PhysiotherapyCallingCardPage() {
             {/* RIGHT: LARGE INTERACTIVE BOOKING CARD (3D Depth Transition) */}
             <motion.div
               id="booking-card"
-              initial={{ opacity: 0, y: 30, scale: 0.98 }}
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30, scale: shouldReduceMotion ? 1 : 0.98 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: easePremium }}
+              transition={{ duration: shouldReduceMotion ? 0.01 : 0.8, ease: easeOrganic }}
               style={{
                 backgroundColor: "#FFFFFF",
                 borderRadius: "2.5rem 1.5rem 2.5rem 1.5rem",
@@ -1924,7 +1928,7 @@ export default function PhysiotherapyCallingCardPage() {
                     <button
                       key={s.num}
                       type="button"
-                      onClick={() => { setBookingStep(s.num as 1 | 2 | 3); setShowIntakeForm(false); }}
+                      onClick={() => changeBookingStep(s.num as 1 | 2 | 3)}
                       className={`flex items-center gap-1 rounded-full px-2.5 py-1 transition-colors ${
                         bookingStep === s.num
                           ? "bg-[#24302D] text-white"
@@ -2040,170 +2044,180 @@ export default function PhysiotherapyCallingCardPage() {
                   </div>
                 </form>
               ) : (
-                /* Step by Step Booking Engine */
-                <div className="mt-6 space-y-6">
-                  
-                  {/* Step 1: Service Selector */}
-                  {bookingStep === 1 && (
-                    <div className="space-y-3">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
-                        Izvēlieties vizītes veidu:
-                      </p>
-                      <div className="grid gap-2.5">
-                        {servicesList.map((srv) => (
-                          <button
-                            key={srv.id}
-                            type="button"
-                            onClick={() => { setSelectedService(srv.id); setBookingStep(2); }}
-                            className={`flex items-center justify-between rounded-2xl border p-4 text-left transition-all ${
-                              selectedService === srv.id
-                                ? "border-[#D87967] bg-[#F8E9E3]/50"
-                                : "border-black/[0.08] hover:bg-[#FFF9F4]"
-                            }`}
-                          >
-                            <div>
-                              <p className="text-xs sm:text-sm font-semibold text-[#24302D]">{srv.title}</p>
-                              <span className="text-[11px] text-[#5A6D67]">{srv.duration}</span>
-                            </div>
-                            <span className="font-sans font-medium text-sm text-[#24302D]">{srv.price}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Step 2: Specialist Selector */}
-                  {bookingStep === 2 && (
-                    <div className="space-y-3">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
-                        Izvēlieties speciālisti:
-                      </p>
-                      <div className="grid gap-2.5">
-                        {specialists.map((spec) => (
-                          <button
-                            key={spec.id}
-                            type="button"
-                            onClick={() => { setSelectedSpecialist(spec.id); setBookingStep(3); }}
-                            className={`flex items-center gap-3.5 rounded-2xl border p-4 text-left transition-all ${
-                              selectedSpecialist === spec.id
-                                ? "border-[#D87967] bg-[#F8E9E3]/50"
-                                : "border-black/[0.08] hover:bg-[#FFF9F4]"
-                            }`}
-                          >
-                            <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border border-black/10 bg-[#F8E9E3]">
-                              <Image src={spec.image} alt={spec.name} fill sizes="48px" className="object-cover" />
-                            </div>
-                            <div>
-                              <p className="text-xs sm:text-sm font-semibold text-[#24302D]">{spec.name}</p>
-                              <p className="text-[11px] text-[#5A6D67]">{spec.role}</p>
-                              <span className="text-[10px] text-[#D87967] font-medium">{spec.badge}</span>
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Step 3: Date & Live Time Slots (Default & Main View) */}
-                  {bookingStep === 3 && (
-                    <div>
-                      {/* Active Selection Summary Strip */}
-                      <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-[#FFF9F4] p-3.5 border border-black/[0.06] text-xs text-[#24302D]">
-                        <div>
-                          <p className="font-semibold">{currentServiceObj.title}</p>
-                          <span className="text-[11px] text-[#5A6D67]">
-                            {currentServiceObj.duration} · {currentSpecialistObj.name}
-                          </span>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => setBookingStep(1)}
-                          className="text-[11px] font-medium text-[#D87967] hover:underline"
-                        >
-                          Mainīt →
-                        </button>
-                      </div>
-
-                      {/* Week Selector Header */}
-                      <div className="mt-5 flex items-center justify-between">
-                        <span className="text-xs font-semibold uppercase tracking-wider text-[#24302D]">
-                          Nedēļa: 7.–11. septembris 2026
-                        </span>
-                        <span className="text-xs text-[#5A6D67]">
-                          {currentDayObj.fullDay}
-                        </span>
-                      </div>
-
-                      {/* Days Strip */}
-                      <div className="mt-3 grid grid-cols-5 gap-2">
-                        {bookingDays.map((d, i) => (
-                          <button
-                            key={d.date}
-                            type="button"
-                            onClick={() => { setSelectedDayIndex(i); setSelectedTimeSlot(d.slots[0]); }}
-                            className={`rounded-2xl border p-2.5 sm:p-3 text-center transition-all ${
-                              selectedDayIndex === i
-                                ? "border-[#24302D] bg-[#24302D] text-white shadow-xs"
-                                : "border-black/[0.08] bg-[#FFF9F4] text-[#24302D] hover:bg-white"
-                            }`}
-                          >
-                            <p className="text-[10px] sm:text-[11px] opacity-75">{d.dayName}</p>
-                            <p className="font-sans font-medium text-sm sm:text-base mt-0.5">
-                              {d.fullDay.split(" ")[1]}
-                            </p>
-                          </button>
-                        ))}
-                      </div>
-
-                      {/* Available Time Slots Chips */}
-                      <div className="mt-5">
-                        <p className="text-xs font-medium text-[#5A6D67] mb-2.5">
-                          Pieejamie laiki šajā dienā:
-                        </p>
-                        <div className="grid grid-cols-3 gap-2.5">
-                          {currentDayObj.slots.map((slot) => (
-                            <button
-                              key={slot}
-                              type="button"
-                              onClick={() => setSelectedTimeSlot(slot)}
-                              className={`rounded-xl border py-3 text-center font-mono text-xs sm:text-sm font-medium transition-all ${
-                                selectedTimeSlot === slot
-                                  ? "border-[#D87967] bg-[#D87967] text-white shadow-xs"
-                                  : "border-black/[0.08] bg-[#FFF9F4] text-[#24302D] hover:border-black/20"
-                              }`}
-                            >
-                              {slot}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Active Confirmation Preview Panel */}
-                      <div className="mt-6 border-t border-black/[0.06] pt-5">
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                          <div>
-                            <span className="text-xs font-semibold text-[#24302D]">
-                              {currentDayObj.fullDay} · plkst. {selectedTimeSlot}
-                            </span>
-                            <p className="text-xs text-[#5A6D67]">
-                              {currentSpecialistObj.name} · {currentServiceObj.title} ({currentServiceObj.price})
-                            </p>
+                /* Step by Step Booking Engine with Directional Horizontal Transitions */
+                <div className="mt-6 overflow-hidden">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={bookingStep}
+                      initial={{ opacity: 0, x: shouldReduceMotion ? 0 : stepDirection * 15 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: shouldReduceMotion ? 0 : -stepDirection * 15 }}
+                      transition={{ duration: shouldReduceMotion ? 0.01 : 0.35, ease: easeOrganic }}
+                      className="space-y-6"
+                    >
+                      {/* Step 1: Service Selector */}
+                      {bookingStep === 1 && (
+                        <div className="space-y-3">
+                          <p className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
+                            Izvēlieties vizītes veidu:
+                          </p>
+                          <div className="grid gap-2.5">
+                            {servicesList.map((srv) => (
+                              <button
+                                key={srv.id}
+                                type="button"
+                                onClick={() => { setSelectedService(srv.id); changeBookingStep(2); }}
+                                className={`flex items-center justify-between rounded-2xl border p-4 text-left transition-all ${
+                                  selectedService === srv.id
+                                    ? "border-[#D87967] bg-[#F8E9E3]/50"
+                                    : "border-black/[0.08] hover:bg-[#FFF9F4]"
+                                }`}
+                              >
+                                <div>
+                                  <p className="text-xs sm:text-sm font-semibold text-[#24302D]">{srv.title}</p>
+                                  <span className="text-[11px] text-[#5A6D67]">{srv.duration}</span>
+                                </div>
+                                <span className="font-sans font-medium text-sm text-[#24302D]">{srv.price}</span>
+                              </button>
+                            ))}
                           </div>
-                          <button
-                            type="button"
-                            onClick={() => setShowIntakeForm(true)}
-                            style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                            className="rounded-full px-8 py-3 text-xs font-semibold shadow-xs hover:bg-[#C26553] whitespace-nowrap"
-                          >
-                            Turpināt →
-                          </button>
                         </div>
-                      </div>
-                    </div>
-                  )}
+                      )}
+
+                      {/* Step 2: Specialist Selector */}
+                      {bookingStep === 2 && (
+                        <div className="space-y-3">
+                          <p className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
+                            Izvēlieties speciālisti:
+                          </p>
+                          <div className="grid gap-2.5">
+                            {specialists.map((spec) => (
+                              <button
+                                key={spec.id}
+                                type="button"
+                                onClick={() => { setSelectedSpecialist(spec.id); changeBookingStep(3); }}
+                                className={`flex items-center gap-3.5 rounded-2xl border p-4 text-left transition-all ${
+                                  selectedSpecialist === spec.id
+                                    ? "border-[#D87967] bg-[#F8E9E3]/50"
+                                    : "border-black/[0.08] hover:bg-[#FFF9F4]"
+                                }`}
+                              >
+                                <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border border-black/10 bg-[#F8E9E3]">
+                                  <Image src={spec.image} alt={spec.name} fill sizes="48px" className="object-cover" />
+                                </div>
+                                <div>
+                                  <p className="text-xs sm:text-sm font-semibold text-[#24302D]">{spec.name}</p>
+                                  <p className="text-[11px] text-[#5A6D67]">{spec.role}</p>
+                                  <span className="text-[10px] text-[#D87967] font-medium">{spec.badge}</span>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Step 3: Date & Live Time Slots (Default & Main View) */}
+                      {bookingStep === 3 && (
+                        <div>
+                          {/* Active Selection Summary Strip */}
+                          <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-[#FFF9F4] p-3.5 border border-black/[0.06] text-xs text-[#24302D]">
+                            <div>
+                              <p className="font-semibold">{currentServiceObj.title}</p>
+                              <span className="text-[11px] text-[#5A6D67]">
+                                {currentServiceObj.duration} · {currentSpecialistObj.name}
+                              </span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => changeBookingStep(1)}
+                              className="text-[11px] font-medium text-[#D87967] hover:underline"
+                            >
+                              Mainīt →
+                            </button>
+                          </div>
+
+                          {/* Week Selector Header */}
+                          <div className="mt-5 flex items-center justify-between">
+                            <span className="text-xs font-semibold uppercase tracking-wider text-[#24302D]">
+                              Nedēļa: 7.–11. septembris 2026
+                            </span>
+                            <span className="text-xs text-[#5A6D67]">
+                              {currentDayObj.fullDay}
+                            </span>
+                          </div>
+
+                          {/* Days Strip */}
+                          <div className="mt-3 grid grid-cols-5 gap-2">
+                            {bookingDays.map((d, i) => (
+                              <button
+                                key={d.date}
+                                type="button"
+                                onClick={() => { setSelectedDayIndex(i); setSelectedTimeSlot(d.slots[0]); }}
+                                className={`rounded-2xl border p-2.5 sm:p-3 text-center transition-all ${
+                                  selectedDayIndex === i
+                                    ? "border-[#24302D] bg-[#24302D] text-white shadow-xs"
+                                    : "border-black/[0.08] bg-[#FFF9F4] text-[#24302D] hover:bg-white"
+                                }`}
+                              >
+                                <p className="text-[10px] sm:text-[11px] opacity-75">{d.dayName}</p>
+                                <p className="font-sans font-medium text-sm sm:text-base mt-0.5">
+                                  {d.fullDay.split(" ")[1]}
+                                </p>
+                              </button>
+                            ))}
+                          </div>
+
+                          {/* Available Time Slots Chips */}
+                          <div className="mt-5">
+                            <p className="text-xs font-medium text-[#5A6D67] mb-2.5">
+                              Pieejamie laiki šajā dienā:
+                            </p>
+                            <div className="grid grid-cols-3 gap-2.5">
+                              {currentDayObj.slots.map((slot) => (
+                                <button
+                                  key={slot}
+                                  type="button"
+                                  onClick={() => setSelectedTimeSlot(slot)}
+                                  className={`rounded-xl border py-3 text-center font-mono text-xs sm:text-sm font-medium transition-all ${
+                                    selectedTimeSlot === slot
+                                      ? "border-[#D87967] bg-[#D87967] text-white shadow-xs"
+                                      : "border-black/[0.08] bg-[#FFF9F4] text-[#24302D] hover:border-black/20"
+                                  }`}
+                                >
+                                  {slot}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Active Confirmation Preview Panel */}
+                          <div className="mt-6 border-t border-black/[0.06] pt-5">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                              <div>
+                                <span className="text-xs font-semibold text-[#24302D]">
+                                  {currentDayObj.fullDay} · plkst. {selectedTimeSlot}
+                                </span>
+                                <p className="text-xs text-[#5A6D67]">
+                                  {currentSpecialistObj.name} · {currentServiceObj.title} ({currentServiceObj.price})
+                                </p>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => setShowIntakeForm(true)}
+                                style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
+                                className="rounded-full px-8 py-3 text-xs font-semibold shadow-xs hover:bg-[#C26553] whitespace-nowrap"
+                              >
+                                Turpināt →
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
 
                   {/* Microcopy & Demo disclaimer */}
-                  <div className="border-t border-black/[0.06] pt-3 flex items-center justify-between text-[11px] text-[#5A6D67]">
+                  <div className="border-t border-black/[0.06] mt-6 pt-3 flex items-center justify-between text-[11px] text-[#5A6D67]">
                     <span>Nezināt, ko izvēlēties? Uzrakstiet mums — palīdzēsim.</span>
                     <span className="opacity-60 italic">Demo pieraksts</span>
                   </div>
@@ -2450,10 +2464,10 @@ export default function PhysiotherapyCallingCardPage() {
       <AnimatePresence>
         {showMobileBottomBar && (
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 50 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            transition={{ duration: 0.35, ease: easePremium }}
+            exit={{ opacity: 0, y: shouldReduceMotion ? 0 : 50 }}
+            transition={{ duration: shouldReduceMotion ? 0.01 : 0.35, ease: easeOrganic }}
             className="sm:hidden fixed bottom-0 left-0 right-0 z-50 p-4 bg-[#FFF9F4]/95 backdrop-blur-md border-t border-black/10 shadow-2xl"
           >
             <a
