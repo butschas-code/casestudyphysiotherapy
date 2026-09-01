@@ -130,22 +130,18 @@ export default function PhysiotherapyCallingCardPage() {
 
   const firstVisitSteps = [
     {
-      number: "01",
       title: "Parunāsim.",
       copy: "Pastāstiet, kas Jūs atveda un ko gribētu mainīt. Mēs vispirms mierīgi uzklausām Jūsu situāciju, nevis steidzamies pie vingrojumiem.",
     },
     {
-      number: "02",
       title: "Paskatīsimies, kā ķermenis kustas.",
       copy: "Nesteidzīga kustību pārbaude: kā Jūs elpojat, stāvat, apsēžaties un kā slodze sadalās visā ķermenī.",
     },
     {
-      number: "03",
       title: "Izskaidrosim.",
       copy: "Jums būs skaidrs, ko redzam un kā tas saistīts ar Jūsu pašsajūtu. Saudzīga manuāla atbrīvošana un pirmās terapeitiskās kustības.",
     },
     {
-      number: "04",
       title: "Vienosimies par nākamo soli.",
       copy: "Plāns, kas ir reāli izpildāms Jūsu ikdienā. 2–3 vienkārši paradumi vai vingrojumi mājas videi bez pārslodzes.",
     },
@@ -1216,18 +1212,18 @@ export default function PhysiotherapyCallingCardPage() {
           </div>
 
           {/* Horizontal Visual Journey */}
-          <div className="relative mt-12 sm:mt-20">
+          <div className="relative mt-12 sm:mt-16">
             
             {/* Desktop Animated SVG Movement Path */}
-            <div className="absolute top-1/2 left-0 right-0 -translate-y-12 hidden lg:block pointer-events-none">
-              <svg className="w-full h-24" viewBox="0 0 1100 100" fill="none" preserveAspectRatio="none">
+            <div className="absolute top-1/2 left-0 right-0 -translate-y-6 hidden lg:block pointer-events-none">
+              <svg className="w-full h-16" viewBox="0 0 1100 60" fill="none" preserveAspectRatio="none">
                 <motion.path
-                  d="M 20,50 Q 280,10 550,50 T 1080,50"
+                  d="M 20,30 Q 280,5 550,30 T 1080,30"
                   stroke="#D87967"
-                  strokeWidth="2"
-                  strokeDasharray="6 6"
+                  strokeWidth="1.5"
+                  strokeDasharray="4 6"
                   initial={{ pathLength: 0, opacity: 0 }}
-                  whileInView={{ pathLength: 1, opacity: 0.5 }}
+                  whileInView={{ pathLength: 1, opacity: 0.35 }}
                   viewport={{ once: true }}
                   transition={{ duration: shouldReduceMotion ? 0.01 : 1.5, ease: easeOrganic }}
                 />
@@ -1235,10 +1231,10 @@ export default function PhysiotherapyCallingCardPage() {
             </div>
 
             {/* 4 Steps Flow */}
-            <div className="grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-4 relative z-10">
+            <div className="grid gap-6 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 relative z-10">
               {firstVisitSteps.map((step, idx) => (
                 <motion.div
-                  key={step.number}
+                  key={step.title}
                   initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -1248,24 +1244,16 @@ export default function PhysiotherapyCallingCardPage() {
                     borderRadius: "1.75rem",
                     boxShadow: "0 12px 30px -10px rgba(36, 48, 45, 0.06)",
                   }}
-                  className="flex flex-col justify-between border border-black/[0.06] p-6 sm:p-8 relative group hover:border-[#D87967]/40 transition-colors"
+                  className="flex flex-col justify-between border border-black/[0.06] p-6 sm:p-7 relative group hover:border-[#D87967]/40 transition-colors"
                 >
                   <div>
-                    <span className="font-sans text-3xl sm:text-5xl font-light text-[#D87967]">
-                      {step.number}
-                    </span>
-
-                    <h3 className="mt-4 sm:mt-6 font-sans text-lg sm:text-xl font-medium text-[#24302D]">
+                    <h3 className="font-sans text-lg sm:text-xl font-medium text-[#24302D]">
                       {step.title}
                     </h3>
 
-                    <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-[#5A6D67]">
+                    <p className="mt-3 text-xs sm:text-sm leading-relaxed text-[#5A6D67]">
                       {step.copy}
                     </p>
-                  </div>
-
-                  <div className="mt-6 border-t border-black/[0.04] pt-3 text-xs text-[#5A6D67]">
-                    Solis {idx + 1} no 4
                   </div>
                 </motion.div>
               ))}
@@ -1711,14 +1699,13 @@ export default function PhysiotherapyCallingCardPage() {
                       key={s.num}
                       type="button"
                       onClick={() => changeBookingStep(s.num as 1 | 2 | 3)}
-                      className={`flex items-center gap-1 rounded-full px-3 py-2 transition-colors min-h-[40px] ${
+                      className={`flex items-center rounded-full px-3.5 py-2 transition-colors min-h-[40px] ${
                         bookingStep === s.num
                           ? "bg-[#24302D] text-white"
                           : "text-[#5A6D67] hover:bg-black/[0.04]"
                       }`}
                     >
-                      <span className="text-[10px] opacity-75">{s.num}</span>
-                      <span className="inline">{s.label}</span>
+                      <span>{s.label}</span>
                     </button>
                   ))}
                 </div>
