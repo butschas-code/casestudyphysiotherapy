@@ -23,6 +23,9 @@ export default function PhysiotherapyCallingCardPage() {
   // Chapter Navigation State
   const [activeChapter, setActiveChapter] = useState<string>("sapes");
 
+  // Testimonial Stories State (User Controlled)
+  const [activeStoryIdx, setActiveStoryIdx] = useState<number>(0);
+
   // Booking State
   const [selectedSpecialist, setSelectedSpecialist] = useState<string>("elina");
   const [selectedDate, setSelectedDate] = useState<string>("2026-09-02");
@@ -118,6 +121,33 @@ export default function PhysiotherapyCallingCardPage() {
     },
   ];
 
+  const demoStories = [
+    {
+      id: 0,
+      quote: "“Pirmo reizi nejutos tā, it kā man būtu tikai jāizpilda vingrojumi. Es sapratu, kas notiek ar manu ķermeni un kāpēc mēs darām tieši to, ko darām.”",
+      label: "Demo pacienta stāsts · Rehabilitācija & mugurkauls",
+      situation: "6 mēneši ar sēdoša darba izraisītām muguras sāpēm",
+      image: "/concept-physio/service-movement.jpg",
+      imageAlt: "Dabiska kustība un terapeita vadība telpā",
+    },
+    {
+      id: 1,
+      quote: "“Pēc dzemdībām man bija grūti saprast, kas ir ‘normāli’ un vai drīkstu atkal sportot. Saruna pati par sevi jau deva milzīgu mieru un skaidru ceļu uz priekšu.”",
+      label: "Demo pacienta stāsts · Pēcdzemdību aprūpe",
+      situation: "Diastāzes pārbaude un iegurņa stabilitātes atjaunošana",
+      image: "/concept-physio/service-women.jpg",
+      imageAlt: "Saudzīgs pieskāriens un sievietes veselības aprūpe",
+    },
+    {
+      id: 2,
+      quote: "“Mēs atnācām ar satraukumu par mazuļa motoriku, bet nodarbība noritēja tik mierīgā, rotaļīgā un mīlošā atmosfērā, ka viss satraukums izzuda. Mēs ieguvām drošību ikdienā.”",
+      label: "Demo vecāku stāsts · Zīdaiņu hendlings",
+      situation: "Mazuļa muskuļu tonuss un ikdienas hendlinga apmācība",
+      image: "/concept-physio/service-children.jpg",
+      imageAlt: "Mazuļa dabiskā motorā attīstība un atbalsts",
+    },
+  ];
+
   const specialists = [
     {
       id: "elina",
@@ -163,27 +193,6 @@ export default function PhysiotherapyCallingCardPage() {
   ];
 
   const timeSlots = ["08:30", "09:45", "11:00", "11:30", "14:00", "15:30", "17:00", "18:30"];
-
-  const stories = [
-    {
-      name: "Jānis Krūmiņš",
-      role: "IT projektu vadītājs (38 gadi)",
-      condition: "Muguras jostas daļas sāpes & sēdošs darbs",
-      text: "Pēc sešu mēnešu ilgām muguras sāpēm Elīna pirmajā vizītē parādīja, ka problēma bija manā elpošanā un sēdēšanas pozā. Pēc 3 nodarbībām sāpes pilnībā atkāpās, un es atkal varu bez bailēm sportot.",
-    },
-    {
-      name: "Laura Bērziņa",
-      role: "Jaunā māmiņa (31 gads)",
-      condition: "Pēcdzemdību diastāze un iegurņa nestabilitāte",
-      text: "Pēcdzemdību vizīte pie Elīnas man deva milzīgu mieru un pārliecību. Saudzīgie vingrojumi palīdzēja atjaunot vēdera dziļo korseti bez lieka stresa un noguruma.",
-    },
-    {
-      name: "Kristaps un Madara",
-      role: "Vecāki",
-      condition: "Zīdaiņa plecu asimetrija un hendlings",
-      text: "Anna mūsu trīs mēnešus vecajam dēliņam palīdzēja novērst asimetriju un iemācīja mums praktisku hendlingu. Nodarbības noritēja tik mierīgi un maigi, bez nevienas asaras.",
-    },
-  ];
 
   const insuranceCompanies: Record<string, { name: string; coverage: string; details: string }> = {
     balta: {
@@ -233,6 +242,7 @@ export default function PhysiotherapyCallingCardPage() {
   ];
 
   const activeRec = recognitionItems[hoveredSituation] || recognitionItems[0];
+  const activeStory = demoStories[activeStoryIdx] || demoStories[0];
   const currentSpecialistObj = specialists.find((s) => s.id === selectedSpecialist) || specialists[0];
   const currentDateObj = dates.find((d) => d.value === selectedDate) || dates[0];
 
@@ -330,6 +340,9 @@ export default function PhysiotherapyCallingCardPage() {
             </a>
             <a href="#cenas" className="transition-colors hover:text-[#24302D]">
               Cenas
+            </a>
+            <a href="#stasti" className="transition-colors hover:text-[#24302D]">
+              Pieredze
             </a>
           </nav>
 
@@ -1543,50 +1556,131 @@ export default function PhysiotherapyCallingCardPage() {
         </div>
       </section>
 
-      {/* 8. PATIENT PROOF: Real Case Chronicles */}
+      {/* ============================================================ */}
+      {/* 8. HUMAN TRUST / STORY SECTION (DEMO STORIES · NO TRUSTPILOT) */}
+      {/* ============================================================ */}
       <section
-        id="atsauksmes"
+        id="stasti"
         style={{
           backgroundColor: "#FFF7EF",
-          borderColor: "rgba(36, 48, 45, 0.08)",
+          backgroundImage: `
+            radial-gradient(circle at 10% 20%, rgba(216, 121, 103, 0.08), transparent 45%),
+            radial-gradient(circle at 90% 80%, rgba(159, 184, 166, 0.15), transparent 45%)
+          `,
         }}
-        className="py-20 lg:py-28 border-b"
+        className="py-24 lg:py-32 border-b border-[#24302D]/08"
       >
-        <div className="mx-auto max-w-7xl px-6 lg:px-12">
+        <div className="mx-auto max-w-6xl px-6 lg:px-12">
+          
+          {/* Header Narrative */}
           <div className="max-w-3xl">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
-              Pacientu pieredze
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#D87967]">
+              PACIENTU STĀSTI · DEMO SATURS
             </span>
-            <h2 className="mt-2 font-sans text-3xl sm:text-5xl font-medium text-[#24302D]">
-              Cilvēki, kuri atguvuši kustību brīvību
+            <h2 className="mt-3 font-sans text-3xl sm:text-5xl font-medium text-[#24302D] leading-[1.18]">
+              <span>Dažreiz visvairāk palīdz dzirdēt:</span>
+              <span className="block font-normal italic font-serif text-[#D87967] mt-1">
+                “Es arī tā jutos.”
+              </span>
             </h2>
-            <p className="mt-3 text-base text-[#5A6D67]">
-              Reāli stāsti par atveseļošanos, pašsajūtas uzlabošanu un atgriešanos pie aktīvas dzīves:
-            </p>
           </div>
 
-          <div className="mt-14 grid gap-8 md:grid-cols-3">
-            {stories.map((story, i) => (
-              <div
-                key={i}
+          {/* Large Active Story Showcase (1 Active at a Time) */}
+          <div className="mt-14">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeStory.id}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.5, ease: easePremium }}
                 style={{
                   backgroundColor: "#FFFFFF",
-                  borderColor: "rgba(36, 48, 45, 0.08)",
-                  boxShadow: "0 10px 24px -8px rgba(36, 48, 45, 0.05)",
-                  borderRadius: "1.75rem",
+                  borderRadius: "2.5rem 1.5rem 2.5rem 1.5rem",
+                  boxShadow: "0 20px 45px -15px rgba(36, 48, 45, 0.08)",
                 }}
-                className="flex flex-col justify-between border p-8"
+                className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center p-8 sm:p-14 border border-black/[0.06]"
               >
-                <p className="font-serif italic text-base leading-relaxed text-[#24302D]">
-                  “{story.text}”
-                </p>
-                <div className="mt-6 border-t border-black/[0.06] pt-4">
-                  <strong className="block text-sm font-semibold text-[#24302D]">{story.name}</strong>
-                  <span className="text-xs text-[#D87967] font-medium block mt-0.5">{story.condition}</span>
-                  <span className="text-[11px] text-[#5A6D67] block">{story.role}</span>
+                {/* Story Quote & Details */}
+                <div>
+                  <span className="inline-block rounded-full bg-[#FFF9F4] px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#D87967] border border-black/[0.06]">
+                    {activeStory.label}
+                  </span>
+
+                  <blockquote className="mt-6 font-serif italic text-2xl sm:text-3xl lg:text-4xl leading-[1.3] text-[#24302D]">
+                    {activeStory.quote}
+                  </blockquote>
+
+                  <p className="mt-6 text-xs sm:text-sm text-[#5A6D67] border-t border-black/[0.06] pt-4">
+                    Konteksts: <strong>{activeStory.situation}</strong>
+                  </p>
                 </div>
+
+                {/* Abstract Natural / Clinic Atmosphere Visual (No Fake Patient Face) */}
+                <div
+                  style={{
+                    borderRadius: "2rem",
+                    overflow: "hidden",
+                    backgroundColor: "#F8E9E3",
+                  }}
+                  className="relative h-[320px] sm:h-[380px] w-full border border-black/[0.04]"
+                >
+                  <Image
+                    src={activeStory.image}
+                    alt={activeStory.imageAlt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 450px"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                  <span className="absolute bottom-4 left-4 rounded-xl bg-white/90 backdrop-blur-xs px-3 py-1 text-[11px] text-[#24302D] font-medium">
+                    {activeStory.imageAlt}
+                  </span>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Tactile Story Switcher Controls (No Auto-Play) */}
+            <div className="mt-8 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                {demoStories.map((story, i) => (
+                  <button
+                    key={story.id}
+                    type="button"
+                    onClick={() => setActiveStoryIdx(i)}
+                    className={`h-2.5 rounded-full transition-all ${
+                      activeStoryIdx === i ? "w-8 bg-[#D87967]" : "w-2.5 bg-black/20 hover:bg-black/40"
+                    }`}
+                    aria-label={`Skatīt stāstu ${i + 1}`}
+                  />
+                ))}
               </div>
-            ))}
+
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setActiveStoryIdx((prev) => (prev === 0 ? demoStories.length - 1 : prev - 1))
+                  }
+                  style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(36, 48, 45, 0.15)" }}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border text-base text-[#24302D] transition-colors hover:bg-[#24302D] hover:text-white"
+                  aria-label="Iepriekšējais stāsts"
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setActiveStoryIdx((prev) => (prev === demoStories.length - 1 ? 0 : prev + 1))
+                  }
+                  style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(36, 48, 45, 0.15)" }}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border text-base text-[#24302D] transition-colors hover:bg-[#24302D] hover:text-white"
+                  aria-label="Nākamais stāsts"
+                >
+                  →
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
