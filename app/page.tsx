@@ -121,6 +121,33 @@ export default function PhysiotherapyCallingCardPage() {
     },
   ];
 
+  const firstVisitSteps = [
+    {
+      number: "01",
+      title: "Parunāsim.",
+      copy: "Pastāstiet, kas Jūs atveda un ko gribētu mainīt. Mēs nesteidzamies pie “vingrojumu saraksta”, bet vispirms izprotam Jūsu ikdienas kontekstu.",
+      tag: "Uzklausīšana · 15 min",
+    },
+    {
+      number: "02",
+      title: "Paskatīsimies, kā ķermenis kustas.",
+      copy: "Nesteidzīga kustību un funkcionālā izvērtēšana. Kā Jūs elpojat, stāvat, apsēžaties un kā sadalās slodze visā ķermenī.",
+      tag: "Funkcionālie testi · 15 min",
+    },
+    {
+      number: "03",
+      title: "Izskaidrosim.",
+      copy: "Jums būs skaidrs, ko redzam un kāpēc tas var būt saistīts ar Jūsu sajūtām. Saudzīga manuāla atbrīvošana un pirmās terapijas kustības.",
+      tag: "Terapija & izpratne · 20 min",
+    },
+    {
+      number: "04",
+      title: "Vienosimies par nākamo soli.",
+      copy: "Terapijas plāns, kas ir reāli izpildāms Jūsu ikdienā. 2–3 vienkārši paradumi vai vingrojumi mājas videi bez pārslodzes.",
+      tag: "Mājas plāns · 10 min",
+    },
+  ];
+
   const demoStories = [
     {
       id: 0,
@@ -332,11 +359,11 @@ export default function PhysiotherapyCallingCardPage() {
             <a href="#nodalas" className="transition-colors hover:text-[#24302D]">
               Virzieni
             </a>
+            <a href="#vizite" className="transition-colors hover:text-[#24302D]">
+              Pirmā vizīte
+            </a>
             <a href="#specialistes" className="transition-colors hover:text-[#24302D]">
               Speciālistes
-            </a>
-            <a href="#vizite" className="transition-colors hover:text-[#24302D]">
-              Vizītes gaita
             </a>
             <a href="#cenas" className="transition-colors hover:text-[#24302D]">
               Cenas
@@ -1251,7 +1278,123 @@ export default function PhysiotherapyCallingCardPage() {
         </div>
       </section>
 
-      {/* 5. REASSURANCE: Specialist Team */}
+      {/* ============================================================ */}
+      {/* 5. FIRST-VISIT STORY SECTION — NO UNCERTAINTY */}
+      {/* ============================================================ */}
+      <section
+        id="vizite"
+        style={{
+          background: "linear-gradient(180deg, #FFF9F4 0%, #EBF2EB 50%, #FFF9F4 100%)",
+        }}
+        className="relative py-28 lg:py-36 border-b border-[#24302D]/08 overflow-hidden"
+      >
+        <div className="mx-auto max-w-7xl px-6 lg:px-12">
+          
+          {/* Header Narrative */}
+          <div className="max-w-3xl">
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#D87967]">
+              BEZ SATRAUKUMA & PĀRPRATUMIEM
+            </span>
+            <h2 className="mt-3 font-sans text-3xl sm:text-5xl font-medium text-[#24302D] leading-[1.15]">
+              Pirmā vizīte bez nezināmā.
+            </h2>
+            <p className="mt-4 text-base sm:text-lg text-[#5A6D67]">
+              Jums nav jāzina, kāds pakalpojums Jums vajadzīgs. Tas ir mūsu darbs.
+            </p>
+          </div>
+
+          {/* Horizontal Visual Journey (Desktop) with Animated Connecting Movement Path */}
+          <div className="relative mt-20">
+            
+            {/* Desktop Animated SVG Movement Path */}
+            <div className="absolute top-1/2 left-0 right-0 -translate-y-12 hidden lg:block pointer-events-none">
+              <svg className="w-full h-24" viewBox="0 0 1100 100" fill="none" preserveAspectRatio="none">
+                <motion.path
+                  d="M 20,50 Q 280,10 550,50 T 1080,50"
+                  stroke="#D87967"
+                  strokeWidth="2"
+                  strokeDasharray="6 6"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  whileInView={{ pathLength: 1, opacity: 0.5 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.5, ease: easePremium }}
+                />
+              </svg>
+            </div>
+
+            {/* 4 Steps Flow */}
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 relative z-10">
+              {firstVisitSteps.map((step, idx) => (
+                <motion.div
+                  key={step.number}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: idx * 0.12, ease: easePremium }}
+                  style={{
+                    backgroundColor: "#FFFFFF",
+                    borderRadius: "2rem",
+                    boxShadow: "0 12px 30px -10px rgba(36, 48, 45, 0.06)",
+                  }}
+                  className="flex flex-col justify-between border border-black/[0.06] p-7 sm:p-8 relative group hover:border-[#D87967]/40 transition-colors"
+                >
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-sans text-4xl sm:text-5xl font-light text-[#D87967]">
+                        {step.number}
+                      </span>
+                      <span className="rounded-full bg-[#FFF9F4] px-3 py-1 text-[10px] font-semibold text-[#5A6D67] border border-black/[0.04]">
+                        {step.tag}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-6 font-sans text-xl font-medium text-[#24302D]">
+                      {step.title}
+                    </h3>
+
+                    <p className="mt-3 text-xs sm:text-sm leading-relaxed text-[#5A6D67]">
+                      {step.copy}
+                    </p>
+                  </div>
+
+                  <div className="mt-8 border-t border-black/[0.04] pt-4 flex items-center justify-between text-xs text-[#24302D]">
+                    <span className="font-medium text-[#D87967]">Solis {idx + 1} no 4</span>
+                    <span className="text-[#5A6D67] text-[11px]">KUSTĪBA telpā</span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Practical Reassurance Card */}
+          <div
+            style={{
+              backgroundColor: "#FFFFFF",
+              borderRadius: "1.75rem",
+              boxShadow: "0 8px 24px -8px rgba(36, 48, 45, 0.05)",
+            }}
+            className="mt-12 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 border border-black/[0.06]"
+          >
+            <div className="space-y-1 text-xs sm:text-sm text-[#5A6D67]">
+              <p>
+                👕 <strong>Ko vilkt mugurā?</strong> Ērtu sporta vai brīvā laika apģērbu (t-kreklu un legingus/šortus), kas neierobežo kustības.
+              </p>
+              <p>
+                📍 <strong>Ieeja & transports:</strong> Miera iela 24, 2. stāvs (ērts lifts ratiņiem un bezmaksas autostāvvieta pagalmā).
+              </p>
+            </div>
+            <a
+              href="#pieraksts"
+              style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
+              className="rounded-full px-8 py-3.5 text-xs font-semibold whitespace-nowrap hover:bg-[#C26553] shadow-xs"
+            >
+              Pieteikt 60 min vizīti →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. REASSURANCE: Specialist Team */}
       <section id="specialistes" className="py-20 lg:py-28 border-b border-[#24302D]/08">
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div className="max-w-3xl">
@@ -1332,112 +1475,6 @@ export default function PhysiotherapyCallingCardPage() {
                 </a>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 6. CLARITY: "Ko sagaidīt pirmajā 60 minūšu vizītē?" */}
-      <section
-        id="vizite"
-        style={{
-          backgroundColor: "#FFF9F4",
-          borderColor: "rgba(36, 48, 45, 0.08)",
-        }}
-        className="py-20 lg:py-28 border-b"
-      >
-        <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <div className="max-w-3xl">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
-              Vizītes gaita
-            </span>
-            <h2 className="mt-2 font-sans text-3xl sm:text-5xl font-medium text-[#24302D] leading-tight">
-              Ko sagaidīt pirmajā 60 minūšu vizītē?
-            </h2>
-            <p className="mt-3 text-base text-[#5A6D67]">
-              Ja nekad iepriekš neesat apmeklējis fizioterapeitu, ir dabiski just nelielu satraukumu. Mūsu nodarbība norit mierīgi, soli pa solim:
-            </p>
-          </div>
-
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <div
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderRadius: "1.5rem",
-                boxShadow: "0 8px 20px -6px rgba(36, 48, 45, 0.06)",
-              }}
-              className="p-7 border border-black/[0.04]"
-            >
-              <span className="font-sans text-2xl font-semibold text-[#D87967]">01</span>
-              <h3 className="mt-3 font-sans text-lg font-medium text-[#24302D]">Uzklausīšana (15 min)</h3>
-              <p className="mt-2 text-xs leading-relaxed text-[#5A6D67]">
-                Mēs uzklausām Jūsu sūdzības, izpētām ikdienas slodzi, izskatām iepriekšējos izmeklējumu slēdzienus un definējam Jūsu labsajūtas mērķi.
-              </p>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderRadius: "1.5rem",
-                boxShadow: "0 8px 20px -6px rgba(36, 48, 45, 0.06)",
-              }}
-              className="p-7 border border-black/[0.04]"
-            >
-              <span className="font-sans text-2xl font-semibold text-[#D87967]">02</span>
-              <h3 className="mt-3 font-sans text-lg font-medium text-[#24302D]">Kustību analīze (15 min)</h3>
-              <p className="mt-2 text-xs leading-relaxed text-[#5A6D67]">
-                Veicam funkcionālos testus stājai, locītavu mobilitātei, muskuļu tonusam un elpošanas modelim, lai atrastu sāpju patieso cēloni.
-              </p>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderRadius: "1.5rem",
-                boxShadow: "0 8px 20px -6px rgba(36, 48, 45, 0.06)",
-              }}
-              className="p-7 border border-black/[0.04]"
-            >
-              <span className="font-sans text-2xl font-semibold text-[#D87967]">03</span>
-              <h3 className="mt-3 font-sans text-lg font-medium text-[#24302D]">Saudzīga terapija (20 min)</h3>
-              <p className="mt-2 text-xs leading-relaxed text-[#5A6D67]">
-                Manuālā terapija sasprindzināto audu atbrīvošanai, locītavu mobilizācija un pirmie koriģējošie vingrojumi kabinetā speciālistes vadībā.
-              </p>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderRadius: "1.5rem",
-                boxShadow: "0 8px 20px -6px rgba(36, 48, 45, 0.06)",
-              }}
-              className="p-7 border border-black/[0.04]"
-            >
-              <span className="font-sans text-2xl font-semibold text-[#D87967]">04</span>
-              <h3 className="mt-3 font-sans text-lg font-medium text-[#24302D]">Mājas plāns (10 min)</h3>
-              <p className="mt-2 text-xs leading-relaxed text-[#5A6D67]">
-                Jūs saņemat 2–3 vienkāršus vingrojumus mājas videi un skaidru izpratni, kā novērst sāpju atgriešanos ikdienā.
-              </p>
-            </div>
-          </div>
-
-          <div
-            style={{
-              backgroundColor: "#FFFFFF",
-              borderColor: "rgba(36, 48, 45, 0.08)",
-              borderRadius: "1.5rem",
-            }}
-            className="mt-10 p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border"
-          >
-            <div className="text-xs sm:text-sm text-[#5A6D67]">
-              👕 <strong>Ko vilkt mugurā?</strong> Ērtu sporta vai brīvā laika apģērbu (t-kreklu un legingus/šortus), kas neierobežo kustības.
-            </div>
-            <a
-              href="#pieraksts"
-              style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
-              className="rounded-full px-6 py-2.5 text-xs font-semibold whitespace-nowrap hover:bg-[#D87967]"
-            >
-              Pieteikt pirmo vizīti →
-            </a>
           </div>
         </div>
       </section>
