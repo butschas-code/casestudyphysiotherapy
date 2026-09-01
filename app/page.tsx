@@ -112,6 +112,24 @@ export default function PhysiotherapyConceptPage() {
     },
   ];
 
+  const stories = [
+    {
+      quote: "Pēc sešu mēnešu ilgām muguras sāpēm pie datora Elīna palīdzēja saprast, kā pareizi sēdēt, elpot un atbrīvot sprandu. Pēc trim nodarbībām sāpes pilnībā atkāpās, un es beidzot atkal varu ar prieku sportot.",
+      author: "Jānis Krūmiņš",
+      meta: "IT projektu vadītājs (38 gadi) · Muguras jostas daļas sāpes",
+    },
+    {
+      quote: "Pēcdzemdību vizīte pie Elīnas man deva milzīgu mieru un skaidrību. Diastāzes pārbaude un saudzīgie vingrojumi palīdzēja man atgūt stabilitātes sajūtu iegurnī bez lieka stresa pie mazā bērniņa.",
+      author: "Laura Bērziņa",
+      meta: "Jaunā māmiņa (31 gads) · Diastāzes un iegurņa pēcdzemdību aprūpe",
+    },
+    {
+      quote: "Anna mūsu trīs mēnešus vecajam dēliņam palīdzēja harmonizēt plecu asimetriju un iemācīja mums hendlinga pamatprincipus. Nodarbības noritēja tik mierīgi un maigi, bez nevienas asaras.",
+      author: "Kristaps un Madara",
+      meta: "Vecāki · Zīdaiņa hendlings un motorā attīstība",
+    },
+  ];
+
   const curSit = situations[activeSituation];
 
   return (
