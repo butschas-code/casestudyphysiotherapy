@@ -13,11 +13,13 @@ import {
 } from "framer-motion";
 
 export type Locale = "lv" | "en" | "ru";
+export type PathwayId = "physio" | "women" | "baby";
 
 const easeOrganic = [0.22, 1, 0.36, 1] as const;
 
 export function PhysiotherapyClient({ locale }: { locale: Locale }) {
   const isEn = locale === "en";
+  const isRu = locale === "ru";
   const shouldReduceMotion = useReducedMotion();
 
   // Scroll Tracking
@@ -32,19 +34,15 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
   // Recognition / Situations State
   const [hoveredSituation, setHoveredSituation] = useState<number>(0);
 
-  // Testimonial Stories State (User Controlled)
-  const [activeStoryIdx, setActiveStoryIdx] = useState<number>(0);
-
   // Toast Notification for Demo Channels
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Booking State
-  const [bookingStep, setBookingStep] = useState<1 | 2 | 3>(3);
-  const [prevStep, setPrevStep] = useState<number>(3);
-  const [selectedService, setSelectedService] = useState<string>("first");
-  const [selectedSpecialist, setSelectedSpecialist] = useState<string>("elina");
-  const [selectedDayIndex, setSelectedDayIndex] = useState<number>(1); // Otrdiena / Tuesday
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>("13:00");
+  // Booking State: Clean 4-Pathway Architecture
+  const [selectedPathway, setSelectedPathway] = useState<PathwayId>("physio");
+  const [selectedServiceId, setSelectedServiceId] = useState<string>("physio_first");
+  const [selectedSpecialist, setSelectedSpecialist] = useState<string>("marta");
+  const [selectedDayIndex, setSelectedDayIndex] = useState<number>(1); // Tuesday (8 Sep)
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>("10:30");
   const [patientName, setPatientName] = useState<string>("");
   const [patientPhone, setPatientPhone] = useState<string>("");
   const [patientNote, setPatientNote] = useState<string>("");
@@ -60,15 +58,11 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
   // FAQ State (Auto-open first question by default for progressive disclosure clarity)
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const changeBookingStep = (newStep: 1 | 2 | 3) => {
-    setPrevStep(bookingStep);
-    setBookingStep(newStep);
-    setShowIntakeForm(false);
-  };
-
   const showDemoToast = () => {
     const msg = isEn
       ? "This is an interactive design concept. No message has been sent."
+      : isRu
+      ? "Это интерактивный концепт дизайна. Сообщение не было отправлено."
       : "Šis ir interaktīvs dizaina koncepts. Ziņojums netika nosūtīts.";
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 4000);
@@ -95,7 +89,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Text content dictionary (Bilingual: LV & EN)
+  // Text content dictionary (Multilingual: LV, EN, RU)
   const recognitionItems = isEn
     ? [
         {
@@ -132,6 +126,44 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           response: "We observe movement gently and give parents practical guidance for everyday handling and play.",
           image: "/concept-physio/service-children.jpg",
           imageAlt: "Infant motor development and gentle handling guidance",
+        },
+      ]
+    : isRu
+    ? [
+        {
+          num: "01",
+          thought: "Болит спина или шея, и это начинает мешать повседневной жизни.",
+          response: "Мы смотрим шире болевой точки — как осанка, нагрузка и привычные движения взаимодействуют вместе.",
+          image: "/concept-physio/warm-guidance.jpg",
+          imageAlt: "Внимательная функциональная оценка движений",
+        },
+        {
+          num: "02",
+          thought: "После травмы тело больше не кажется таким надежным, как раньше.",
+          response: "Мы восстанавливаем движения постепенно, чтобы уверенность возвращалась вместе с силой и гибкостью.",
+          image: "/concept-physio/service-movement.jpg",
+          imageAlt: "Безопасное и постепенное восстановление",
+        },
+        {
+          num: "03",
+          thought: "Жду ребенка и хочу оставаться активной без перегрузки поясницы.",
+          response: "Бережно поддерживаем меняющиеся движения, дыхание и комфорт на протяжении всей беременности.",
+          image: "/concept-physio/service-women.jpg",
+          imageAlt: "Забота о теле во время беременности",
+        },
+        {
+          num: "04",
+          thought: "После родов мое тело еще не ощущается полностью моим.",
+          response: "Помогаем понять восстановление, возобновить связь с телом и вернуться к активности в комфортном ритме.",
+          image: "/concept-physio/hands-care.jpg",
+          imageAlt: "Послеродовое восстановление и индивидуальная забота",
+        },
+        {
+          num: "05",
+          thought: "Не уверена, естественно ли развивается моторика моего малыша.",
+          response: "Бережно наблюдаем за движениями и даем родителям практические советы по хендлингу и играм.",
+          image: "/concept-physio/service-children.jpg",
+          imageAlt: "Моторное развитие малыша и бережный хендлинг",
         },
       ]
     : [
@@ -172,78 +204,262 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
         },
       ];
 
-  const experienceScenarios = isEn
+  // 4 Primary Care Pathways on Left
+  const pathways = isEn
     ? [
         {
-          id: 0,
-          num: "01",
-          tag: "UNDERSTANDING",
-          statement: "Understand what's happening.",
-          supporting: "Not merely receive an exercise checklist, but understand why the body responds this way and what the next steps are.",
-          image: "/concept-physio/service-movement.jpg",
-          imageAlt: "Therapeutic movement guidance and anatomical understanding",
+          id: "physio" as PathwayId,
+          title: "PHYSIOTHERAPY & RECOVERY",
+          subtitle: "Pain · injury · mobility · assessment",
+          fromPrice: "From €45",
+          defaultService: "physio_first",
+          defaultSpecialist: "marta",
         },
         {
-          id: 1,
-          num: "02",
-          tag: "SAFETY",
-          statement: "Feel safe moving again.",
-          supporting: "After pain, injury, pregnancy or childbirth, confidence in movement can matter just as much as strength.",
-          image: "/concept-physio/hands-care.jpg",
-          imageAlt: "Gentle manual guidance and supportive touch",
+          id: "women" as PathwayId,
+          title: "WOMEN'S HEALTH",
+          subtitle: "Pregnancy · postpartum · pelvic recovery",
+          fromPrice: "From €50",
+          defaultService: "women_eval",
+          defaultSpecialist: "elina",
         },
         {
-          id: 2,
-          num: "03",
-          tag: "PRACTICALITY",
-          statement: "Know what to do at home.",
-          supporting: "A few clear, realistic steps that fit daily life are more useful than a complicated plan that stays unused.",
-          image: "/concept-physio/warm-guidance.jpg",
-          imageAlt: "Practical movement techniques for everyday life",
+          id: "baby" as PathwayId,
+          title: "BABY & CHILD DEVELOPMENT",
+          subtitle: "Infant motor milestones · handling · posture",
+          fromPrice: "From €40",
+          defaultService: "baby_infant",
+          defaultSpecialist: "anna",
+        },
+      ]
+    : isRu
+    ? [
+        {
+          id: "physio" as PathwayId,
+          title: "ФИЗИОТЕРАПИЯ И ВОССТАНОВЛЕНИЕ",
+          subtitle: "Боль · травмы · подвижность · первая оценка",
+          fromPrice: "От 45 €",
+          defaultService: "physio_first",
+          defaultSpecialist: "marta",
+        },
+        {
+          id: "women" as PathwayId,
+          title: "ЖЕНСКОЕ ЗДОРОВЬЕ",
+          subtitle: "Беременность · восстановление после родов · тазовое дно",
+          fromPrice: "От 50 €",
+          defaultService: "women_eval",
+          defaultSpecialist: "elina",
+        },
+        {
+          id: "baby" as PathwayId,
+          title: "РАЗВИТИЕ МЛАДЕНЦЕВ И ДЕТЕЙ",
+          subtitle: "Моторные навыки · хендлинг · осанка",
+          fromPrice: "От 40 €",
+          defaultService: "baby_infant",
+          defaultSpecialist: "anna",
         },
       ]
     : [
         {
-          id: 0,
-          num: "01",
-          tag: "IZPRATNE",
-          statement: "Saprast, kas notiek.",
-          supporting: "Ne tikai saņemt vingrojumu sarakstu, bet saprast, kāpēc ķermenis reaģē tieši šādi un ko mēs darīsim tālāk.",
-          image: "/concept-physio/service-movement.jpg",
-          imageAlt: "Kustību skaidrojums un dziļāka ķermeņa izpratne",
+          id: "physio" as PathwayId,
+          title: "FIZIOTERAPIJA UN ATVESELOŠANĀS",
+          subtitle: "Muguras & locītavu sāpes · traumu rehabilitācija · stāja",
+          fromPrice: "No 45 €",
+          defaultService: "physio_first",
+          defaultSpecialist: "marta",
         },
         {
-          id: 1,
-          num: "02",
-          tag: "DROŠĪBA",
-          statement: "Justies droši kustēties.",
-          supporting: "Īpaši pēc traumas, sāpēm vai dzemdībām drošības sajūta bieži ir tikpat svarīga kā pats vingrojums.",
-          image: "/concept-physio/hands-care.jpg",
-          imageAlt: "Saudzīga vadība un droša vide",
+          id: "women" as PathwayId,
+          title: "SIEVIETES VESELĪBA",
+          subtitle: "Gaidību laiks · pēcdzemdību atjaunošanās · diastāze",
+          fromPrice: "No 50 €",
+          defaultService: "women_eval",
+          defaultSpecialist: "elina",
         },
         {
-          id: 2,
-          num: "03",
-          tag: "PRAKTISKUMS",
-          statement: "Zināt, ko darīt mājās.",
-          supporting: "Daži konkrēti, izpildāmi soļi ir vērtīgāki par sarežģītu plānu, kas paliek neizmantots.",
-          image: "/concept-physio/warm-guidance.jpg",
-          imageAlt: "Reāli izpildāmi paradumi mājas videi",
+          id: "baby" as PathwayId,
+          title: "ZĪDAIŅU UN BĒRNU ATTĪSTĪBA",
+          subtitle: "Motorā attīstība · zīdaiņu hendlings · stājas pārbaude",
+          fromPrice: "No 40 €",
+          defaultService: "baby_infant",
+          defaultSpecialist: "anna",
         },
       ];
 
-  const servicesList = isEn
+  // Specific appointment types filtered strictly per category
+  const appointmentsByPathway = isEn
+    ? {
+        physio: [
+          {
+            id: "physio_first",
+            title: "Initial physiotherapy visit",
+            duration: "60 min",
+            price: "50 €",
+            desc: "Comprehensive functional evaluation, posture & movement assessment, and individual treatment plan.",
+          },
+          {
+            id: "physio_followup",
+            title: "Follow-up physiotherapy visit",
+            duration: "45–50 min",
+            price: "45 €",
+            desc: "Targeted therapeutic movement, manual techniques, and progressive muscular stabilization.",
+          },
+        ],
+        women: [
+          {
+            id: "women_eval",
+            title: "Women's health assessment",
+            duration: "60 min",
+            price: "50 €",
+            desc: "Diastasis check, breathing mechanics, and prenatal or postnatal pelvic relief.",
+          },
+          {
+            id: "women_postpartum",
+            title: "Postpartum recovery visit",
+            duration: "60 min",
+            price: "50 €",
+            desc: "Safe pelvic floor reconnect, posture realignment, and individual recovery guidance.",
+          },
+        ],
+        baby: [
+          {
+            id: "baby_infant",
+            title: "Infant development consultation",
+            duration: "45 min",
+            price: "40 €",
+            desc: "Gentle motor milestone observation and supportive everyday handling guidance for parents.",
+          },
+          {
+            id: "baby_posture",
+            title: "Child posture & movement consultation",
+            duration: "45 min",
+            price: "40 €",
+            desc: "Postural symmetry, gait assessment, and playful functional movement exercises.",
+          },
+        ],
+      }
+    : isRu
+    ? {
+        physio: [
+          {
+            id: "physio_first",
+            title: "Первичный визит к физиотерапевту",
+            duration: "60 мин",
+            price: "50 €",
+            desc: "Углубленная функциональная оценка, проверка осанки и движений, составление плана.",
+          },
+          {
+            id: "physio_followup",
+            title: "Повторный визит",
+            duration: "45–50 мин",
+            price: "45 €",
+            desc: "Целенаправленная лечебная гимнастика, мануальные техники и стабилизация мышц.",
+          },
+        ],
+        women: [
+          {
+            id: "women_eval",
+            title: "Консультация по женскому здоровью",
+            duration: "60 мин",
+            price: "50 €",
+            desc: "Проверка диастаза, биомеханика дыхания и забота о мышцах тазового дна.",
+          },
+          {
+            id: "women_postpartum",
+            title: "Восстановление после родов",
+            duration: "60 мин",
+            price: "50 €",
+            desc: "Безопасное восстановление тела после родов и индивидуально подобранный ритм движений.",
+          },
+        ],
+        baby: [
+          {
+            id: "baby_infant",
+            title: "Консультация по развитию младенца",
+            duration: "45 мин",
+            price: "40 €",
+            desc: "Оценка естественной моторики малыша и обучение родителей бережному хендлингу.",
+          },
+          {
+            id: "baby_posture",
+            title: "Консультация по осанке и движениям ребенка",
+            duration: "45 мин",
+            price: "40 €",
+            desc: "Симметрия осанки, оценка походки и игровые функциональные упражнения.",
+          },
+        ],
+      }
+    : {
+        physio: [
+          {
+            id: "physio_first",
+            title: "Pirmā fizioterapijas vizīte",
+            duration: "60 min",
+            price: "50 €",
+            desc: "Padziļināts funkcionālais novērtējums, stājas un kustību pārbaude un pirmais ārstniecības plāns.",
+          },
+          {
+            id: "physio_followup",
+            title: "Atkārtota vizīte",
+            duration: "45–50 min",
+            price: "45 €",
+            desc: "Mērķtiecīga ārstnieciskā vingrošana, manuālās tehnikas un muskuļu stabilizācija.",
+          },
+        ],
+        women: [
+          {
+            id: "women_eval",
+            title: "Sieviešu veselības vizīte",
+            duration: "60 min",
+            price: "50 €",
+            desc: "Diastāzes izvērtēšana, elpošanas biomehānika un iegurņa pamatnes muskuļu aprūpe.",
+          },
+          {
+            id: "women_postpartum",
+            title: "Pēcdzemdību atjaunošanās vizīte",
+            duration: "60 min",
+            price: "50 €",
+            desc: "Droša ķermeņa atjaunošana pēc dzemdībām un individuāli pielāgots kustību ritms.",
+          },
+        ],
+        baby: [
+          {
+            id: "baby_infant",
+            title: "Zīdaiņa attīstības konsultācija",
+            duration: "45 min",
+            price: "40 €",
+            desc: "Mazuļa dabiskās motorikas novērtējums un maiga ikdienas hendlinga apmācība vecākiem.",
+          },
+          {
+            id: "baby_posture",
+            title: "Bērna stājas un kustību konsultācija",
+            duration: "45 min",
+            price: "40 €",
+            desc: "Stājas simetrija, gaitas izvērtēšana un rotaļīgi funkcionālās vingrošanas vingrinājumi.",
+          },
+        ],
+      };
+
+  // Pricing section list
+  const pricingList = isEn
     ? [
-        { id: "first", title: "Pirmā fizioterapijas vizīte", titleEn: "Initial physiotherapy consultation", duration: "60 min", price: "50 €", desc: "Comprehensive functional evaluation, posture & movement assessment, and first individual treatment plan." },
-        { id: "rehab", title: "Atkārtota vizīte", titleEn: "Follow-up physiotherapy session", duration: "45–50 min", price: "45 €", desc: "Focused therapeutic movement, manual techniques, and progressive muscular stabilization." },
-        { id: "women", title: "Sieviešu veselības vizīte", titleEn: "Women's health consultation", duration: "60 min", price: "50 €", desc: "Diastasis assessment, gentle pelvic floor guidance, and postpartum recovery support." },
-        { id: "infant", title: "Zīdaiņa attīstības konsultācija", titleEn: "Infant development session", duration: "45 min", price: "40 €", desc: "Gentle motor milestone observation and supportive everyday handling guidance for parents." },
+        { id: "physio_first", pathway: "physio" as PathwayId, title: "Initial physiotherapy visit", duration: "60 min", price: "50 €", desc: "Comprehensive functional evaluation, posture & movement assessment, and individual treatment plan." },
+        { id: "physio_followup", pathway: "physio" as PathwayId, title: "Follow-up physiotherapy visit", duration: "45–50 min", price: "45 €", desc: "Targeted therapeutic movement, manual techniques, and progressive muscular stabilization." },
+        { id: "women_eval", pathway: "women" as PathwayId, title: "Women's health assessment", duration: "60 min", price: "50 €", desc: "Diastasis check, breathing mechanics, and prenatal or postnatal pelvic relief." },
+        { id: "baby_infant", pathway: "baby" as PathwayId, title: "Infant development consultation", duration: "45 min", price: "40 €", desc: "Gentle motor milestone observation and supportive everyday handling guidance for parents." },
+      ]
+    : isRu
+    ? [
+        { id: "physio_first", pathway: "physio" as PathwayId, title: "Первичный визит к физиотерапевту", duration: "60 мин", price: "50 €", desc: "Углубленная функциональная оценка, проверка осанки и движений, составление плана." },
+        { id: "physio_followup", pathway: "physio" as PathwayId, title: "Повторный визит", duration: "45–50 мин", price: "45 €", desc: "Лечебная гимнастика, мануальные техники и стабилизация мышц." },
+        { id: "women_eval", pathway: "women" as PathwayId, title: "Консультация по женскому здоровью", duration: "60 мин", price: "50 €", desc: "Проверка диастаза, дыхание и забота о мышцах тазового дна." },
+        { id: "baby_infant", pathway: "baby" as PathwayId, title: "Консультация по развитию младенца", duration: "45 мин", price: "40 €", desc: "Оценка моторики малыша и обучение бережному хендлингу." },
       ]
     : [
-        { id: "first", title: "Pirmā fizioterapijas vizīte", duration: "60 min", price: "50 €", desc: "Padziļināts funkcionālais novērtējums, stājas un kustību pārbaude un pirmais ārstniecības plāns." },
-        { id: "rehab", title: "Atkārtota vizīte", duration: "45–50 min", price: "45 €", desc: "Mērķtiecīga ārstnieciskā vingrošana, manuālās tehnikas un pakāpeniska ķermeņa stabilitātes atjaunošana." },
-        { id: "women", title: "Sieviešu veselības vizīte", duration: "60 min", price: "50 €", desc: "Diastāzes izvērtēšana, iegurņa pamatnes muskuļu atjaunošana un pēcdzemdību aprūpe." },
-        { id: "infant", title: "Zīdaiņa attīstības konsultācija", duration: "45 min", price: "40 €", desc: "Mazuļa dabiskās motorikas novērtējums un maiga ikdienas hendlinga apmācība vecākiem." },
+        { id: "physio_first", pathway: "physio" as PathwayId, title: "Pirmā fizioterapijas vizīte", duration: "60 min", price: "50 €", desc: "Padziļināts funkcionālais novērtējums, stājas un kustību pārbaude un pirmais ārstniecības plāns." },
+        { id: "physio_followup", pathway: "physio" as PathwayId, title: "Atkārtota vizīte", duration: "45–50 min", price: "45 €", desc: "Mērķtiecīga ārstnieciskā vingrošana, manuālās tehnikas un pakāpeniska ķermeņa stabilitātes atjaunošana." },
+        { id: "women_eval", pathway: "women" as PathwayId, title: "Sieviešu veselības vizīte", duration: "60 min", price: "50 €", desc: "Diastāzes izvērtēšana, elpošanas biomehānika un iegurņa pamatnes muskuļu aprūpe." },
+        { id: "baby_infant", pathway: "baby" as PathwayId, title: "Zīdaiņa attīstības konsultācija", duration: "45 min", price: "40 €", desc: "Mazuļa dabiskās motorikas novērtējums un maiga ikdienas hendlinga apmācība vecākiem." },
       ];
 
   const specialists = isEn
@@ -254,6 +470,8 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           role: "Lead Physiotherapist",
           cropHeight: "h-[460px]",
           specialty: "Spinal biomechanics, women's health and postpartum recovery",
+          nextSlot: "Next: Tue 10:30",
+          pathways: ["physio", "women"],
           image: "/concept-physio/practitioner-primary.jpg",
         },
         {
@@ -262,6 +480,8 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           role: "Physiotherapist",
           cropHeight: "h-[420px]",
           specialty: "Spinal and joint rehabilitation, active movement therapy",
+          nextSlot: "Next: Wed 09:30",
+          pathways: ["physio"],
           image: "/concept-physio/practitioner-2.jpg",
         },
         {
@@ -270,6 +490,41 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           role: "Pediatric Physiotherapist",
           cropHeight: "h-[440px]",
           specialty: "Infant motor development, gentle handling and postural guidance",
+          nextSlot: "Next: Thu 11:00",
+          pathways: ["baby"],
+          image: "/concept-physio/practitioner-3.jpg",
+        },
+      ]
+    : isRu
+    ? [
+        {
+          id: "elina",
+          name: "Элина Витола",
+          role: "Ведущий физиотерапевт",
+          cropHeight: "h-[460px]",
+          specialty: "Биомеханика позвоночника, женское здоровье и восстановление после родов",
+          nextSlot: "Ближайшее: Вт 10:30",
+          pathways: ["physio", "women"],
+          image: "/concept-physio/practitioner-primary.jpg",
+        },
+        {
+          id: "marta",
+          name: "Марта Лиепа",
+          role: "Физиотерапевт",
+          cropHeight: "h-[420px]",
+          specialty: "Реабилитация позвоночника и суставов, активная двигательная терапия",
+          nextSlot: "Ближайшее: Ср 09:30",
+          pathways: ["physio"],
+          image: "/concept-physio/practitioner-2.jpg",
+        },
+        {
+          id: "anna",
+          name: "Анна Озола",
+          role: "Детский физиотерапевт",
+          cropHeight: "h-[440px]",
+          specialty: "Моторное развитие младенцев, бережный хендлинг и осанка",
+          nextSlot: "Ближайшее: Чт 11:00",
+          pathways: ["baby"],
           image: "/concept-physio/practitioner-3.jpg",
         },
       ]
@@ -280,6 +535,8 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           role: "Vadošā fizioterapeite",
           cropHeight: "h-[460px]",
           specialty: "Mugurkaula biomehānika, sieviešu veselība un pēcdzemdību aprūpe",
+          nextSlot: "Tuvākais: Otrd. 10:30",
+          pathways: ["physio", "women"],
           image: "/concept-physio/practitioner-primary.jpg",
         },
         {
@@ -288,6 +545,8 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           role: "Fizioterapeite",
           cropHeight: "h-[420px]",
           specialty: "Muguras un locītavu atjaunošanās, aktīvā kustību terapija",
+          nextSlot: "Tuvākais: Trešd. 09:30",
+          pathways: ["physio"],
           image: "/concept-physio/practitioner-2.jpg",
         },
         {
@@ -296,24 +555,35 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           role: "Bērnu fizioterapeite",
           cropHeight: "h-[440px]",
           specialty: "Zīdaiņu motorā attīstība, saudzīgs hendlings un bērnu stāja",
+          nextSlot: "Tuvākais: Ceturtd. 11:00",
+          pathways: ["baby"],
           image: "/concept-physio/practitioner-3.jpg",
         },
       ];
 
+  // Calendar dates with explicit day numbers to avoid month-string date rendering bugs
   const bookingDays = isEn
     ? [
-        { date: "2026-09-07", dayName: "Mon", fullDay: "Monday, September 7", slots: ["09:00", "11:30", "15:00"] },
-        { date: "2026-09-08", dayName: "Tue", fullDay: "Tuesday, September 8", slots: ["10:30", "13:00", "16:30"] },
-        { date: "2026-09-09", dayName: "Wed", fullDay: "Wednesday, September 9", slots: ["09:30", "14:00", "17:30"] },
-        { date: "2026-09-10", dayName: "Thu", fullDay: "Thursday, September 10", slots: ["11:00", "15:30", "18:00"] },
-        { date: "2026-09-11", dayName: "Fri", fullDay: "Friday, September 11", slots: ["08:30", "12:00", "14:30"] },
+        { date: "2026-09-07", dayName: "Mon", dayNum: "7", fullDay: "Monday, 7 September", slots: ["09:00", "11:30", "15:00"] },
+        { date: "2026-09-08", dayName: "Tue", dayNum: "8", fullDay: "Tuesday, 8 September", slots: ["10:30", "13:00", "16:30"] },
+        { date: "2026-09-09", dayName: "Wed", dayNum: "9", fullDay: "Wednesday, 9 September", slots: ["09:30", "14:00", "17:30"] },
+        { date: "2026-09-10", dayName: "Thu", dayNum: "10", fullDay: "Thursday, 10 September", slots: ["11:00", "15:30", "18:00"] },
+        { date: "2026-09-11", dayName: "Fri", dayNum: "11", fullDay: "Friday, 11 September", slots: ["08:30", "12:00", "14:30"] },
+      ]
+    : isRu
+    ? [
+        { date: "2026-09-07", dayName: "Пн", dayNum: "7", fullDay: "Понедельник, 7 сентября", slots: ["09:00", "11:30", "15:00"] },
+        { date: "2026-09-08", dayName: "Вт", dayNum: "8", fullDay: "Вторник, 8 сентября", slots: ["10:30", "13:00", "16:30"] },
+        { date: "2026-09-09", dayName: "Ср", dayNum: "9", fullDay: "Среда, 9 сентября", slots: ["09:30", "14:00", "17:30"] },
+        { date: "2026-09-10", dayName: "Чт", dayNum: "10", fullDay: "Четверг, 10 сентября", slots: ["11:00", "15:30", "18:00"] },
+        { date: "2026-09-11", dayName: "Пт", dayNum: "11", fullDay: "Пятница, 11 сентября", slots: ["08:30", "12:00", "14:30"] },
       ]
     : [
-        { date: "2026-09-07", dayName: "Pirmd.", fullDay: "Pirmdiena, 7. septembris", slots: ["09:00", "11:30", "15:00"] },
-        { date: "2026-09-08", dayName: "Otrd.", fullDay: "Otrdiena, 8. septembris", slots: ["10:30", "13:00", "16:30"] },
-        { date: "2026-09-09", dayName: "Trešd.", fullDay: "Trešdiena, 9. septembris", slots: ["09:30", "14:00", "17:30"] },
-        { date: "2026-09-10", dayName: "Ceturtd.", fullDay: "Ceturtdiena, 10. septembris", slots: ["11:00", "15:30", "18:00"] },
-        { date: "2026-09-11", dayName: "Piektd.", fullDay: "Piektdiena, 11. septembris", slots: ["08:30", "12:00", "14:30"] },
+        { date: "2026-09-07", dayName: "Pirmd.", dayNum: "7", fullDay: "Pirmdiena, 7. septembris", slots: ["09:00", "11:30", "15:00"] },
+        { date: "2026-09-08", dayName: "Otrd.", dayNum: "8", fullDay: "Otrdiena, 8. septembris", slots: ["10:30", "13:00", "16:30"] },
+        { date: "2026-09-09", dayName: "Trešd.", dayNum: "9", fullDay: "Trešdiena, 9. septembris", slots: ["09:30", "14:00", "17:30"] },
+        { date: "2026-09-10", dayName: "Ceturtd.", dayNum: "10", fullDay: "Ceturtdiena, 10. septembris", slots: ["11:00", "15:30", "18:00"] },
+        { date: "2026-09-11", dayName: "Piektd.", dayNum: "11", fullDay: "Piektdiena, 11. septembris", slots: ["08:30", "12:00", "14:30"] },
       ];
 
   const faqs = isEn
@@ -328,11 +598,30 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
         },
         {
           q: "How does health insurance reimbursement work?",
-          a: "In a live practice website, clear instructions for submitting receipts and statements or direct billing would appear here.",
+          a: "Clear instructions for submitting receipts and statements or direct billing would appear here on a live clinic website.",
         },
         {
           q: "How do I access the practice?",
-          a: "Demonstration concept located in Riga. In a live clinic scenario, convenient access and parking instructions would be detailed here.",
+          a: "Demonstration concept located in Riga. In a live clinic scenario, convenient access, entrance instructions, and parking information would be detailed here.",
+        },
+      ]
+    : isRu
+    ? [
+        {
+          q: "Что нужно взять с собой на первый визит?",
+          a: "Удобную, эластичную одежду (футболка, леггинсы или мягкие брюки). Если есть заключения предыдущих обследований (МРТ, рентген, УЗИ), возьмите их с собой.",
+        },
+        {
+          q: "Нужно ли направление врача?",
+          a: "Нет, для частной консультации физиотерапевта направление врача не требуется. Специалисты проводят собственную функциональную оценку.",
+        },
+        {
+          q: "Как работает возмещение по страховке?",
+          a: "На реальном сайте практики здесь размещается подробная инструкция по чекам, выпискам и страховым компаниям.",
+        },
+        {
+          q: "Как добраться до практики?",
+          a: "Демонстрационный концепт в Риге. На реальном сайте клиники здесь указываются точные ориентиры, парковка и доступная среда.",
         },
       ]
     : [
@@ -355,9 +644,10 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
       ];
 
   const activeRec = recognitionItems[hoveredSituation] || recognitionItems[0];
-  const activeStory = experienceScenarios[activeStoryIdx] || experienceScenarios[0];
+  const currentPathwayObj = pathways.find((p) => p.id === selectedPathway) || pathways[0];
+  const currentPathwayServices = appointmentsByPathway[selectedPathway] || appointmentsByPathway.physio;
+  const currentServiceObj = currentPathwayServices.find((s) => s.id === selectedServiceId) || currentPathwayServices[0];
   const currentSpecialistObj = specialists.find((s) => s.id === selectedSpecialist) || specialists[0];
-  const currentServiceObj = servicesList.find((s) => s.id === selectedService) || servicesList[0];
   const currentDayObj = bookingDays[selectedDayIndex] || bookingDays[1];
 
   // Motion Variants
@@ -386,8 +676,6 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
     },
   };
 
-  const stepDirection = bookingStep >= prevStep ? 1 : -1;
-
   // Safe CreativeWork Structured Data
   const schemaJsonLd = {
     "@context": "https://schema.org",
@@ -397,9 +685,13 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
         "@id": `https://saiteo.com/${locale}/concept/physiotherapy#concept`,
         name: isEn
           ? "KUSTĪBA — Human-Centred Physiotherapy Website Concept"
+          : isRu
+          ? "KUSTĪBA — Концепт сайта физиотерапевтической практики"
           : "KUSTĪBA — Fizioterapijas konceptprakse",
         headline: isEn
           ? "KUSTĪBA — Human-Centred Physiotherapy Website Concept"
+          : isRu
+          ? "KUSTĪBA — Концепт сайта физиотерапевтической практики"
           : "KUSTĪBA — Cilvēcīgas fizioterapijas tīmekļa vietnes koncepts",
         creator: {
           "@type": "Organization",
@@ -483,7 +775,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           </Link>
           <span className="h-3.5 w-[1px] bg-white/20" />
           <span className="text-[#FFF9F4]/80">
-            {isEn ? "Independent concept · Physiotherapy" : "Neatkarīgs koncepts · Fizioterapija"}
+            {isEn ? "Independent concept · Physiotherapy" : isRu ? "Независимый концепт · Физиотерапия" : "Neatkarīgs koncepts · Fizioterapija"}
           </span>
         </div>
 
@@ -497,7 +789,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           </Link>
           <span className="text-white/40">·</span>
           <span className="text-[#FFF9F4]/75">
-            {isEn ? "concept" : "koncepts"}
+            {isEn ? "concept" : isRu ? "концепт" : "koncepts"}
           </span>
         </div>
 
@@ -508,7 +800,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
             className="group inline-flex items-center gap-1.5 text-xs sm:text-sm font-normal text-[#FFF9F4]/90 hover:text-white transition-colors"
           >
             <span className="group-hover:underline underline-offset-4 decoration-white/40">
-              {isEn ? "Behind the design" : "Behind the design"}
+              Behind the design
             </span>
             <span className="text-xs transition-transform duration-200 group-hover:translate-x-0.5">
               →
@@ -537,23 +829,23 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
               KUSTĪBA
             </span>
             <span className="text-xs sm:text-sm font-normal text-[#4A5D57] block">
-              {isEn ? "physiotherapy concept" : "fizioterapijas koncepts"}
+              {isEn ? "physiotherapy practice" : isRu ? "практика физиотерапии" : "fizioterapijas prakse"}
             </span>
           </Link>
 
           {/* Center Navigation */}
           <nav className="hidden lg:flex items-center gap-10 text-base font-medium text-[#4A5D57]">
             <a href="#atpazisana" className="transition-colors hover:text-[#24302D]">
-              {isEn ? "How we help" : "Kā varam palīdzēt"}
+              {isEn ? "How we help" : isRu ? "Как мы помогаем" : "Kā varam palīdzēt"}
             </a>
             <a href="#elina" className="transition-colors hover:text-[#24302D]">
-              {isEn ? "Therapist" : "Elīna"}
+              {isEn ? "Therapist" : isRu ? "Элина" : "Elīna"}
             </a>
             <a href="#nodalas" className="transition-colors hover:text-[#24302D]">
-              {isEn ? "Services" : "Pakalpojumi"}
+              {isEn ? "Services" : isRu ? "Услуги" : "Pakalpojumi"}
             </a>
             <a href="#vizite" className="transition-colors hover:text-[#24302D]">
-              {isEn ? "First visit" : "Pirmā vizīte"}
+              {isEn ? "First visit" : isRu ? "Первый визит" : "Pirmā vizīte"}
             </a>
           </nav>
 
@@ -564,7 +856,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
               style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
               className="hidden sm:inline-block rounded-full px-7 py-3 text-sm font-semibold shadow-xs transition-all hover:bg-[#C26553] hover:-translate-y-0.5"
             >
-              {isEn ? "Book visit" : "Pieteikt vizīti"}
+              {isEn ? "Book visit" : isRu ? "Записаться на прием" : "Pieteikt vizīti"}
             </a>
 
             {/* Mobile Hamburger Toggle */}
@@ -594,28 +886,28 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 onClick={() => setMobileMenuOpen(false)}
                 className="block text-lg font-medium text-[#24302D] py-1.5"
               >
-                {isEn ? "How we help" : "Kā varam palīdzēt"}
+                {isEn ? "How we help" : isRu ? "Как мы помогаем" : "Kā varam palīdzēt"}
               </a>
               <a
                 href="#elina"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block text-lg font-medium text-[#24302D] py-1.5"
               >
-                {isEn ? "Therapist" : "Elīna"}
+                {isEn ? "Therapist" : isRu ? "Элина" : "Elīna"}
               </a>
               <a
                 href="#nodalas"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block text-lg font-medium text-[#24302D] py-1.5"
               >
-                {isEn ? "Services" : "Pakalpojumi"}
+                {isEn ? "Services" : isRu ? "Услуги" : "Pakalpojumi"}
               </a>
               <a
                 href="#vizite"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block text-lg font-medium text-[#24302D] py-1.5"
               >
-                {isEn ? "First visit" : "Pirmā vizīte"}
+                {isEn ? "First visit" : isRu ? "Первый визит" : "Pirmā vizīte"}
               </a>
               <div className="pt-3 border-t border-black/[0.06]">
                 <a
@@ -624,7 +916,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                   style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
                   className="block text-center rounded-full py-4 text-base font-semibold min-h-[48px] flex items-center justify-center"
                 >
-                  {isEn ? "Book visit →" : "Pieteikt vizīti →"}
+                  {isEn ? "Book visit →" : isRu ? "Записаться на прием →" : "Pieteikt vizīti →"}
                 </a>
               </div>
             </motion.div>
@@ -650,7 +942,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
             className="object-cover object-[60%_center] sm:object-[70%_center] lg:object-[82%_center]"
           />
 
-          {/* Atmospheric Layered Gradients — Preserves full photo while ensuring crisp, legible text */}
+          {/* Atmospheric Layered Gradients */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#FFF9F4] via-[#FFF9F4]/70 to-transparent/20 lg:hidden" />
           <div className="absolute inset-0 hidden lg:block bg-gradient-to-r from-[#FFF9F4] via-[#FFF9F4]/90 to-transparent/10 w-[70%]" />
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#FFF9F4] to-transparent pointer-events-none" />
@@ -670,6 +962,8 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
             >
               {isEn
                 ? "Physiotherapy for people, not just symptoms."
+                : isRu
+                ? "Физиотерапия для людей, а не просто симптомов."
                 : "Fizioterapija cilvēkiem, nevis tikai simptomiem."}
             </motion.p>
 
@@ -684,11 +978,15 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
               <span>
                 {isEn
                   ? "Your body shouldn't have to adapt to therapy."
+                  : isRu
+                  ? "Вашему телу не нужно подстраиваться под терапию."
                   : "Jūsu ķermenim nav jāpielāgojas terapijai."}
               </span>
               <span className="mt-2.5 block font-normal text-[#D87967]">
                 {isEn
                   ? "Therapy should adapt to you."
+                  : isRu
+                  ? "Терапия должна адаптироваться к вам."
                   : "Terapijai jāpielāgojas Jums."}
               </span>
             </motion.h1>
@@ -703,6 +1001,8 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
             >
               {isEn
                 ? "Individual physical therapy tailored to life's transitions — from chronic pain and recovery to pregnancy, postpartum care, and baby's first milestones."
+                : isRu
+                ? "Индивидуальная физиотерапия на разных этапах жизни — от боли в спине и восстановления до беременности, послеродового периода и первых шагов малыша."
                 : "Individuāla fizioterapija cilvēkiem dažādos dzīves posmos — no muguras sāpēm un atveseļošanās līdz grūtniecībai, pēcdzemdību mieram un mazuļa pirmajiem soļiem."}
             </motion.p>
 
@@ -719,13 +1019,13 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
                 className="rounded-full px-8 py-4 text-center text-base font-semibold shadow-md transition-all hover:bg-[#C26553] hover:shadow-lg hover:-translate-y-0.5 min-h-[52px] flex items-center justify-center"
               >
-                {isEn ? "Book first visit →" : "Pieteikt pirmo vizīti →"}
+                {isEn ? "Book first visit →" : isRu ? "Записаться на прием →" : "Pieteikt pirmo vizīti →"}
               </a>
               <a
                 href="#jautajums"
                 className="text-center text-base font-medium text-[#24302D] underline decoration-[#24302D]/40 underline-offset-4 transition-colors hover:text-[#D87967] hover:decoration-[#D87967] py-2"
               >
-                {isEn ? "Not sure what to choose? →" : "Neesmu pārliecināta, ko izvēlēties →"}
+                {isEn ? "Not sure what to choose? →" : isRu ? "Не уверены, что выбрать? →" : "Neesmu pārliecināta, ko izvēlēties →"}
               </a>
             </motion.div>
 
@@ -738,6 +1038,8 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
             >
               {isEn
                 ? "Independent design study · Demonstration concept"
+                : isRu
+                ? "Независимый дизайн-концепт · Демонстрационный проект"
                 : "Neatkarīgs dizaina pētījums · Demonstrācijas koncepts"}
             </motion.p>
           </div>
@@ -753,10 +1055,10 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
               <div className="flex items-center justify-between border-b border-black/[0.06] pb-3">
                 <div>
                   <span className="text-xs font-semibold uppercase tracking-wider text-[#4A5D57] block">
-                    {isEn ? "Next available session" : "Tuvākā brīvā vizīte"}
+                    {isEn ? "Next available session" : isRu ? "Ближайшая свободная запись" : "Tuvākā brīvā vizīte"}
                   </span>
                   <span className="text-base font-bold text-[#24302D] mt-0.5 block">
-                    {isEn ? "Tuesday · 10:30" : "Otrdien · 10:30"}
+                    {isEn ? "Tuesday · 10:30" : isRu ? "Вторник · 10:30" : "Otrdien · 10:30"}
                   </span>
                 </div>
                 <div className="relative h-11 w-11 flex-shrink-0 overflow-hidden rounded-full border border-black/10 bg-[#F8E9E3]">
@@ -777,6 +1079,8 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     key={slot}
                     href="#pieraksts"
                     onClick={() => {
+                      setSelectedPathway("women");
+                      setSelectedServiceId("women_eval");
                       setSelectedDayIndex(1);
                       setSelectedTimeSlot(slot);
                       setSelectedSpecialist("elina");
@@ -792,17 +1096,19 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 <p className="text-[11px] sm:text-xs text-[#4A5D57] font-medium">
                   {isEn
                     ? "Physiotherapy · Women's health · Baby & child care"
+                    : isRu
+                    ? "Физиотерапия · Женское здоровье · Дети и младенцы"
                     : "Fizioterapija · Sieviešu veselība · Zīdaiņu un bērnu aprūpe"}
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-[#4A5D57]">
-                    {isEn ? "Elīna Vītola · Lead Physiotherapist" : "Elīna Vītola · Vadošā fizioterapeite"}
+                    {isEn ? "Elīna Vītola · Lead Physiotherapist" : isRu ? "Элина Витола · Ведущий физиотерапевт" : "Elīna Vītola · Vadošā fizioterapeite"}
                   </span>
                   <a
                     href="#pieraksts"
                     className="text-xs font-semibold text-[#D87967] hover:underline"
                   >
-                    {isEn ? "View all services & times →" : "Skatīt visus laikus →"}
+                    {isEn ? "View all services & times →" : isRu ? "Все услуги и время →" : "Skatīt visus laikus →"}
                   </a>
                 </div>
               </div>
@@ -827,16 +1133,18 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           {/* Header Narrative */}
           <div className="max-w-3xl mb-12 sm:mb-16">
             <h2 className="text-3xl sm:text-5xl font-medium text-[#24302D] leading-tight">
-              {isEn ? "Perhaps you recognise yourself here." : "Varbūt Jūs atpazīstat sevi šeit."}
+              {isEn ? "Perhaps you recognise yourself here." : isRu ? "Возможно, вы узнаете себя здесь." : "Varbūt Jūs atpazīstat sevi šeit."}
             </h2>
             <p className="mt-4 text-lg sm:text-xl leading-relaxed text-[#4A5D57]">
               {isEn
                 ? "People don't arrive with medical labels. They arrive with feelings, uncertainty, and a desire to feel comfortable in their body again."
+                : isRu
+                ? "Люди не приходят с названиями медицинских процедур. Они приходят с ощущениями, вопросами и желанием снова чувствовать себя уверенно в своем теле."
                 : "Cilvēki pie mums nenāk ar pakalpojuma nosaukumu. Viņi nāk ar sajūtām, jautājumiem un vēlmi atkal justies labi savā ķermenī."}
             </p>
           </div>
 
-          {/* DESKTOP (lg:grid): Left Sticky Changing Photo & Right 5 Editorial Rows Always Showing Explanation */}
+          {/* DESKTOP (lg:grid): Left Sticky Changing Photo & Right 5 Editorial Rows */}
           <div className="hidden lg:grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
             
             {/* LEFT 55%: Sticky Crossfading Photographic Atmosphere */}
@@ -932,7 +1240,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                   {item.response}
                 </p>
 
-                {/* Subtly alternate image vignettes for items 0, 2, 4 */}
+                {/* Alternating image vignettes for mobile */}
                 {idx % 2 === 0 && (
                   <div className="relative h-48 w-full overflow-hidden rounded-2xl bg-[#F8E9E3] mt-3">
                     <Image
@@ -953,13 +1261,15 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
             <p className="text-base text-[#4A5D57]">
               {isEn
                 ? "Unsure about your situation? We listen and help guide your first step."
+                : isRu
+                ? "Не уверены насчет своей ситуации? Мы выслушаем и поможем определиться с первым шагом."
                 : "Neesat pārliecināti par savu situāciju? Mēs uzklausām un palīdzam saprast pirmo soli."}
             </p>
             <a
               href="#jautajums"
               className="inline-flex items-center gap-2 text-base font-semibold text-[#D87967] hover:underline whitespace-nowrap"
             >
-              <span>{isEn ? "Tell us what you're experiencing" : "Pastāstiet mums, kas notiek"}</span>
+              <span>{isEn ? "Tell us what you're experiencing" : isRu ? "Расскажите нам о вашей ситуации" : "Pastāstiet mums, kas notiek"}</span>
               <span>→</span>
             </a>
           </div>
@@ -995,7 +1305,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
               >
                 <Image
                   src="/concept-physio/practitioner-primary.jpg"
-                  alt={isEn ? "Elīna Vītola, Physiotherapist" : "Elīna Vītola, fizioterapeite"}
+                  alt={isEn ? "Elīna Vītola, Lead Physiotherapist" : isRu ? "Элина Витола, ведущий физиотерапевт" : "Elīna Vītola, fizioterapeite"}
                   fill
                   sizes="(max-width: 1024px) 100vw, 38vw"
                   className="object-cover object-top"
@@ -1003,12 +1313,12 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
               </div>
 
               <div className="mt-4 flex items-center justify-between text-xs text-[#4A5D57]">
-                <span>{isEn ? "Elīna Vītola · Concept Persona" : "Elīna Vītola · koncepta persona"}</span>
-                <span>{isEn ? "Riga Practice" : "Rīgas prakse"}</span>
+                <span>Elīna Vītola</span>
+                <span>{isEn ? "Lead physiotherapist" : isRu ? "Ведущий физиотерапевт" : "Vadošā fizioterapeite"}</span>
               </div>
             </motion.div>
 
-            {/* RIGHT (~62%): Story, Intimate Strip, Experience Focus, & Secondary Action Photo */}
+            {/* RIGHT (~62%): Story, Intimate Strip, Experience Focus */}
             <div className="relative">
               
               {/* Personal Identity Tag */}
@@ -1017,7 +1327,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                   Elīna Vītola
                 </p>
                 <p className="text-base sm:text-lg font-medium text-[#4A5D57] mt-0.5">
-                  {isEn ? "physiotherapist · movement therapist (concept persona)" : "fizioterapeite · kustību terapeite (koncepta persona)"}
+                  {isEn ? "Lead physiotherapist · movement therapist" : isRu ? "Ведущий физиотерапевт · двигательный терапевт" : "Vadošā fizioterapeite · kustību terapeite"}
                 </p>
               </div>
 
@@ -1025,6 +1335,8 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
               <h2 className="mt-6 text-3xl sm:text-4xl lg:text-[3rem] font-medium leading-[1.12] tracking-tight text-[#24302D]">
                 {isEn
                   ? "“First, I want to understand your story.”"
+                  : isRu
+                  ? "«Сначала я хочу понять вашу историю.»"
                   : "“Vispirms es gribu saprast Jūsu stāstu.”"}
               </h2>
 
@@ -1040,6 +1352,18 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     </p>
                     <p className="font-semibold text-[#24302D]">
                       Only then do we build a plan that truly fits into your life.
+                    </p>
+                  </>
+                ) : isRu ? (
+                  <>
+                    <p>
+                      Каждый человек двигается по-своему — и каждый приходит со своим опытом, повседневным ритмом и причиной, почему телу сейчас требуется особое внимание.
+                    </p>
+                    <p>
+                      Поэтому на первом визите я не спешу выдавать список упражнений. Сначала мы обсуждаем, что изменилось, что вы хотите вернуть и как тело движется в целом.
+                    </p>
+                    <p className="font-semibold text-[#24302D]">
+                      Только после этого мы составляем план, который реально вписывается в вашу жизнь.
                     </p>
                   </>
                 ) : (
@@ -1065,67 +1389,71 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 className="mt-8 rounded-2xl p-6 sm:p-7 border border-black/[0.06]"
               >
                 <p className="text-base font-semibold text-[#24302D]">
-                  {isEn ? "Why physiotherapy?" : "Kāpēc fizioterapija?"}
+                  {isEn ? "Why physiotherapy?" : isRu ? "Почему физиотерапия?" : "Kāpēc fizioterapija?"}
                 </p>
                 <p className="mt-2 text-base sm:text-lg italic leading-relaxed text-[#3D4F4A]">
                   {isEn
                     ? "“I have always been fascinated by the moment when someone begins trusting their body again. Not only when pain subsides, but when the confidence to move returns.”"
+                    : isRu
+                    ? "«Меня всегда вдохновлял момент, когда человек снова начинает доверять своему телу. Не просто когда утихает боль, а когда возвращается уверенность в каждом движении.»"
                     : "“Man vienmēr interesējis brīdis, kad cilvēks atkal sāk uzticēties savam ķermenim. Ne tikai tas, ka sāpes mazinās, bet ka atgriežas drošība kustēties.”"}
                 </p>
-                <span className="mt-3 block text-xs text-[#4A5D57] opacity-80">
-                  {isEn ? "— Fictional concept reflection" : "— Fiktīvs demonstrācijas pārdomu fragments"}
-                </span>
               </div>
 
-              {/* Experience Focus Areas (No Fake Numeric Credentials) & Human Detail */}
+              {/* Experience Focus Areas */}
               <div className="mt-8 grid gap-6 sm:grid-cols-2 border-t border-black/[0.08] pt-6">
                 <div>
                   <p className="text-sm font-semibold text-[#24302D] mb-2.5">
-                    {isEn ? "Focus areas (fictional concept):" : "Pieredzes virzieni (demonstrācijas koncepts):"}
+                    {isEn ? "Focus areas:" : isRu ? "Основные направления:" : "Galvenie virzieni:"}
                   </p>
                   <ul className="space-y-1.5 text-base text-[#4A5D57]">
-                    <li>{isEn ? "• Women's health" : "• Sieviešu veselība"}</li>
-                    <li>{isEn ? "• Spinal & joint rehabilitation" : "• Muguras un locītavu rehabilitācija"}</li>
-                    <li>{isEn ? "• Movement therapy" : "• Kustību terapija"}</li>
-                    <li>{isEn ? "• Postpartum recovery" : "• Pēcdzemdību atjaunošanās"}</li>
+                    <li>{isEn ? "• Women's health" : isRu ? "• Женское здоровье" : "• Sieviešu veselība"}</li>
+                    <li>{isEn ? "• Spinal & joint rehabilitation" : isRu ? "• Реабилитация позвоночника и суставов" : "• Muguras un locītavu rehabilitācija"}</li>
+                    <li>{isEn ? "• Movement therapy" : isRu ? "• Двигательная терапия" : "• Kustību terapija"}</li>
+                    <li>{isEn ? "• Postpartum recovery" : isRu ? "• Восстановление после родов" : "• Pēcdzemdību atjaunošanās"}</li>
                   </ul>
                 </div>
 
                 <div>
                   <p className="text-sm font-semibold text-[#24302D] mb-2.5">
-                    {isEn ? "Outside practice:" : "Ārpus prakses:"}
+                    {isEn ? "Outside practice:" : isRu ? "Вне практики:" : "Ārpus prakses:"}
                   </p>
                   <p className="text-base text-[#4A5D57] leading-relaxed">
                     {isEn
                       ? "Long walks · open-water swimming · good coffee"
+                      : isRu
+                      ? "Долгие прогулки · плавание · хороший кофе"
                       : "Garas pastaigas · peldēšana · laba kafija"}
                   </p>
-                  <span className="mt-2 block text-xs text-[#4A5D57] opacity-75">
-                    {isEn ? "Fictional persona personality profile" : "Fiktīvs personāža profils"}
-                  </span>
                 </div>
               </div>
 
-              {/* Secondary Photograph of Elīna Working With Patient + CTAs */}
+              {/* Action Buttons */}
               <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border-t border-black/[0.08] pt-6">
                 <div className="flex flex-wrap items-center gap-5">
                   <a
                     href="#pieraksts"
-                    onClick={() => { setSelectedSpecialist("elina"); changeBookingStep(3); }}
+                    onClick={() => {
+                      setSelectedPathway("women");
+                      setSelectedServiceId("women_eval");
+                      setSelectedSpecialist("elina");
+                      setSelectedDayIndex(1);
+                      setSelectedTimeSlot("10:30");
+                    }}
                     style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
                     className="rounded-full px-8 py-4 text-sm font-semibold hover:bg-[#D87967] transition-colors min-h-[48px] flex items-center justify-center shadow-xs"
                   >
-                    {isEn ? "Book with Elīna →" : "Pieteikt vizīti pie Elīnas →"}
+                    {isEn ? "Book with Elīna →" : isRu ? "Записаться к Элине →" : "Pieteikt vizīti pie Elīnas →"}
                   </a>
                   <a
                     href="#nodalas"
                     className="text-base font-medium text-[#4A5D57] hover:text-[#24302D] underline py-2"
                   >
-                    {isEn ? "Explore focus areas" : "Iepazīt prakses virzienus"}
+                    {isEn ? "Explore focus areas" : isRu ? "Направления практики" : "Iepazīt prakses virzienus"}
                   </a>
                 </div>
 
-                {/* Secondary In-Practice Photo (Parallax 6%) */}
+                {/* Secondary In-Practice Photo */}
                 <motion.div
                   style={{ y: storyImageY }}
                   className="hidden sm:block relative w-[200px] h-[140px] lg:w-[220px] lg:h-[155px] rounded-2xl overflow-hidden border-2 border-white shadow-md bg-[#FFF9F4] shrink-0"
@@ -1140,6 +1468,12 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 </motion.div>
               </div>
 
+              <div className="mt-6 pt-3 border-t border-black/[0.06]">
+                <p className="text-xs text-[#4A5D57] opacity-60">
+                  {isEn ? "Demonstration profile created for this concept." : isRu ? "Демонстрационный профиль, созданный для концепта." : "Demonstrācijas profils, kas izveidots šim konceptam."}
+                </p>
+              </div>
+
             </div>
           </div>
         </div>
@@ -1150,7 +1484,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
       {/* ============================================================ */}
       <section id="nodalas" className="relative">
         
-        {/* CHAPTER 1: SĀPES & ATVESEĻOŠANĀS (Movement-Oriented Landscape + Overlap) */}
+        {/* CHAPTER 1: SĀPES & ATVESEĻOŠANĀS */}
         <div
           id="sapes"
           style={{
@@ -1161,7 +1495,6 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
             <div className="grid lg:grid-cols-[1.15fr_0.85fr] items-center">
               
-              {/* Large Landscape Image (~60% width) without heavy card frame */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -1178,10 +1511,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 />
               </motion.div>
 
-              {/* Text Partially Overlapping Cream Background */}
               <div className="mt-8 lg:mt-0 lg:-ml-16 relative z-10 lg:bg-[#FFF9F4]/95 lg:backdrop-blur-md lg:p-10 lg:rounded-3xl">
-                
-                {/* Subtle Motion Trace Line */}
                 <svg className="w-36 h-8 mb-3 text-[#D87967]" viewBox="0 0 160 32" fill="none">
                   <motion.path
                     d="M 5,20 C 45,5 115,28 155,14"
@@ -1196,18 +1526,22 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 </svg>
 
                 <h2 className="text-2xl sm:text-4xl lg:text-[2.6rem] font-medium text-[#24302D] leading-[1.16]">
-                  {isEn ? "Return to movement you can trust again." : "Atgriezties pie kustības, kurai atkal var uzticēties."}
+                  {isEn ? "Return to movement you can trust again." : isRu ? "Вернитесь к движениям, которым снова можно доверять." : "Atgriezties pie kustības, kurai atkal var uzticēties."}
                 </h2>
 
                 <div className="mt-5 space-y-4 text-lg sm:text-[19px] leading-relaxed text-[#3D4F4A]">
                   <p>
                     {isEn
                       ? "Pain changes how we sit, walk, sleep, and think about our bodies. It creates hesitation and strain."
+                      : isRu
+                      ? "Боль меняет то, как мы сидим, ходим, спим и относимся к своему телу, создавая постоянное напряжение."
                       : "Sāpes bieži maina to, kā mēs kustamies, strādājam, guļam un pat domājam par savu ķermeni."}
                   </p>
                   <p>
                     {isEn
                       ? "We start with what troubles you most, evaluate full movement patterns, and build a safe roadmap back without strain."
+                      : isRu
+                      ? "Мы начинаем с того, что беспокоит именно вас, оцениваем движения в целом и шаг за шагом возвращаем уверенность."
                       : "Mēs sākam ar to, kas traucē tieši Jums, izvērtējam kustību kopumā un soli pa solim veidojam ceļu atpakaļ uz drošu kustību — bez lieka stresa un pārslodzes."}
                   </p>
                 </div>
@@ -1215,20 +1549,28 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 <p className="mt-6 text-base font-medium text-[#4A5D57]">
                   {isEn
                     ? "Back & neck relief · Post-injury rehab · Mobility restore"
+                    : isRu
+                    ? "Боль в спине и шее · Реабилитация после травм · Восстановление подвижности"
                     : "Muguras un kakla sāpes · Pēctraumu atjaunošanās · Kustību ierobežojumi"}
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-6">
                   <a
                     href="#pieraksts"
-                    onClick={() => { setSelectedService("rehab"); changeBookingStep(3); }}
+                    onClick={() => {
+                      setSelectedPathway("physio");
+                      setSelectedServiceId("physio_first");
+                      setSelectedSpecialist("marta");
+                      setSelectedDayIndex(2);
+                      setSelectedTimeSlot("09:30");
+                    }}
                     style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
                     className="rounded-full px-8 py-4 text-center text-sm font-semibold hover:bg-[#C26553] min-h-[48px] flex items-center justify-center shadow-xs"
                   >
-                    {isEn ? "Book rehabilitation session →" : "Pieteikt rehabilitācijas vizīti →"}
+                    {isEn ? "Book rehabilitation session →" : isRu ? "Записаться на реабилитацию →" : "Pieteikt rehabilitācijas vizīti →"}
                   </a>
                   <a href="#cenas" className="text-base font-medium text-[#4A5D57] hover:text-[#24302D] underline py-2">
-                    {isEn ? "View pricing" : "Skatīt cenrādi"}
+                    {isEn ? "View pricing" : isRu ? "Цены" : "Skatīt cenrādi"}
                   </a>
                 </div>
               </div>
@@ -1236,7 +1578,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           </div>
         </div>
 
-        {/* CHAPTER 2: GRŪTNIECĪBA (Quiet Left Column + Viewport-Touching Right Portrait) */}
+        {/* CHAPTER 2: GRŪTNIECĪBA */}
         <div
           id="grutnieciba"
           style={{
@@ -1247,25 +1589,28 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
             <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               
-              {/* Quiet Left Column */}
               <div>
                 <p className="font-serif italic text-lg text-[#D87967] mb-2.5">
-                  {isEn ? "more room to breathe" : "vairāk vietas elpai"}
+                  {isEn ? "more room to breathe" : isRu ? "больше легкости и дыхания" : "vairāk vietas elpai"}
                 </p>
 
                 <h2 className="text-2xl sm:text-4xl lg:text-[2.6rem] font-medium text-[#24302D] leading-[1.16]">
-                  {isEn ? "Your body is changing. You don't have to navigate it alone." : "Ķermenis mainās. Jums nav tas jāizdzīvo vienai."}
+                  {isEn ? "Your body is changing. You don't have to navigate it alone." : isRu ? "Тело меняется. Вам не нужно проходить через это в одиночку." : "Ķermenis mainās. Jums nav tas jāizdzīvo vienai."}
                 </h2>
 
                 <div className="mt-5 space-y-4 text-lg sm:text-[19px] leading-relaxed text-[#3D4F4A]">
                   <p>
                     {isEn
                       ? "During pregnancy, joint ligaments loosen and the pelvic girdle takes on unfamiliar load. It's natural, but persistent discomfort doesn't have to be endured."
+                      : isRu
+                      ? "Во время беременности связки становятся эластичнее, а поясница и таз получают непривычную нагрузку. Это естественно, но боль не нужно терпеть."
                       : "Gaidību laikā mainās smaguma centrs, locītavu saites kļūst elastīgākas, un muguras jostas daļa un iegurnis saņem nepierastu slodzi. Tas ir dabisks process, taču tas nenozīmē, ka sāpes ir jāpacieš."}
                   </p>
                   <p>
                     {isEn
                       ? "We help you discover more comfortable movement, breathing, and relaxation techniques throughout pregnancy and birth preparation."
+                      : isRu
+                      ? "Мы помогаем найти удобные движения, техники дыхания и расслабления во время беременности и подготовки к родам."
                       : "Mēs palīdzam atrast ērtākas kustības, elpošanas un atslābināšanās paņēmienus grūtniecības un dzemdību sagatavošanās laikā."}
                   </p>
                 </div>
@@ -1273,23 +1618,30 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 <p className="mt-6 text-base font-medium text-[#4A5D57]">
                   {isEn
                     ? "Pelvic & lumbar relief · Birth prep breathing · Gentle taping"
+                    : isRu
+                    ? "Разгрузка таза и поясницы · Дыхание для родов · Мягкое тейпирование"
                     : "Iegurņa un muguras atslogošana · Elpošana dzemdību sagatavošanai · Saudzīga teipošana"}
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-6">
                   <a
                     href="#pieraksts"
-                    onClick={() => { setSelectedService("women"); setSelectedSpecialist("elina"); changeBookingStep(3); }}
+                    onClick={() => {
+                      setSelectedPathway("women");
+                      setSelectedServiceId("women_eval");
+                      setSelectedSpecialist("elina");
+                      setSelectedDayIndex(1);
+                      setSelectedTimeSlot("10:30");
+                    }}
                     style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
                     className="rounded-full px-8 py-4 text-center text-sm font-semibold hover:bg-[#D87967] min-h-[48px] flex items-center justify-center"
                   >
-                    {isEn ? "Book prenatal care session →" : "Pieteikt grūtniecības vizīti →"}
+                    {isEn ? "Book prenatal care session →" : isRu ? "Записаться на консультацию →" : "Pieteikt grūtniecības vizīti →"}
                   </a>
-                  <span className="text-base text-[#4A5D57]">{isEn ? "Led by Elīna Vītola" : "Pieņem Elīna Vītola"}</span>
+                  <span className="text-base text-[#4A5D57]">{isEn ? "Led by Elīna Vītola" : isRu ? "Принимает Элина Витола" : "Pieņem Elīna Vītola"}</span>
                 </div>
               </div>
 
-              {/* Portrait Touching Viewport Edge */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -1309,7 +1661,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           </div>
         </div>
 
-        {/* CHAPTER 3: PĒC DZEMDĪBĀM (Intimate Two-Image Bodily Focus) */}
+        {/* CHAPTER 3: PĒC DZEMDĪBĀM */}
         <div
           id="pecdzemdibam"
           style={{
@@ -1320,7 +1672,6 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
             <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
               
-              {/* Two Visuals: Large Tactile Close-up + Smaller Lifestyle Vignette */}
               <div className="grid grid-cols-2 gap-4 lg:grid-cols-1 lg:gap-6">
                 <motion.div
                   initial="hidden"
@@ -1349,41 +1700,47 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 </div>
               </div>
 
-              {/* Narrative Content */}
-              <div className="lg:pl-6">
+              <div className="space-y-6">
+                <p className="font-serif italic text-lg text-[#D87967]">
+                  {isEn ? "patience and care" : isRu ? "терпение и бережность" : "pacietība un saudzība"}
+                </p>
+
                 <h2 className="text-2xl sm:text-4xl lg:text-[2.6rem] font-medium text-[#24302D] leading-[1.16]">
-                  {isEn ? "Returning to yourself is not a race." : "Atgriešanās pie sevis nav sacensība."}
+                  {isEn ? "Giving your body time to restore without pressure." : isRu ? "Дать телу время восстановиться без давления." : "Dot ķermenim laiku atjaunoties bez steigas."}
                 </h2>
 
-                <div className="mt-5 space-y-4 text-lg sm:text-[19px] leading-relaxed text-[#3D4F4A]">
+                <div className="space-y-4 text-lg sm:text-[19px] leading-relaxed text-[#3D4F4A]">
                   <p>
                     {isEn
-                      ? "The postpartum period demands patience and genuine gentleness. Your body needs time for tissues to regenerate, core layers to reconnect, and pelvic base to stabilize."
-                      : "Pēcdzemdību periods prasa pacietību un patiesu saudzību. Ķermenim ir nepieciešams laiks, lai audi atjaunotos, vēdera dziļie muskuļi atkal atrastu savienojumu un iegurņa pamatne kļūtu stabila."}
+                      ? "The postpartum period requires patient listening. Abdominal separation (diastasis), pelvic floor changes, and daily carrying strains deserve thoughtful evaluation."
+                      : isRu
+                      ? "Послеродовой период требует бережного внимания. Диастаз, изменения тазового дна и ежедневное ношение малыша заслуживают внимательной оценки."
+                      : "Pēcdzemdību periods prasa pacietīgu ieklausīšanos. Diastāze, iegurņa pamatnes muskuļu tonuss un ikdienas slodze ar mazuli uz rokām prasa saudzīgu pieeju."}
                   </p>
                   <p>
                     {isEn
-                      ? "We evaluate rectus diastasis, support C-section scar recovery, and establish a gradual, safe return to daily activities and movement."
-                      : "Mēs veicam taisnā vēdera muskuļa diastāzes izvērtēšanu, atbalstām rētu sadzīšanu pēc ķeizargrieziena un veidojam pakāpenisku, drošu atgriešanās plānu ikdienas aktivitātēm."}
+                      ? "We safely evaluate tissue healing, posture alignment, and guide progressive return to everyday movement."
+                      : isRu
+                      ? "Мы безопасно оцениваем состояние тканей, осанку и направляем постепенное возвращение к привычной активности."
+                      : "Mēs droši pārbaudām audu stāvokli, stāju un palīdzam atgriezties pie kustībām ar pārliecību."}
                   </p>
                 </div>
 
-                <p className="mt-6 text-base font-medium text-[#4A5D57]">
-                  {isEn
-                    ? "Diastasis assessment · Pelvic floor core · Scar care"
-                    : "Diastāzes izvērtēšana · Iegurņa pamatnes muskuļi · Rētas aprūpe"}
-                </p>
-
-                <div className="mt-8 flex flex-wrap items-center gap-6">
+                <div className="pt-2">
                   <a
                     href="#pieraksts"
-                    onClick={() => { setSelectedService("women"); setSelectedSpecialist("elina"); changeBookingStep(3); }}
+                    onClick={() => {
+                      setSelectedPathway("women");
+                      setSelectedServiceId("women_postpartum");
+                      setSelectedSpecialist("elina");
+                      setSelectedDayIndex(1);
+                      setSelectedTimeSlot("13:00");
+                    }}
                     style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                    className="rounded-full px-8 py-4 text-center text-sm font-semibold hover:bg-[#C26553] min-h-[48px] flex items-center justify-center shadow-xs"
+                    className="inline-block rounded-full px-8 py-4 text-sm font-semibold hover:bg-[#C26553] shadow-xs min-h-[48px]"
                   >
-                    {isEn ? "Book postpartum checkup →" : "Pieteikt pēcdzemdību pārbaudi →"}
+                    {isEn ? "Book postpartum recovery visit →" : isRu ? "Записаться на послеродовой визит →" : "Pieteikt pēcdzemdību vizīti →"}
                   </a>
-                  <span className="text-base text-[#4A5D57]">{isEn ? "Recommended from week 6 postpartum" : "Ieteicams no 6. nedēļas pēc dzemdībām"}</span>
                 </div>
               </div>
 
@@ -1391,89 +1748,80 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           </div>
         </div>
 
-        {/* CHAPTER 4: MAZUĻI & BĒRNI (Playful Energy, Asymmetric Crop & 3 Parent Questions) */}
+        {/* CHAPTER 4: BĒRNI & ZĪDAIŅI */}
         <div
-          id="berniem"
+          id="berni"
           style={{
-            background: "linear-gradient(180deg, #F5EDE6 0%, #E5ECE5 50%, #FFF9F4 100%)",
+            background: "linear-gradient(180deg, #F5EDE6 0%, #FFF9F4 100%)",
           }}
           className="py-20 sm:py-28 lg:py-36 overflow-hidden"
         >
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
-            <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               
-              {/* Narrative Content with 3 Parent Thought Prompts */}
               <div>
+                <p className="font-serif italic text-lg text-[#D87967] mb-2.5">
+                  {isEn ? "gentle first steps" : isRu ? "первые уверенные движения" : "pirmie drošie soļi"}
+                </p>
+
                 <h2 className="text-2xl sm:text-4xl lg:text-[2.6rem] font-medium text-[#24302D] leading-[1.16]">
-                  {isEn ? "A small body. A monumental developmental journey." : "Mazs ķermenis. Milzīgs attīstības ceļš."}
+                  {isEn ? "Supporting natural movement and milestones from the start." : isRu ? "Поддержка естественного движения и развития с первых месяцев." : "Dabiska kustību attīstība no pirmajiem mēnešiem."}
                 </h2>
 
-                {/* 3 Real Parent Thought Questions */}
-                <div className="mt-6 flex flex-wrap gap-2.5">
-                  {(isEn
-                    ? [
-                        "“Is baby rolling symmetrically to both sides?”",
-                        "“When should sitting happen naturally?”",
-                        "“How to lift and hold baby comfortably?”",
-                      ]
-                    : [
-                        "“Vai viņš veļas uz abām pusēm?”",
-                        "“Kad jāsāk sēdēt?”",
-                        "“Kā pareizi celt mazuli?”",
-                      ]
-                  ).map((thought) => (
-                    <span
-                      key={thought}
-                      className="rounded-full bg-white/70 px-4 py-2 text-xs sm:text-sm font-medium text-[#4A5D57] border border-black/[0.06]"
-                    >
-                      {thought}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-6 space-y-4 text-lg sm:text-[19px] leading-relaxed text-[#3D4F4A]">
+                <div className="mt-5 space-y-4 text-lg sm:text-[19px] leading-relaxed text-[#3D4F4A]">
                   <p>
                     {isEn
-                      ? "In their first year, babies master life's cornerstone movements — rolling, crawling, sitting, and taking first steps. Parent handling in everyday care is the finest foundation for balanced growth."
-                      : "Pirmajā dzīves gadā mazulis apgūst svarīgākās dzīves kustības — velšanos, rāpošanu, sēdēšanu un pirmos soļus. Vecāku saudzīgs hendlings ikdienas aprūpē ir labākais atbalsts simetriskai attīstībai."}
+                      ? "Every baby develops along their own timeline. In a calm and unhurried setting, our pediatric therapist observes movement symmetry, rolling, crawling, and posture."
+                      : isRu
+                      ? "Каждый ребенок развивается в своем темпе. В спокойной обстановке детский физиотерапевт оценивает симметрию движений, перевороты, ползание и осанку."
+                      : "Katrs mazulis attīstās savā ritmā. Mierīgā gaisotnē bērnu fizioterapeite izvērtē motoros posmus, simetriju, velšanos, rāpošanu un stāju."}
                   </p>
                   <p>
                     {isEn
-                      ? "In playful, calm sessions, Anna Ozola evaluates infant motor development and teaches parents practical everyday techniques to support confident movement at home."
-                      : "Nodarbībā Anna Ozola rotaļīgā un mierīgā veidā novērtē mazuļa motoriku un iemāca vecākiem praktiskus paņēmienus, kā ikdienā palīdzēt mazulim kustēties brīvi un droši."}
+                      ? "We empower parents with gentle handling techniques that easily integrate into feeding, dressing, holding, and daily play."
+                      : isRu
+                      ? "Мы обучаем родителей бережным приемам хендлинга, которые легко встроить в кормление, одевание и совместные игры."
+                      : "Mēs iemācām vecākiem saudzīgu hendlingu, ko viegli iekļaut ikdienas aprūpē, ģērbšanā un rotaļās."}
                   </p>
                 </div>
 
                 <p className="mt-6 text-base font-medium text-[#4A5D57]">
                   {isEn
-                    ? "Infant handling · Motor development · Milestone guidance · Posture support"
-                    : "Zīdaiņu hendlings · Kustību attīstība · Vecāku apmācība · Bērnu stāja"}
+                    ? "Infant handling · Motor development · Child posture check"
+                    : isRu
+                    ? "Хендлинг младенцев · Моторное развитие · Проверка осанки ребенка"
+                    : "Zīdaiņu hendlings · Motoro posmu novērtējums · Bērnu stāja"}
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-6">
                   <a
                     href="#pieraksts"
-                    onClick={() => { setSelectedService("infant"); setSelectedSpecialist("anna"); changeBookingStep(3); }}
+                    onClick={() => {
+                      setSelectedPathway("baby");
+                      setSelectedServiceId("baby_infant");
+                      setSelectedSpecialist("anna");
+                      setSelectedDayIndex(3);
+                      setSelectedTimeSlot("11:00");
+                    }}
                     style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
                     className="rounded-full px-8 py-4 text-center text-sm font-semibold hover:bg-[#D87967] min-h-[48px] flex items-center justify-center"
                   >
-                    {isEn ? "Book infant handling session →" : "Pieteikt hendlinga nodarbību →"}
+                    {isEn ? "Book infant consultation →" : isRu ? "Консультация по развитию малыша →" : "Pieteikt mazuļa konsultāciju →"}
                   </a>
-                  <span className="text-base text-[#4A5D57]">{isEn ? "Led by Anna Ozola (40 € / 45 min)" : "Pieņem Anna Ozola (40 € / 45 min)"}</span>
+                  <span className="text-base text-[#4A5D57]">{isEn ? "Led by Anna Ozola" : isRu ? "Принимает Анна Озола" : "Pieņem Anna Ozola"}</span>
                 </div>
               </div>
 
-              {/* Asymmetric Cropped Action Photography */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={chapterImageVariants}
-                className="relative h-[360px] sm:h-[480px] lg:h-[540px] w-full overflow-hidden rounded-3xl lg:rounded-tr-[90px] lg:rounded-bl-[90px] bg-[#FFF9F4]"
+                className="relative h-[380px] sm:h-[480px] lg:h-[540px] w-full overflow-hidden rounded-3xl bg-[#FFF9F4] shadow-xs"
               >
                 <Image
                   src="/concept-physio/service-children.jpg"
-                  alt={isEn ? "Infant development & parent handling" : "Zīdaiņu attīstība un mīlošs hendlings"}
+                  alt={isEn ? "Infant development and gentle handling" : "Zīdaiņu attīstība un saudzīgs hendlings"}
                   fill
                   sizes="(max-width: 1024px) 100vw, 45vw"
                   className="object-cover object-center"
@@ -1482,33 +1830,29 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
             </div>
           </div>
         </div>
+
       </section>
 
       {/* ============================================================ */}
-      {/* 5. FIRST-VISIT CONTINUOUS HUMAN JOURNEY (NO CARD BOXES)      */}
+      {/* 5. FIRST VISIT JOURNEY (1200px CANVAS WITH CONTINUOUS LINE)  */}
       {/* ============================================================ */}
-      <section
-        id="vizite"
-        style={{
-          backgroundColor: "#FFF9F4",
-        }}
-        className="relative py-20 sm:py-28 lg:py-36 overflow-hidden border-t border-black/[0.06]"
-      >
+      <section id="vizite" className="py-20 sm:py-28 lg:py-36 bg-[#FFF9F4] border-t border-black/[0.06]">
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
           
-          {/* Header Narrative */}
           <div className="max-w-3xl">
             <h2 className="text-3xl sm:text-5xl font-medium text-[#24302D] leading-[1.15]">
-              {isEn ? "A first visit with zero unknowns." : "Pirmā vizīte bez nezināmā."}
+              {isEn ? "A first visit with zero unknowns." : isRu ? "Первый визит без неизвестности." : "Pirmā vizīte bez nezināmā."}
             </h2>
             <p className="mt-4 text-lg sm:text-xl text-[#4A5D57]">
               {isEn
                 ? "You don't need to know which medical service to request. That's our job."
+                : isRu
+                ? "Вам не нужно заранее разбираться в медицинских терминах. Это наша задача."
                 : "Jums nav jāzina, kāds pakalpojums Jums vajadzīgs. Tas ir mūsu darbs."}
             </p>
           </div>
 
-          {/* DESKTOP: 1200px-wide Horizontal Storytelling Canvas with Continuous Organic Coral Line */}
+          {/* DESKTOP: 1200px-wide Horizontal Storytelling Canvas */}
           <div className="hidden lg:block relative mt-20 max-w-[1200px]">
             
             {/* Continuous Organic Curved SVG Movement Line */}
@@ -1527,7 +1871,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
               </svg>
             </div>
 
-            {/* 4 Story Moments Interspersed with 2 Tactile Detail Images */}
+            {/* 4 Story Moments Interspersed with Tactile Detail Images */}
             <div className="grid grid-cols-4 gap-8 relative z-10">
               
               {/* Step 01 */}
@@ -1537,15 +1881,16 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     01
                   </span>
                   <h3 className="mt-4 text-xl font-medium text-[#24302D]">
-                    {isEn ? "Let's talk first." : "Parunāsim."}
+                    {isEn ? "Let's talk first." : isRu ? "Сначала поговорим." : "Parunāsim."}
                   </h3>
                   <p className="mt-3 text-base leading-relaxed text-[#4A5D57]">
                     {isEn
                       ? "You share your history, daily routine, and what feels uncomfortable or restricted."
+                      : isRu
+                      ? "Вы рассказываете свою историю, привычные нагрузки и то, что сейчас доставляет дискомфорт."
                       : "Jūs izstāstāt savu pieredzi, ikdienas slodzi un to, kas šobrīd rada diskomfortu."}
                   </p>
                 </div>
-                {/* Small Candid Image 1 */}
                 <div className="mt-8 relative h-32 w-full rounded-2xl overflow-hidden bg-[#F8E9E3] shadow-xs">
                   <Image
                     src="/concept-physio/warm-guidance.jpg"
@@ -1564,16 +1909,18 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     02
                   </span>
                   <h3 className="mt-4 text-xl font-medium text-[#24302D]">
-                    {isEn ? "Let's see how your body moves." : "Paskatīsimies, kā ķermenis kustas."}
+                    {isEn ? "Let's see how your body moves." : isRu ? "Посмотрим, как движется тело." : "Paskatīsimies, kā ķermenis kustas."}
                   </h3>
                   <p className="mt-3 text-base leading-relaxed text-[#4A5D57]">
                     {isEn
                       ? "A gentle evaluation of movement patterns, posture, and muscular balance without provoking pain."
+                      : isRu
+                      ? "Бережная оценка паттернов движения, осанки и мышечного баланса без провокации боли."
                       : "Saudzīgs kustību, stājas un muskuļu balansa novērtējums bez sāpju provocēšanas."}
                   </p>
                 </div>
                 <div className="mt-8 pt-6 border-t border-black/[0.06] text-xs text-[#D87967] font-medium">
-                  {isEn ? "Gentle movement observation" : "Saudzīga kustību vērošana"}
+                  {isEn ? "Gentle movement observation" : isRu ? "Бережное наблюдение движений" : "Saudzīga kustību vērošana"}
                 </div>
               </div>
 
@@ -1584,15 +1931,16 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     03
                   </span>
                   <h3 className="mt-4 text-xl font-medium text-[#24302D]">
-                    {isEn ? "We explain what is happening." : "Izskaidrosim."}
+                    {isEn ? "We explain what is happening." : isRu ? "Объясним происходящее." : "Izskaidrosim."}
                   </h3>
                   <p className="mt-3 text-base leading-relaxed text-[#4A5D57]">
                     {isEn
                       ? "In simple, clear human language, we explain why your body is reacting this way."
+                      : isRu
+                      ? "Простым и понятным языком объясняем, почему тело реагирует именно так."
                       : "Vienkāršā, cilvēcīgā valodā izskaidrojam, kāpēc ķermenis reaģē tieši šādi."}
                   </p>
                 </div>
-                {/* Small Tactile Detail Image 2 */}
                 <div className="mt-8 relative h-32 w-full rounded-2xl overflow-hidden bg-[#F8E9E3] shadow-xs">
                   <Image
                     src="/concept-physio/hands-care.jpg"
@@ -1611,25 +1959,26 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     04
                   </span>
                   <h3 className="mt-4 text-xl font-medium text-[#24302D]">
-                    {isEn ? "We agree on the next step." : "Vienosimies par nākamo soli."}
+                    {isEn ? "We agree on the next step." : isRu ? "Договоримся о следующем шаге." : "Vienosimies par nākamo soli."}
                   </h3>
                   <p className="mt-3 text-base leading-relaxed text-[#4A5D57]">
                     {isEn
                       ? "A plan that realistically fits your daily life. 2–3 simple home habits without overwhelming routines."
+                      : isRu
+                      ? "План, который реально выполним в вашей жизни. 2–3 простых домашних навыка без перегрузки."
                       : "Plāns, kas ir reāli izpildāms Jūsu ikdienā. 2–3 vienkārši paradumi vai vingrojumi mājas videi bez pārslodzes."}
                   </p>
                 </div>
                 <div className="mt-8 pt-6 border-t border-black/[0.06] text-xs text-[#D87967] font-medium">
-                  {isEn ? "Realistic daily routine" : "Reāls ikdienas plāns"}
+                  {isEn ? "Realistic daily routine" : isRu ? "Реальный ежедневный план" : "Reāls ikdienas plāns"}
                 </div>
               </div>
 
             </div>
           </div>
 
-          {/* MOBILE / TABLET: Vertical Flow with Organic Line Down Left Side */}
+          {/* MOBILE / TABLET: Vertical Flow */}
           <div className="lg:hidden relative mt-14 pl-8 sm:pl-10">
-            {/* Vertical Organic Dashed Line */}
             <div className="absolute top-2 bottom-6 left-3 sm:left-4 w-[2px] bg-gradient-to-b from-[#D87967]/60 via-[#D87967]/30 to-transparent pointer-events-none" />
 
             <div className="space-y-12">
@@ -1639,11 +1988,13 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                   01
                 </span>
                 <h3 className="text-xl font-medium text-[#24302D]">
-                  {isEn ? "Let's talk first." : "Parunāsim."}
+                  {isEn ? "Let's talk first." : isRu ? "Сначала поговорим." : "Parunāsim."}
                 </h3>
                 <p className="mt-2 text-base leading-relaxed text-[#4A5D57]">
                   {isEn
                     ? "You share your history, daily routine, and what feels uncomfortable or restricted."
+                    : isRu
+                    ? "Вы рассказываете свою историю, привычные нагрузки и то, что сейчас доставляет дискомфорт."
                     : "Jūs izstāstāt savu pieredzi, ikdienas slodzi un to, kas šobrīd rada diskomfortu."}
                 </p>
                 <div className="mt-4 relative h-40 w-full rounded-2xl overflow-hidden bg-[#F8E9E3]">
@@ -1663,11 +2014,13 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                   02
                 </span>
                 <h3 className="text-xl font-medium text-[#24302D]">
-                  {isEn ? "Let's see how your body moves." : "Paskatīsimies, kā ķermenis kustas."}
+                  {isEn ? "Let's see how your body moves." : isRu ? "Посмотрим, как движется тело." : "Paskatīsimies, kā ķermenis kustas."}
                 </h3>
                 <p className="mt-2 text-base leading-relaxed text-[#4A5D57]">
                   {isEn
                     ? "A gentle evaluation of movement patterns, posture, and muscular balance without provoking pain."
+                    : isRu
+                    ? "Бережная оценка паттернов движения, осанки и мышечного баланса без провокации боли."
                     : "Saudzīgs kustību, stājas un muskuļu balansa novērtējums bez sāpju provocēšanas."}
                 </p>
               </div>
@@ -1678,11 +2031,13 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                   03
                 </span>
                 <h3 className="text-xl font-medium text-[#24302D]">
-                  {isEn ? "We explain what is happening." : "Izskaidrosim."}
+                  {isEn ? "We explain what is happening." : isRu ? "Объясним происходящее." : "Izskaidrosim."}
                 </h3>
                 <p className="mt-2 text-base leading-relaxed text-[#4A5D57]">
                   {isEn
                     ? "In simple, clear human language, we explain why your body is reacting this way."
+                    : isRu
+                    ? "Простым и понятным языком объясняем, почему тело реагирует именно так."
                     : "Vienkāršā, cilvēcīgā valodā izskaidrojam, kāpēc ķermenis reaģē tieši šādi."}
                 </p>
                 <div className="mt-4 relative h-40 w-full rounded-2xl overflow-hidden bg-[#F8E9E3]">
@@ -1702,30 +2057,32 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                   04
                 </span>
                 <h3 className="text-xl font-medium text-[#24302D]">
-                  {isEn ? "We agree on the next step." : "Vienosimies par nākamo soli."}
+                  {isEn ? "We agree on the next step." : isRu ? "Договоримся о следующем шаге." : "Vienosimies par nākamo soli."}
                 </h3>
                 <p className="mt-2 text-base leading-relaxed text-[#4A5D57]">
                   {isEn
                     ? "A plan that realistically fits your daily life. 2–3 simple home habits without overwhelming routines."
+                    : isRu
+                    ? "План, который реально выполним в вашей жизни. 2–3 простых домашних навыка без перегрузки."
                     : "Plāns, kas ir reāli izpildāms Jūsu ikdienā. 2–3 vienkārši paradumi vai vingrojumi mājas videi bez pārslodzes."}
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Information Below: Elegant Single Text Bar (No Emojis, No Cards) */}
+          {/* Information Below: Elegant Single Text Bar */}
           <div className="mt-16 sm:mt-20 border-t border-black/[0.08] pt-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm sm:text-base text-[#3D4F4A]">
               <span className="font-semibold uppercase tracking-wider text-[#D87967] text-xs sm:text-sm">
-                {isEn ? "Before your visit" : "Pirms vizītes"}
+                {isEn ? "Before your visit" : isRu ? "Перед визитом" : "Pirms vizītes"}
               </span>
               <span className="hidden sm:inline text-black/30">|</span>
               <p className="leading-relaxed">
-                <span>{isEn ? "Comfortable clothing" : "Ērts apģērbs"}</span>
+                <span>{isEn ? "Comfortable clothing" : isRu ? "Удобная одежда" : "Ērts apģērbs"}</span>
                 <span className="mx-2 text-[#D87967]">·</span>
-                <span>{isEn ? "Bring previous medical imaging if available" : "Ja ir izmeklējumi, paņemiet tos līdzi"}</span>
+                <span>{isEn ? "Bring previous medical imaging if available" : isRu ? "Возьмите результаты обследований, если есть" : "Ja ir izmeklējumi, paņemiet tos līdzi"}</span>
                 <span className="mx-2 text-[#D87967]">·</span>
-                <span>{isEn ? "Arrive 5 minutes before your time" : "Ierodieties 5 minūtes agrāk"}</span>
+                <span>{isEn ? "Arrive 5 minutes before your time" : isRu ? "Приходите за 5 минут до начала" : "Ierodieties 5 minūtes agrāk"}</span>
               </p>
             </div>
 
@@ -1734,7 +2091,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
               style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
               className="rounded-full px-8 py-3.5 text-center text-sm font-semibold whitespace-nowrap hover:bg-[#C26553] shadow-xs min-h-[46px] flex items-center justify-center self-start md:self-auto"
             >
-              {isEn ? "Book first visit →" : "Pieteikt pirmo vizīti →"}
+              {isEn ? "Book first visit →" : isRu ? "Записаться на прием →" : "Pieteikt pirmo vizīti →"}
             </a>
           </div>
 
@@ -1742,19 +2099,21 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
       </section>
 
       {/* ============================================================ */}
-      {/* 6. PRACTITIONER TRIPTYCH (NO FAKE DEGREES / GENERIC FOCUS)   */}
+      {/* 6. PRACTITIONER TRIPTYCH                                     */}
       {/* ============================================================ */}
       <section id="specialistes" className="py-20 sm:py-28 lg:py-36 bg-[#FFF9F4] border-t border-black/[0.06]">
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
           
           <div className="max-w-3xl mb-12 sm:mb-16">
             <h2 className="text-3xl sm:text-5xl font-medium text-[#24302D] leading-tight">
-              {isEn ? "Physiotherapy Roles & Focus Areas" : "Fizioterapijas lomas un virzieni"}
+              {isEn ? "Physiotherapy Roles & Focus Areas" : isRu ? "Направления практики и специалисты" : "Fizioterapijas lomas un virzieni"}
             </h2>
             <p className="mt-4 text-lg sm:text-xl text-[#4A5D57]">
               {isEn
-                ? "Concept team profiles and key focus areas (demonstration personas)."
-                : "Koncepta komandas profili un galvenie prakses virzieni (demonstrācijas personāži)."}
+                ? "Demonstration practitioner profiles."
+                : isRu
+                ? "Демонстрационные профили специалистов практики."
+                : "Prakses speciālistu profili (paraugs)."}
             </p>
           </div>
 
@@ -1796,17 +2155,20 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                       onClick={() => {
                         setSelectedSpecialist(person.id);
                         if (person.id === "elina") {
+                          setSelectedPathway("women");
+                          setSelectedServiceId("women_eval");
                           setSelectedDayIndex(1);
                           setSelectedTimeSlot("10:30");
-                          setSelectedService("women");
                         } else if (person.id === "marta") {
+                          setSelectedPathway("physio");
+                          setSelectedServiceId("physio_first");
                           setSelectedDayIndex(2);
                           setSelectedTimeSlot("09:30");
-                          setSelectedService("first");
                         } else {
+                          setSelectedPathway("baby");
+                          setSelectedServiceId("baby_infant");
                           setSelectedDayIndex(3);
                           setSelectedTimeSlot("11:00");
-                          setSelectedService("infant");
                         }
                       }}
                       className="inline-flex items-center gap-2 text-base font-semibold text-[#D87967] hover:underline transition-colors py-1"
@@ -1814,6 +2176,8 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                       <span>
                         {isEn
                           ? `See ${person.name.split(" ")[0]}'s available sessions`
+                          : isRu
+                          ? `Смотреть свободные часы (${person.name.split(" ")[0]})`
                           : person.id === "elina"
                           ? "Skatīt Elīnas pieejamos laikus"
                           : person.id === "marta"
@@ -1831,27 +2195,29 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
       </section>
 
       {/* ============================================================ */}
-      {/* 7. TRANSPARENCY: DEMO PRICING & INSURANCE UX EXAMPLE         */}
+      {/* 7. TRANSPARENCY: SERVICE RATES & DIRECT SHORTCUTS            */}
       {/* ============================================================ */}
       <section id="cenas" className="py-20 sm:py-28 lg:py-36 bg-[#FFF7EF] border-t border-black/[0.06]">
         <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-12">
           <div>
             <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#D87967] block">
-              {isEn ? "Demonstration Pricing" : "Demonstrācijas cenas"}
+              {isEn ? "Transparent Rates" : isRu ? "Прозрачные цены" : "Cenrādis"}
             </span>
             <h2 className="mt-2 text-3xl sm:text-5xl font-medium text-[#24302D]">
-              {isEn ? "Example service rates" : "Piemēra pakalpojumu cenas"}
+              {isEn ? "Example service rates" : isRu ? "Примеры стоимости услуг" : "Piemēra pakalpojumu cenas"}
             </h2>
             <p className="mt-3 text-base sm:text-lg text-[#4A5D57]">
               {isEn
-                ? "Concept pricing shown for demonstration only. All essential session materials are included."
-                : "Koncepta cenrādis paraugam. Visi nodarbībai nepieciešamie materiāli ir iekļauti vizītes cenā."}
+                ? "Demonstration pricing shown for reference. All essential session materials are included."
+                : isRu
+                ? "Демонстрационный прейскурант. Все необходимые для занятия материалы включены в стоимость."
+                : "Demonstrācijas cenrādis paraugam. Visi nodarbībai nepieciešamie materiāli ir iekļauti vizītes cenā."}
             </p>
           </div>
 
-          {/* Flat Typographic Price Rows with Direct Booking Shortcuts */}
+          {/* Flat Typographic Price Rows */}
           <div className="mt-12 space-y-2">
-            {servicesList.map((srv) => (
+            {pricingList.map((srv) => (
               <div key={srv.id} className="border-b border-black/[0.08] py-6 flex flex-col sm:flex-row sm:items-baseline justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-baseline justify-between sm:justify-start gap-4">
@@ -1872,10 +2238,13 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                   </span>
                   <a
                     href="#pieraksts"
-                    onClick={() => setSelectedService(srv.id)}
+                    onClick={() => {
+                      setSelectedPathway(srv.pathway);
+                      setSelectedServiceId(srv.id);
+                    }}
                     className="inline-flex items-center gap-1.5 text-sm sm:text-base font-semibold text-[#D87967] hover:underline"
                   >
-                    <span>{isEn ? "Book this →" : "Pieteikt šo vizīti →"}</span>
+                    <span>{isEn ? "Book this →" : isRu ? "Записаться →" : "Pieteikt šo vizīti →"}</span>
                   </a>
                 </div>
               </div>
@@ -1883,31 +2252,13 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           </div>
 
           <p className="mt-6 text-xs text-[#4A5D57]">
-            {isEn ? "Concept pricing shown for demonstration only." : "Cenas norādītas kā demonstrācijas paraugs."}
+            {isEn ? "Demonstration pricing shown for reference." : isRu ? "Демонстрационный прейскурант для ознакомления." : "Cenas norādītas kā demonstrācijas paraugs."}
           </p>
-
-          {/* Insurance Information UX Example (No Fake Brand Partnerships) */}
-          <div className="mt-12 pt-8 border-t border-black/[0.08]">
-            <p className="text-sm font-bold uppercase tracking-wider text-[#D87967]">
-              {isEn ? "Insurance" : "Apdrošināšana"}
-            </p>
-            <h3 className="mt-2 text-xl sm:text-2xl font-medium text-[#24302D]">
-              {isEn
-                ? "“In a real project, this module would present the practice's insurance partners, direct billing workflows, and required claim documentation.”"
-                : "“Reālā projektā šeit varētu parādīt prakses sadarbības partnerus, atlīdzības procesu un nepieciešamos dokumentus.”"}
-            </h3>
-            <p className="mt-3 text-sm sm:text-base text-[#4A5D57] leading-relaxed">
-              {isEn
-                ? "This demonstrates what Saiteo would solve for patient clarity without fabricating fictional commercial relationships."
-                : "Šis demonstrē, kā Saiteo struktūrē apdrošināšanas informāciju pacientu ērtībai, neizdomājot fiktīvas komerciālās partnerības."}
-            </p>
-          </div>
         </div>
       </section>
 
       {/* ============================================================ */}
-      {/* ============================================================ */}
-      {/* 8. PACIENTU PIEREDZES SCENĀRIJI — 3 SCROLLING STORY MOMENTS  */}
+      {/* 8. PATIENT EXPERIENCE — 3 VISIBLE STORY MOMENTS              */}
       {/* ============================================================ */}
       <section
         id="stasti"
@@ -1923,11 +2274,13 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
             <h2 className="text-3xl sm:text-5xl font-medium text-[#24302D] leading-[1.18]">
               {isEn
                 ? "What is essential for someone to feel after their first session?"
+                : isRu
+                ? "Что человеку важно почувствовать после первого визита?"
                 : "Kas cilvēkam ir svarīgi sajust pēc pirmās vizītes?"}
             </h2>
           </div>
 
-          {/* Three Visible Story Moments (Scroll-Revealed, No Carousel) */}
+          {/* Three Visible Story Moments */}
           <div className="space-y-20 sm:space-y-28">
             
             {/* MOMENT 01: UNDERSTANDING (Text Left / Image Right) */}
@@ -1940,14 +2293,16 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
             >
               <div>
                 <span className="font-mono text-sm font-bold text-[#D87967] uppercase tracking-wider block">
-                  01 · {isEn ? "UNDERSTANDING" : "IZPRATNE"}
+                  01 · {isEn ? "UNDERSTANDING" : isRu ? "ПОНИМАНИЕ" : "IZPRATNE"}
                 </span>
                 <h3 className="mt-3 text-3xl sm:text-4xl lg:text-[2.6rem] font-medium leading-[1.12] text-[#24302D]">
-                  {isEn ? "Understand what's happening." : "Saprast, kas notiek."}
+                  {isEn ? "Understand what's happening." : isRu ? "Понять, что происходит." : "Saprast, kas notiek."}
                 </h3>
                 <p className="mt-5 text-lg sm:text-xl leading-relaxed text-[#3D4F4A]">
                   {isEn
                     ? "Not merely receive an exercise checklist, but understand why your body responds this way and what the next steps are."
+                    : isRu
+                    ? "Не просто получить список упражнений, а понять, почему тело реагирует именно так и что мы будем делать дальше."
                     : "Ne tikai saņemt vingrojumu sarakstu, bet saprast, kāpēc ķermenis reaģē tieši šādi un ko mēs darīsim tālāk."}
                 </p>
               </div>
@@ -1968,29 +2323,36 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
               </div>
             </motion.div>
 
-            {/* MOMENT 02: SAFETY (Large Full-Width Near-Full-Bleed Moment with Text in Natural Negative Space) */}
+            {/* MOMENT 02: SAFETY (Photographic Editorial Moment Without Big Card Panel) */}
             <motion.div
               initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 25 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-10%" }}
               transition={{ duration: shouldReduceMotion ? 0.01 : 0.7, ease: easeOrganic }}
-              className="relative overflow-hidden rounded-3xl lg:rounded-[2.5rem] bg-[#FAF0EB] p-8 sm:p-12 lg:p-16 border border-black/[0.06] grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center"
+              className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center py-4"
             >
-              <div>
+              <div className="order-2 lg:order-1">
                 <span className="font-mono text-sm font-bold text-[#D87967] uppercase tracking-wider block">
-                  02 · {isEn ? "SAFETY" : "DROŠĪBA"}
+                  02 · {isEn ? "SAFETY" : isRu ? "БЕЗОПАСНОСТЬ" : "DROŠĪBA"}
                 </span>
                 <h3 className="mt-3 text-3xl sm:text-4xl lg:text-[2.6rem] font-medium leading-[1.12] text-[#24302D]">
-                  {isEn ? "Feel safe moving again." : "Justies droši kustēties."}
+                  {isEn ? "Feel safe moving again." : isRu ? "Чувствовать безопасность в движениях." : "Justies droši kustēties."}
                 </h3>
                 <p className="mt-5 text-lg sm:text-xl leading-relaxed text-[#3D4F4A]">
                   {isEn
                     ? "After pain, injury, pregnancy or childbirth, confidence in movement can matter just as much as strength."
+                    : isRu
+                    ? "Особенно после травмы, боли или родов чувство безопасности часто так же важно, как само упражнение."
                     : "Īpaši pēc traumas, sāpēm vai dzemdībām drošības sajūta bieži ir tikpat svarīga kā pats vingrojums."}
                 </p>
               </div>
 
-              <div className="relative h-[260px] sm:h-[340px] w-full overflow-hidden rounded-2xl bg-white shadow-xs">
+              <div
+                style={{
+                  borderRadius: "1.25rem 2.5rem 1.25rem 2.5rem",
+                }}
+                className="relative h-[300px] sm:h-[380px] w-full overflow-hidden bg-[#F8E9E3] shadow-xs order-1 lg:order-2"
+              >
                 <Image
                   src="/concept-physio/hands-care.jpg"
                   alt={isEn ? "Supportive tactile physical therapy guidance" : "Saudzīga manuālā vadība"}
@@ -2026,14 +2388,16 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
 
               <div className="order-1 lg:order-2">
                 <span className="font-mono text-sm font-bold text-[#D87967] uppercase tracking-wider block">
-                  03 · {isEn ? "PRACTICALITY" : "PRAKTISKUMS"}
+                  03 · {isEn ? "PRACTICALITY" : isRu ? "ПРАКТИЧНОСТЬ" : "PRAKTISKUMS"}
                 </span>
                 <h3 className="mt-3 text-3xl sm:text-4xl lg:text-[2.6rem] font-medium leading-[1.12] text-[#24302D]">
-                  {isEn ? "Know what to do at home." : "Zināt, ko darīt mājās."}
+                  {isEn ? "Know what to do at home." : isRu ? "Знать, что делать дома." : "Zināt, ko darīt mājās."}
                 </h3>
                 <p className="mt-5 text-lg sm:text-xl leading-relaxed text-[#3D4F4A]">
                   {isEn
                     ? "A few clear, realistic steps that fit daily life are more useful than a complicated plan that stays unused."
+                    : isRu
+                    ? "Несколько понятных, выполнимых шагов ценнее сложного плана, который останется нереализованным."
                     : "Daži konkrēti, izpildāmi soļi ir vērtīgāki par sarežģītu plānu, kas paliek neizmantots."}
                 </p>
               </div>
@@ -2045,7 +2409,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
       </section>
 
       {/* ============================================================ */}
-      {/* 9. CONTINUOUS BOOKING ARCHITECTURE (NOT HIDDEN BEHIND TABS)  */}
+      {/* 9. CONTINUOUS BOOKING ARCHITECTURE (CALMED & REFINED)        */}
       {/* ============================================================ */}
       <section
         id="pieraksts"
@@ -2055,154 +2419,96 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
         className="py-20 sm:py-28 lg:py-36 text-[#FFF9F4] relative overflow-hidden"
       >
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
-          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div className="grid gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-start">
             
-            {/* LEFT: 4 Direct Selectable Routes (All Visible on Scroll) & Safe Demo Channels */}
+            {/* LEFT: 4 Editorial Pathway Choices (Clean, Non-Card Style) */}
             <div>
               <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#9FB8A6] block">
-                {isEn ? "Online Booking · Demonstration" : "Vizītes pieteikšana · Demonstrācija"}
+                {isEn ? "Appointments" : isRu ? "Запись на прием" : "Vizītes pieteikšana"}
               </span>
               <h2 className="mt-2 text-3xl sm:text-5xl font-medium text-[#FFF9F4] leading-[1.15]">
-                {isEn ? "What would you like help with?" : "Ar ko mēs varam Jums palīdzēt?"}
+                {isEn ? "What would you like help with?" : isRu ? "С чем мы можем вам помочь?" : "Ar ko mēs varam Jums palīdzēt?"}
               </h2>
 
               <p className="mt-4 text-base sm:text-lg text-[#FFF9F4]/80">
                 {isEn
-                  ? "Explore all main care pathways. Select any area below to tailor the booking surface alongside."
-                  : "Izvēlieties savu virzienu. Izvēle automātiski pielāgos speciālisti un tuvāko pieejamo laiku."}
+                  ? "Select a care pathway below to view relevant appointment options and available specialist times."
+                  : isRu
+                  ? "Выберите направление, чтобы сразу увидеть подходящие виды консультаций и свободные часы специалистов."
+                  : "Izvēlieties savu virzienu. Tas automātiski atlasīs atbilstošos vizīšu veidus un speciālistu pieejamos laikus."}
               </p>
 
-              {/* 4 Clear Route Rows — All Visible Without Clicking */}
-              <div className="mt-8 space-y-3">
-                
-                {/* Route 1: Physio & Recovery */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedService("first");
-                    setSelectedSpecialist("marta");
-                    changeBookingStep(3);
-                  }}
-                  className={`w-full rounded-2xl border p-4 sm:p-5 text-left transition-all min-h-[72px] flex items-center justify-between ${
-                    selectedService === "first" || selectedService === "rehab"
-                      ? "border-[#D87967] bg-white/12 text-white shadow-xs"
-                      : "border-white/15 bg-white/5 text-[#FFF9F4]/90 hover:bg-white/10 hover:border-white/30"
-                  }`}
-                >
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-base sm:text-lg font-semibold text-white">
-                        {isEn ? "PHYSIOTHERAPY & RECOVERY" : "FIZIOTERAPIJA UN ATVESELOŠANĀS"}
-                      </span>
-                    </div>
-                    <p className="mt-1 text-xs sm:text-sm text-[#FFF9F4]/75">
-                      {isEn
-                        ? "Pain · injury · mobility · initial assessment"
-                        : "Muguras & locītavu sāpes · traumu rehabilitācija · stāja"}
-                    </p>
-                  </div>
-                  <div className="text-right pl-4 shrink-0">
-                    <span className="text-sm font-bold text-[#9FB8A6] block">
-                      {isEn ? "From €45" : "No 45 €"}
-                    </span>
-                    <span className="text-xs text-[#D87967] font-semibold">→</span>
-                  </div>
-                </button>
+              {/* Editorial Category List (Separated by Thin Hairlines, No Bulky Boxes) */}
+              <div className="mt-8 divide-y divide-white/15 border-y border-white/15">
+                {pathways.map((pathway) => {
+                  const isActive = selectedPathway === pathway.id;
+                  return (
+                    <button
+                      key={pathway.id}
+                      type="button"
+                      onClick={() => {
+                        setSelectedPathway(pathway.id);
+                        setSelectedServiceId(pathway.defaultService);
+                        setSelectedSpecialist(pathway.defaultSpecialist);
+                        setShowIntakeForm(false);
+                      }}
+                      className="w-full py-5 text-left transition-all flex items-center justify-between group cursor-pointer"
+                    >
+                      <div className="pr-4">
+                        <div className="flex items-center gap-3">
+                          {isActive && <span className="h-2 w-2 rounded-full bg-[#D87967] shrink-0" />}
+                          <span className={`text-base sm:text-lg font-semibold tracking-wide transition-colors ${
+                            isActive ? "text-[#D87967]" : "text-white group-hover:text-[#D87967]"
+                          }`}>
+                            {pathway.title}
+                          </span>
+                        </div>
+                        <p className="mt-1 text-xs sm:text-sm text-[#FFF9F4]/75 pl-5">
+                          {pathway.subtitle}
+                        </p>
+                      </div>
 
-                {/* Route 2: Women's Health */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedService("women");
-                    setSelectedSpecialist("elina");
-                    changeBookingStep(3);
-                  }}
-                  className={`w-full rounded-2xl border p-4 sm:p-5 text-left transition-all min-h-[72px] flex items-center justify-between ${
-                    selectedService === "women"
-                      ? "border-[#D87967] bg-white/12 text-white shadow-xs"
-                      : "border-white/15 bg-white/5 text-[#FFF9F4]/90 hover:bg-white/10 hover:border-white/30"
-                  }`}
-                >
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-base sm:text-lg font-semibold text-white">
-                        {isEn ? "WOMEN'S HEALTH" : "SIEVIETES VESELĪBA"}
-                      </span>
-                    </div>
-                    <p className="mt-1 text-xs sm:text-sm text-[#FFF9F4]/75">
-                      {isEn
-                        ? "Pregnancy · postpartum · pelvic recovery"
-                        : "Gaidību laiks · pēcdzemdību atjaunošanās · diastāze"}
-                    </p>
-                  </div>
-                  <div className="text-right pl-4 shrink-0">
-                    <span className="text-sm font-bold text-[#9FB8A6] block">
-                      {isEn ? "From €50" : "No 50 €"}
-                    </span>
-                    <span className="text-xs text-[#D87967] font-semibold">→</span>
-                  </div>
-                </button>
+                      <div className="text-right shrink-0 flex items-center gap-3">
+                        <span className="text-sm font-bold text-[#9FB8A6]">
+                          {pathway.fromPrice}
+                        </span>
+                        <span className={`text-sm transition-transform group-hover:translate-x-1 ${
+                          isActive ? "text-[#D87967] font-bold" : "text-white/40"
+                        }`}>
+                          →
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
 
-                {/* Route 3: Baby & Child */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedService("infant");
-                    setSelectedSpecialist("anna");
-                    changeBookingStep(3);
-                  }}
-                  className={`w-full rounded-2xl border p-4 sm:p-5 text-left transition-all min-h-[72px] flex items-center justify-between ${
-                    selectedService === "infant"
-                      ? "border-[#D87967] bg-white/12 text-white shadow-xs"
-                      : "border-white/15 bg-white/5 text-[#FFF9F4]/90 hover:bg-white/10 hover:border-white/30"
-                  }`}
-                >
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-base sm:text-lg font-semibold text-white">
-                        {isEn ? "BABY & CHILD DEVELOPMENT" : "ZĪDAIŅU UN BĒRNU ATTĪSTĪBA"}
-                      </span>
-                    </div>
-                    <p className="mt-1 text-xs sm:text-sm text-[#FFF9F4]/75">
-                      {isEn
-                        ? "Infant motor milestones · handling · posture"
-                        : "Motorā attīstība · zīdaiņu hendlings · stājas pārbaude"}
-                    </p>
-                  </div>
-                  <div className="text-right pl-4 shrink-0">
-                    <span className="text-sm font-bold text-[#9FB8A6] block">
-                      {isEn ? "From €40" : "No 40 €"}
-                    </span>
-                    <span className="text-xs text-[#D87967] font-semibold">→</span>
-                  </div>
-                </button>
-
-                {/* Route 4: Not sure what to choose */}
+                {/* 4th Route: Not sure what to choose */}
                 <a
                   href="#jautajums"
-                  className="w-full rounded-2xl border border-white/15 bg-white/5 p-4 sm:p-5 text-left transition-all min-h-[72px] flex items-center justify-between hover:bg-white/10 hover:border-white/30 text-[#FFF9F4]/90 group"
+                  className="w-full py-5 text-left transition-all flex items-center justify-between group cursor-pointer"
                 >
-                  <div>
+                  <div className="pr-4">
                     <span className="text-base sm:text-lg font-semibold text-[#D87967] group-hover:underline">
-                      {isEn ? "NOT SURE WHAT TO CHOOSE?" : "NEESAT PĀRLIECINĀTI, KO IZVĒLĒTIES?"}
+                      {isEn ? "NOT SURE WHAT TO CHOOSE?" : isRu ? "НЕ УВЕРЕНЫ, ЧТО ВЫБРАТЬ?" : "NEESAT PĀRLIECINĀTI, KO IZVĒLĒTIES?"}
                     </span>
                     <p className="mt-1 text-xs sm:text-sm text-[#FFF9F4]/75">
                       {isEn
                         ? "Tell us briefly what's happening — we'll help guide you"
+                        : isRu
+                        ? "Расскажите коротко о ситуации — мы поможем выбрать"
                         : "Pastāstiet mums, kas notiek — mēs palīdzēsim izvēlēties pirmo soli"}
                     </p>
                   </div>
-                  <div className="text-right pl-4 shrink-0">
-                    <span className="text-sm font-semibold text-[#D87967]">→</span>
+                  <div className="text-right shrink-0">
+                    <span className="text-sm font-semibold text-[#D87967] group-hover:translate-x-1 inline-block transition-transform">→</span>
                   </div>
                 </a>
-
               </div>
 
-              {/* Safe Demo Channels */}
-              <div className="mt-10 border-t border-white/15 pt-6 space-y-3 text-sm text-[#FFF9F4]/80">
+              {/* Demonstration Channels */}
+              <div className="mt-8 pt-4 space-y-3 text-sm text-[#FFF9F4]/80">
                 <p className="font-semibold text-[#9FB8A6]">
-                  {isEn ? "Direct demonstration channels:" : "Tiešā demonstrācijas saziņa:"}
+                  {isEn ? "Direct contact channels:" : isRu ? "Прямая связь:" : "Tiešā saziņa:"}
                 </p>
                 <div className="flex flex-wrap gap-2.5 pt-1">
                   <button
@@ -2210,27 +2516,27 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     onClick={showDemoToast}
                     className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs sm:text-sm text-white hover:bg-white/20 transition-colors min-h-[40px]"
                   >
-                    <span>💬 Demo WhatsApp</span>
+                    <span>💬 WhatsApp</span>
                   </button>
                   <button
                     type="button"
                     onClick={showDemoToast}
                     className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs sm:text-sm text-white hover:bg-white/20 transition-colors min-h-[40px]"
                   >
-                    <span>📞 Demo Phone</span>
+                    <span>📞 Phone</span>
                   </button>
                   <button
                     type="button"
                     onClick={showDemoToast}
                     className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs sm:text-sm text-white hover:bg-white/20 transition-colors min-h-[40px]"
                   >
-                    <span>✉️ Demo Email</span>
+                    <span>✉️ Email</span>
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* RIGHT: THE ONE REFINED INTERFACE CARD (CONTINUOUS 3-STAGE SELECTION) */}
+            {/* RIGHT: REFINED BOOKING SURFACE (CALM HIERARCHY: APPOINTMENT -> SPECIALIST -> TIME -> SUMMARY) */}
             <motion.div
               id="booking-card"
               initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 25 }}
@@ -2242,31 +2548,26 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 borderRadius: "1.75rem",
                 boxShadow: "0 25px 60px -15px rgba(0, 0, 0, 0.4)",
               }}
-              className="p-6 sm:p-10 text-[#24302D] border border-white"
+              className="p-6 sm:p-9 text-[#24302D] border border-white"
             >
-              {/* Header */}
-              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-black/[0.08] pb-5">
+              {/* Header with Quiet Reassurance */}
+              <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-black/[0.08] pb-4">
                 <div>
-                  <h3 className="text-2xl font-semibold text-[#24302D]">
-                    {isEn ? "Book visit (Demo)" : "Pieteikt vizīti"}
-                  </h3>
-                  <span className="text-sm text-[#4A5D57]">
-                    {isEn ? "KUSTĪBA concept · Riga" : "KUSTĪBA telpā · Rīga (koncepts)"}
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#D87967] block">
+                    {isEn ? "Your visit" : isRu ? "Ваш визит" : "Jūsu vizīte"}
                   </span>
+                  <h3 className="text-xl sm:text-2xl font-semibold text-[#24302D] mt-0.5">
+                    {currentPathwayObj.title}
+                  </h3>
                 </div>
                 
-                {/* Step indicator */}
-                <div className="flex items-center gap-2 text-xs sm:text-sm font-medium text-[#4A5D57]">
-                  <span className={bookingStep === 1 ? "text-[#24302D] font-bold" : ""}>01 {isEn ? "Service" : "Pakalpojums"}</span>
-                  <span className="text-black/30">→</span>
-                  <span className={bookingStep === 2 ? "text-[#24302D] font-bold" : ""}>02 {isEn ? "Specialist" : "Speciālists"}</span>
-                  <span className="text-black/30">→</span>
-                  <span className={bookingStep === 3 ? "text-[#24302D] font-bold" : ""}>03 {isEn ? "Time" : "Laiks"}</span>
-                </div>
+                <span className="text-xs text-[#4A5D57]">
+                  {isEn ? "Takes less than a minute" : isRu ? "Занимает меньше минуты" : "Aizņem mazāk par minūti"}
+                </span>
               </div>
 
               {bookingCompleted ? (
-                /* Warm Confirmation State & Saiteo Handoff */
+                /* Confirmation State */
                 <div className="py-8 text-center space-y-5">
                   <span
                     style={{ backgroundColor: "#F8E9E3", color: "#D87967" }}
@@ -2277,12 +2578,14 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                   
                   <div>
                     <h4 className="text-3xl sm:text-4xl font-medium text-[#24302D]">
-                      {isEn ? "“See how simple that was.”" : "“Lūk, cik vienkārši.”"}
+                      {isEn ? "“See how simple that was.”" : isRu ? "«Вот как это просто.»" : "“Lūk, cik vienkārši.”"}
                     </h4>
                     <p className="mt-3 text-base sm:text-lg text-[#4A5D57] max-w-lg mx-auto">
                       {isEn
-                        ? "No appointment was created — this is an interactive Saiteo concept."
-                        : "Vizīte netika izveidota — šis ir interaktīvs Saiteo dizaina koncepts."}
+                        ? "No actual appointment was created — this is an interactive concept showcasing calm healthcare UX."
+                        : isRu
+                        ? "Запись не была создана — это интерактивный концепт, демонстрирующий спокойный UX для медицины."
+                        : "Vizīte netika izveidota — šis ir interaktīvs dizaina koncepts."}
                     </p>
                   </div>
 
@@ -2292,7 +2595,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                       style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
                       className="rounded-full px-8 py-3.5 text-sm font-semibold hover:bg-[#D87967] transition-colors min-h-[48px] flex items-center justify-center gap-2 shadow-xs"
                     >
-                      <span>{isEn ? "See why Saiteo designed it this way →" : "Uzzināt, kāpēc Saiteo to veidoja šādi →"}</span>
+                      <span>{isEn ? "See why Saiteo designed it this way →" : isRu ? "Узнать, почему Saiteo создал это так →" : "Uzzināt, kāpēc Saiteo to veidoja šādi →"}</span>
                     </Link>
                     
                     <button
@@ -2300,7 +2603,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                       onClick={() => { setBookingCompleted(false); setShowIntakeForm(false); }}
                       className="rounded-full border border-black/15 bg-[#FFF9F4] px-6 py-3.5 text-sm font-semibold text-[#4A5D57] hover:border-black/30 min-h-[48px]"
                     >
-                      {isEn ? "Try another demo appointment" : "Izmēģināt citu vizītes laiku"}
+                      {isEn ? "Try another booking" : isRu ? "Попробовать другое время" : "Izmēģināt citu vizītes laiku"}
                     </button>
                   </div>
                 </div>
@@ -2326,28 +2629,28 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     <div>
                       <p className="font-semibold">{currentDayObj.fullDay} @ {selectedTimeSlot}</p>
                       <p className="text-xs text-[#4A5D57]">
-                        {currentServiceObj.title} {isEn ? `with ${currentSpecialistObj.name}` : `pie ${currentSpecialistObj.name}`}
+                        {currentServiceObj.title} {isEn ? `with ${currentSpecialistObj.name}` : isRu ? `у специалиста ${currentSpecialistObj.name}` : `pie ${currentSpecialistObj.name}`} · <span className="font-bold text-[#D87967]">{currentServiceObj.price}</span>
                       </p>
                     </div>
                   </div>
 
                   <div>
                     <label className="block text-sm sm:text-base font-medium text-[#24302D]">
-                      {isEn ? "Full Name (Demo) *" : "Jūsu vārds, uzvārds *"}
+                      {isEn ? "Full Name *" : isRu ? "Имя и фамилия *" : "Jūsu vārds, uzvārds *"}
                     </label>
                     <input
                       type="text"
                       required
                       value={patientName}
                       onChange={(e) => setPatientName(e.target.value)}
-                      placeholder={isEn ? "Anna Smith" : "Anna Bērziņa"}
+                      placeholder={isEn ? "Anna Smith" : isRu ? "Анна Берзиня" : "Anna Bērziņa"}
                       className="mt-1.5 w-full rounded-[12px] border border-black/20 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[48px]"
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm sm:text-base font-medium text-[#24302D]">
-                      {isEn ? "Phone number (Demo) *" : "Tālruņa numurs (SMS atgādinājumam) *"}
+                      {isEn ? "Phone number (for confirmation SMS) *" : isRu ? "Номер телефона (для SMS-подтверждения) *" : "Tālruņa numurs (SMS atgādinājumam) *"}
                     </label>
                     <input
                       type="tel"
@@ -2361,13 +2664,13 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
 
                   <div>
                     <label className="block text-sm sm:text-base font-medium text-[#24302D]">
-                      {isEn ? "Notes for therapist (optional)" : "Piezīmes ārstei (pēc izvēles)"}
+                      {isEn ? "Notes for therapist (optional)" : isRu ? "Примечания для специалиста (необязательно)" : "Piezīmes ārstei (pēc izvēles)"}
                     </label>
                     <input
                       type="text"
                       value={patientNote}
                       onChange={(e) => setPatientNote(e.target.value)}
-                      placeholder={isEn ? "What discomfort are you currently experiencing?" : "Kas šobrīd sagādā vislielāko diskomfortu?"}
+                      placeholder={isEn ? "What discomfort are you currently experiencing?" : isRu ? "Что вас беспокоит в данный момент?" : "Kas šobrīd sagādā vislielāko diskomfortu?"}
                       className="mt-1.5 w-full rounded-[12px] border border-black/20 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[48px]"
                     />
                   </div>
@@ -2378,138 +2681,148 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                       onClick={() => setShowIntakeForm(false)}
                       className="text-sm sm:text-base text-[#4A5D57] hover:underline py-2"
                     >
-                      {isEn ? "← Change time" : "← Mainīt laiku"}
+                      {isEn ? "← Change time" : isRu ? "← Изменить время" : "← Mainīt laiku"}
                     </button>
                     <button
                       type="submit"
                       style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
                       className="rounded-full px-8 py-3.5 text-sm font-semibold shadow-xs hover:bg-[#C26553] min-h-[48px] flex items-center justify-center"
                     >
-                      {isEn ? "Confirm demo booking →" : "Apstiprināt pieteikumu →"}
+                      {isEn ? "Confirm booking →" : isRu ? "Подтвердить запись →" : "Apstiprināt pieteikumu →"}
                     </button>
                   </div>
                 </form>
               ) : (
-                /* Continuous Booking Engine */
-                <div className="mt-6 space-y-7">
+                /* Continuous 4-Stage Hierarchy */
+                <div className="mt-5 space-y-6">
                   
-                  {/* 1. What can we help with? (All Services Visible) */}
-                  <div className="space-y-3">
+                  {/* A. APPOINTMENT (Only relevant services for selected category) */}
+                  <div className="space-y-2.5">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold uppercase tracking-wider text-[#D87967]">
-                        1. {isEn ? "Choose Service" : "Vizītes veids"}
+                        A. {isEn ? "Appointment Type" : isRu ? "Вид визита" : "Vizītes veids"}
                       </span>
                       <span className="text-xs text-[#4A5D57]">
                         {currentServiceObj.title} ({currentServiceObj.price})
                       </span>
                     </div>
-                    <div className="grid sm:grid-cols-2 gap-2.5">
-                      {servicesList.map((srv) => (
-                        <button
-                          key={srv.id}
-                          type="button"
-                          onClick={() => { setSelectedService(srv.id); }}
-                          className={`flex flex-col justify-between rounded-[12px] border p-3.5 text-left transition-all min-h-[64px] ${
-                            selectedService === srv.id
-                              ? "border-[#D87967] bg-[#F8E9E3] font-medium shadow-xs"
-                              : "border-black/15 bg-white hover:bg-[#FFF9F4]"
-                          }`}
-                        >
-                          <div className="flex items-baseline justify-between gap-2">
-                            <p className="text-sm font-semibold text-[#24302D]">{srv.title}</p>
-                            <span className="font-bold text-sm text-[#24302D] shrink-0">{srv.price}</span>
-                          </div>
-                          <span className="text-xs text-[#4A5D57] mt-1">{srv.duration}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
 
-                  {/* 2. Choose your specialist (All Specialists Visible Directly) */}
-                  <div className="space-y-3 border-t border-black/[0.08] pt-5">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold uppercase tracking-wider text-[#D87967]">
-                        2. {isEn ? "Choose Specialist" : "Speciāliste"}
-                      </span>
-                      <span className="text-xs font-semibold text-[#24302D]">
-                        {currentSpecialistObj.name} ({currentSpecialistObj.role})
-                      </span>
-                    </div>
-                    <div className="grid sm:grid-cols-3 gap-2.5">
-                      {specialists.map((spec) => {
-                        const isSelected = selectedSpecialist === spec.id;
-                        const nextSlot =
-                          spec.id === "elina"
-                            ? isEn ? "Next: Tue 10:30" : "Tuvākais: Otrd. 10:30"
-                            : spec.id === "marta"
-                            ? isEn ? "Next: Wed 09:30" : "Tuvākais: Trešd. 09:30"
-                            : isEn ? "Next: Thu 11:00" : "Tuvākais: Ceturtd. 11:00";
+                    <div className="space-y-2">
+                      {currentPathwayServices.map((srv) => {
+                        const isSelected = selectedServiceId === srv.id;
                         return (
                           <button
-                            key={spec.id}
+                            key={srv.id}
                             type="button"
-                            onClick={() => {
-                              setSelectedSpecialist(spec.id);
-                              if (spec.id === "elina") {
-                                setSelectedDayIndex(1);
-                                setSelectedTimeSlot("10:30");
-                              } else if (spec.id === "marta") {
-                                setSelectedDayIndex(2);
-                                setSelectedTimeSlot("09:30");
-                              } else {
-                                setSelectedDayIndex(3);
-                                setSelectedTimeSlot("11:00");
-                              }
-                            }}
-                            className={`flex flex-col items-center p-3.5 rounded-[12px] border text-center transition-all min-h-[118px] ${
+                            onClick={() => setSelectedServiceId(srv.id)}
+                            className={`w-full rounded-[12px] border p-3 sm:p-3.5 text-left transition-all flex items-center justify-between min-h-[58px] ${
                               isSelected
                                 ? "border-[#D87967] bg-[#F8E9E3] font-medium shadow-xs ring-1 ring-[#D87967]"
                                 : "border-black/15 bg-white hover:bg-[#FFF9F4]"
                             }`}
                           >
-                            <div className="relative h-11 w-11 rounded-full overflow-hidden border border-black/10 bg-[#FFF9F4] shrink-0 mb-2">
-                              <Image src={spec.image} alt={spec.name} fill sizes="44px" className="object-cover object-top" />
+                            <div className="pr-3">
+                              <p className="text-sm font-semibold text-[#24302D]">{srv.title}</p>
+                              <p className="text-xs text-[#4A5D57] mt-0.5">{srv.duration} · {srv.desc}</p>
                             </div>
-                            <p className="text-xs font-semibold text-[#24302D]">{spec.name}</p>
-                            <p className="text-[11px] text-[#4A5D57] leading-tight mt-0.5">{spec.role}</p>
-                            <span className={`mt-2 text-[10px] font-semibold px-2 py-0.5 rounded-full ${
-                              isSelected ? "bg-[#D87967] text-white" : "bg-black/[0.06] text-[#4A5D57]"
-                            }`}>
-                              {nextSlot}
-                            </span>
+                            <span className="font-bold text-sm text-[#24302D] shrink-0">{srv.price}</span>
                           </button>
                         );
                       })}
                     </div>
                   </div>
 
-                  {/* 3. Choose your time (Calendar & Timeslots) */}
-                  <div className="space-y-3 border-t border-black/[0.08] pt-5">
+                  {/* B. SPECIALIST (Horizontal Human Rows) */}
+                  <div className="space-y-2.5 border-t border-black/[0.08] pt-5">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold uppercase tracking-wider text-[#D87967]">
-                        3. {isEn ? "Choose Time" : "Vizītes laiks"}
+                        B. {isEn ? "Specialist" : isRu ? "Специалист" : "Speciāliste"}
                       </span>
-                      <span className="text-xs text-[#4A5D57]">
-                        {currentDayObj.fullDay} @ {selectedTimeSlot}
+                      <span className="text-xs font-semibold text-[#24302D]">
+                        {currentSpecialistObj.name} · {currentSpecialistObj.role}
                       </span>
                     </div>
 
-                    {/* Weekday Strip */}
+                    <div className="space-y-2">
+                      {specialists
+                        .filter((spec) => spec.pathways.includes(selectedPathway) || selectedPathway === "physio")
+                        .map((spec) => {
+                          const isSelected = selectedSpecialist === spec.id;
+                          return (
+                            <button
+                              key={spec.id}
+                              type="button"
+                              onClick={() => {
+                                setSelectedSpecialist(spec.id);
+                                if (spec.id === "elina") {
+                                  setSelectedDayIndex(1);
+                                  setSelectedTimeSlot("10:30");
+                                } else if (spec.id === "marta") {
+                                  setSelectedDayIndex(2);
+                                  setSelectedTimeSlot("09:30");
+                                } else {
+                                  setSelectedDayIndex(3);
+                                  setSelectedTimeSlot("11:00");
+                                }
+                              }}
+                              className={`w-full rounded-[12px] border p-3 text-left transition-all flex items-center justify-between gap-3 min-h-[64px] ${
+                                isSelected
+                                  ? "border-[#D87967] bg-[#F8E9E3] font-medium shadow-xs ring-1 ring-[#D87967]"
+                                  : "border-black/15 bg-white hover:bg-[#FFF9F4]"
+                              }`}
+                            >
+                              <div className="flex items-center gap-3 min-w-0">
+                                <div className="relative h-11 w-11 rounded-full overflow-hidden border border-black/10 bg-[#FFF9F4] shrink-0">
+                                  <Image src={spec.image} alt={spec.name} fill sizes="44px" className="object-cover object-top" />
+                                </div>
+                                <div className="min-w-0">
+                                  <p className="text-sm font-semibold text-[#24302D] truncate">{spec.name}</p>
+                                  <p className="text-xs text-[#4A5D57] truncate">{spec.role} · {spec.specialty}</p>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-3 shrink-0">
+                                <span className="text-xs font-medium text-[#D87967] hidden sm:inline">
+                                  {spec.nextSlot}
+                                </span>
+                                <span className={`text-xs font-semibold px-3 py-1.5 rounded-full transition-all ${
+                                  isSelected ? "bg-[#D87967] text-white" : "bg-black/[0.06] text-[#24302D] hover:bg-black/10"
+                                }`}>
+                                  {isSelected ? (isEn ? "Selected ✓" : isRu ? "Выбрано ✓" : "Izvēlēta ✓") : (isEn ? "Select" : isRu ? "Выбрать" : "Izvēlēties")}
+                                </span>
+                              </div>
+                            </button>
+                          );
+                        })}
+                    </div>
+                  </div>
+
+                  {/* C. TIME (Locale-Aware Date Strip with Correct Numbers & Time Chips) */}
+                  <div className="space-y-2.5 border-t border-black/[0.08] pt-5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#D87967]">
+                        C. {isEn ? "Time" : isRu ? "Время" : "Vizītes laiks"}
+                      </span>
+                      <span className="text-xs text-[#4A5D57]">
+                        {isEn ? "7–11 September" : isRu ? "7–11 сентября" : "7.–11. septembris"}
+                      </span>
+                    </div>
+
+                    {/* Weekday Strip with Explicit Day Numbers */}
                     <div className="grid grid-cols-5 gap-1.5">
                       {bookingDays.map((d, i) => (
                         <button
                           key={d.date}
                           type="button"
                           onClick={() => { setSelectedDayIndex(i); setSelectedTimeSlot(d.slots[0]); }}
-                          className={`rounded-[12px] border p-2 text-center transition-all min-h-[50px] flex flex-col justify-center items-center ${
+                          className={`rounded-[12px] border p-2 text-center transition-all min-h-[52px] flex flex-col justify-center items-center ${
                             selectedDayIndex === i
-                              ? "border-[#D87967] bg-[#F8E9E3] text-[#24302D] font-semibold"
+                              ? "border-[#D87967] bg-[#F8E9E3] text-[#24302D] font-semibold ring-1 ring-[#D87967]"
                               : "border-black/15 bg-white text-[#4A5D57] hover:border-black/30"
                           }`}
                         >
                           <p className="text-[11px] opacity-75">{d.dayName}</p>
                           <p className="font-semibold text-sm mt-0.5 text-[#24302D]">
-                            {d.fullDay.split(" ")[1]}
+                            {d.dayNum}
                           </p>
                         </button>
                       ))}
@@ -2534,8 +2847,8 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     </div>
                   </div>
 
-                  {/* Summary & Continue Action Panel */}
-                  <div className="rounded-[12px] bg-[#FFF9F4] p-4 border border-black/[0.08]">
+                  {/* D. SUMMARY & CONTINUE ACTION PANEL */}
+                  <div className="rounded-[14px] bg-[#FFF9F4] p-4 border border-black/[0.08] mt-2">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
                         <div className="relative h-11 w-11 rounded-full overflow-hidden bg-[#F8E9E3] border border-[#D87967]/30 shrink-0">
@@ -2552,7 +2865,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                             {currentDayObj.fullDay} · {selectedTimeSlot}
                           </p>
                           <p className="text-xs text-[#4A5D57]">
-                            {currentServiceObj.title} {isEn ? `with ${currentSpecialistObj.name.split(" ")[0]}` : `pie ${currentSpecialistObj.name.split(" ")[0]}s`} · <span className="font-semibold text-[#D87967]">{currentServiceObj.price}</span>
+                            {currentServiceObj.title} {isEn ? `with ${currentSpecialistObj.name.split(" ")[0]}` : isRu ? `у ${currentSpecialistObj.name.split(" ")[0]}` : `pie ${currentSpecialistObj.name.split(" ")[0]}s`} · <span className="font-semibold text-[#D87967]">{currentServiceObj.price}</span>
                           </p>
                         </div>
                       </div>
@@ -2563,16 +2876,16 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                         style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
                         className="rounded-full px-7 py-3 text-center text-sm font-semibold shadow-xs hover:bg-[#C26553] whitespace-nowrap min-h-[44px] flex items-center justify-center self-start sm:self-auto"
                       >
-                        {isEn ? "Continue to booking →" : "Turpināt pieteikumu →"}
+                        {isEn ? "Continue to booking →" : isRu ? "Продолжить запись →" : "Turpināt pieteikumu →"}
                       </button>
                     </div>
                   </div>
 
                   {/* Microcopy */}
                   <div className="border-t border-black/[0.08] pt-3 flex items-center justify-between text-xs text-[#4A5D57]">
-                    <span>{isEn ? "Not sure where to begin?" : "Nezināt, ko izvēlēties?"}</span>
+                    <span>{isEn ? "Not sure where to begin?" : isRu ? "Не уверены, с чего начать?" : "Nezināt, ko izvēlēties?"}</span>
                     <a href="#jautajums" className="text-[#D87967] font-semibold hover:underline p-1">
-                      {isEn ? "Ask a question →" : "Uzdot jautājumu →"}
+                      {isEn ? "Ask a question →" : isRu ? "Задать вопрос →" : "Uzdot jautājumu →"}
                     </a>
                   </div>
                 </div>
@@ -2596,23 +2909,25 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-center">
             <div>
               <h2 className="text-3xl sm:text-4xl font-medium text-[#24302D]">
-                {isEn ? "Not sure where to begin?" : "Neesat pārliecināti, ar ko sākt?"}
+                {isEn ? "Not sure where to begin?" : isRu ? "Не уверены, с чего начать?" : "Neesat pārliecināti, ar ko sākt?"}
               </h2>
               <p className="mt-4 text-lg sm:text-xl leading-relaxed text-[#4A5D57]">
                 {isEn
-                  ? "In a real practice, patients can ask a quick question or message on WhatsApp. The therapist reviews the situation and suggests the best specialist and first step."
+                  ? "Patients can ask a quick question or message on WhatsApp. The therapist reviews the situation and suggests the best specialist and first step."
+                  : isRu
+                  ? "Задайте вопрос здесь или напишите нам в WhatsApp. Наш специалист ознакомится с вашей ситуацией и порекомендует подходящий первый шаг."
                   : "Uzdodiet savu jautājumu šeit vai uzrakstiet mums WhatsApp. Mūsu fizioterapeite iepazīsies ar Jūsu situāciju un ieteiks piemērotāko speciālisti un pirmo soli."}
               </p>
 
               <div className="mt-8 space-y-3 border-t border-black/[0.08] pt-6 text-sm sm:text-base text-[#3D4F4A]">
                 <p>
-                  📍 <strong>{isEn ? "Location:" : "Atrašanās vieta:"}</strong> {isEn ? "Riga · demonstration location" : "Rīga · demonstrācijas lokācija"}
+                  📍 <strong>{isEn ? "Location:" : isRu ? "Локация:" : "Atrašanās vieta:"}</strong> {isEn ? "Riga · demonstration location" : isRu ? "Рига · демонстрационная локация" : "Rīga · demonstrācijas lokācija"}
                 </p>
                 <p>
-                  🕒 <strong>{isEn ? "Example hours:" : "Piemēra darba laiks:"}</strong> {isEn ? "Mon–Fri 08:30–19:30 (example)" : "P.–Pk. 08:30–19:30 (piemērs)"}
+                  🕒 <strong>{isEn ? "Hours:" : isRu ? "Время работы:" : "Piemēra darba laiks:"}</strong> {isEn ? "Mon–Fri 08:30–19:30" : isRu ? "Пн–Пт 08:30–19:30" : "P.–Pk. 08:30–19:30"}
                 </p>
 
-                {/* Stylized Abstract Map Placeholder */}
+                {/* Stylized Location Info */}
                 <div className="mt-4 rounded-2xl border border-black/[0.08] bg-[#FFF9F4] p-4 flex items-center gap-4">
                   <div className="h-12 w-12 rounded-xl bg-[#F8E9E3] flex items-center justify-center text-[#D87967] shrink-0">
                     <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -2622,17 +2937,17 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                   </div>
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
-                      {isEn ? "Stylized Location Placeholder" : "Abstrakts lokācijas paraugs"}
+                      {isEn ? "Central Practice in Riga" : isRu ? "Центральная практика в Риге" : "Prakses telpas Rīgā"}
                     </p>
                     <p className="text-xs text-[#4A5D57] mt-0.5">
-                      {isEn ? "Demonstration concept · No fictional street address or map pins" : "Demonstrācijas koncepts · Bez izdomātas ielas adreses vai koordinātēm"}
+                      {isEn ? "Quiet, accessible clinic space" : isRu ? "Спокойная, доступная среда" : "Mierīga, ērti pieejama vide"}
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Contained Form: Reduced 16-20px radius, clean border, no heavy drop-shadow */}
+            {/* Contained Form */}
             <div
               style={{
                 backgroundColor: "#FFFFFF",
@@ -2649,11 +2964,13 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     ✓
                   </span>
                   <h3 className="mt-3 text-2xl font-semibold text-[#24302D]">
-                    {isEn ? "Demo inquiry complete!" : "Paldies par ziņu!"}
+                    {isEn ? "Thank you for your message!" : isRu ? "Спасибо за сообщение!" : "Paldies par ziņu!"}
                   </h3>
                   <p className="mt-2 text-base text-[#4A5D57]">
                     {isEn
-                      ? "Demo interaction — in a real project this would connect securely to the practice's intake workflow."
+                      ? "Demo interaction — in a real project this connects securely to the practice's intake workflow."
+                      : isRu
+                      ? "Демонстрационное действие — на реальном сайте это направляется в систему клиники."
                       : "Demonstrācijas mijiedarbība — reālā projektā šis droši savienotos ar prakses pacientu pieņemšanas sistēmu."}
                   </p>
                   <button
@@ -2662,7 +2979,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
                     className="mt-5 rounded-full px-7 py-3 text-sm font-semibold min-h-[46px]"
                   >
-                    {isEn ? "Send another demo note" : "Nosūtīt vēl vienu ziņu"}
+                    {isEn ? "Send another note" : isRu ? "Отправить еще сообщение" : "Nosūtīt vēl vienu ziņu"}
                   </button>
                 </div>
               ) : (
@@ -2675,21 +2992,21 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 >
                   <div>
                     <label className="block text-sm sm:text-base font-medium text-[#24302D]">
-                      {isEn ? "Name (Demo) *" : "Jūsu vārds *"}
+                      {isEn ? "Name *" : isRu ? "Ваше имя *" : "Jūsu vārds *"}
                     </label>
                     <input
                       type="text"
                       required
                       value={inquiryName}
                       onChange={(e) => setInquiryName(e.target.value)}
-                      placeholder={isEn ? "Anna" : "Anna"}
+                      placeholder={isEn ? "Anna" : isRu ? "Анна" : "Anna"}
                       className="mt-1.5 w-full rounded-xl border border-black/20 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[48px]"
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm sm:text-base font-medium text-[#24302D]">
-                      {isEn ? "Phone or WhatsApp (Demo) *" : "Tālrunis vai WhatsApp *"}
+                      {isEn ? "Phone or WhatsApp *" : isRu ? "Телефон или WhatsApp *" : "Tālrunis vai WhatsApp *"}
                     </label>
                     <input
                       type="tel"
@@ -2703,14 +3020,14 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
 
                   <div>
                     <label className="block text-sm sm:text-base font-medium text-[#24302D]">
-                      {isEn ? "Brief description of what you're feeling" : "Jautājums vai situācijas apraksts"}
+                      {isEn ? "Brief description of what you're feeling" : isRu ? "Кратко опишите, что вас беспокоит" : "Jautājums vai situācijas apraksts"}
                     </label>
                     <textarea
                       rows={3}
                       required
                       value={inquiryText}
                       onChange={(e) => setInquiryText(e.target.value)}
-                      placeholder={isEn ? "What discomfort are you experiencing?" : "Kas Jums rada diskomfortu, cik ilgi, vai ir bijusi trauma vai izmeklējumi?"}
+                      placeholder={isEn ? "What discomfort are you experiencing?" : isRu ? "Что доставляет дискомфорт, как давно?" : "Kas Jums rada diskomfortu, cik ilgi, vai ir bijusi trauma vai izmeklējumi?"}
                       className="mt-1.5 w-full rounded-xl border border-black/20 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden"
                     />
                   </div>
@@ -2720,7 +3037,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
                     className="w-full rounded-full py-3.5 text-sm font-semibold shadow-xs hover:bg-[#C26553] min-h-[48px] flex items-center justify-center"
                   >
-                    {isEn ? "Send demo inquiry" : "Nosūtīt jautājumu speciālistei"}
+                    {isEn ? "Send inquiry" : isRu ? "Отправить вопрос" : "Nosūtīt jautājumu speciālistei"}
                   </button>
                 </form>
               )}
@@ -2736,11 +3053,10 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
         <div className="mx-auto max-w-3xl px-5 sm:px-6 lg:px-12">
           <div>
             <h2 className="text-3xl sm:text-4xl font-medium text-[#24302D]">
-              {isEn ? "Frequently asked questions" : "Viss, kas jāzina pirms apmeklējuma"}
+              {isEn ? "Frequently asked questions" : isRu ? "Часто задаваемые вопросы" : "Viss, kas jāzina pirms apmeklējuma"}
             </h2>
           </div>
 
-          {/* Clean Flat Question Rows */}
           <div className="mt-10 divide-y divide-black/[0.10]">
             {faqs.map((faq, idx) => (
               <div key={idx} className="py-6">
@@ -2778,36 +3094,38 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
             <div>
               <span className="text-2xl sm:text-3xl font-semibold text-[#24302D]">KUSTĪBA</span>
               <p className="mt-1 text-sm font-medium text-[#4A5D57]">
-                {isEn ? "Physiotherapy website concept by Saiteo" : "Fizioterapijas tīmekļa vietnes koncepts"}
+                {isEn ? "Physiotherapy website concept by Saiteo" : isRu ? "Концепт сайта физиотерапии от Saiteo" : "Fizioterapijas tīmekļa vietnes koncepts"}
               </p>
               <p className="mt-4 text-sm sm:text-base leading-relaxed text-[#4A5D57]">
                 {isEn
                   ? "Independent speculative design concept demonstrating human-centred healthcare UX. Not a real clinic."
+                  : isRu
+                  ? "Независимый дизайн-концепт, демонстрирующий человечный медицинский UX. Не является действующей клиникой."
                   : "Neatkarīgs dizaina koncepts, kas demonstrē cilvēcīgu un uzticamu veselības aprūpes lietotāja pieredzi. Tā nav reāla ārstniecības iestāde."}
               </p>
             </div>
 
             <div>
               <p className="text-base font-semibold text-[#24302D]">
-                {isEn ? "Design Scope" : "Koncepta tvērums"}
+                {isEn ? "Design Scope" : isRu ? "Объем концепта" : "Koncepta tvērums"}
               </p>
               <ul className="mt-3 space-y-2 text-sm sm:text-base text-[#4A5D57]">
-                <li>{isEn ? "• Human-centred patient recognition" : "• Pacientu situāciju atpazīšana"}</li>
-                <li>{isEn ? "• Frictionless interactive appointment booking" : "• Intuitīva vizīšu pieteikšana"}</li>
-                <li>{isEn ? "• Demystified first visit journey" : "• Pirmās vizītes gaitas skaidrojums"}</li>
+                <li>{isEn ? "• Human-centred patient recognition" : isRu ? "• Узнавание ситуаций пациентов" : "• Pacientu situāciju atpazīšana"}</li>
+                <li>{isEn ? "• Frictionless interactive appointment booking" : isRu ? "• Понятная и быстрая запись на прием" : "• Intuitīva vizīšu pieteikšana"}</li>
+                <li>{isEn ? "• Demystified first visit journey" : isRu ? "• Понятный путь первого визита" : "• Pirmās vizītes gaitas skaidrojums"}</li>
               </ul>
             </div>
 
             <div>
               <p className="text-base font-semibold text-[#24302D]">
-                {isEn ? "Studio Case Study" : "Stratēģiskais pētījums"}
+                {isEn ? "Studio Case Study" : isRu ? "Кейс студии" : "Stratēģiskais pētījums"}
               </p>
               <p className="mt-3 text-sm sm:text-base">
                 <Link
                   href={`/${locale}/case-studies/physiotherapy`}
                   className="text-[#D87967] font-semibold underline"
                 >
-                  {isEn ? "Read the Saiteo Case Study →" : "Lasīt Saiteo stratēģijas analīzi →"}
+                  {isEn ? "Read the Saiteo Case Study →" : isRu ? "Читать кейс Saiteo →" : "Lasīt Saiteo stratēģijas analīzi →"}
                 </Link>
               </p>
               <p className="mt-2 text-sm sm:text-base">
@@ -2822,11 +3140,13 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
             <p>
               {isEn
                 ? `© ${new Date().getFullYear()} Saiteo · KUSTĪBA is an independent speculative design study.`
+                : isRu
+                ? `© ${new Date().getFullYear()} Saiteo · KUSTĪBA — независимый исследовательский концепт.`
                 : `© ${new Date().getFullYear()} Saiteo · KUSTĪBA ir neatkarīgs dizaina koncepts.`}
             </p>
             <div className="flex items-center gap-4">
               <Link href={`/${locale}/case-studies/physiotherapy`} className="text-[#24302D] hover:underline font-semibold py-1">
-                {isEn ? "Case Study Breakdown →" : "Pētījuma analīze →"}
+                {isEn ? "Case Study Breakdown →" : isRu ? "Анализ кейса →" : "Pētījuma analīze →"}
               </Link>
             </div>
           </div>
@@ -2850,7 +3170,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
               style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
               className="flex w-full items-center justify-center gap-2 rounded-full py-4 text-base font-semibold shadow-md active:scale-98 min-h-[50px]"
             >
-              <span>{isEn ? "Book visit" : "Pieteikt vizīti"}</span>
+              <span>{isEn ? "Book visit" : isRu ? "Записаться на прием" : "Pieteikt vizīti"}</span>
               <span>→</span>
             </a>
           </motion.div>
