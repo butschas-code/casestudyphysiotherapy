@@ -2063,79 +2063,98 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
               transition={{ duration: shouldReduceMotion ? 0.01 : 0.7, ease: easeOrganic }}
               style={{
                 backgroundColor: "#FFFFFF",
-                borderRadius: "2rem",
+                borderRadius: "1.75rem",
                 boxShadow: "0 25px 60px -15px rgba(0, 0, 0, 0.4)",
               }}
               className="p-6 sm:p-10 text-[#24302D] border border-white"
             >
-              {/* Header & Step Navigation */}
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-black/[0.08] pb-4">
+              {/* Header & Subtle Typographic Progress Navigation */}
+              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-black/[0.08] pb-5">
                 <div>
                   <h3 className="text-2xl font-semibold text-[#24302D]">{isEn ? "Book visit (Demo)" : "Pieteikt vizīti"}</h3>
                   <span className="text-sm text-[#4A5D57]">
                     {isEn ? "KUSTĪBA concept · Riga" : "KUSTĪBA telpā · Rīga (koncepts)"}
                   </span>
                 </div>
-                <div className="flex items-center gap-1.5 text-sm font-semibold">
-                  {[
-                    { num: 1, label: isEn ? "Service" : "Pakalpojums" },
-                    { num: 2, label: isEn ? "Specialist" : "Speciālists" },
-                    { num: 3, label: isEn ? "Time" : "Laiks" },
-                  ].map((s) => (
-                    <button
-                      key={s.num}
-                      type="button"
-                      onClick={() => changeBookingStep(s.num as 1 | 2 | 3)}
-                      className={`flex items-center rounded-full px-4 py-2 transition-colors min-h-[40px] ${
-                        bookingStep === s.num
-                          ? "bg-[#24302D] text-white"
-                          : "text-[#4A5D57] hover:bg-black/[0.04]"
-                      }`}
-                    >
-                      <span>{s.label}</span>
-                    </button>
-                  ))}
+                
+                {/* Subtle progress text without pill backgrounds */}
+                <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm font-medium">
+                  <button
+                    type="button"
+                    onClick={() => changeBookingStep(1)}
+                    className={`transition-colors py-1 ${
+                      bookingStep === 1
+                        ? "text-[#24302D] font-semibold border-b-2 border-[#D87967]"
+                        : "text-[#4A5D57] hover:text-[#24302D]"
+                    }`}
+                  >
+                    01 {isEn ? "Service" : "Pakalpojums"}
+                  </button>
+                  <span className="text-black/30 select-none">——</span>
+                  <button
+                    type="button"
+                    onClick={() => changeBookingStep(2)}
+                    className={`transition-colors py-1 ${
+                      bookingStep === 2
+                        ? "text-[#24302D] font-semibold border-b-2 border-[#D87967]"
+                        : "text-[#4A5D57] hover:text-[#24302D]"
+                    }`}
+                  >
+                    02 {isEn ? "Specialist" : "Speciālists"}
+                  </button>
+                  <span className="text-black/30 select-none">——</span>
+                  <button
+                    type="button"
+                    onClick={() => changeBookingStep(3)}
+                    className={`transition-colors py-1 ${
+                      bookingStep === 3
+                        ? "text-[#24302D] font-semibold border-b-2 border-[#D87967]"
+                        : "text-[#4A5D57] hover:text-[#24302D]"
+                    }`}
+                  >
+                    03 {isEn ? "Time" : "Laiks"}
+                  </button>
                 </div>
               </div>
 
               {bookingCompleted ? (
-                /* Demo Completed Screen */
-                <div className="py-10 text-center">
+                /* Warm Confirmation State & Saiteo Handoff */
+                <div className="py-8 text-center space-y-5">
                   <span
                     style={{ backgroundColor: "#F8E9E3", color: "#D87967" }}
                     className="inline-flex h-16 w-16 items-center justify-center rounded-full text-3xl font-bold"
                   >
                     ✓
                   </span>
-                  <h4 className="mt-4 text-2xl sm:text-3xl font-semibold text-[#24302D]">
-                    {isEn ? "Demo booking complete" : "Demonstrācijas pieraksts pabeigts"}
-                  </h4>
-                  <p className="mt-2 text-base text-[#4A5D57]">
-                    <strong>{currentDayObj.fullDay} @ {selectedTimeSlot}</strong> {isEn ? "with" : "pie speciālistes"} <strong>{currentSpecialistObj.name}</strong>.
-                  </p>
-
-                  <div
-                    style={{ backgroundColor: "#FFF9F4" }}
-                    className="mt-6 rounded-2xl p-5 text-sm sm:text-base text-left border border-black/[0.08] text-[#24302D]"
-                  >
-                    <p className="font-semibold text-[#D87967]">
-                      {isEn ? "⚠️ Speculative Concept Notice:" : "⚠️ Koncepta paziņojums:"}
-                    </p>
-                    <p className="mt-1">
+                  
+                  <div>
+                    <h4 className="text-3xl sm:text-4xl font-medium text-[#24302D]">
+                      {isEn ? "“See how simple that was.”" : "“Lūk, cik vienkārši.”"}
+                    </h4>
+                    <p className="mt-3 text-base sm:text-lg text-[#4A5D57] max-w-lg mx-auto">
                       {isEn
-                        ? "No actual appointment has been created. This interaction demonstrates the booking experience for a modern physiotherapy practice."
-                        : "Vizīte nav reģistrēta. Šī mijiedarbība demonstrē mūsdienīgas fizioterapijas prakses pieraksta pieredzi."}
+                        ? "No appointment was created — this is an interactive Saiteo concept."
+                        : "Vizīte netika izveidota — šis ir interaktīvs Saiteo dizaina koncepts."}
                     </p>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => { setBookingCompleted(false); setShowIntakeForm(false); }}
-                    style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
-                    className="mt-6 rounded-full px-8 py-3.5 text-sm font-semibold hover:bg-[#D87967] min-h-[48px]"
-                  >
-                    {isEn ? "Try another time slot" : "Pieteikt citu laiku"}
-                  </button>
+                  <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <Link
+                      href={`/${locale}/case-studies/physiotherapy`}
+                      style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
+                      className="rounded-full px-8 py-3.5 text-sm font-semibold hover:bg-[#D87967] transition-colors min-h-[48px] flex items-center justify-center gap-2 shadow-xs"
+                    >
+                      <span>{isEn ? "See why Saiteo designed it this way →" : "Uzzināt, kāpēc Saiteo to veidoja šādi →"}</span>
+                    </Link>
+                    
+                    <button
+                      type="button"
+                      onClick={() => { setBookingCompleted(false); setShowIntakeForm(false); }}
+                      className="rounded-full border border-black/15 bg-[#FFF9F4] px-6 py-3.5 text-sm font-semibold text-[#4A5D57] hover:border-black/30 min-h-[48px]"
+                    >
+                      {isEn ? "Try another demo appointment" : "Izmēģināt citu vizītes laiku"}
+                    </button>
+                  </div>
                 </div>
               ) : showIntakeForm ? (
                 /* Intake Form Step */
@@ -2146,8 +2165,22 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                   }}
                   className="mt-6 space-y-4"
                 >
-                  <div className="rounded-xl bg-[#FFF9F4] p-4 text-sm sm:text-base text-[#24302D] border border-black/[0.08]">
-                    <strong>{isEn ? "Selected:" : "Izvēlēts:"}</strong> {currentDayObj.fullDay} @ {selectedTimeSlot} · {currentSpecialistObj.name} ({currentServiceObj.title})
+                  <div className="rounded-[12px] bg-[#FFF9F4] p-4 text-sm sm:text-base text-[#24302D] border border-black/[0.08] flex items-center gap-3">
+                    <div className="relative h-10 w-10 rounded-full overflow-hidden bg-[#F8E9E3] border border-[#D87967]/30 shrink-0">
+                      <Image
+                        src={currentSpecialistObj.image}
+                        alt={currentSpecialistObj.name}
+                        fill
+                        sizes="40px"
+                        className="object-cover object-top"
+                      />
+                    </div>
+                    <div>
+                      <p className="font-semibold">{currentDayObj.fullDay} @ {selectedTimeSlot}</p>
+                      <p className="text-xs text-[#4A5D57]">
+                        {currentServiceObj.title} {isEn ? `with ${currentSpecialistObj.name}` : `pie ${currentSpecialistObj.name}`}
+                      </p>
+                    </div>
                   </div>
 
                   <div>
@@ -2160,7 +2193,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                       value={patientName}
                       onChange={(e) => setPatientName(e.target.value)}
                       placeholder={isEn ? "Anna Smith" : "Anna Bērziņa"}
-                      className="mt-1.5 w-full rounded-xl border border-black/20 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[48px]"
+                      className="mt-1.5 w-full rounded-[12px] border border-black/20 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[48px]"
                     />
                   </div>
 
@@ -2174,7 +2207,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                       value={patientPhone}
                       onChange={(e) => setPatientPhone(e.target.value)}
                       placeholder="+371 20 000 000"
-                      className="mt-1.5 w-full rounded-xl border border-black/20 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[48px]"
+                      className="mt-1.5 w-full rounded-[12px] border border-black/20 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[48px]"
                     />
                   </div>
 
@@ -2187,7 +2220,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                       value={patientNote}
                       onChange={(e) => setPatientNote(e.target.value)}
                       placeholder={isEn ? "What discomfort are you currently experiencing?" : "Kas šobrīd sagādā vislielāko diskomfortu?"}
-                      className="mt-1.5 w-full rounded-xl border border-black/20 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[48px]"
+                      className="mt-1.5 w-full rounded-[12px] border border-black/20 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[48px]"
                     />
                   </div>
 
@@ -2232,10 +2265,10 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                                 key={srv.id}
                                 type="button"
                                 onClick={() => { setSelectedService(srv.id); changeBookingStep(2); }}
-                                className={`flex items-center justify-between rounded-xl border p-4 text-left transition-all min-h-[58px] ${
+                                className={`flex items-center justify-between rounded-[12px] border p-4 text-left transition-all min-h-[58px] ${
                                   selectedService === srv.id
-                                    ? "border-[#D87967] bg-[#F8E9E3]/50"
-                                    : "border-black/15 hover:bg-[#FFF9F4]"
+                                    ? "border-[#D87967] bg-[#F8E9E3]/60 font-medium"
+                                    : "border-black/15 bg-white hover:bg-[#FFF9F4]"
                                 }`}
                               >
                                 <div>
@@ -2261,14 +2294,14 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                                 key={spec.id}
                                 type="button"
                                 onClick={() => { setSelectedSpecialist(spec.id); changeBookingStep(3); }}
-                                className={`flex items-center gap-4 rounded-xl border p-4 text-left transition-all min-h-[58px] ${
+                                className={`flex items-center gap-4 rounded-[12px] border p-4 text-left transition-all min-h-[58px] ${
                                   selectedSpecialist === spec.id
-                                    ? "border-[#D87967] bg-[#F8E9E3]/50"
-                                    : "border-black/15 hover:bg-[#FFF9F4]"
+                                    ? "border-[#D87967] bg-[#F8E9E3]/60 font-medium"
+                                    : "border-black/15 bg-white hover:bg-[#FFF9F4]"
                                 }`}
                               >
                                 <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border border-black/10 bg-[#F8E9E3]">
-                                  <Image src={spec.image} alt={spec.name} fill sizes="48px" className="object-cover" />
+                                  <Image src={spec.image} alt={spec.name} fill sizes="48px" className="object-cover object-top" />
                                 </div>
                                 <div>
                                   <p className="text-base font-semibold text-[#24302D]">{spec.name}</p>
@@ -2284,12 +2317,17 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                       {bookingStep === 3 && (
                         <div>
                           {/* Active Selection Summary Strip */}
-                          <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-[#FFF9F4] p-3.5 border border-black/[0.08] text-sm text-[#24302D]">
-                            <div>
-                              <p className="font-semibold">{currentServiceObj.title}</p>
-                              <span className="text-xs text-[#4A5D57]">
-                                {currentServiceObj.duration} · {currentSpecialistObj.name}
-                              </span>
+                          <div className="flex flex-wrap items-center justify-between gap-2 rounded-[12px] bg-[#FFF9F4] p-3.5 border border-black/[0.08] text-sm text-[#24302D]">
+                            <div className="flex items-center gap-3">
+                              <div className="relative h-9 w-9 rounded-full overflow-hidden bg-[#F8E9E3] border border-[#D87967]/30 shrink-0">
+                                <Image src={currentSpecialistObj.image} alt={currentSpecialistObj.name} fill sizes="36px" className="object-cover object-top" />
+                              </div>
+                              <div>
+                                <p className="font-semibold">{currentServiceObj.title}</p>
+                                <span className="text-xs text-[#4A5D57]">
+                                  {currentServiceObj.duration} · {currentSpecialistObj.name}
+                                </span>
+                              </div>
                             </div>
                             <button
                               type="button"
@@ -2310,28 +2348,28 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                             </span>
                           </div>
 
-                          {/* Days Strip */}
+                          {/* Days Strip — 12px max radius, warm coral outline + blush fill when selected */}
                           <div className="mt-2.5 grid grid-cols-5 gap-2">
                             {bookingDays.map((d, i) => (
                               <button
                                 key={d.date}
                                 type="button"
                                 onClick={() => { setSelectedDayIndex(i); setSelectedTimeSlot(d.slots[0]); }}
-                                className={`rounded-xl border p-2.5 text-center transition-all min-h-[54px] flex flex-col justify-center items-center ${
+                                className={`rounded-[12px] border p-2.5 text-center transition-all min-h-[54px] flex flex-col justify-center items-center ${
                                   selectedDayIndex === i
-                                    ? "border-[#24302D] bg-[#24302D] text-white shadow-xs"
-                                    : "border-black/15 bg-[#FFF9F4] text-[#24302D] hover:bg-white"
+                                    ? "border-[#D87967] bg-[#F8E9E3] text-[#24302D] font-semibold"
+                                    : "border-black/15 bg-white text-[#4A5D57] hover:border-black/30"
                                 }`}
                               >
-                                <p className="text-xs opacity-75">{d.dayName}</p>
-                                <p className="font-semibold text-base mt-0.5">
+                                <p className="text-xs opacity-80">{d.dayName}</p>
+                                <p className="font-semibold text-base mt-0.5 text-[#24302D]">
                                   {d.fullDay.split(" ")[1]}
                                 </p>
                               </button>
                             ))}
                           </div>
 
-                          {/* Available Time Slots Chips */}
+                          {/* Available Time Slots Chips — 12px max radius */}
                           <div className="mt-4">
                             <p className="text-xs font-medium text-[#4A5D57] mb-2">
                               {isEn ? "Available times:" : "Pieejamie laiki:"}
@@ -2342,10 +2380,10 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                                   key={slot}
                                   type="button"
                                   onClick={() => setSelectedTimeSlot(slot)}
-                                  className={`rounded-xl border py-2.5 text-center text-sm font-semibold transition-all min-h-[44px] flex items-center justify-center ${
+                                  className={`rounded-[12px] border py-2.5 text-center text-sm font-semibold transition-all min-h-[44px] flex items-center justify-center ${
                                     selectedTimeSlot === slot
                                       ? "border-[#D87967] bg-[#D87967] text-white shadow-xs"
-                                      : "border-black/15 bg-[#FFF9F4] text-[#24302D] hover:border-black/30"
+                                      : "border-black/15 bg-white text-[#24302D] hover:border-black/30"
                                   }`}
                                 >
                                   {slot}
@@ -2354,24 +2392,43 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                             </div>
                           </div>
 
-                          {/* Active Confirmation Preview Panel */}
-                          <div className="mt-5 border-t border-black/[0.08] pt-3.5">
-                            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                              <div>
-                                <span className="text-sm font-semibold text-[#24302D]">
-                                  {currentDayObj.fullDay} @ {selectedTimeSlot}
-                                </span>
-                                <p className="text-xs text-[#4A5D57]">
-                                  {currentSpecialistObj.name} · {currentServiceObj.title} ({currentServiceObj.price})
-                                </p>
+                          {/* Warm Human Summary Panel */}
+                          <div className="mt-6 rounded-[12px] bg-[#FFF9F4] p-4 border border-black/[0.08]">
+                            <span className="text-xs font-bold uppercase tracking-wider text-[#D87967] block">
+                              {isEn ? "Your selection" : "Jūsu izvēle"}
+                            </span>
+                            
+                            <div className="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                              <div className="flex items-center gap-3.5">
+                                <div className="relative h-12 w-12 rounded-full overflow-hidden bg-[#F8E9E3] border border-[#D87967]/30 shrink-0">
+                                  <Image
+                                    src={currentSpecialistObj.image}
+                                    alt={currentSpecialistObj.name}
+                                    fill
+                                    sizes="48px"
+                                    className="object-cover object-top"
+                                  />
+                                </div>
+                                <div>
+                                  <p className="text-base font-semibold text-[#24302D]">
+                                    {currentDayObj.fullDay} · {selectedTimeSlot}
+                                  </p>
+                                  <p className="text-sm text-[#4A5D57]">
+                                    {currentServiceObj.title} {isEn ? `with ${currentSpecialistObj.name.split(" ")[0]}` : `ar ${currentSpecialistObj.name.split(" ")[0]}u`}
+                                  </p>
+                                  <p className="text-xs font-semibold text-[#D87967] mt-0.5">
+                                    {currentServiceObj.price} · {currentServiceObj.duration}
+                                  </p>
+                                </div>
                               </div>
+
                               <button
                                 type="button"
-                                onClick={() => setShowIntakeForm(true)}
+                                onClick={() => setBookingCompleted(true)}
                                 style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                                className="rounded-full px-7 py-3 text-center text-sm font-semibold shadow-xs hover:bg-[#C26553] whitespace-nowrap min-h-[46px] flex items-center justify-center"
+                                className="rounded-full px-8 py-3 text-center text-sm font-semibold shadow-xs hover:bg-[#C26553] whitespace-nowrap min-h-[46px] flex items-center justify-center self-start sm:self-auto"
                               >
-                                {isEn ? "Continue →" : "Turpināt →"}
+                                {isEn ? "Continue" : "Turpināt"}
                               </button>
                             </div>
                           </div>
