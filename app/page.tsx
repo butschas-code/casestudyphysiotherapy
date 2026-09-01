@@ -670,8 +670,8 @@ export default function PhysiotherapyCallingCardPage() {
                 className="absolute -top-4 -left-6 hidden sm:block h-28 w-28 overflow-hidden border-2 border-white bg-white"
               >
                 <Image
-                  src="/concept-physio/service-women.jpg"
-                  alt="Saudzīgais pieskāriens un aprūpe"
+                  src="/concept-physio/detail-hands.jpg"
+                  alt="Saudzīgais pieskāriens un terapeitiskā aprūpe"
                   fill
                   sizes="112px"
                   className="object-cover"
@@ -962,8 +962,8 @@ export default function PhysiotherapyCallingCardPage() {
                 className="absolute -bottom-6 -right-4 hidden sm:block h-36 w-36 overflow-hidden rounded-3xl border-4 border-white bg-white shadow-lg"
               >
                 <Image
-                  src="/concept-physio/service-rehab.jpg"
-                  alt="Fizioterapijas pieskāriena un kustības detaļa"
+                  src="/concept-physio/detail-hands.jpg"
+                  alt="Fizioterapijas pieskāriena un kustības vadības detaļa"
                   fill
                   sizes="144px"
                   className="object-cover"
@@ -2004,7 +2004,7 @@ export default function PhysiotherapyCallingCardPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-[#24302D]">Tālruņa numurs (SMS atgādinājumam) *</label>
+                    <label className="block text-xs font-medium text-[#24302D]">Tālrunis vai WhatsApp *</label>
                     <input
                       type="tel"
                       required
