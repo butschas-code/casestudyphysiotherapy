@@ -10,6 +10,7 @@ import {
   useTransform,
   useReducedMotion,
   Variants,
+  LayoutGroup,
 } from "framer-motion";
 
 export type Locale = "lv" | "en" | "ru";
@@ -286,55 +287,49 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
         },
       ];
 
-  // Specific appointment types filtered strictly per category
+  // Specific appointment types filtered strictly per category (simplified for scan speed)
   const appointmentsByPathway = isEn
     ? {
         physio: [
           {
             id: "physio_first",
             title: "Initial physiotherapy visit",
-            duration: "60 min",
+            duration: "60 min · First assessment",
             price: "50 €",
-            desc: "Comprehensive functional evaluation, posture & movement assessment, and individual treatment plan.",
           },
           {
             id: "physio_followup",
             title: "Follow-up physiotherapy visit",
-            duration: "45–50 min",
+            duration: "45–50 min · Follow-up treatment",
             price: "45 €",
-            desc: "Targeted therapeutic movement, manual techniques, and progressive muscular stabilization.",
           },
         ],
         women: [
           {
             id: "women_eval",
             title: "Women's health assessment",
-            duration: "60 min",
+            duration: "60 min · Pregnancy / postpartum care",
             price: "50 €",
-            desc: "Diastasis check, breathing mechanics, and prenatal or postnatal pelvic relief.",
           },
           {
             id: "women_postpartum",
             title: "Postpartum recovery visit",
-            duration: "60 min",
+            duration: "60 min · Postpartum recovery",
             price: "50 €",
-            desc: "Safe pelvic floor reconnect, posture realignment, and individual recovery guidance.",
           },
         ],
         baby: [
           {
             id: "baby_infant",
             title: "Infant development consultation",
-            duration: "45 min",
+            duration: "45 min · Baby movement & handling",
             price: "40 €",
-            desc: "Gentle motor milestone observation and supportive everyday handling guidance for parents.",
           },
           {
             id: "baby_posture",
             title: "Child posture & movement consultation",
-            duration: "45 min",
+            duration: "45 min · Posture & movement",
             price: "40 €",
-            desc: "Postural symmetry, gait assessment, and playful functional movement exercises.",
           },
         ],
       }
@@ -344,48 +339,42 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           {
             id: "physio_first",
             title: "Первичный визит к физиотерапевту",
-            duration: "60 мин",
+            duration: "60 мин · Первичная оценка",
             price: "50 €",
-            desc: "Углубленная функциональная оценка, проверка осанки и движений, составление плана.",
           },
           {
             id: "physio_followup",
-            title: "Повторный визит",
-            duration: "45–50 мин",
+            title: "Повторный визит к физиотерапевту",
+            duration: "45–50 мин · Повторное лечение",
             price: "45 €",
-            desc: "Целенаправленная лечебная гимнастика, мануальные техники и стабилизация мышц.",
           },
         ],
         women: [
           {
             id: "women_eval",
             title: "Консультация по женскому здоровью",
-            duration: "60 мин",
+            duration: "60 мин · Беременность / послеродовой период",
             price: "50 €",
-            desc: "Проверка диастаза, биомеханика дыхания и забота о мышцах тазового дна.",
           },
           {
             id: "women_postpartum",
             title: "Восстановление после родов",
-            duration: "60 мин",
+            duration: "60 мин · Послеродовое восстановление",
             price: "50 €",
-            desc: "Безопасное восстановление тела после родов и индивидуально подобранный ритм движений.",
           },
         ],
         baby: [
           {
             id: "baby_infant",
             title: "Консультация по развитию младенца",
-            duration: "45 мин",
+            duration: "45 мин · Развитие движений и хендлинг",
             price: "40 €",
-            desc: "Оценка естественной моторики малыша и обучение родителей бережному хендлингу.",
           },
           {
             id: "baby_posture",
             title: "Консультация по осанке и движениям ребенка",
-            duration: "45 мин",
+            duration: "45 мин · Осанка и движения",
             price: "40 €",
-            desc: "Симметрия осанки, оценка походки и игровые функциональные упражнения.",
           },
         ],
       }
@@ -394,48 +383,42 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           {
             id: "physio_first",
             title: "Pirmā fizioterapijas vizīte",
-            duration: "60 min",
+            duration: "60 min · Pirmreizējs novērtējums",
             price: "50 €",
-            desc: "Padziļināts funkcionālais novērtējums, stājas un kustību pārbaude un pirmais ārstniecības plāns.",
           },
           {
             id: "physio_followup",
             title: "Atkārtota vizīte",
-            duration: "45–50 min",
+            duration: "45–50 min · Atkārtota terapija",
             price: "45 €",
-            desc: "Mērķtiecīga ārstnieciskā vingrošana, manuālās tehnikas un muskuļu stabilizācija.",
           },
         ],
         women: [
           {
             id: "women_eval",
             title: "Sieviešu veselības vizīte",
-            duration: "60 min",
+            duration: "60 min · Gaidību / pēcdzemdību aprūpe",
             price: "50 €",
-            desc: "Diastāzes izvērtēšana, elpošanas biomehānika un iegurņa pamatnes muskuļu aprūpe.",
           },
           {
             id: "women_postpartum",
             title: "Pēcdzemdību atjaunošanās vizīte",
-            duration: "60 min",
+            duration: "60 min · Pēcdzemdību atjaunošanās",
             price: "50 €",
-            desc: "Droša ķermeņa atjaunošana pēc dzemdībām un individuāli pielāgots kustību ritms.",
           },
         ],
         baby: [
           {
             id: "baby_infant",
             title: "Zīdaiņa attīstības konsultācija",
-            duration: "45 min",
+            duration: "45 min · Kustību attīstība & hendlings",
             price: "40 €",
-            desc: "Mazuļa dabiskās motorikas novērtējums un maiga ikdienas hendlinga apmācība vecākiem.",
           },
           {
             id: "baby_posture",
             title: "Bērna stājas un kustību konsultācija",
-            duration: "45 min",
+            duration: "45 min · Stājas un gaitas pārbaude",
             price: "40 €",
-            desc: "Stājas simetrija, gaitas izvērtēšana un rotaļīgi funkcionālās vingrošanas vingrinājumi.",
           },
         ],
       };
@@ -649,6 +632,15 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
   const currentServiceObj = currentPathwayServices.find((s) => s.id === selectedServiceId) || currentPathwayServices[0];
   const currentSpecialistObj = specialists.find((s) => s.id === selectedSpecialist) || specialists[0];
   const currentDayObj = bookingDays[selectedDayIndex] || bookingDays[1];
+
+  const filteredSpecialists = specialists.filter(
+    (spec) => spec.pathways.includes(selectedPathway) || selectedPathway === "physio"
+  );
+  const sortedSpecialists = [...filteredSpecialists].sort((a, b) => {
+    if (a.id === selectedSpecialist) return -1;
+    if (b.id === selectedSpecialist) return 1;
+    return 0;
+  });
 
   // Motion Variants
   const revealLineVariants: Variants = {
@@ -2452,18 +2444,19 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                         setSelectedSpecialist(pathway.defaultSpecialist);
                         setShowIntakeForm(false);
                       }}
-                      className="w-full py-5 text-left transition-all flex items-center justify-between group cursor-pointer"
+                      className={`w-full py-5 text-left transition-all flex items-center justify-between group cursor-pointer border-l-2 ${
+                        isActive
+                          ? "border-[#D87967] pl-4"
+                          : "border-transparent pl-0 hover:pl-2"
+                      }`}
                     >
                       <div className="pr-4">
-                        <div className="flex items-center gap-3">
-                          {isActive && <span className="h-2 w-2 rounded-full bg-[#D87967] shrink-0" />}
-                          <span className={`text-base sm:text-lg font-semibold tracking-wide transition-colors ${
-                            isActive ? "text-[#D87967]" : "text-white group-hover:text-[#D87967]"
-                          }`}>
-                            {pathway.title}
-                          </span>
-                        </div>
-                        <p className="mt-1 text-xs sm:text-sm text-[#FFF9F4]/75 pl-5">
+                        <span className={`text-base sm:text-lg font-semibold tracking-wide block transition-colors ${
+                          isActive ? "text-[#D87967]" : "text-white group-hover:text-[#D87967]"
+                        }`}>
+                          {pathway.title}
+                        </span>
+                        <p className="mt-1 text-xs sm:text-sm text-[#FFF9F4]/75">
                           {pathway.subtitle}
                         </p>
                       </div>
@@ -2485,10 +2478,10 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 {/* 4th Route: Not sure what to choose */}
                 <a
                   href="#jautajums"
-                  className="w-full py-5 text-left transition-all flex items-center justify-between group cursor-pointer"
+                  className="w-full py-5 text-left transition-all flex items-center justify-between group cursor-pointer border-l-2 border-transparent pl-0 hover:pl-2"
                 >
                   <div className="pr-4">
-                    <span className="text-base sm:text-lg font-semibold text-[#D87967] group-hover:underline">
+                    <span className="text-base sm:text-lg font-semibold text-[#D87967] group-hover:underline block">
                       {isEn ? "NOT SURE WHAT TO CHOOSE?" : isRu ? "НЕ УВЕРЕНЫ, ЧТО ВЫБРАТЬ?" : "NEESAT PĀRLIECINĀTI, KO IZVĒLĒTIES?"}
                     </span>
                     <p className="mt-1 text-xs sm:text-sm text-[#FFF9F4]/75">
@@ -2702,9 +2695,6 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                       <span className="text-xs font-bold uppercase tracking-wider text-[#D87967]">
                         A. {isEn ? "Appointment Type" : isRu ? "Вид визита" : "Vizītes veids"}
                       </span>
-                      <span className="text-xs text-[#4A5D57]">
-                        {currentServiceObj.title} ({currentServiceObj.price})
-                      </span>
                     </div>
 
                     <div className="space-y-2">
@@ -2715,7 +2705,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                             key={srv.id}
                             type="button"
                             onClick={() => setSelectedServiceId(srv.id)}
-                            className={`w-full rounded-[12px] border p-3 sm:p-3.5 text-left transition-all flex items-center justify-between min-h-[58px] ${
+                            className={`w-full rounded-[12px] border p-3 sm:p-3.5 text-left transition-all flex items-center justify-between min-h-[52px] ${
                               isSelected
                                 ? "border-[#D87967] bg-[#F8E9E3] font-medium shadow-xs ring-1 ring-[#D87967]"
                                 : "border-black/15 bg-white hover:bg-[#FFF9F4]"
@@ -2723,7 +2713,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                           >
                             <div className="pr-3">
                               <p className="text-sm font-semibold text-[#24302D]">{srv.title}</p>
-                              <p className="text-xs text-[#4A5D57] mt-0.5">{srv.duration} · {srv.desc}</p>
+                              <p className="text-xs text-[#4A5D57] mt-0.5">{srv.duration}</p>
                             </div>
                             <span className="font-bold text-sm text-[#24302D] shrink-0">{srv.price}</span>
                           </button>
@@ -2732,24 +2722,22 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     </div>
                   </div>
 
-                  {/* B. SPECIALIST (Horizontal Human Rows) */}
+                  {/* B. SPECIALIST (Horizontal Human Rows with Subtle Reorder) */}
                   <div className="space-y-2.5 border-t border-black/[0.08] pt-5">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold uppercase tracking-wider text-[#D87967]">
                         B. {isEn ? "Specialist" : isRu ? "Специалист" : "Speciāliste"}
                       </span>
-                      <span className="text-xs font-semibold text-[#24302D]">
-                        {currentSpecialistObj.name} · {currentSpecialistObj.role}
-                      </span>
                     </div>
 
-                    <div className="space-y-2">
-                      {specialists
-                        .filter((spec) => spec.pathways.includes(selectedPathway) || selectedPathway === "physio")
-                        .map((spec) => {
+                    <LayoutGroup id="booking-specialists-reorder">
+                      <div className="space-y-2">
+                        {sortedSpecialists.map((spec) => {
                           const isSelected = selectedSpecialist === spec.id;
                           return (
-                            <button
+                            <motion.button
+                              layout
+                              transition={{ duration: 0.25, ease: easeOrganic }}
                               key={spec.id}
                               type="button"
                               onClick={() => {
@@ -2765,7 +2753,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                                   setSelectedTimeSlot("11:00");
                                 }
                               }}
-                              className={`w-full rounded-[12px] border p-3 text-left transition-all flex items-center justify-between gap-3 min-h-[64px] ${
+                              className={`w-full rounded-[12px] border p-3 text-left transition-colors flex items-center justify-between gap-3 min-h-[64px] ${
                                 isSelected
                                   ? "border-[#D87967] bg-[#F8E9E3] font-medium shadow-xs ring-1 ring-[#D87967]"
                                   : "border-black/15 bg-white hover:bg-[#FFF9F4]"
@@ -2790,10 +2778,11 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                                   {isSelected ? (isEn ? "Selected ✓" : isRu ? "Выбрано ✓" : "Izvēlēta ✓") : (isEn ? "Select" : isRu ? "Выбрать" : "Izvēlēties")}
                                 </span>
                               </div>
-                            </button>
+                            </motion.button>
                           );
                         })}
-                    </div>
+                      </div>
+                    </LayoutGroup>
                   </div>
 
                   {/* C. TIME (Locale-Aware Date Strip with Correct Numbers & Time Chips) */}
@@ -2847,7 +2836,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                     </div>
                   </div>
 
-                  {/* D. SUMMARY & CONTINUE ACTION PANEL */}
+                  {/* D. SUMMARY & CONFIRM ACTION PANEL */}
                   <div className="rounded-[14px] bg-[#FFF9F4] p-4 border border-black/[0.08] mt-2">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
@@ -2861,11 +2850,22 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                           />
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-[#24302D]">
-                            {currentDayObj.fullDay} · {selectedTimeSlot}
+                          <p className="text-sm sm:text-base font-semibold text-[#24302D]">
+                            {currentDayObj.fullDay} · {selectedTimeSlot}{" "}
+                            <span className="font-normal text-[#4A5D57]">
+                              {isEn
+                                ? `with ${currentSpecialistObj.name}`
+                                : isRu
+                                ? `у ${currentSpecialistObj.name}`
+                                : currentSpecialistObj.id === "elina"
+                                ? "pie Elīnas Vītolas"
+                                : currentSpecialistObj.id === "marta"
+                                ? "pie Martas Liepas"
+                                : "pie Annas Ozolas"}
+                            </span>
                           </p>
-                          <p className="text-xs text-[#4A5D57]">
-                            {currentServiceObj.title} {isEn ? `with ${currentSpecialistObj.name.split(" ")[0]}` : isRu ? `у ${currentSpecialistObj.name.split(" ")[0]}` : `pie ${currentSpecialistObj.name.split(" ")[0]}s`} · <span className="font-semibold text-[#D87967]">{currentServiceObj.price}</span>
+                          <p className="text-xs text-[#4A5D57] mt-0.5">
+                            {currentServiceObj.title} · {currentServiceObj.duration.split(" · ")[0]} · <span className="font-semibold text-[#D87967]">{currentServiceObj.price}</span>
                           </p>
                         </div>
                       </div>
@@ -2876,7 +2876,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                         style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
                         className="rounded-full px-7 py-3 text-center text-sm font-semibold shadow-xs hover:bg-[#C26553] whitespace-nowrap min-h-[44px] flex items-center justify-center self-start sm:self-auto"
                       >
-                        {isEn ? "Continue to booking →" : isRu ? "Продолжить запись →" : "Turpināt pieteikumu →"}
+                        {isEn ? "Confirm this time →" : isRu ? "Подтвердить это время →" : "Apstiprināt šo laiku →"}
                       </button>
                     </div>
                   </div>
