@@ -330,9 +330,9 @@ export default function PhysiotherapyCallingCardPage() {
         name: "KUSTĪBA — Fizioterapijas, Sieviešu Veselības un Bērnu Attīstības Telpa",
         alternateName: "KUSTĪBA fizioterapijas prakse",
         url: "https://saiteo.com/en/concept/physiotherapy",
-        logo: "https://saiteo.com/concept-physio/hero-natural-care.jpg",
+        logo: "https://saiteo.com/concept-physio/hero-warm-care.jpg",
         image: [
-          "https://saiteo.com/concept-physio/hero-natural-care.jpg",
+          "https://saiteo.com/concept-physio/hero-warm-care.jpg",
           "https://saiteo.com/concept-physio/practitioner-primary.jpg",
           "https://saiteo.com/concept-physio/service-women.jpg",
           "https://saiteo.com/concept-physio/service-children.jpg",
@@ -505,21 +505,21 @@ export default function PhysiotherapyCallingCardPage() {
       {/* Discrete Studio Calling Card Strip */}
       <div
         style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
-        className="px-4 sm:px-6 py-2 text-xs flex flex-wrap items-center justify-between gap-2 border-b border-white/10"
+        className="px-5 sm:px-8 py-2.5 text-sm flex flex-wrap items-center justify-between gap-3 border-b border-white/10"
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <Link href="/" className="font-bold text-[#00C9A7] tracking-tight">
             saiteo
           </Link>
           <span className="opacity-40">|</span>
-          <span className="opacity-80 truncate max-w-[210px] sm:max-w-none">
+          <span className="opacity-90">
             Prakses etalons: <strong>KUSTĪBA</strong> · Rīga
           </span>
         </div>
-        <div className="flex items-center gap-4 text-xs">
+        <div className="flex items-center gap-4 text-sm">
           <Link
             href="/case-studies/physiotherapy"
-            className="opacity-75 hover:opacity-100 underline decoration-white/30 whitespace-nowrap"
+            className="opacity-80 hover:opacity-100 underline decoration-white/30 whitespace-nowrap"
           >
             Kāpēc šī lapa konvertē? →
           </Link>
@@ -527,31 +527,31 @@ export default function PhysiotherapyCallingCardPage() {
       </div>
 
       {/* ============================================================ */}
-      {/* HUMAN-CENTERED HEADER (LIGHT/TRANSPARENT -> WARM ON SCROLL) */}
+      {/* HUMAN-CENTERED HEADER */}
       {/* ============================================================ */}
       <header
         style={{
-          backgroundColor: isScrolled ? "rgba(255, 249, 244, 0.94)" : "rgba(255, 249, 244, 0.8)",
+          backgroundColor: isScrolled ? "rgba(255, 249, 244, 0.96)" : "rgba(255, 249, 244, 0.85)",
           borderColor: isScrolled ? "rgba(36, 48, 45, 0.08)" : "transparent",
         }}
         className={`sticky top-0 z-40 transition-all duration-300 border-b ${
-          isScrolled ? "backdrop-blur-xs py-3 shadow-2xs" : "py-4 sm:py-5 backdrop-blur-xs"
+          isScrolled ? "backdrop-blur-sm py-3.5 shadow-xs" : "py-5 backdrop-blur-sm"
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-12">
           
-          {/* Left: Brand & Small Subtitle */}
+          {/* Left: Brand */}
           <Link href="#top" className="flex flex-col group">
-            <span className="font-serif text-2xl lg:text-[1.85rem] font-medium tracking-tight text-[#24302D]">
+            <span className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#24302D]">
               KUSTĪBA
             </span>
-            <span className="text-[11px] font-normal text-[#5A6D67] block -mt-0.5">
+            <span className="text-sm font-normal text-[#4A5D57] block">
               fizioterapijas prakse
             </span>
           </Link>
 
-          {/* Center/Right Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-9 text-sm font-medium text-[#5A6D67]">
+          {/* Center Navigation */}
+          <nav className="hidden lg:flex items-center gap-10 text-base font-medium text-[#4A5D57]">
             <a href="#atpazisana" className="transition-colors hover:text-[#24302D]">
               Kā varam palīdzēt
             </a>
@@ -571,7 +571,7 @@ export default function PhysiotherapyCallingCardPage() {
             <a
               href="#pieraksts"
               style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-              className="hidden sm:inline-block rounded-full px-6 py-2.5 text-xs font-semibold shadow-xs transition-all hover:bg-[#C26553] hover:-translate-y-0.5"
+              className="hidden sm:inline-block rounded-full px-7 py-3 text-sm font-semibold shadow-xs transition-all hover:bg-[#C26553] hover:-translate-y-0.5"
             >
               Pieteikt vizīti
             </a>
@@ -580,7 +580,7 @@ export default function PhysiotherapyCallingCardPage() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden flex h-11 w-11 items-center justify-center rounded-full border border-black/10 text-[#24302D] active:bg-black/5"
+              className="lg:hidden flex h-12 w-12 items-center justify-center rounded-full border border-black/15 text-[#24302D] active:bg-black/5 text-lg"
               aria-label="Izvēlne"
             >
               {mobileMenuOpen ? "✕" : "☰"}
@@ -601,28 +601,28 @@ export default function PhysiotherapyCallingCardPage() {
               <a
                 href="#atpazisana"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block text-base font-medium text-[#24302D] py-1"
+                className="block text-lg font-medium text-[#24302D] py-1.5"
               >
                 Kā varam palīdzēt
               </a>
               <a
                 href="#elina"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block text-base font-medium text-[#24302D] py-1"
+                className="block text-lg font-medium text-[#24302D] py-1.5"
               >
                 Elīna
               </a>
               <a
                 href="#nodalas"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block text-base font-medium text-[#24302D] py-1"
+                className="block text-lg font-medium text-[#24302D] py-1.5"
               >
                 Pakalpojumi
               </a>
               <a
                 href="#vizite"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block text-base font-medium text-[#24302D] py-1"
+                className="block text-lg font-medium text-[#24302D] py-1.5"
               >
                 Pirmā vizīte
               </a>
@@ -631,7 +631,7 @@ export default function PhysiotherapyCallingCardPage() {
                   href="#pieraksts"
                   onClick={() => setMobileMenuOpen(false)}
                   style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                  className="block text-center rounded-full py-3.5 text-sm font-semibold min-h-[44px] flex items-center justify-center"
+                  className="block text-center rounded-full py-4 text-base font-semibold min-h-[48px] flex items-center justify-center"
                 >
                   Pieteikt vizīti →
                 </a>
@@ -646,9 +646,9 @@ export default function PhysiotherapyCallingCardPage() {
       {/* ============================================================ */}
       <section
         id="top"
-        className="relative min-h-[85vh] lg:min-h-[calc(100svh-65px)] flex items-center overflow-hidden"
+        className="relative min-h-[85vh] lg:min-h-[calc(100svh-75px)] flex items-center overflow-hidden"
       >
-        {/* FULL-WIDTH BACKGROUND PHOTOGRAPHY (Warm, Observational, Daylight Care) */}
+        {/* Full-width Background Photography */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/concept-physio/hero-warm-care.jpg"
@@ -658,17 +658,17 @@ export default function PhysiotherapyCallingCardPage() {
             sizes="100vw"
             className="object-cover object-[center_30%]"
           />
-          {/* Subtle Warm Gradient Overlay: Ensures readability on left while keeping full-width photo prominent */}
+          {/* Subtle Warm Overlay for readability */}
           <div
             style={{
-              background: "linear-gradient(90deg, rgba(255, 249, 244, 0.96) 0%, rgba(255, 249, 244, 0.88) 45%, rgba(255, 249, 244, 0.4) 75%, rgba(255, 249, 244, 0.15) 100%)",
+              background: "linear-gradient(90deg, rgba(255, 249, 244, 0.97) 0%, rgba(255, 249, 244, 0.90) 45%, rgba(255, 249, 244, 0.35) 75%, rgba(255, 249, 244, 0.15) 100%)",
             }}
             className="absolute inset-0 hidden lg:block"
           />
-          {/* Mobile warm gradient */}
+          {/* Mobile warm overlay */}
           <div
             style={{
-              background: "linear-gradient(180deg, rgba(255, 249, 244, 0.94) 0%, rgba(255, 249, 244, 0.8) 60%, rgba(255, 249, 244, 0.4) 100%)",
+              background: "linear-gradient(180deg, rgba(255, 249, 244, 0.95) 0%, rgba(255, 249, 244, 0.82) 65%, rgba(255, 249, 244, 0.45) 100%)",
             }}
             className="absolute inset-0 lg:hidden"
           />
@@ -678,7 +678,7 @@ export default function PhysiotherapyCallingCardPage() {
         <div className="mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-12 py-16 sm:py-24 relative z-10">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] items-center gap-10">
             
-            {/* LEFT: Warm Editorial Monologue */}
+            {/* LEFT: Text Monologue */}
             <motion.div
               style={{ opacity: heroOpacity }}
               className="max-w-2xl"
@@ -688,7 +688,7 @@ export default function PhysiotherapyCallingCardPage() {
                 initial="hidden"
                 animate="visible"
                 variants={revealLineVariants}
-                className="font-serif italic text-base sm:text-lg text-[#5A6D67] tracking-normal"
+                className="text-base sm:text-lg font-medium text-[#4A5D57]"
               >
                 Fizioterapija sievietēm, bērniem un atveseļošanās kustībai
               </motion.p>
@@ -698,10 +698,10 @@ export default function PhysiotherapyCallingCardPage() {
                 initial="hidden"
                 animate="visible"
                 variants={revealLineVariants}
-                className="mt-4 font-serif text-[42px] sm:text-5xl lg:text-[3.9rem] xl:text-[4.4rem] font-normal leading-[1.14] tracking-tight text-[#24302D]"
+                className="mt-4 text-[40px] sm:text-5xl lg:text-[3.8rem] xl:text-[4.2rem] font-medium leading-[1.14] tracking-tight text-[#24302D]"
               >
                 <span>Jūsu ķermenim nav jāpielāgojas terapijai.</span>
-                <span className="mt-2 block italic text-[#D87967]">
+                <span className="mt-2 block font-normal text-[#D87967]">
                   Terapijai jāpielāgojas Jums.
                 </span>
               </motion.h1>
@@ -711,7 +711,7 @@ export default function PhysiotherapyCallingCardPage() {
                 initial="hidden"
                 animate="visible"
                 variants={revealLineVariants}
-                className="mt-6 max-w-xl text-[17px] sm:text-lg leading-[1.7] text-[#3D4F4A]"
+                className="mt-6 max-w-xl text-lg sm:text-xl leading-relaxed text-[#3D4F4A]"
               >
                 Individuāla fizioterapija cilvēkiem dažādos dzīves posmos — no muguras sāpēm un atveseļošanās līdz grūtniecībai, pēcdzemdību mieram un mazuļa pirmajiem soļiem.
               </motion.p>
@@ -726,13 +726,13 @@ export default function PhysiotherapyCallingCardPage() {
                 <a
                   href="#pieraksts"
                   style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                  className="rounded-full px-8 py-4 text-center text-sm font-semibold shadow-md transition-all hover:bg-[#C26553] hover:shadow-lg hover:-translate-y-0.5 min-h-[50px] flex items-center justify-center"
+                  className="rounded-full px-8 py-4 text-center text-base font-semibold shadow-md transition-all hover:bg-[#C26553] hover:shadow-lg hover:-translate-y-0.5 min-h-[52px] flex items-center justify-center"
                 >
                   Pieteikt pirmo vizīti
                 </a>
                 <a
                   href="#jautajums"
-                  className="text-center text-sm font-medium text-[#24302D] underline decoration-[#24302D]/30 underline-offset-6 transition-colors hover:text-[#D87967] hover:decoration-[#D87967] py-2"
+                  className="text-center text-base font-medium text-[#24302D] underline decoration-[#24302D]/40 underline-offset-4 transition-colors hover:text-[#D87967] hover:decoration-[#D87967] py-2"
                 >
                   Neesmu pārliecināta, ko izvēlēties →
                 </a>
@@ -743,13 +743,13 @@ export default function PhysiotherapyCallingCardPage() {
                 initial="hidden"
                 animate="visible"
                 variants={revealLineVariants}
-                className="mt-5 text-xs text-[#5A6D67]"
+                className="mt-5 text-sm sm:text-base text-[#4A5D57]"
               >
                 Nav nepieciešams ārsta nosūtījums · Miera iela 24, Rīga
               </motion.p>
             </motion.div>
 
-            {/* RIGHT: FLOATING INTIMATE BOOKING CARD */}
+            {/* RIGHT: FLOATING APPOINTMENT CARD */}
             <div className="flex justify-start lg:justify-end">
               <motion.div
                 style={{ y: heroCardY }}
@@ -764,40 +764,40 @@ export default function PhysiotherapyCallingCardPage() {
                   scale: { duration: 0.7, delay: 0.3, ease: easeOrganic },
                   y: shouldReduceMotion ? { duration: 0 } : { repeat: Infinity, duration: 6, ease: "easeInOut" },
                 }}
-                className="w-full sm:w-[330px] rounded-3xl bg-[#FFFFFF]/95 backdrop-blur-md p-6 border border-white/80 shadow-2xl"
+                className="w-full sm:w-[350px] rounded-3xl bg-[#FFFFFF]/95 backdrop-blur-md p-7 border border-white shadow-2xl"
               >
-                <div className="flex items-center justify-between border-b border-black/[0.06] pb-3">
-                  <span className="text-xs font-semibold text-[#24302D]">
+                <div className="flex items-center justify-between border-b border-black/[0.06] pb-3.5">
+                  <span className="text-sm font-semibold text-[#24302D]">
                     Tuvākā brīvā vizīte
                   </span>
-                  <span className="flex h-2 w-2 relative">
+                  <span className="flex h-2.5 w-2.5 relative">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#9FB8A6] opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#9FB8A6]"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#9FB8A6]"></span>
                   </span>
                 </div>
 
-                <div className="mt-3.5 flex items-center gap-3">
-                  <div className="relative h-11 w-11 flex-shrink-0 overflow-hidden rounded-full border border-black/10 bg-[#F8E9E3]">
+                <div className="mt-4 flex items-center gap-3.5">
+                  <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border border-black/10 bg-[#F8E9E3]">
                     <Image
                       src="/concept-physio/practitioner-primary.jpg"
                       alt="Elīna Vītola"
                       fill
-                      sizes="44px"
+                      sizes="48px"
                       className="object-cover object-top"
                     />
                   </div>
                   <div>
-                    <p className="font-sans text-sm font-semibold text-[#24302D]">Elīna Vītola</p>
-                    <p className="text-xs text-[#5A6D67]">Vadošā fizioterapeite</p>
+                    <p className="text-base font-semibold text-[#24302D]">Elīna Vītola</p>
+                    <p className="text-sm text-[#4A5D57]">Vadošā fizioterapeite</p>
                   </div>
                 </div>
 
-                <p className="mt-4 text-xs font-medium text-[#24302D]">
+                <p className="mt-4 text-sm font-medium text-[#24302D]">
                   Otrdiena, 8. septembris
                 </p>
 
                 {/* Available Time Chips */}
-                <div className="mt-2.5 grid grid-cols-3 gap-2">
+                <div className="mt-3 grid grid-cols-3 gap-2.5">
                   {["10:30", "13:00", "16:30"].map((slot) => (
                     <a
                       key={slot}
@@ -807,17 +807,17 @@ export default function PhysiotherapyCallingCardPage() {
                         setSelectedTimeSlot(slot);
                         setSelectedSpecialist("elina");
                       }}
-                      className="rounded-xl border border-black/10 bg-[#FFF9F4] py-2.5 text-center font-mono text-xs font-medium text-[#24302D] transition-colors hover:border-[#D87967] hover:bg-[#D87967] hover:text-white min-h-[44px] flex items-center justify-center"
+                      className="rounded-xl border border-black/15 bg-[#FFF9F4] py-3 text-center text-sm font-semibold text-[#24302D] transition-colors hover:border-[#D87967] hover:bg-[#D87967] hover:text-white min-h-[46px] flex items-center justify-center"
                     >
                       {slot}
                     </a>
                   ))}
                 </div>
 
-                <div className="mt-4 flex items-center justify-between border-t border-black/[0.06] pt-3">
+                <div className="mt-4 flex items-center justify-between border-t border-black/[0.06] pt-3.5">
                   <a
                     href="#pieraksts"
-                    className="text-xs font-semibold text-[#D87967] hover:underline"
+                    className="text-sm font-semibold text-[#D87967] hover:underline"
                   >
                     Skatīt visus laikus →
                   </a>
@@ -830,7 +830,7 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 2. HUMAN CONVERSATIONAL PATIENT RECOGNITION (CLEAN & WARM)   */}
+      {/* 2. HUMAN CONVERSATIONAL PATIENT RECOGNITION                 */}
       {/* ============================================================ */}
       <section
         id="atpazisana"
@@ -847,15 +847,15 @@ export default function PhysiotherapyCallingCardPage() {
           
           {/* Header Narrative */}
           <div className="max-w-3xl">
-            <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#24302D] leading-tight">
+            <h2 className="text-3xl sm:text-5xl font-medium text-[#24302D] leading-tight">
               Varbūt Jūs atpazīstat sevi šeit.
             </h2>
-            <p className="mt-4 text-[17px] leading-[1.65] text-[#5A6D67]">
+            <p className="mt-4 text-lg sm:text-xl leading-relaxed text-[#4A5D57]">
               Cilvēki pie mums nenāk ar pakalpojuma nosaukumu. Viņi nāk ar sajūtām, jautājumiem un vēlmi atkal justies labi savā ķermenī.
             </p>
           </div>
 
-          {/* Editorial Two-Column Conversational Layout */}
+          {/* Two-Column Conversational Layout */}
           <div className="mt-12 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             
             {/* LEFT: Human Patient Thoughts */}
@@ -869,14 +869,14 @@ export default function PhysiotherapyCallingCardPage() {
                     onClick={() => setHoveredSituation(idx)}
                     style={{
                       backgroundColor: isActive ? "#FFFFFF" : "transparent",
-                      borderColor: isActive ? "rgba(216, 121, 103, 0.4)" : "rgba(36, 48, 45, 0.08)",
+                      borderColor: isActive ? "rgba(216, 121, 103, 0.4)" : "rgba(36, 48, 45, 0.10)",
                       boxShadow: isActive ? "0 14px 32px -12px rgba(36, 48, 45, 0.08)" : "none",
                     }}
                     className={`cursor-pointer rounded-2xl border p-6 transition-all duration-300 ${
                       isActive ? "pl-7 border-l-4 border-l-[#D87967]" : "hover:bg-white/50"
                     }`}
                   >
-                    <h3 className="font-serif text-lg sm:text-xl font-normal text-[#24302D]">
+                    <h3 className="text-xl sm:text-2xl font-medium text-[#24302D]">
                       {item.thought}
                     </h3>
 
@@ -888,7 +888,7 @@ export default function PhysiotherapyCallingCardPage() {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3, ease: easeOrganic }}
-                          className="mt-3 text-[15px] sm:text-base leading-relaxed text-[#5A6D67] pt-2 border-t border-black/[0.04]"
+                          className="mt-3.5 text-base sm:text-lg leading-relaxed text-[#4A5D57] pt-2 border-t border-black/[0.04]"
                         >
                           {item.response}
                         </motion.p>
@@ -927,7 +927,7 @@ export default function PhysiotherapyCallingCardPage() {
                   </motion.div>
                 </AnimatePresence>
 
-                <div className="absolute bottom-4 left-4 right-4 rounded-xl bg-white/90 backdrop-blur-xs px-4 py-2.5 text-xs text-[#24302D] shadow-xs">
+                <div className="absolute bottom-4 left-4 right-4 rounded-xl bg-white/95 backdrop-blur-xs px-5 py-3 text-sm font-medium text-[#24302D] shadow-xs">
                   {activeRec.imageAlt}
                 </div>
               </div>
@@ -936,12 +936,12 @@ export default function PhysiotherapyCallingCardPage() {
 
           {/* Section Direct Human Transition */}
           <div className="mt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6">
-            <p className="text-sm text-[#5A6D67]">
+            <p className="text-base text-[#4A5D57]">
               Neesat pārliecināti par savu situāciju? Mēs uzklausām un palīdzam saprast pirmo soli.
             </p>
             <a
               href="#jautajums"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#D87967] hover:underline whitespace-nowrap"
+              className="inline-flex items-center gap-2 text-base font-semibold text-[#D87967] hover:underline whitespace-nowrap"
             >
               <span>Pastāstiet mums, kas notiek</span>
               <span>→</span>
@@ -951,7 +951,7 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 3. THERAPIST STORY SECTION (NO INSET PIP, CLEAN & HUMAN)     */}
+      {/* 3. THERAPIST STORY SECTION                                  */}
       {/* ============================================================ */}
       <section
         id="elina"
@@ -993,40 +993,40 @@ export default function PhysiotherapyCallingCardPage() {
               </div>
             </motion.div>
 
-            {/* RIGHT: Intimate Monologue & Human Grounding */}
+            {/* RIGHT: Intimate Monologue */}
             <div>
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[2.9rem] font-normal leading-[1.18] tracking-tight text-[#24302D]">
+              <h2 className="text-3xl sm:text-4xl lg:text-[2.9rem] font-medium leading-[1.18] tracking-tight text-[#24302D]">
                 “Vispirms es gribu saprast Jūsu stāstu.”
               </h2>
 
-              <div className="mt-6 space-y-4 text-[17px] sm:text-lg leading-[1.65] text-[#4A5D57]">
+              <div className="mt-6 space-y-4 text-lg sm:text-xl leading-relaxed text-[#3D4F4A]">
                 <p>
                   Katrs cilvēks kustas citādi — un katrs atnāk ar savu pieredzi, ikdienu un iemeslu, kāpēc ķermenis šobrīd prasa vairāk uzmanības.
                 </p>
                 <p>
                   Tāpēc pirmajā vizītē es nesteidzos pie “vingrojumu saraksta”. Vispirms mēs izrunājam, kas ir mainījies, ko Jūs vēlaties atgūt un kā ķermenis kustas kopumā.
                 </p>
-                <p className="font-medium text-[#24302D]">
+                <p className="font-semibold text-[#24302D]">
                   Tikai tad veidojam plānu, kas iederas Jūsu dzīvē.
                 </p>
               </div>
 
-              <p className="mt-6 text-sm sm:text-base leading-relaxed text-[#24302D] font-medium border-t border-[#24302D]/10 pt-4">
+              <p className="mt-6 text-base sm:text-lg leading-relaxed text-[#24302D] font-medium border-t border-[#24302D]/10 pt-4">
                 Elīna Vītola ir KUSTĪBA dibinātāja un sertificēta fizioterapeite ar 12 gadu klīnisko pieredzi mugurkaula biomehānikā, sieviešu veselībā un pēcdzemdību aprūpē.
               </p>
 
-              <div className="mt-8 flex flex-wrap items-center gap-5">
+              <div className="mt-8 flex flex-wrap items-center gap-6">
                 <a
                   href="#pieraksts"
                   onClick={() => { setSelectedSpecialist("elina"); changeBookingStep(3); }}
                   style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
-                  className="rounded-full px-7 py-3.5 text-xs font-semibold hover:bg-[#D87967] transition-colors min-h-[44px] flex items-center justify-center"
+                  className="rounded-full px-8 py-4 text-sm font-semibold hover:bg-[#D87967] transition-colors min-h-[48px] flex items-center justify-center"
                 >
                   Pieteikt vizīti pie Elīnas →
                 </a>
                 <a
                   href="#nodalas"
-                  className="text-xs font-medium text-[#5A6D67] hover:text-[#24302D] underline py-2"
+                  className="text-base font-medium text-[#4A5D57] hover:text-[#24302D] underline py-2"
                 >
                   Iepazīt prakses virzienus
                 </a>
@@ -1037,7 +1037,7 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 4. FOUR SPECIALISM STORYTELLING CHAPTERS (CLEAN & PURE)      */}
+      {/* 4. FOUR SPECIALISM STORYTELLING CHAPTERS                     */}
       {/* ============================================================ */}
       <section id="nodalas" className="relative">
         
@@ -1046,7 +1046,7 @@ export default function PhysiotherapyCallingCardPage() {
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
             <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
               
-              {/* Photo with Organic Reveal */}
+              {/* Photo */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -1069,11 +1069,11 @@ export default function PhysiotherapyCallingCardPage() {
 
               {/* Narrative Content */}
               <div>
-                <h2 className="font-serif text-2xl sm:text-4xl lg:text-[2.75rem] font-normal text-[#24302D] leading-[1.2]">
+                <h2 className="text-2xl sm:text-4xl lg:text-[2.75rem] font-medium text-[#24302D] leading-[1.2]">
                   Atgriezties pie kustības, kurai atkal var uzticēties.
                 </h2>
 
-                <div className="mt-5 space-y-4 text-[17px] sm:text-lg leading-[1.65] text-[#5A6D67]">
+                <div className="mt-5 space-y-4 text-lg sm:text-[19px] leading-relaxed text-[#3D4F4A]">
                   <p>
                     Sāpes bieži maina to, kā mēs kustamies, strādājam, guļam un pat domājam par savu ķermeni.
                   </p>
@@ -1082,20 +1082,20 @@ export default function PhysiotherapyCallingCardPage() {
                   </p>
                 </div>
 
-                <p className="mt-6 text-sm text-[#5A6D67]">
+                <p className="mt-6 text-base font-medium text-[#4A5D57]">
                   Muguras un kakla sāpes · Pēctraumu atjaunošanās · Kustību ierobežojumi
                 </p>
 
-                <div className="mt-8 flex flex-wrap items-center gap-5">
+                <div className="mt-8 flex flex-wrap items-center gap-6">
                   <a
                     href="#pieraksts"
                     onClick={() => { setSelectedService("rehab"); changeBookingStep(3); }}
                     style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                    className="rounded-full px-7 py-3.5 text-center text-xs font-semibold hover:bg-[#C26553] min-h-[44px] flex items-center justify-center"
+                    className="rounded-full px-8 py-4 text-center text-sm font-semibold hover:bg-[#C26553] min-h-[48px] flex items-center justify-center"
                   >
                     Pieteikt rehabilitācijas vizīti →
                   </a>
-                  <a href="#cenas" className="text-xs font-medium text-[#5A6D67] hover:text-[#24302D] underline py-2">
+                  <a href="#cenas" className="text-base font-medium text-[#4A5D57] hover:text-[#24302D] underline py-2">
                     Skatīt cenrādi
                   </a>
                 </div>
@@ -1118,11 +1118,11 @@ export default function PhysiotherapyCallingCardPage() {
               
               {/* Narrative Content */}
               <div>
-                <h2 className="font-serif text-2xl sm:text-4xl lg:text-[2.75rem] font-normal text-[#24302D] leading-[1.2]">
+                <h2 className="text-2xl sm:text-4xl lg:text-[2.75rem] font-medium text-[#24302D] leading-[1.2]">
                   Ķermenis mainās. Jums nav tas jāizdzīvo vienai.
                 </h2>
 
-                <div className="mt-5 space-y-4 text-[17px] sm:text-lg leading-[1.65] text-[#5A6D67]">
+                <div className="mt-5 space-y-4 text-lg sm:text-[19px] leading-relaxed text-[#3D4F4A]">
                   <p>
                     Gaidību laikā mainās smaguma centrs, locītavu saites kļūst elastīgākas, un muguras jostas daļa un iegurnis saņem nepierastu slodzi. Tas ir dabisks process, taču tas nenozīmē, ka sāpes ir jāpacieš.
                   </p>
@@ -1131,24 +1131,24 @@ export default function PhysiotherapyCallingCardPage() {
                   </p>
                 </div>
 
-                <p className="mt-6 text-sm text-[#5A6D67]">
+                <p className="mt-6 text-base font-medium text-[#4A5D57]">
                   Iegurņa un muguras atslogošana · Elpošana dzemdībām · Teipošana
                 </p>
 
-                <div className="mt-8 flex flex-wrap items-center gap-5">
+                <div className="mt-8 flex flex-wrap items-center gap-6">
                   <a
                     href="#pieraksts"
                     onClick={() => { setSelectedService("women"); setSelectedSpecialist("elina"); changeBookingStep(3); }}
                     style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
-                    className="rounded-full px-7 py-3.5 text-center text-xs font-semibold hover:bg-[#D87967] min-h-[44px] flex items-center justify-center"
+                    className="rounded-full px-8 py-4 text-center text-sm font-semibold hover:bg-[#D87967] min-h-[48px] flex items-center justify-center"
                   >
                     Pieteikt grūtniecības vizīti →
                   </a>
-                  <span className="text-xs text-[#5A6D67]">Pieņem Elīna Vītola</span>
+                  <span className="text-base text-[#4A5D57]">Pieņem Elīna Vītola</span>
                 </div>
               </div>
 
-              {/* Photo with Organic Reveal */}
+              {/* Photo */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -1177,7 +1177,7 @@ export default function PhysiotherapyCallingCardPage() {
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
             <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
               
-              {/* Photo with Organic Reveal */}
+              {/* Photo */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -1200,11 +1200,11 @@ export default function PhysiotherapyCallingCardPage() {
 
               {/* Narrative Content */}
               <div>
-                <h2 className="font-serif text-2xl sm:text-4xl lg:text-[2.75rem] font-normal text-[#24302D] leading-[1.2]">
+                <h2 className="text-2xl sm:text-4xl lg:text-[2.75rem] font-medium text-[#24302D] leading-[1.2]">
                   Atgriešanās pie sevis nav sacensība.
                 </h2>
 
-                <div className="mt-5 space-y-4 text-[17px] sm:text-lg leading-[1.65] text-[#5A6D67]">
+                <div className="mt-5 space-y-4 text-lg sm:text-[19px] leading-relaxed text-[#3D4F4A]">
                   <p>
                     Pēcdzemdību periods prasa pacietību un patiesu saudzību. Ķermenim ir nepieciešams laiks, lai audi atjaunotos, vēdera dziļie muskuļi atkal atrastu savienojumu un iegurņa pamatne kļūtu stabila.
                   </p>
@@ -1213,20 +1213,20 @@ export default function PhysiotherapyCallingCardPage() {
                   </p>
                 </div>
 
-                <p className="mt-6 text-sm text-[#5A6D67]">
+                <p className="mt-6 text-base font-medium text-[#4A5D57]">
                   Diastāzes diagnostika · Iegurņa pamatne · Ķeizargrieziena rētas aprūpe
                 </p>
 
-                <div className="mt-8 flex flex-wrap items-center gap-5">
+                <div className="mt-8 flex flex-wrap items-center gap-6">
                   <a
                     href="#pieraksts"
                     onClick={() => { setSelectedService("women"); setSelectedSpecialist("elina"); changeBookingStep(3); }}
                     style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                    className="rounded-full px-7 py-3.5 text-center text-xs font-semibold hover:bg-[#C26553] min-h-[44px] flex items-center justify-center"
+                    className="rounded-full px-8 py-4 text-center text-sm font-semibold hover:bg-[#C26553] min-h-[48px] flex items-center justify-center"
                   >
                     Pieteikt pēcdzemdību pārbaudi →
                   </a>
-                  <span className="text-xs text-[#5A6D67]">Ieteicams no 6. nedēļas pēc dzemdībām</span>
+                  <span className="text-base text-[#4A5D57]">Ieteicams no 6. nedēļas pēc dzemdībām</span>
                 </div>
               </div>
             </div>
@@ -1247,11 +1247,11 @@ export default function PhysiotherapyCallingCardPage() {
               
               {/* Narrative Content */}
               <div>
-                <h2 className="font-serif text-2xl sm:text-4xl lg:text-[2.75rem] font-normal text-[#24302D] leading-[1.2]">
+                <h2 className="text-2xl sm:text-4xl lg:text-[2.75rem] font-medium text-[#24302D] leading-[1.2]">
                   Mazs ķermenis. Milzīgs attīstības ceļš.
                 </h2>
 
-                <div className="mt-5 space-y-4 text-[17px] sm:text-lg leading-[1.65] text-[#5A6D67]">
+                <div className="mt-5 space-y-4 text-lg sm:text-[19px] leading-relaxed text-[#3D4F4A]">
                   <p>
                     Pirmajā dzīves gadā mazulis apgūst svarīgākās dzīves kustības — velšanos, rāpošanu, sēdēšanu un pirmos soļus. Vecāku pareizs hendlings (ikdienas celšana, turēšana un ģērbšana) ir labākais atbalsts simetriskai attīstībai.
                   </p>
@@ -1260,24 +1260,24 @@ export default function PhysiotherapyCallingCardPage() {
                   </p>
                 </div>
 
-                <p className="mt-6 text-sm text-[#5A6D67]">
+                <p className="mt-6 text-base font-medium text-[#4A5D57]">
                   Zīdaiņu hendlings · Muskuļu tonuss · Motorā attīstība · Bērnu stāja
                 </p>
 
-                <div className="mt-8 flex flex-wrap items-center gap-5">
+                <div className="mt-8 flex flex-wrap items-center gap-6">
                   <a
                     href="#pieraksts"
                     onClick={() => { setSelectedService("infant"); setSelectedSpecialist("anna"); changeBookingStep(3); }}
                     style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
-                    className="rounded-full px-7 py-3.5 text-center text-xs font-semibold hover:bg-[#D87967] min-h-[44px] flex items-center justify-center"
+                    className="rounded-full px-8 py-4 text-center text-sm font-semibold hover:bg-[#D87967] min-h-[48px] flex items-center justify-center"
                   >
                     Pieteikt hendlinga nodarbību →
                   </a>
-                  <span className="text-xs text-[#5A6D67]">Pieņem Anna Ozola (40 € / 45 min)</span>
+                  <span className="text-base text-[#4A5D57]">Pieņem Anna Ozola (40 € / 45 min)</span>
                 </div>
               </div>
 
-              {/* Photo with Organic Reveal */}
+              {/* Photo */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -1303,7 +1303,7 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 5. FIRST-VISIT STORY SECTION (CLEAN & DEMYSTIFIED)           */}
+      {/* 5. FIRST-VISIT STORY SECTION                                */}
       {/* ============================================================ */}
       <section
         id="vizite"
@@ -1316,10 +1316,10 @@ export default function PhysiotherapyCallingCardPage() {
           
           {/* Header Narrative */}
           <div className="max-w-3xl">
-            <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#24302D] leading-[1.15]">
+            <h2 className="text-3xl sm:text-5xl font-medium text-[#24302D] leading-[1.15]">
               Pirmā vizīte bez nezināmā.
             </h2>
-            <p className="mt-3 text-[17px] text-[#5A6D67]">
+            <p className="mt-4 text-lg sm:text-xl text-[#4A5D57]">
               Jums nav jāzina, kāds pakalpojums Jums vajadzīgs. Tas ir mūsu darbs.
             </p>
           </div>
@@ -1357,14 +1357,14 @@ export default function PhysiotherapyCallingCardPage() {
                     borderRadius: "1.75rem",
                     boxShadow: "0 12px 30px -10px rgba(36, 48, 45, 0.06)",
                   }}
-                  className="flex flex-col justify-between border border-black/[0.06] p-6 sm:p-7 relative group hover:border-[#D87967]/40 transition-colors"
+                  className="flex flex-col justify-between border border-black/[0.08] p-7 relative group hover:border-[#D87967]/40 transition-colors"
                 >
                   <div>
-                    <h3 className="font-serif text-lg sm:text-xl font-normal text-[#24302D]">
+                    <h3 className="text-xl sm:text-2xl font-medium text-[#24302D]">
                       {step.title}
                     </h3>
 
-                    <p className="mt-3 text-xs sm:text-sm leading-relaxed text-[#5A6D67]">
+                    <p className="mt-3.5 text-base sm:text-[17px] leading-relaxed text-[#4A5D57]">
                       {step.copy}
                     </p>
                   </div>
@@ -1380,9 +1380,9 @@ export default function PhysiotherapyCallingCardPage() {
               borderRadius: "1.75rem",
               boxShadow: "0 8px 24px -8px rgba(36, 48, 45, 0.05)",
             }}
-            className="mt-10 p-6 sm:p-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-6 border border-black/[0.06]"
+            className="mt-10 p-7 sm:p-9 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-6 border border-black/[0.08]"
           >
-            <div className="space-y-1.5 text-xs sm:text-sm text-[#5A6D67]">
+            <div className="space-y-2 text-base sm:text-[17px] text-[#3D4F4A]">
               <p>
                 👕 <strong>Ko vilkt mugurā?</strong> Ērtu sporta vai brīvā laika apģērbu (t-kreklu un legingus/šortus), kas neierobežo kustības.
               </p>
@@ -1393,7 +1393,7 @@ export default function PhysiotherapyCallingCardPage() {
             <a
               href="#pieraksts"
               style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-              className="rounded-full px-8 py-3.5 text-center text-xs font-semibold whitespace-nowrap hover:bg-[#C26553] shadow-xs min-h-[44px] flex items-center justify-center"
+              className="rounded-full px-8 py-4 text-center text-sm font-semibold whitespace-nowrap hover:bg-[#C26553] shadow-xs min-h-[48px] flex items-center justify-center"
             >
               Pieteikt 60 min vizīti →
             </a>
@@ -1405,10 +1405,10 @@ export default function PhysiotherapyCallingCardPage() {
       <section id="specialistes" className="py-16 sm:py-24 lg:py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
           <div className="max-w-3xl">
-            <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#24302D] leading-tight">
+            <h2 className="text-3xl sm:text-5xl font-medium text-[#24302D] leading-tight">
               Sertificētas ārstniecības personas, kurām var uzticēties
             </h2>
-            <p className="mt-3 text-[17px] text-[#5A6D67]">
+            <p className="mt-4 text-lg sm:text-xl text-[#4A5D57]">
               Katrai mūsu speciālistei ir sava padziļinātā specializācija un patiesa mīlestība pret savu darbu.
             </p>
           </div>
@@ -1436,15 +1436,15 @@ export default function PhysiotherapyCallingCardPage() {
                     />
                   </div>
 
-                  <h3 className="mt-6 font-serif text-2xl sm:text-3xl font-normal text-[#24302D]">
+                  <h3 className="mt-6 text-2xl sm:text-3xl font-medium text-[#24302D]">
                     {person.name}
                   </h3>
                   
-                  <p className="mt-1 text-sm sm:text-base font-medium text-[#D87967]">
+                  <p className="mt-1.5 text-base sm:text-[17px] font-semibold text-[#D87967]">
                     {person.role}
                   </p>
 
-                  <p className="mt-3 text-[15px] sm:text-base leading-relaxed text-[#5A6D67]">
+                  <p className="mt-3.5 text-base sm:text-[17px] leading-relaxed text-[#4A5D57]">
                     {person.specialty}
                   </p>
                 </div>
@@ -1453,7 +1453,7 @@ export default function PhysiotherapyCallingCardPage() {
                   <a
                     href="#pieraksts"
                     onClick={() => { setSelectedSpecialist(person.id); changeBookingStep(3); }}
-                    className="inline-flex items-center gap-2 text-sm sm:text-base font-semibold text-[#24302D] hover:text-[#D87967] transition-colors py-2"
+                    className="inline-flex items-center gap-2 text-base font-semibold text-[#24302D] hover:text-[#D87967] transition-colors py-2"
                   >
                     <span>Pieteikt vizīti pie {person.name.split(" ")[0]}s</span>
                     <span>→</span>
@@ -1469,10 +1469,10 @@ export default function PhysiotherapyCallingCardPage() {
       <section id="cenas" className="py-16 sm:py-24 lg:py-28">
         <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-12">
           <div className="text-center">
-            <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#24302D]">
+            <h2 className="text-3xl sm:text-5xl font-medium text-[#24302D]">
               Caurspīdīgas pakalpojumu cenas
             </h2>
-            <p className="mt-2 text-xs text-[#5A6D67]">
+            <p className="mt-3 text-base sm:text-lg text-[#4A5D57]">
               Visi nodarbībai nepieciešamie materiāli (kinezioloģiskā teipošana, inventārs) ir iekļauti vizītes cenā.
             </p>
           </div>
@@ -1480,54 +1480,54 @@ export default function PhysiotherapyCallingCardPage() {
           <div
             style={{
               backgroundColor: "#FFFFFF",
-              borderColor: "rgba(36, 48, 45, 0.08)",
+              borderColor: "rgba(36, 48, 45, 0.10)",
               boxShadow: "0 10px 28px -10px rgba(36, 48, 45, 0.06)",
               borderRadius: "2rem",
             }}
             className="mt-10 overflow-hidden border"
           >
-            <div className="divide-y divide-black/[0.06] text-sm">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-5 sm:p-7 gap-2">
+            <div className="divide-y divide-black/[0.08]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6 sm:p-8 gap-3">
                 <div>
-                  <p className="font-semibold text-[#24302D]">Pirmreizēja fizioterapeita konsultācija & diagnostika</p>
-                  <p className="text-xs text-[#5A6D67] mt-0.5">Pilna kustību pārbaude, manuālie testi, pirmā terapija un mājas plāns (60 min)</p>
+                  <p className="text-lg sm:text-xl font-semibold text-[#24302D]">Pirmreizēja fizioterapeita konsultācija & diagnostika</p>
+                  <p className="text-base text-[#4A5D57] mt-1">Pilna kustību pārbaude, manuālie testi, pirmā terapija un mājas plāns (60 min)</p>
                 </div>
-                <span className="font-sans text-xl font-medium text-[#24302D]">50 €</span>
+                <span className="text-2xl sm:text-3xl font-bold text-[#24302D] whitespace-nowrap">50 €</span>
               </div>
 
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-5 sm:p-7 gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6 sm:p-8 gap-3">
                 <div>
-                  <p className="font-semibold text-[#24302D]">Atkārtota individuālā fizioterapijas nodarbība</p>
-                  <p className="text-xs text-[#5A6D67] mt-0.5">Manuāla terapija un koriģējošie vingrojumi ar speciālisti (60 min)</p>
+                  <p className="text-lg sm:text-xl font-semibold text-[#24302D]">Atkārtota individuālā fizioterapijas nodarbība</p>
+                  <p className="text-base text-[#4A5D57] mt-1">Manuāla terapija un koriģējošie vingrojumi ar speciālisti (60 min)</p>
                 </div>
-                <span className="font-sans text-xl font-medium text-[#24302D]">45 €</span>
+                <span className="text-2xl sm:text-3xl font-bold text-[#24302D] whitespace-nowrap">45 €</span>
               </div>
 
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-5 sm:p-7 gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6 sm:p-8 gap-3">
                 <div>
-                  <p className="font-semibold text-[#24302D]">Sieviešu veselības un pēcdzemdību vizīte</p>
-                  <p className="text-xs text-[#5A6D67] mt-0.5">Diastāzes pārbaude, iegurņa pamatnes muskuļu atjaunošana (60 min)</p>
+                  <p className="text-lg sm:text-xl font-semibold text-[#24302D]">Sieviešu veselības un pēcdzemdību vizīte</p>
+                  <p className="text-base text-[#4A5D57] mt-1">Diastāzes pārbaude, iegurņa pamatnes muskuļu atjaunošana (60 min)</p>
                 </div>
-                <span className="font-sans text-xl font-medium text-[#24302D]">50 €</span>
+                <span className="text-2xl sm:text-3xl font-bold text-[#24302D] whitespace-nowrap">50 €</span>
               </div>
 
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-5 sm:p-7 gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6 sm:p-8 gap-3">
                 <div>
-                  <p className="font-semibold text-[#24302D]">Zīdaiņu motorā attīstība & hendlinga apmācība</p>
-                  <p className="text-xs text-[#5A6D67] mt-0.5">Praktiska vecāku apmācība un mazuļa kustību harmonizācija (45 min)</p>
+                  <p className="text-lg sm:text-xl font-semibold text-[#24302D]">Zīdaiņu motorā attīstība & hendlinga apmācība</p>
+                  <p className="text-base text-[#4A5D57] mt-1">Praktiska vecāku apmācība un mazuļa kustību harmonizācija (45 min)</p>
                 </div>
-                <span className="font-sans text-xl font-medium text-[#24302D]">40 €</span>
+                <span className="text-2xl sm:text-3xl font-bold text-[#24302D] whitespace-nowrap">40 €</span>
               </div>
 
               <div
                 style={{ backgroundColor: "#F8E9E3" }}
-                className="flex flex-col sm:flex-row sm:items-center justify-between p-5 sm:p-7 gap-2"
+                className="flex flex-col sm:flex-row sm:items-center justify-between p-6 sm:p-8 gap-3"
               >
                 <div>
-                  <p className="font-semibold text-[#D87967]">5 nodarbību kurss (abonements)</p>
-                  <p className="text-xs text-[#5A6D67] mt-0.5">Derīgs 3 mēnešus no iegādes brīža (ietaupījums 25 €)</p>
+                  <p className="text-lg sm:text-xl font-semibold text-[#D87967]">5 nodarbību kurss (abonements)</p>
+                  <p className="text-base text-[#4A5D57] mt-1">Derīgs 3 mēnešus no iegādes brīža (ietaupījums 25 €)</p>
                 </div>
-                <span className="font-sans text-xl font-bold text-[#D87967]">200 €</span>
+                <span className="text-2xl sm:text-3xl font-bold text-[#D87967] whitespace-nowrap">200 €</span>
               </div>
             </div>
           </div>
@@ -1536,24 +1536,24 @@ export default function PhysiotherapyCallingCardPage() {
           <div
             style={{
               backgroundColor: "#FFFFFF",
-              borderColor: "rgba(36, 48, 45, 0.08)",
-              borderRadius: "1.5rem",
+              borderColor: "rgba(36, 48, 45, 0.10)",
+              borderRadius: "1.75rem",
             }}
             className="mt-8 border p-6 sm:p-8"
           >
-            <p className="text-xs font-semibold text-[#24302D]">
+            <p className="text-base sm:text-lg font-semibold text-[#24302D]">
               Apdrošināšanas atlīdzības saņemšana:
             </p>
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap gap-2.5">
               {Object.keys(insuranceCompanies).map((key) => (
                 <button
                   key={key}
                   type="button"
                   onClick={() => setSelectedInsurance(key)}
-                  className={`rounded-full px-4 py-2 text-xs font-medium transition-all min-h-[44px] flex items-center ${
+                  className={`rounded-full px-5 py-3 text-sm sm:text-base font-medium transition-all min-h-[46px] flex items-center ${
                     selectedInsurance === key
                       ? "bg-[#24302D] text-white"
-                      : "bg-[#FFF9F4] text-[#5A6D67] border border-black/[0.08]"
+                      : "bg-[#FFF9F4] text-[#4A5D57] border border-black/15 hover:border-black/30"
                   }`}
                 >
                   {insuranceCompanies[key].name}
@@ -1563,12 +1563,12 @@ export default function PhysiotherapyCallingCardPage() {
 
             <div
               style={{ backgroundColor: "#FFF9F4" }}
-              className="mt-4 rounded-xl p-4 text-xs text-[#24302D] border border-black/[0.04]"
+              className="mt-5 rounded-2xl p-5 text-base sm:text-[17px] text-[#24302D] border border-black/[0.06] leading-relaxed"
             >
               <p>
                 <strong>{insuranceCompanies[selectedInsurance].name}:</strong> {insuranceCompanies[selectedInsurance].coverage}. {insuranceCompanies[selectedInsurance].details}
               </p>
-              <p className="mt-2 text-[11px] text-[#5A6D67]">
+              <p className="mt-3 text-sm sm:text-base text-[#4A5D57] border-t border-black/[0.06] pt-3">
                 Pēc katras vizītes izsniedzam oficiālu čeku un ārstniecības personas izrakstu (forma 027/u).
               </p>
             </div>
@@ -1577,7 +1577,7 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 8. HUMAN TRUST / STORY SECTION */}
+      {/* 8. HUMAN TRUST / STORY SECTION                              */}
       {/* ============================================================ */}
       <section
         id="stasti"
@@ -1594,9 +1594,9 @@ export default function PhysiotherapyCallingCardPage() {
           
           {/* Header Narrative */}
           <div className="max-w-3xl">
-            <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#24302D] leading-[1.18]">
+            <h2 className="text-3xl sm:text-5xl font-medium text-[#24302D] leading-[1.18]">
               <span>Dažreiz visvairāk palīdz dzirdēt:</span>
-              <span className="block font-normal italic font-serif text-[#D87967] mt-1">
+              <span className="block font-normal text-[#D87967] mt-1">
                 “Es arī tā jutos.”
               </span>
             </h2>
@@ -1616,21 +1616,21 @@ export default function PhysiotherapyCallingCardPage() {
                   borderRadius: "2rem 1.25rem 2rem 1.25rem",
                   boxShadow: "0 20px 45px -15px rgba(36, 48, 45, 0.08)",
                 }}
-                className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center p-6 sm:p-14 border border-black/[0.06]"
+                className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center p-6 sm:p-12 border border-black/[0.08]"
               >
                 <div>
-                  <blockquote className="font-serif italic text-xl sm:text-3xl lg:text-4xl leading-[1.3] text-[#24302D]">
+                  <blockquote className="text-2xl sm:text-3xl lg:text-4xl leading-snug text-[#24302D] font-normal">
                     {activeStory.quote}
                   </blockquote>
 
-                  <p className="mt-5 text-xs sm:text-sm text-[#5A6D67] border-t border-black/[0.06] pt-4">
+                  <p className="mt-6 text-base sm:text-[17px] font-medium text-[#4A5D57] border-t border-black/[0.06] pt-4">
                     {activeStory.situation}
                   </p>
                 </div>
 
                 <div
                   style={{
-                    borderRadius: "1.5rem",
+                    borderRadius: "1.75rem",
                     overflow: "hidden",
                     backgroundColor: "#F8E9E3",
                   }}
@@ -1649,14 +1649,14 @@ export default function PhysiotherapyCallingCardPage() {
 
             {/* Tactile Story Switcher Controls */}
             <div className="mt-6 sm:mt-8 flex items-center justify-between">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 {demoStories.map((story, i) => (
                   <button
                     key={story.id}
                     type="button"
                     onClick={() => setActiveStoryIdx(i)}
-                    className={`h-3 rounded-full transition-all min-w-[12px] ${
-                      activeStoryIdx === i ? "w-8 bg-[#D87967]" : "w-3 bg-black/20 hover:bg-black/40"
+                    className={`h-3.5 rounded-full transition-all min-w-[14px] ${
+                      activeStoryIdx === i ? "w-9 bg-[#D87967]" : "w-3.5 bg-black/20 hover:bg-black/40"
                     }`}
                     aria-label={`Skatīt stāstu ${i + 1}`}
                   />
@@ -1670,7 +1670,7 @@ export default function PhysiotherapyCallingCardPage() {
                     setActiveStoryIdx((prev) => (prev === 0 ? demoStories.length - 1 : prev - 1))
                   }
                   style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(36, 48, 45, 0.15)" }}
-                  className="flex h-12 w-12 items-center justify-center rounded-full border text-lg text-[#24302D] transition-colors hover:bg-[#24302D] hover:text-white active:scale-95"
+                  className="flex h-12 w-12 items-center justify-center rounded-full border text-xl text-[#24302D] transition-colors hover:bg-[#24302D] hover:text-white active:scale-95"
                   aria-label="Iepriekšējais stāsts"
                 >
                   ←
@@ -1681,7 +1681,7 @@ export default function PhysiotherapyCallingCardPage() {
                     setActiveStoryIdx((prev) => (prev === demoStories.length - 1 ? 0 : prev + 1))
                   }
                   style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(36, 48, 45, 0.15)" }}
-                  className="flex h-12 w-12 items-center justify-center rounded-full border text-lg text-[#24302D] transition-colors hover:bg-[#24302D] hover:text-white active:scale-95"
+                  className="flex h-12 w-12 items-center justify-center rounded-full border text-xl text-[#24302D] transition-colors hover:bg-[#24302D] hover:text-white active:scale-95"
                   aria-label="Nākamais stāsts"
                 >
                   →
@@ -1693,7 +1693,7 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 9. PREMIUM BOOKING SECTION */}
+      {/* 9. PREMIUM BOOKING SECTION                                   */}
       {/* ============================================================ */}
       <section
         id="pieraksts"
@@ -1709,13 +1709,13 @@ export default function PhysiotherapyCallingCardPage() {
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             
-            {/* LEFT: Reassuring Human Guidance & Direct Channels */}
+            {/* LEFT: Reassuring Human Guidance */}
             <div>
-              <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#FFF9F4] leading-[1.15]">
+              <h2 className="text-3xl sm:text-5xl font-medium text-[#FFF9F4] leading-[1.15]">
                 Sāksim ar pirmo soli.
               </h2>
 
-              <div className="mt-5 space-y-3 sm:space-y-4 text-[17px] sm:text-lg leading-[1.65] text-[#FFF9F4]/80">
+              <div className="mt-5 space-y-4 text-lg sm:text-xl leading-relaxed text-[#FFF9F4]/85">
                 <p>
                   Ja zināt, ko vēlaties rezervēt — izvēlieties vizītes laiku blakus esošajā kalendārā.
                 </p>
@@ -1725,24 +1725,24 @@ export default function PhysiotherapyCallingCardPage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+              <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                 <a
                   href="#booking-card"
                   style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                  className="rounded-full px-8 py-4 text-center text-xs font-semibold shadow-md transition-all hover:bg-[#C26553] hover:-translate-y-0.5 min-h-[48px] flex items-center justify-center"
+                  className="rounded-full px-8 py-4 text-center text-base font-semibold shadow-md transition-all hover:bg-[#C26553] hover:-translate-y-0.5 min-h-[52px] flex items-center justify-center"
                 >
                   Izvēlēties vizītes laiku
                 </a>
                 <a
                   href="#jautajums"
-                  className="text-center text-xs sm:text-sm font-medium text-[#FFF9F4] underline decoration-white/30 underline-offset-4 hover:text-[#9FB8A6] py-2"
+                  className="text-center text-base font-medium text-[#FFF9F4] underline decoration-white/40 underline-offset-4 hover:text-[#9FB8A6] py-2"
                 >
                   Man vajag palīdzību izvēlēties →
                 </a>
               </div>
 
               {/* Direct Quick Contact Options */}
-              <div className="mt-10 border-t border-white/10 pt-6 space-y-3 text-xs text-[#FFF9F4]/70">
+              <div className="mt-10 border-t border-white/15 pt-6 space-y-3.5 text-sm sm:text-base text-[#FFF9F4]/80">
                 <p className="font-semibold text-[#9FB8A6]">
                   Tiešā saziņa ar speciālisti:
                 </p>
@@ -1751,19 +1751,19 @@ export default function PhysiotherapyCallingCardPage() {
                     href="https://wa.me/37120000000"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 rounded-full bg-white/10 px-4 py-2.5 text-white hover:bg-white/20 transition-colors min-h-[44px]"
+                    className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 text-white hover:bg-white/20 transition-colors min-h-[46px]"
                   >
                     <span>💬 WhatsApp</span>
                   </a>
                   <a
                     href="tel:+37167000000"
-                    className="flex items-center gap-1.5 rounded-full bg-white/10 px-4 py-2.5 text-white hover:bg-white/20 transition-colors min-h-[44px]"
+                    className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 text-white hover:bg-white/20 transition-colors min-h-[46px]"
                   >
                     <span>📞 Zvanīt</span>
                   </a>
                   <a
                     href="mailto:sveiki@kustiba-demo.lv"
-                    className="flex items-center gap-1.5 rounded-full bg-white/10 px-4 py-2.5 text-white hover:bg-white/20 transition-colors min-h-[44px]"
+                    className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 text-white hover:bg-white/20 transition-colors min-h-[46px]"
                   >
                     <span>✉️ E-pasts</span>
                   </a>
@@ -1783,15 +1783,15 @@ export default function PhysiotherapyCallingCardPage() {
                 borderRadius: "2rem 1.25rem 2rem 1.25rem",
                 boxShadow: "0 25px 60px -15px rgba(0, 0, 0, 0.35)",
               }}
-              className="p-6 sm:p-10 text-[#24302D] border border-white/80"
+              className="p-6 sm:p-10 text-[#24302D] border border-white"
             >
               {/* Header & Step Navigation */}
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-black/[0.06] pb-4">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-black/[0.08] pb-4">
                 <div>
-                  <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#24302D]">Pieteikt vizīti</h3>
-                  <span className="text-xs text-[#5A6D67]">KUSTĪBA telpā · Miera iela 24</span>
+                  <h3 className="text-2xl font-semibold text-[#24302D]">Pieteikt vizīti</h3>
+                  <span className="text-sm text-[#4A5D57]">KUSTĪBA telpā · Miera iela 24</span>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs font-semibold">
+                <div className="flex items-center gap-1.5 text-sm font-semibold">
                   {[
                     { num: 1, label: "Pakalpojums" },
                     { num: 2, label: "Speciālists" },
@@ -1801,10 +1801,10 @@ export default function PhysiotherapyCallingCardPage() {
                       key={s.num}
                       type="button"
                       onClick={() => changeBookingStep(s.num as 1 | 2 | 3)}
-                      className={`flex items-center rounded-full px-3.5 py-2 transition-colors min-h-[40px] ${
+                      className={`flex items-center rounded-full px-4 py-2 transition-colors min-h-[42px] ${
                         bookingStep === s.num
                           ? "bg-[#24302D] text-white"
-                          : "text-[#5A6D67] hover:bg-black/[0.04]"
+                          : "text-[#4A5D57] hover:bg-black/[0.04]"
                       }`}
                     >
                       <span>{s.label}</span>
@@ -1818,30 +1818,30 @@ export default function PhysiotherapyCallingCardPage() {
                 <div className="py-10 text-center">
                   <span
                     style={{ backgroundColor: "#F8E9E3", color: "#D87967" }}
-                    className="inline-flex h-16 w-16 items-center justify-center rounded-full text-3xl font-serif"
+                    className="inline-flex h-16 w-16 items-center justify-center rounded-full text-3xl font-bold"
                   >
                     ✓
                   </span>
-                  <h4 className="mt-4 font-serif text-2xl sm:text-3xl font-normal text-[#24302D]">
+                  <h4 className="mt-4 text-2xl sm:text-3xl font-semibold text-[#24302D]">
                     Vizītes pieteikums reģistrēts!
                   </h4>
-                  <p className="mt-2 text-sm text-[#5A6D67]">
+                  <p className="mt-2 text-base text-[#4A5D57]">
                     <strong>{currentDayObj.fullDay} plkst. {selectedTimeSlot}</strong> pie speciālistes <strong>{currentSpecialistObj.name}</strong>.
                   </p>
 
                   <div
                     style={{ backgroundColor: "#FFF9F4" }}
-                    className="mt-6 rounded-2xl p-4 text-xs text-left border border-black/[0.06] text-[#24302D]"
+                    className="mt-6 rounded-2xl p-5 text-sm sm:text-base text-left border border-black/[0.08] text-[#24302D]"
                   >
                     <p>📍 Miera iela 24, 2. stāvs (ērts lifts ratiņiem)</p>
-                    <p className="mt-1">🔔 SMS atgādinājums tiks nosūtīts 24h pirms vizītes.</p>
+                    <p className="mt-1.5">🔔 SMS atgādinājums tiks nosūtīts 24h pirms vizītes.</p>
                   </div>
 
                   <button
                     type="button"
                     onClick={() => { setBookingCompleted(false); setShowIntakeForm(false); }}
                     style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
-                    className="mt-6 rounded-full px-7 py-3 text-xs font-semibold hover:bg-[#D87967] min-h-[44px]"
+                    className="mt-6 rounded-full px-8 py-3.5 text-sm font-semibold hover:bg-[#D87967] min-h-[48px]"
                   >
                     Pieteikt citu laiku
                   </button>
@@ -1855,57 +1855,57 @@ export default function PhysiotherapyCallingCardPage() {
                   }}
                   className="mt-6 space-y-4"
                 >
-                  <div className="rounded-xl bg-[#FFF9F4] p-3 text-xs text-[#24302D] border border-black/[0.06]">
+                  <div className="rounded-xl bg-[#FFF9F4] p-4 text-sm sm:text-base text-[#24302D] border border-black/[0.08]">
                     <strong>Izvēlēts:</strong> {currentDayObj.fullDay} plkst. {selectedTimeSlot} · {currentSpecialistObj.name} ({currentServiceObj.title})
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-[#24302D]">Jūsu vārds, uzvārds *</label>
+                    <label className="block text-sm sm:text-base font-medium text-[#24302D]">Jūsu vārds, uzvārds *</label>
                     <input
                       type="text"
                       required
                       value={patientName}
                       onChange={(e) => setPatientName(e.target.value)}
                       placeholder="Anna Bērziņa"
-                      className="mt-1 w-full rounded-xl border border-black/15 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[48px]"
+                      className="mt-1.5 w-full rounded-xl border border-black/20 bg-[#FFF9F4] px-4 py-3.5 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[50px]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-[#24302D]">Tālruņa numurs (SMS atgādinājumam) *</label>
+                    <label className="block text-sm sm:text-base font-medium text-[#24302D]">Tālruņa numurs (SMS atgādinājumam) *</label>
                     <input
                       type="tel"
                       required
                       value={patientPhone}
                       onChange={(e) => setPatientPhone(e.target.value)}
                       placeholder="+371 20 000 000"
-                      className="mt-1 w-full rounded-xl border border-black/15 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[48px]"
+                      className="mt-1.5 w-full rounded-xl border border-black/20 bg-[#FFF9F4] px-4 py-3.5 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[50px]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-[#24302D]">Piezīmes ārstei (pēc izvēles)</label>
+                    <label className="block text-sm sm:text-base font-medium text-[#24302D]">Piezīmes ārstei (pēc izvēles)</label>
                     <input
                       type="text"
                       value={patientNote}
                       onChange={(e) => setPatientNote(e.target.value)}
                       placeholder="Kas šobrīd sagādā vislielāko diskomfortu?"
-                      className="mt-1 w-full rounded-xl border border-black/15 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[48px]"
+                      className="mt-1.5 w-full rounded-xl border border-black/20 bg-[#FFF9F4] px-4 py-3.5 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[50px]"
                     />
                   </div>
 
-                  <div className="flex items-center justify-between border-t border-black/[0.06] pt-4">
+                  <div className="flex items-center justify-between border-t border-black/[0.08] pt-4">
                     <button
                       type="button"
                       onClick={() => setShowIntakeForm(false)}
-                      className="text-xs text-[#5A6D67] hover:underline py-2"
+                      className="text-sm sm:text-base text-[#4A5D57] hover:underline py-2"
                     >
                       ← Mainīt laiku
                     </button>
                     <button
                       type="submit"
                       style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                      className="rounded-full px-8 py-3.5 text-xs font-semibold shadow-xs hover:bg-[#C26553] min-h-[48px] flex items-center justify-center"
+                      className="rounded-full px-8 py-3.5 text-sm font-semibold shadow-xs hover:bg-[#C26553] min-h-[48px] flex items-center justify-center"
                     >
                       Apstiprināt pieteikumu →
                     </button>
@@ -1926,26 +1926,26 @@ export default function PhysiotherapyCallingCardPage() {
                       {/* Step 1: Service Selector */}
                       {bookingStep === 1 && (
                         <div className="space-y-3">
-                          <p className="text-xs font-semibold text-[#24302D]">
+                          <p className="text-sm font-semibold text-[#24302D]">
                             Izvēlieties vizītes veidu:
                           </p>
-                          <div className="grid gap-2.5">
+                          <div className="grid gap-3">
                             {servicesList.map((srv) => (
                               <button
                                 key={srv.id}
                                 type="button"
                                 onClick={() => { setSelectedService(srv.id); changeBookingStep(2); }}
-                                className={`flex items-center justify-between rounded-2xl border p-4 text-left transition-all min-h-[56px] ${
+                                className={`flex items-center justify-between rounded-2xl border p-5 text-left transition-all min-h-[60px] ${
                                   selectedService === srv.id
                                     ? "border-[#D87967] bg-[#F8E9E3]/50"
-                                    : "border-black/[0.08] hover:bg-[#FFF9F4]"
+                                    : "border-black/15 hover:bg-[#FFF9F4]"
                                 }`}
                               >
                                 <div>
-                                  <p className="text-xs sm:text-sm font-semibold text-[#24302D]">{srv.title}</p>
-                                  <span className="text-[11px] text-[#5A6D67]">{srv.duration}</span>
+                                  <p className="text-base sm:text-lg font-semibold text-[#24302D]">{srv.title}</p>
+                                  <span className="text-sm text-[#4A5D57]">{srv.duration}</span>
                                 </div>
-                                <span className="font-sans font-medium text-sm text-[#24302D]">{srv.price}</span>
+                                <span className="font-semibold text-lg text-[#24302D] ml-3">{srv.price}</span>
                               </button>
                             ))}
                           </div>
@@ -1955,27 +1955,27 @@ export default function PhysiotherapyCallingCardPage() {
                       {/* Step 2: Specialist Selector */}
                       {bookingStep === 2 && (
                         <div className="space-y-3">
-                          <p className="text-xs font-semibold text-[#24302D]">
+                          <p className="text-sm font-semibold text-[#24302D]">
                             Izvēlieties speciālisti:
                           </p>
-                          <div className="grid gap-2.5">
+                          <div className="grid gap-3">
                             {specialists.map((spec) => (
                               <button
                                 key={spec.id}
                                 type="button"
                                 onClick={() => { setSelectedSpecialist(spec.id); changeBookingStep(3); }}
-                                className={`flex items-center gap-3.5 rounded-2xl border p-4 text-left transition-all min-h-[56px] ${
+                                className={`flex items-center gap-4 rounded-2xl border p-5 text-left transition-all min-h-[60px] ${
                                   selectedSpecialist === spec.id
                                     ? "border-[#D87967] bg-[#F8E9E3]/50"
-                                    : "border-black/[0.08] hover:bg-[#FFF9F4]"
+                                    : "border-black/15 hover:bg-[#FFF9F4]"
                                 }`}
                               >
-                                <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border border-black/10 bg-[#F8E9E3]">
-                                  <Image src={spec.image} alt={spec.name} fill sizes="48px" className="object-cover" />
+                                <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-full border border-black/10 bg-[#F8E9E3]">
+                                  <Image src={spec.image} alt={spec.name} fill sizes="56px" className="object-cover" />
                                 </div>
                                 <div>
-                                  <p className="text-xs sm:text-sm font-semibold text-[#24302D]">{spec.name}</p>
-                                  <p className="text-[11px] text-[#5A6D67]">{spec.role}</p>
+                                  <p className="text-base sm:text-lg font-semibold text-[#24302D]">{spec.name}</p>
+                                  <p className="text-sm text-[#4A5D57]">{spec.role}</p>
                                 </div>
                               </button>
                             ))}
@@ -1987,47 +1987,47 @@ export default function PhysiotherapyCallingCardPage() {
                       {bookingStep === 3 && (
                         <div>
                           {/* Active Selection Summary Strip */}
-                          <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-[#FFF9F4] p-3.5 border border-black/[0.06] text-xs text-[#24302D]">
+                          <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-[#FFF9F4] p-4 border border-black/[0.08] text-sm sm:text-base text-[#24302D]">
                             <div>
                               <p className="font-semibold">{currentServiceObj.title}</p>
-                              <span className="text-[11px] text-[#5A6D67]">
+                              <span className="text-sm text-[#4A5D57]">
                                 {currentServiceObj.duration} · {currentSpecialistObj.name}
                               </span>
                             </div>
                             <button
                               type="button"
                               onClick={() => changeBookingStep(1)}
-                              className="text-[11px] font-medium text-[#D87967] hover:underline p-1"
+                              className="text-sm font-semibold text-[#D87967] hover:underline p-1"
                             >
                               Mainīt →
                             </button>
                           </div>
 
                           {/* Week Selector Header */}
-                          <div className="mt-4 flex items-center justify-between">
-                            <span className="text-xs font-semibold text-[#24302D]">
+                          <div className="mt-5 flex items-center justify-between">
+                            <span className="text-sm font-semibold text-[#24302D]">
                               7.–11. septembris
                             </span>
-                            <span className="text-xs text-[#5A6D67]">
+                            <span className="text-sm text-[#4A5D57]">
                               {currentDayObj.fullDay}
                             </span>
                           </div>
 
                           {/* Days Strip */}
-                          <div className="mt-2.5 grid grid-cols-5 gap-1.5 sm:gap-2">
+                          <div className="mt-3 grid grid-cols-5 gap-2">
                             {bookingDays.map((d, i) => (
                               <button
                                 key={d.date}
                                 type="button"
                                 onClick={() => { setSelectedDayIndex(i); setSelectedTimeSlot(d.slots[0]); }}
-                                className={`rounded-2xl border p-2.5 sm:p-3 text-center transition-all min-h-[54px] flex flex-col justify-center items-center ${
+                                className={`rounded-2xl border p-3 text-center transition-all min-h-[58px] flex flex-col justify-center items-center ${
                                   selectedDayIndex === i
                                     ? "border-[#24302D] bg-[#24302D] text-white shadow-xs"
-                                    : "border-black/[0.08] bg-[#FFF9F4] text-[#24302D] hover:bg-white"
+                                    : "border-black/15 bg-[#FFF9F4] text-[#24302D] hover:bg-white"
                                 }`}
                               >
-                                <p className="text-[10px] sm:text-[11px] opacity-75">{d.dayName}</p>
-                                <p className="font-sans font-medium text-xs sm:text-base mt-0.5">
+                                <p className="text-xs opacity-75">{d.dayName}</p>
+                                <p className="font-semibold text-base sm:text-lg mt-0.5">
                                   {d.fullDay.split(" ")[1]}
                                 </p>
                               </button>
@@ -2035,20 +2035,20 @@ export default function PhysiotherapyCallingCardPage() {
                           </div>
 
                           {/* Available Time Slots Chips */}
-                          <div className="mt-4">
-                            <p className="text-xs font-medium text-[#5A6D67] mb-2">
+                          <div className="mt-5">
+                            <p className="text-sm font-medium text-[#4A5D57] mb-2.5">
                               Pieejamie laiki:
                             </p>
-                            <div className="grid grid-cols-3 gap-2">
+                            <div className="grid grid-cols-3 gap-2.5">
                               {currentDayObj.slots.map((slot) => (
                                 <button
                                   key={slot}
                                   type="button"
                                   onClick={() => setSelectedTimeSlot(slot)}
-                                  className={`rounded-xl border py-3 text-center font-mono text-xs sm:text-sm font-medium transition-all min-h-[48px] flex items-center justify-center ${
+                                  className={`rounded-xl border py-3 text-center text-sm sm:text-base font-semibold transition-all min-h-[48px] flex items-center justify-center ${
                                     selectedTimeSlot === slot
                                       ? "border-[#D87967] bg-[#D87967] text-white shadow-xs"
-                                      : "border-black/[0.08] bg-[#FFF9F4] text-[#24302D] hover:border-black/20"
+                                      : "border-black/15 bg-[#FFF9F4] text-[#24302D] hover:border-black/30"
                                   }`}
                                 >
                                   {slot}
@@ -2058,13 +2058,13 @@ export default function PhysiotherapyCallingCardPage() {
                           </div>
 
                           {/* Active Confirmation Preview Panel */}
-                          <div className="mt-5 border-t border-black/[0.06] pt-4">
+                          <div className="mt-6 border-t border-black/[0.08] pt-4">
                             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                               <div>
-                                <span className="text-xs font-semibold text-[#24302D]">
+                                <span className="text-sm sm:text-base font-semibold text-[#24302D]">
                                   {currentDayObj.fullDay} · plkst. {selectedTimeSlot}
                                 </span>
-                                <p className="text-xs text-[#5A6D67]">
+                                <p className="text-sm text-[#4A5D57]">
                                   {currentSpecialistObj.name} · {currentServiceObj.title} ({currentServiceObj.price})
                                 </p>
                               </div>
@@ -2072,7 +2072,7 @@ export default function PhysiotherapyCallingCardPage() {
                                 type="button"
                                 onClick={() => setShowIntakeForm(true)}
                                 style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                                className="rounded-full px-8 py-3.5 text-center text-xs font-semibold shadow-xs hover:bg-[#C26553] whitespace-nowrap min-h-[48px] flex items-center justify-center"
+                                className="rounded-full px-8 py-4 text-center text-sm font-semibold shadow-xs hover:bg-[#C26553] whitespace-nowrap min-h-[50px] flex items-center justify-center"
                               >
                                 Turpināt →
                               </button>
@@ -2084,9 +2084,9 @@ export default function PhysiotherapyCallingCardPage() {
                   </AnimatePresence>
 
                   {/* Microcopy */}
-                  <div className="border-t border-black/[0.06] mt-5 pt-3 flex items-center justify-between text-[11px] text-[#5A6D67]">
+                  <div className="border-t border-black/[0.08] mt-6 pt-3.5 flex items-center justify-between text-sm text-[#4A5D57]">
                     <span>Nezināt, ko izvēlēties? Uzrakstiet mums.</span>
-                    <a href="#jautajums" className="text-[#D87967] font-medium hover:underline p-1">
+                    <a href="#jautajums" className="text-[#D87967] font-semibold hover:underline p-1">
                       Uzdot jautājumu →
                     </a>
                   </div>
@@ -2109,14 +2109,14 @@ export default function PhysiotherapyCallingCardPage() {
         <div className="mx-auto max-w-5xl px-5 sm:px-6 lg:px-12">
           <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
             <div>
-              <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#24302D]">
+              <h2 className="text-3xl sm:text-4xl font-medium text-[#24302D]">
                 Neesat pārliecināti, ar ko sākt?
               </h2>
-              <p className="mt-3 text-[17px] leading-[1.65] text-[#5A6D67]">
+              <p className="mt-4 text-lg sm:text-xl leading-relaxed text-[#4A5D57]">
                 Uzdodiet savu jautājumu šeit vai uzrakstiet mums WhatsApp. Mūsu fizioterapeite iepazīsies ar Jūsu situāciju un ieteiks piemērotāko speciālisti un pirmo soli.
               </p>
 
-              <div className="mt-6 space-y-2.5 border-t border-black/[0.06] pt-5 text-xs text-[#5A6D67]">
+              <div className="mt-6 space-y-3 border-t border-black/[0.08] pt-5 text-sm sm:text-base text-[#3D4F4A]">
                 <p>
                   📞 <strong>Tālrunis:</strong>{" "}
                   <a href="tel:+37167000000" className="text-[#24302D] font-semibold underline">
@@ -2146,23 +2146,23 @@ export default function PhysiotherapyCallingCardPage() {
                 borderRadius: "1.75rem",
                 boxShadow: "0 10px 30px -10px rgba(36, 48, 45, 0.08)",
               }}
-              className="p-6 sm:p-8 border border-black/[0.06]"
+              className="p-7 sm:p-9 border border-black/[0.08]"
             >
               {inquirySent ? (
                 <div className="p-6 text-center">
                   <span
                     style={{ backgroundColor: "#F8E9E3", color: "#D87967" }}
-                    className="inline-flex h-12 w-12 items-center justify-center rounded-full text-2xl"
+                    className="inline-flex h-14 w-14 items-center justify-center rounded-full text-2xl font-bold"
                   >
                     ✓
                   </span>
-                  <h3 className="mt-3 font-serif text-2xl text-[#24302D]">Paldies par ziņu!</h3>
-                  <p className="mt-2 text-xs text-[#5A6D67]">Fizioterapeite sazināsies ar Jums darba laikā 15–30 minūšu laikā.</p>
+                  <h3 className="mt-3 text-2xl font-semibold text-[#24302D]">Paldies par ziņu!</h3>
+                  <p className="mt-2 text-base text-[#4A5D57]">Fizioterapeite sazināsies ar Jums darba laikā 15–30 minūšu laikā.</p>
                   <button
                     type="button"
                     onClick={() => setInquirySent(false)}
                     style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
-                    className="mt-5 rounded-full px-6 py-2.5 text-xs font-semibold min-h-[44px]"
+                    className="mt-5 rounded-full px-7 py-3 text-sm font-semibold min-h-[46px]"
                   >
                     Nosūtīt vēl vienu ziņu
                   </button>
@@ -2176,45 +2176,45 @@ export default function PhysiotherapyCallingCardPage() {
                   className="space-y-4"
                 >
                   <div>
-                    <label className="block text-xs font-medium text-[#24302D]">Jūsu vārds *</label>
+                    <label className="block text-sm sm:text-base font-medium text-[#24302D]">Jūsu vārds *</label>
                     <input
                       type="text"
                       required
                       value={inquiryName}
                       onChange={(e) => setInquiryName(e.target.value)}
                       placeholder="Anna"
-                      className="mt-1 w-full rounded-xl border border-black/15 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[48px]"
+                      className="mt-1.5 w-full rounded-xl border border-black/20 bg-[#FFF9F4] px-4 py-3.5 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[50px]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-[#24302D]">Tālrunis vai WhatsApp *</label>
+                    <label className="block text-sm sm:text-base font-medium text-[#24302D]">Tālrunis vai WhatsApp *</label>
                     <input
                       type="tel"
                       required
                       value={inquiryPhone}
                       onChange={(e) => setInquiryPhone(e.target.value)}
                       placeholder="+371 20 000 000"
-                      className="mt-1 w-full rounded-xl border border-black/15 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[48px]"
+                      className="mt-1.5 w-full rounded-xl border border-black/20 bg-[#FFF9F4] px-4 py-3.5 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden min-h-[50px]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-[#24302D]">Jautājums vai situācijas apraksts</label>
+                    <label className="block text-sm sm:text-base font-medium text-[#24302D]">Jautājums vai situācijas apraksts</label>
                     <textarea
                       rows={3}
                       required
                       value={inquiryText}
                       onChange={(e) => setInquiryText(e.target.value)}
                       placeholder="Kas Jums rada diskomfortu, cik ilgi, vai ir bijusi trauma vai izmeklējumi?"
-                      className="mt-1 w-full rounded-xl border border-black/15 bg-[#FFF9F4] px-4 py-3 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden"
+                      className="mt-1.5 w-full rounded-xl border border-black/20 bg-[#FFF9F4] px-4 py-3.5 text-base text-[#24302D] focus:border-[#D87967] focus:outline-hidden"
                     />
                   </div>
 
                   <button
                     type="submit"
                     style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                    className="w-full rounded-full py-4 text-xs font-semibold shadow-xs hover:bg-[#C26553] min-h-[48px] flex items-center justify-center"
+                    className="w-full rounded-full py-4 text-sm font-semibold shadow-xs hover:bg-[#C26553] min-h-[50px] flex items-center justify-center"
                   >
                     Nosūtīt jautājumu speciālistei
                   </button>
@@ -2229,7 +2229,7 @@ export default function PhysiotherapyCallingCardPage() {
       <section className="py-16 sm:py-24 lg:py-28">
         <div className="mx-auto max-w-3xl px-5 sm:px-6 lg:px-12">
           <div className="text-center">
-            <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#24302D]">
+            <h2 className="text-3xl sm:text-4xl font-medium text-[#24302D]">
               Viss, kas jāzina pirms apmeklējuma
             </h2>
           </div>
@@ -2248,13 +2248,13 @@ export default function PhysiotherapyCallingCardPage() {
                 <button
                   type="button"
                   onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="flex w-full items-center justify-between p-5 text-left font-serif text-base font-normal text-[#24302D] min-h-[56px]"
+                  className="flex w-full items-center justify-between p-5 text-left text-lg sm:text-xl font-medium text-[#24302D] min-h-[58px]"
                 >
                   <span>{faq.q}</span>
-                  <span className="text-[#D87967] text-xl font-mono ml-4">{openFaq === idx ? "−" : "+"}</span>
+                  <span className="text-[#D87967] text-2xl ml-4 font-bold">{openFaq === idx ? "−" : "+"}</span>
                 </button>
                 {openFaq === idx && (
-                  <div className="border-t border-black/[0.06] px-5 py-4 text-xs sm:text-sm leading-relaxed text-[#5A6D67]">
+                  <div className="border-t border-black/[0.06] px-5 py-4 text-base sm:text-[17px] leading-relaxed text-[#4A5D57]">
                     {faq.a}
                   </div>
                 )}
@@ -2271,22 +2271,22 @@ export default function PhysiotherapyCallingCardPage() {
           backgroundColor: "#FFF7EF",
           borderColor: "rgba(36, 48, 45, 0.08)",
         }}
-        className="border-t py-14 text-[#5A6D67]"
+        className="border-t py-14 text-[#4A5D57]"
       >
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
           <div className="grid gap-10 md:grid-cols-3">
             <div>
-              <span className="font-serif text-2xl font-normal text-[#24302D]">Kustība</span>
-              <p className="mt-1 text-xs text-[#5A6D67]">Fizioterapijas, sieviešu veselības un bērnu attīstības telpa</p>
-              <p className="mt-4 text-xs leading-relaxed text-[#5A6D67]">
+              <span className="text-2xl sm:text-3xl font-semibold text-[#24302D]">Kustība</span>
+              <p className="mt-1 text-sm font-medium text-[#4A5D57]">Fizioterapijas, sieviešu veselības un bērnu attīstības telpa</p>
+              <p className="mt-4 text-sm sm:text-base leading-relaxed text-[#4A5D57]">
                 Miera iela 24, Rīga, LV-1001.<br />
                 Ieeja no Miera ielas pagalma, 2. stāvs, pieejams ērts lifts bērnu ratiņiem un bezmaksas stāvvieta klientiem.
               </p>
             </div>
 
             <div>
-              <p className="text-xs font-semibold text-[#24302D]">Darba laiks</p>
-              <ul className="mt-3 space-y-1.5 text-xs font-mono text-[#5A6D67]">
+              <p className="text-base font-semibold text-[#24302D]">Darba laiks</p>
+              <ul className="mt-3 space-y-2 text-sm sm:text-base text-[#4A5D57]">
                 <li>Pirmdiena – Piektdiena: 08:00 – 20:00</li>
                 <li>Sestdiena: 09:00 – 15:00 (pēc pieraksta)</li>
                 <li>Svētdiena: Slēgts</li>
@@ -2294,20 +2294,20 @@ export default function PhysiotherapyCallingCardPage() {
             </div>
 
             <div>
-              <p className="text-xs font-semibold text-[#24302D]">Saziņa</p>
-              <p className="mt-3 text-xs">
+              <p className="text-base font-semibold text-[#24302D]">Saziņa</p>
+              <p className="mt-3 text-sm sm:text-base">
                 Tālrunis: <a href="tel:+37167000000" className="text-[#24302D] font-semibold underline py-1 inline-block">+371 67 000 000</a>
               </p>
-              <p className="mt-1 text-xs">
+              <p className="mt-1.5 text-sm sm:text-base">
                 E-pasts: <a href="mailto:sveiki@kustiba-demo.lv" className="text-[#24302D] font-semibold underline py-1 inline-block">sveiki@kustiba-demo.lv</a>
               </p>
-              <p className="mt-1 text-xs">
+              <p className="mt-1.5 text-sm sm:text-base">
                 WhatsApp: <a href="https://wa.me/37120000000" target="_blank" rel="noopener noreferrer" className="text-[#D87967] font-semibold underline py-1 inline-block">+371 20 000 000</a>
               </p>
             </div>
           </div>
 
-          <div className="mt-10 border-t border-black/[0.06] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#5A6D67]/70">
+          <div className="mt-10 border-t border-black/[0.08] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[#4A5D57]">
             <p>© {new Date().getFullYear()} KUSTĪBA. Fizioterapijas telpa Rīgā.</p>
             <div className="flex items-center gap-4">
               <Link href="/case-studies/physiotherapy" className="text-[#24302D] hover:underline font-semibold py-1">
@@ -2331,12 +2331,12 @@ export default function PhysiotherapyCallingCardPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: shouldReduceMotion ? 0 : 50 }}
             transition={{ duration: shouldReduceMotion ? 0.01 : 0.3, ease: easeOrganic }}
-            className="sm:hidden fixed bottom-0 left-0 right-0 z-50 p-3.5 bg-[#FFF9F4]/95 backdrop-blur-md border-t border-black/10 shadow-2xl"
+            className="sm:hidden fixed bottom-0 left-0 right-0 z-50 p-4 bg-[#FFF9F4]/95 backdrop-blur-md border-t border-black/15 shadow-2xl"
           >
             <a
               href="#pieraksts"
               style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-              className="flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-sm font-semibold shadow-md active:scale-98 min-h-[48px]"
+              className="flex w-full items-center justify-center gap-2 rounded-full py-4 text-base font-semibold shadow-md active:scale-98 min-h-[50px]"
             >
               <span>Pieteikt vizīti</span>
               <span>→</span>
