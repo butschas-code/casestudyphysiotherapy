@@ -921,8 +921,7 @@ export default function PhysiotherapyConceptPage() {
             )}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Direct Human Question & Inquiry Channel */}
       <section id="jautajums" className="py-20 lg:py-28">
