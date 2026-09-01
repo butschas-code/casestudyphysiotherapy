@@ -327,25 +327,169 @@ export default function PhysiotherapyCallingCardPage() {
 
   const schemaJsonLd = {
     "@context": "https://schema.org",
-    "@type": ["Physiotherapy", "MedicalBusiness", "LocalBusiness"],
-    name: "KUSTĪBA — Fizioterapijas, Sieviešu Veselības un Bērnu Attīstības Prakse",
-    description: "Specializēta fizioterapija, sieviešu veselība un zīdaiņu hendlings Rīgā, Miera ielā 24.",
-    image: "https://saiteo.com/concept-physio/hero-treatment.jpg",
-    telephone: "+37167000000",
-    email: "sveiki@kustiba-demo.lv",
-    priceRange: "€40 - €60",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Miera iela 24",
-      addressLocality: "Rīga",
-      postalCode: "LV-1001",
-      addressCountry: "LV",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 56.9631,
-      longitude: 24.1352,
-    },
+    "@graph": [
+      {
+        "@type": ["Physiotherapy", "MedicalBusiness", "LocalBusiness"],
+        "@id": "https://saiteo.com/en/concept/physiotherapy#clinic",
+        name: "KUSTĪBA — Fizioterapijas, Sieviešu Veselības un Bērnu Attīstības Telpa",
+        alternateName: "KUSTĪBA fizioterapijas prakse",
+        url: "https://saiteo.com/en/concept/physiotherapy",
+        logo: "https://saiteo.com/concept-physio/hero-treatment.jpg",
+        image: [
+          "https://saiteo.com/concept-physio/hero-treatment.jpg",
+          "https://saiteo.com/concept-physio/practitioner-primary.jpg",
+          "https://saiteo.com/concept-physio/service-women.jpg",
+          "https://saiteo.com/concept-physio/service-children.jpg",
+        ],
+        description: "Specializēta fizioterapija, sieviešu veselība, grūtnieču un pēcdzemdību aprūpe, mugurkaula atveseļošana un zīdaiņu hendlings Rīgā, Miera ielā 24.",
+        telephone: "+37167000000",
+        email: "sveiki@kustiba-demo.lv",
+        priceRange: "€40 - €50",
+        currenciesAccepted: "EUR",
+        paymentAccepted: "Skaidra nauda, bankas karte, veselības apdrošināšana (Balta, BTA, Compensa, ERGO, Gjensidige)",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Miera iela 24",
+          addressLocality: "Rīga",
+          postalCode: "LV-1001",
+          addressCountry: "LV",
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: 56.9631,
+          longitude: 24.1352,
+        },
+        openingHoursSpecification: [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            opens: "08:00",
+            closes: "20:00",
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Saturday"],
+            opens: "09:00",
+            closes: "15:00",
+          },
+        ],
+        medicalSpecialty: [
+          "Physiotherapy",
+          "Obstetric",
+          "Pediatric",
+          "Musculoskeletal",
+          "Postnatal Rehabilitation",
+        ],
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Fizioterapijas un rehabilitācijas pakalpojumi",
+          itemListElement: [
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "MedicalProcedure",
+                name: "Pirmreizēja fizioterapeita konsultācija & diagnostika",
+                description: "Pilna kustību pārbaude, manuālie testi, pirmā terapija un individuāls mājas plāns.",
+              },
+              price: "50",
+              priceCurrency: "EUR",
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "MedicalProcedure",
+                name: "Atkārtota individuālā fizioterapijas nodarbība",
+                description: "Manuāla terapija un koriģējošie vingrojumi ar sertificētu speciālisti.",
+              },
+              price: "45",
+              priceCurrency: "EUR",
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "MedicalProcedure",
+                name: "Sieviešu veselības un pēcdzemdību vizīte",
+                description: "Diastāzes pārbaude, iegurņa pamatnes muskuļu atjaunošana un rētu aprūpe.",
+              },
+              price: "50",
+              priceCurrency: "EUR",
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "MedicalProcedure",
+                name: "Zīdaiņu motorā attīstība & hendlinga apmācība",
+                description: "Praktiska vecāku hendlinga apmācība un mazuļa kustību harmonizācija.",
+              },
+              price: "40",
+              priceCurrency: "EUR",
+            },
+          ],
+        },
+        employee: [
+          {
+            "@type": "Person",
+            name: "Elīna Vītola",
+            jobTitle: "Vadošā fizioterapeite · Prakses dibinātāja",
+            description: "12 gadu pieredze mugurkaula biomehānikā, sieviešu veselībā un pēcdzemdību aprūpē.",
+            alumniOf: "Rīgas Stradiņa universitāte",
+            image: "https://saiteo.com/concept-physio/practitioner-primary.jpg",
+          },
+          {
+            "@type": "Person",
+            name: "Marta Liepa",
+            jobTitle: "Sertificēta fizioterapeite",
+            description: "Akūtas muguras sāpes, sporta un pēctraumu rehabilitācija.",
+            alumniOf: "Rīgas Stradiņa universitāte",
+            image: "https://saiteo.com/concept-physio/practitioner-2.jpg",
+          },
+          {
+            "@type": "Person",
+            name: "Anna Ozola",
+            jobTitle: "Bērnu fizioterapeite · Hendlinga speciāliste",
+            description: "Zīdaiņu motorā attīstība, muskuļu tonusa harmonizācija un bērnu stāja.",
+            alumniOf: "Rīgas Stradiņa universitāte",
+            image: "https://saiteo.com/concept-physio/practitioner-3.jpg",
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://saiteo.com/en/concept/physiotherapy#faq",
+        mainEntity: faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.a,
+          },
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://saiteo.com/en/concept/physiotherapy#breadcrumbs",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Saiteo",
+            item: "https://saiteo.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Koncepti",
+            item: "https://saiteo.com/en/concept/physiotherapy",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: "KUSTĪBA Fizioterapija",
+            item: "https://saiteo.com/en/concept/physiotherapy",
+          },
+        ],
+      },
+    ],
   };
 
   return (
