@@ -41,7 +41,7 @@ export default function PhysiotherapyCallingCardPage() {
   // Testimonial Stories State (User Controlled)
   const [activeStoryIdx, setActiveStoryIdx] = useState<number>(0);
 
-  // Premium Booking State
+  // Booking State
   const [bookingStep, setBookingStep] = useState<1 | 2 | 3>(3);
   const [prevStep, setPrevStep] = useState<number>(3);
   const [selectedService, setSelectedService] = useState<string>("first");
@@ -101,7 +101,7 @@ export default function PhysiotherapyCallingCardPage() {
     {
       id: 0,
       statement: "“Man sāp mugura vai kakls.”",
-      solution: "Sākam ar kustību un ikdienas paradumu izvērtēšanu, ne tikai sāpīgo vietu.",
+      solution: "Sākam ar kustību un ikdienas slodzes izvērtēšanu, nevis tikai masējam sāpīgo punktu.",
       specialist: "Elīna Vītola vai Marta Liepa",
       image: "/concept-physio/service-rehab.jpg",
       badge: "Pieaugušajiem · Sēdošs darbs",
@@ -109,15 +109,15 @@ export default function PhysiotherapyCallingCardPage() {
     {
       id: 1,
       statement: "“Pēc traumas ķermenis vairs nejūtas kā agrāk.”",
-      solution: "Izstrādājam soli pa solim virzītu atjaunošanās plānu, lai droši atgūtu spēku un kustību brīvību.",
+      solution: "Izstrādājam drošu plānu, lai pakāpeniski atgūtu spēku, kustību brīvību un pārliecību.",
       specialist: "Marta Liepa",
       image: "/concept-physio/service-movement.jpg",
-      badge: "Rehabilitācija · Saišu atjaunošana",
+      badge: "Rehabilitācija & locītavu veselība",
     },
     {
       id: 2,
       statement: "“Esmu stāvoklī un gribu kustēties droši.”",
-      solution: "Saudzīgi atslogojam muguru un iegurni, sagatavojot ķermeni vieglākām dzemdībām.",
+      solution: "Atslogojam muguru un iegurni, sagatavojot ķermeni vieglākām dzemdībām bez lieka stresa.",
       specialist: "Elīna Vītola",
       image: "/concept-physio/service-women.jpg",
       badge: "Gaidību laika aprūpe",
@@ -125,7 +125,7 @@ export default function PhysiotherapyCallingCardPage() {
     {
       id: 3,
       statement: "“Pēc dzemdībām nejūtos savā ķermenī kā iepriekš.”",
-      solution: "Pārbaudām diastāzi, atjaunojam iegurņa pamatni un atgriežam stabilitātes sajūtu bez steigas.",
+      solution: "Pārbaudām diastāzi, atjaunojam iegurņa pamatni un atgriežam stabilitāti soli pa solim.",
       specialist: "Elīna Vītola",
       image: "/concept-physio/service-women.jpg",
       badge: "Pēcdzemdību atjaunošanās",
@@ -133,7 +133,7 @@ export default function PhysiotherapyCallingCardPage() {
     {
       id: 4,
       statement: "“Nezinu, vai mana mazuļa kustību attīstība ir tāda, kādai tai jābūt.”",
-      solution: "Mierīgi izvērtējam mazuļa motoriku un iemācām vecākiem pareizu hendlingu ikdienas aprūpē.",
+      solution: "Mierīgi novērtējam mazuļa motoriku un iemācām vecākiem pareizu hendlingu ikdienas aprūpē.",
       specialist: "Anna Ozola",
       image: "/concept-physio/service-children.jpg",
       badge: "Zīdaiņiem no 1 mēneša",
@@ -141,10 +141,10 @@ export default function PhysiotherapyCallingCardPage() {
     {
       id: 5,
       statement: "“Mans bērns kustas citādi, un es gribu saprast, kā viņam palīdzēt.”",
-      solution: "Harmonizējam muskuļu tonusu un stāju caur rotaļīgu, bērnam draudzīgu pieeju bez asarām.",
+      solution: "Līdzsvarojam muskuļu tonusu un stāju caur mierīgu, bērnam draudzīgu pieeju bez asarām.",
       specialist: "Anna Ozola",
       image: "/concept-physio/service-children.jpg",
-      badge: "Bērnu stāja & hendlings",
+      badge: "Bērnu stāja & attīstība",
     },
   ];
 
@@ -152,25 +152,25 @@ export default function PhysiotherapyCallingCardPage() {
     {
       number: "01",
       title: "Parunāsim.",
-      copy: "Pastāstiet, kas Jūs atveda un ko gribētu mainīt. Mēs nesteidzamies pie “vingrojumu saraksta”, bet vispirms izprotam Jūsu ikdienas kontekstu.",
+      copy: "Pastāstiet, kas Jūs atveda un ko gribētu mainīt. Mēs nesteidzamies pie “vingrojumu saraksta”, bet vispirms mierīgi uzklausām Jūsu situāciju.",
       tag: "Uzklausīšana · 15 min",
     },
     {
       number: "02",
       title: "Paskatīsimies, kā ķermenis kustas.",
-      copy: "Nesteidzīga kustību un funkcionālā izvērtēšana. Kā Jūs elpojat, stāvat, apsēžaties un kā sadalās slodze visā ķermenī.",
-      tag: "Funkcionālie testi · 15 min",
+      copy: "Nesteidzīga kustību pārbaude: kā Jūs elpojat, stāvat, apsēžaties un kā slodze sadalās visā ķermenī.",
+      tag: "Kustību pārbaude · 15 min",
     },
     {
       number: "03",
       title: "Izskaidrosim.",
-      copy: "Jums būs skaidrs, ko redzam un kāpēc tas var būt saistīts ar Jūsu sajūtām. Saudzīga manuāla atbrīvošana un pirmās terapijas kustības.",
-      tag: "Terapija & izpratne · 20 min",
+      copy: "Jums būs skaidrs, ko redzam un kā tas saistīts ar Jūsu sāpēm. Saudzīga manuāla atbrīvošana un pirmās terapijas kustības.",
+      tag: "Terapija & skaidrība · 20 min",
     },
     {
       number: "04",
       title: "Vienosimies par nākamo soli.",
-      copy: "Terapijas plāns, kas ir reāli izpildāms Jūsu ikdienā. 2–3 vienkārši paradumi vai vingrojumi mājas videi bez pārslodzes.",
+      copy: "Plāns, kas ir reāli izpildāms Jūsu ikdienā. 2–3 vienkārši paradumi vai vingrojumi mājas videi bez pārslodzes.",
       tag: "Mājas plāns · 10 min",
     },
   ];
@@ -179,7 +179,7 @@ export default function PhysiotherapyCallingCardPage() {
     {
       id: 0,
       quote: "“Pirmo reizi nejutos tā, it kā man būtu tikai jāizpilda vingrojumi. Es sapratu, kas notiek ar manu ķermeni un kāpēc mēs darām tieši to, ko darām.”",
-      label: "Demo pacienta stāsts · Rehabilitācija & mugurkauls",
+      label: "Pacienta pieredze · Muguras sāpju atvieglošana",
       situation: "6 mēneši ar sēdoša darba izraisītām muguras sāpēm",
       image: "/concept-physio/service-movement.jpg",
       imageAlt: "Dabiska kustība un terapeita vadība telpā",
@@ -187,7 +187,7 @@ export default function PhysiotherapyCallingCardPage() {
     {
       id: 1,
       quote: "“Pēc dzemdībām man bija grūti saprast, kas ir ‘normāli’ un vai drīkstu atkal sportot. Saruna pati par sevi jau deva milzīgu mieru un skaidru ceļu uz priekšu.”",
-      label: "Demo pacienta stāsts · Pēcdzemdību aprūpe",
+      label: "Pacientes pieredze · Pēcdzemdību aprūpe",
       situation: "Diastāzes pārbaude un iegurņa stabilitātes atjaunošana",
       image: "/concept-physio/service-women.jpg",
       imageAlt: "Saudzīgs pieskāriens un sievietes veselības aprūpe",
@@ -195,7 +195,7 @@ export default function PhysiotherapyCallingCardPage() {
     {
       id: 2,
       quote: "“Mēs atnācām ar satraukumu par mazuļa motoriku, bet nodarbība noritēja tik mierīgā, rotaļīgā un mīlošā atmosfērā, ka viss satraukums izzuda. Mēs ieguvām drošību ikdienā.”",
-      label: "Demo vecāku stāsts · Zīdaiņu hendlings",
+      label: "Vecāku pieredze · Zīdaiņu hendlings",
       situation: "Mazuļa muskuļu tonuss un ikdienas hendlinga apmācība",
       image: "/concept-physio/service-children.jpg",
       imageAlt: "Mazuļa dabiskā motorā attīstība un atbalsts",
@@ -213,7 +213,7 @@ export default function PhysiotherapyCallingCardPage() {
     {
       id: "elina",
       name: "Elīna Vītola",
-      role: "Vadošā fizioterapeite & dibinātāja",
+      role: "Vadošā fizioterapeite · prakses dibinātāja",
       experience: "12 gadu klīniskā pieredze",
       specialty: "Mugurkaula biomehānika, sieviešu veselība un pēcdzemdību aprūpe",
       education: "RSU Rehabilitācijas fakultāte · Starptautiskie DNS un Mulligan kursi",
@@ -235,7 +235,7 @@ export default function PhysiotherapyCallingCardPage() {
     {
       id: "anna",
       name: "Anna Ozola",
-      role: "Bērnu fizioterapeite & hendlinga speciāliste",
+      role: "Bērnu fizioterapeite · hendlinga speciāliste",
       experience: "7 gadu pieredze mazuļu aprūpē",
       specialty: "Zīdaiņu motorā attīstība, muskuļu tonusa harmonizācija un bērnu stāja",
       education: "RSU fizioterapija · Bobath un Emmi Pikleres metodes sertifikācija",
@@ -537,6 +537,7 @@ export default function PhysiotherapyCallingCardPage() {
 
       {/* ============================================================ */}
       {/* 1. FULL-WIDTH HUMAN-FIRST HERO (90–100svh DESKTOP) */}
+      {/* Real Patient Question: "Can you help someone like me?" */}
       {/* ============================================================ */}
       <section
         id="top"
@@ -575,7 +576,7 @@ export default function PhysiotherapyCallingCardPage() {
                 <span>rehabilitācijai</span>
               </motion.div>
 
-              {/* Main Headline (Revealed with intentional human breath) */}
+              {/* Main Headline (Human & Grounded) */}
               <motion.h1
                 custom={1}
                 initial="hidden"
@@ -597,7 +598,7 @@ export default function PhysiotherapyCallingCardPage() {
                 variants={revealLineVariants}
                 className="mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-[#5A6D67]"
               >
-                Individuāla fizioterapija cilvēkiem dažādos dzīves posmos — no sāpēm un rehabilitācijas līdz grūtniecībai, pēcdzemdību atjaunošanai un bērna attīstībai.
+                Individuāla fizioterapija cilvēkiem dažādos dzīves posmos — no sāpēm un atveseļošanās līdz grūtniecībai, pēcdzemdību atjaunošanai un mazuļa pirmajiem soļiem.
               </motion.p>
 
               {/* Primary & Secondary Action Group */}
@@ -762,6 +763,7 @@ export default function PhysiotherapyCallingCardPage() {
 
       {/* ============================================================ */}
       {/* 2. PATIENT RECOGNITION SECTION — NOT A SERVICES GRID */}
+      {/* Real Patient Question: "Do you understand what I'm experiencing?" */}
       {/* ============================================================ */}
       <section
         id="atpazisana"
@@ -896,7 +898,7 @@ export default function PhysiotherapyCallingCardPage() {
           <div className="mt-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-[#24302D]/08 pt-8">
             <div className="text-sm font-medium text-[#24302D]">
               <span>Neredzat savu situāciju sarakstā? </span>
-              <span className="text-[#5A6D67]">Mūsu ārstes uzklausa un palīdz atrast pareizo virzienu.</span>
+              <span className="text-[#5A6D67]">Mūsu speciālistes uzklausa un palīdz atrast pareizo virzienu.</span>
             </div>
             <a
               href="#jautajums"
@@ -911,6 +913,7 @@ export default function PhysiotherapyCallingCardPage() {
 
       {/* ============================================================ */}
       {/* 3. THERAPIST STORY SECTION — EMOTIONAL CENTER OF PAGE */}
+      {/* Real Patient Question: "Can I trust you?" */}
       {/* ============================================================ */}
       <section
         id="elina"
@@ -1031,6 +1034,7 @@ export default function PhysiotherapyCallingCardPage() {
 
       {/* ============================================================ */}
       {/* 4. FOUR SPECIALISM STORYTELLING CHAPTERS (NO SERVICES GRID) */}
+      {/* Real Patient Question: "Do you work with this specific problem?" */}
       {/* ============================================================ */}
       <section id="nodalas" className="relative">
         
@@ -1375,6 +1379,7 @@ export default function PhysiotherapyCallingCardPage() {
 
       {/* ============================================================ */}
       {/* 5. FIRST-VISIT STORY SECTION — NO UNCERTAINTY */}
+      {/* Real Patient Question: "What will happen to me?" */}
       {/* ============================================================ */}
       <section
         id="vizite"
@@ -1689,7 +1694,8 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 8. HUMAN TRUST / STORY SECTION (DEMO STORIES · NO TRUSTPILOT) */}
+      {/* 8. HUMAN TRUST / STORY SECTION (NO TRUSTPILOT) */}
+      {/* Real Patient Question: "Can I trust that others felt understood here?" */}
       {/* ============================================================ */}
       <section
         id="stasti"
@@ -1707,7 +1713,7 @@ export default function PhysiotherapyCallingCardPage() {
           {/* Header Narrative */}
           <div className="max-w-3xl">
             <span className="text-xs font-semibold uppercase tracking-widest text-[#D87967]">
-              PACIENTU STĀSTI · DEMO SATURS
+              PACIENTU PIEREDZE
             </span>
             <h2 className="mt-3 font-sans text-3xl sm:text-5xl font-medium text-[#24302D] leading-[1.18]">
               <span>Dažreiz visvairāk palīdz dzirdēt:</span>
@@ -1748,7 +1754,7 @@ export default function PhysiotherapyCallingCardPage() {
                   </p>
                 </div>
 
-                {/* Abstract Natural / Clinic Atmosphere Visual (No Fake Patient Face) */}
+                {/* Abstract Natural / Clinic Atmosphere Visual */}
                 <div
                   style={{
                     borderRadius: "2rem",
@@ -1819,6 +1825,7 @@ export default function PhysiotherapyCallingCardPage() {
 
       {/* ============================================================ */}
       {/* 9. PREMIUM BOOKING SECTION (DEEP WARM GREEN #243A36 MOMENT) */}
+      {/* Real Patient Question: "What do I do next?" */}
       {/* ============================================================ */}
       <section
         id="pieraksts"
@@ -1848,7 +1855,7 @@ export default function PhysiotherapyCallingCardPage() {
                   Ja zināt, ko vēlaties rezervēt — izvēlieties vizītes laiku blakus esošajā kalendārā.
                 </p>
                 <p>
-                  Ja neesat pārliecināta, ar ko sākt — īsi pastāstiet par savu situāciju, un mēs palīdzēsim izvēlēties piemērotāko speciālisti.
+                  Ja neesat pārliecināta, ar ko sākt — īsi pastāstiet par savu situāciju, un mēs palīdzēsim izvēlēties piemērotāko speciālisti un pirmo soli.
                 </p>
               </div>
 
@@ -1964,9 +1971,6 @@ export default function PhysiotherapyCallingCardPage() {
                   >
                     <p>📍 Miera iela 24, 2. stāvs (ērts lifts ratiņiem)</p>
                     <p className="mt-1">🔔 SMS atgādinājums tiks nosūtīts 24h pirms vizītes.</p>
-                    <p className="mt-2 font-semibold text-[#D87967]">
-                      * Šis ir demonstrācijas pieraksts koncepta izvērtēšanai.
-                    </p>
                   </div>
 
                   <button
@@ -2004,7 +2008,7 @@ export default function PhysiotherapyCallingCardPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-[#24302D]">Tālrunis vai WhatsApp *</label>
+                    <label className="block text-xs font-medium text-[#24302D]">Tālruņa numurs (SMS atgādinājumam) *</label>
                     <input
                       type="tel"
                       required
@@ -2021,7 +2025,7 @@ export default function PhysiotherapyCallingCardPage() {
                       type="text"
                       value={patientNote}
                       onChange={(e) => setPatientNote(e.target.value)}
-                      placeholder="Īsi par sāpēm vai sūdzībām"
+                      placeholder="Kas šobrīd sagādā vislielāko diskomfortu?"
                       className="mt-1 w-full rounded-xl border border-black/15 bg-[#FFF9F4] px-4 py-2.5 text-sm text-[#24302D] focus:border-[#D87967] focus:outline-hidden"
                     />
                   </div>
@@ -2216,10 +2220,12 @@ export default function PhysiotherapyCallingCardPage() {
                     </motion.div>
                   </AnimatePresence>
 
-                  {/* Microcopy & Demo disclaimer */}
+                  {/* Microcopy */}
                   <div className="border-t border-black/[0.06] mt-6 pt-3 flex items-center justify-between text-[11px] text-[#5A6D67]">
                     <span>Nezināt, ko izvēlēties? Uzrakstiet mums — palīdzēsim.</span>
-                    <span className="opacity-60 italic">Demo pieraksts</span>
+                    <a href="#jautajums" className="text-[#D87967] font-medium hover:underline">
+                      Uzdot jautājumu →
+                    </a>
                   </div>
                 </div>
               )}
@@ -2350,7 +2356,7 @@ export default function PhysiotherapyCallingCardPage() {
                     style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
                     className="w-full rounded-full py-3.5 text-xs font-semibold shadow-xs hover:bg-[#C26553]"
                   >
-                    Nosūtīt jautājumu ārstei
+                    Nosūtīt jautājumu speciālistei
                   </button>
                 </form>
               )}
@@ -2445,7 +2451,7 @@ export default function PhysiotherapyCallingCardPage() {
           </div>
 
           <div className="mt-12 border-t border-black/[0.06] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#5A6D67]/70">
-            <p>© {new Date().getFullYear()} KUSTĪBA. Demonstrācijas koncepts.</p>
+            <p>© {new Date().getFullYear()} KUSTĪBA. Fizioterapijas telpa Rīgā.</p>
             <div className="flex items-center gap-4">
               <Link href="/case-studies/physiotherapy" className="text-[#24302D] hover:underline font-semibold">
                 Lasīt Saiteo stratēģijas analīzi →
