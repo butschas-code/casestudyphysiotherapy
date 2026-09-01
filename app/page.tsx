@@ -514,7 +514,7 @@ export default function PhysiotherapyCallingCardPage() {
             radial-gradient(circle at 50% 70%, rgba(244, 215, 208, 0.12), transparent 55%)
           `,
         }}
-        className="relative flex items-center overflow-hidden py-10 lg:py-0 border-b border-[#24302D]/08"
+        className="relative flex items-center overflow-hidden py-10 lg:py-0"
       >
         {/* Desktop Expansive Right Image */}
         <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-[52vw] xl:w-[54vw] overflow-hidden">
@@ -728,7 +728,7 @@ export default function PhysiotherapyCallingCardPage() {
             radial-gradient(circle at 20% 80%, rgba(229, 236, 229, 0.25), transparent 50%)
           `,
         }}
-        className="py-16 sm:py-24 lg:py-32 border-b border-[#24302D]/08"
+        className="py-16 sm:py-24 lg:py-32"
       >
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
           
@@ -822,7 +822,7 @@ export default function PhysiotherapyCallingCardPage() {
           </div>
 
           {/* Section Direct Human Transition */}
-          <div className="mt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-[#24302D]/08 pt-6">
+          <div className="mt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6">
             <p className="text-sm text-[#5A6D67]">
               Neesat pārliecināti par savu situāciju? Mēs uzklausām un palīdzam saprast pirmo soli.
             </p>
@@ -849,7 +849,7 @@ export default function PhysiotherapyCallingCardPage() {
             radial-gradient(circle at 85% 80%, rgba(159, 184, 166, 0.25), transparent 45%)
           `,
         }}
-        className="py-16 sm:py-24 lg:py-32 border-b border-[#24302D]/08 overflow-hidden"
+        className="py-16 sm:py-24 lg:py-32 overflow-hidden"
       >
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
@@ -929,7 +929,7 @@ export default function PhysiotherapyCallingCardPage() {
       <section id="nodalas" className="relative">
         
         {/* CHAPTER 1: SĀPES & ATVESEĻOŠANĀS */}
-        <div id="sapes" className="py-16 sm:py-24 lg:py-32 border-b border-[#24302D]/08 bg-[#FFF9F4]">
+        <div id="sapes" className="py-16 sm:py-24 lg:py-32 bg-[#FFF9F4]">
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
             <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
               
@@ -998,7 +998,7 @@ export default function PhysiotherapyCallingCardPage() {
             backgroundColor: "#F8E9E3",
             backgroundImage: "radial-gradient(circle at 80% 20%, rgba(216, 121, 103, 0.12), transparent 45%)",
           }}
-          className="py-16 sm:py-24 lg:py-32 border-b border-[#24302D]/08"
+          className="py-16 sm:py-24 lg:py-32"
         >
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
             <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -1060,7 +1060,7 @@ export default function PhysiotherapyCallingCardPage() {
         </div>
 
         {/* CHAPTER 3: PĒC DZEMDĪBĀM */}
-        <div id="pecdzemdibam" className="py-16 sm:py-24 lg:py-32 border-b border-[#24302D]/08 bg-[#FFF7EF]">
+        <div id="pecdzemdibam" className="py-16 sm:py-24 lg:py-32 bg-[#FFF7EF]">
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
             <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
               
@@ -1127,7 +1127,7 @@ export default function PhysiotherapyCallingCardPage() {
             backgroundColor: "#E5ECE5",
             backgroundImage: "radial-gradient(circle at 20% 80%, rgba(159, 184, 166, 0.20), transparent 45%)",
           }}
-          className="py-16 sm:py-24 lg:py-32 border-b border-[#24302D]/08"
+          className="py-16 sm:py-24 lg:py-32"
         >
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
             <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -1197,7 +1197,7 @@ export default function PhysiotherapyCallingCardPage() {
         style={{
           background: "linear-gradient(180deg, #FFF9F4 0%, #EBF2EB 50%, #FFF9F4 100%)",
         }}
-        className="relative py-20 sm:py-28 lg:py-36 border-b border-[#24302D]/08 overflow-hidden"
+        className="relative py-20 sm:py-28 lg:py-36 overflow-hidden"
       >
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
           
@@ -1289,7 +1289,7 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* 6. REASSURANCE: Specialist Team */}
-      <section id="specialistes" className="py-16 sm:py-24 lg:py-28 border-b border-[#24302D]/08">
+      <section id="specialistes" className="py-16 sm:py-24 lg:py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
           <div className="max-w-3xl">
             <h2 className="font-sans text-3xl sm:text-5xl font-medium text-[#24302D] leading-tight">
@@ -1353,7 +1353,7 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* 7. TRANSPARENCY: Pricing & Insurance Reimbursement */}
-      <section id="cenas" className="py-16 sm:py-24 lg:py-28 border-b border-[#24302D]/08">
+      <section id="cenas" className="py-16 sm:py-24 lg:py-28">
         <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-12">
           <div className="text-center">
             <h2 className="font-sans text-3xl sm:text-4xl font-medium text-[#24302D]">
@@ -1475,7 +1475,7 @@ export default function PhysiotherapyCallingCardPage() {
             radial-gradient(circle at 90% 80%, rgba(159, 184, 166, 0.15), transparent 45%)
           `,
         }}
-        className="py-16 sm:py-24 lg:py-32 border-b border-[#24302D]/08"
+        className="py-16 sm:py-24 lg:py-32"
       >
         <div className="mx-auto max-w-6xl px-5 sm:px-6 lg:px-12">
           
@@ -1991,7 +1991,7 @@ export default function PhysiotherapyCallingCardPage() {
           backgroundColor: "#F4D7D0",
           borderColor: "rgba(36, 48, 45, 0.08)",
         }}
-        className="py-16 sm:py-24 lg:py-28 border-b"
+        className="py-16 sm:py-24 lg:py-28"
       >
         <div className="mx-auto max-w-5xl px-5 sm:px-6 lg:px-12">
           <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
