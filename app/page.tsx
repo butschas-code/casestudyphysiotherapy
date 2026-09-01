@@ -916,8 +916,9 @@ export default function PhysiotherapyConceptPage() {
                       Apstiprināt vizītes pieteikumu →
                     </button>
                   </div>
-                </form>
-              )}
+                </div>
+              </form>
+            )}
             </div>
           </div>
         </div>
