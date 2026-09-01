@@ -64,9 +64,6 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
   // FAQ State
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  // Insurance Calculator State
-  const [selectedInsurance, setSelectedInsurance] = useState<string>("balta");
-
   const changeBookingStep = (newStep: 1 | 2 | 3) => {
     setPrevStep(bookingStep);
     setBookingStep(newStep);
@@ -275,16 +272,16 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
 
   const servicesList = isEn
     ? [
-        { id: "first", title: "Initial physiotherapist consultation & diagnosis", duration: "60 min", price: "50 €", desc: "Comprehensive functional evaluation, posture & breathing assessment, and first individual treatment plan." },
-        { id: "rehab", title: "Individual follow-up rehabilitation session", duration: "60 min", price: "45 €", desc: "Focused therapeutic movement, manual techniques, and progressive muscular stabilization." },
-        { id: "women", title: "Women's health & postpartum consultation", duration: "60 min", price: "50 €", desc: "Diastasis check, gentle pelvic floor rehabilitation, and scar recovery care." },
-        { id: "infant", title: "Infant motor development & handling instruction", duration: "45 min", price: "40 €", desc: "Gentle motor milestone assessment and supportive everyday handling guidance for parents." },
+        { id: "first", title: "Pirmā fizioterapijas vizīte", titleEn: "Initial physiotherapy consultation", duration: "60 min", price: "50 €", desc: "Comprehensive functional evaluation, posture & movement assessment, and first individual treatment plan." },
+        { id: "rehab", title: "Atkārtota vizīte", titleEn: "Follow-up physiotherapy session", duration: "45–50 min", price: "45 €", desc: "Focused therapeutic movement, manual techniques, and progressive muscular stabilization." },
+        { id: "women", title: "Sieviešu veselības vizīte", titleEn: "Women's health consultation", duration: "60 min", price: "50 €", desc: "Diastasis assessment, gentle pelvic floor guidance, and postpartum recovery support." },
+        { id: "infant", title: "Zīdaiņa attīstības konsultācija", titleEn: "Infant development session", duration: "45 min", price: "40 €", desc: "Gentle motor milestone observation and supportive everyday handling guidance for parents." },
       ]
     : [
-        { id: "first", title: "Pirmreizēja fizioterapeita konsultācija & diagnostika", duration: "60 min", price: "50 €", desc: "Padziļināts funkcionālais novērtējums, stājas un elpošanas pārbaude un pirmais ārstniecības plāns." },
-        { id: "rehab", title: "Atkārtota individuālā fizioterapijas nodarbība", duration: "60 min", price: "45 €", desc: "Mērķtiecīga ārstnieciskā vingrošana, manuālās tehnikas un pakāpeniska ķermeņa stabilitātes atjaunošana." },
-        { id: "women", title: "Sieviešu veselības un pēcdzemdību vizīte", duration: "60 min", price: "50 €", desc: "Diastāzes diagnostika, iegurņa pamatnes muskuļu atjaunošana un ķeizargrieziena rētas aprūpe." },
-        { id: "infant", title: "Zīdaiņu motorā attīstība & hendlinga apmācība", duration: "45 min", price: "40 €", desc: "Mazuļa dabiskās motorikas novērtējums un maiga ikdienas hendlinga apmācība vecākiem." },
+        { id: "first", title: "Pirmā fizioterapijas vizīte", duration: "60 min", price: "50 €", desc: "Padziļināts funkcionālais novērtējums, stājas un kustību pārbaude un pirmais ārstniecības plāns." },
+        { id: "rehab", title: "Atkārtota vizīte", duration: "45–50 min", price: "45 €", desc: "Mērķtiecīga ārstnieciskā vingrošana, manuālās tehnikas un pakāpeniska ķermeņa stabilitātes atjaunošana." },
+        { id: "women", title: "Sieviešu veselības vizīte", duration: "60 min", price: "50 €", desc: "Diastāzes izvērtēšana, iegurņa pamatnes muskuļu atjaunošana un pēcdzemdību aprūpe." },
+        { id: "infant", title: "Zīdaiņa attīstības konsultācija", duration: "45 min", price: "40 €", desc: "Mazuļa dabiskās motorikas novērtējums un maiga ikdienas hendlinga apmācība vecākiem." },
       ];
 
   const specialists = isEn
@@ -300,9 +297,9 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
         {
           id: "marta",
           name: "Marta Liepa",
-          role: "Certified Physiotherapist",
+          role: "Physiotherapist",
           cropHeight: "h-[420px]",
-          specialty: "Acute spinal discomfort, sports recovery & joint rehab",
+          specialty: "Spinal and joint rehabilitation, active movement therapy",
           image: "/concept-physio/practitioner-2.jpg",
         },
         {
@@ -310,7 +307,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           name: "Anna Ozola",
           role: "Pediatric Physiotherapist",
           cropHeight: "h-[440px]",
-          specialty: "Infant motor milestones, muscle tone harmony & postural support",
+          specialty: "Infant motor development, gentle handling and postural guidance",
           image: "/concept-physio/practitioner-3.jpg",
         },
       ]
@@ -326,9 +323,9 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
         {
           id: "marta",
           name: "Marta Liepa",
-          role: "Sertificēta fizioterapeite",
+          role: "Fizioterapeite",
           cropHeight: "h-[420px]",
-          specialty: "Akūtas muguras sāpes, sporta un pēctraumu rehabilitācija",
+          specialty: "Muguras un locītavu atjaunošanās, aktīvā kustību terapija",
           image: "/concept-physio/practitioner-2.jpg",
         },
         {
@@ -336,7 +333,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           name: "Anna Ozola",
           role: "Bērnu fizioterapeite",
           cropHeight: "h-[440px]",
-          specialty: "Zīdaiņu motorā attīstība, muskuļu tonusa harmonizācija un bērnu stāja",
+          specialty: "Zīdaiņu motorā attīstība, saudzīgs hendlings un bērnu stāja",
           image: "/concept-physio/practitioner-3.jpg",
         },
       ];
@@ -357,62 +354,6 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
         { date: "2026-09-11", dayName: "Piektd.", fullDay: "Piektdiena, 11. septembris", slots: ["08:30", "12:00", "14:30"] },
       ];
 
-  const insuranceCompanies: Record<string, { name: string; coverage: string; details: string }> = isEn
-    ? {
-        balta: {
-          name: "Balta",
-          coverage: "Up to 100% reimbursement",
-          details: "Standard private health insurance reimbursement example for physical therapy and rehabilitation.",
-        },
-        bta: {
-          name: "BTA",
-          coverage: "Up to 100% reimbursement",
-          details: "Covers certified physiotherapist consultation and individual exercises according to your policy limits.",
-        },
-        compensa: {
-          name: "Compensa Life",
-          coverage: "Up to 100% reimbursement",
-          details: "Full or partial reimbursement under outpatient physical therapy coverage programs.",
-        },
-        ergo: {
-          name: "ERGO",
-          coverage: "Up to 100% reimbursement",
-          details: "Reimburses certified physiotherapy sessions with receipt and statement submission.",
-        },
-        gjensidige: {
-          name: "Gjensidige",
-          coverage: "Up to 100% reimbursement",
-          details: "Covers rehabilitation sessions and functional diagnostics.",
-        },
-      }
-    : {
-        balta: {
-          name: "Balta",
-          coverage: "Līdz 100% no vizītes cenas",
-          details: "Apmaksā fizikālās un rehabilitācijas medicīnas pakalpojumus, fizioterapiju un teipošanu atbilstoši Jūsu polises limitam.",
-        },
-        bta: {
-          name: "BTA",
-          coverage: "Līdz 100% no vizītes cenas",
-          details: "Apmaksā sertificēta fizioterapeita konsultācijas un individuālās nodarbības pēc izsniegtā čeka un ārstniecības izraksta.",
-        },
-        compensa: {
-          name: "Compensa Life",
-          coverage: "Līdz 100% no vizītes cenas",
-          details: "Pilna vai daļēja atmaksa atbilstoši ambulatorās rehabilitācijas un maksas medicīnas programmai.",
-        },
-        ergo: {
-          name: "ERGO",
-          coverage: "Līdz 100% no vizītes cenas",
-          details: "Apmaksā fizioterapeita pakalpojumus un ārstniecisko vingrošanu pēc pievienotā čeka.",
-        },
-        gjensidige: {
-          name: "Gjensidige",
-          coverage: "Līdz 100% no vizītes cenas",
-          details: "Apmaksā rehabilitācijas pakalpojumus un funkcionālo diagnostiku.",
-        },
-      };
-
   const faqs = isEn
     ? [
         {
@@ -421,15 +362,15 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
         },
         {
           q: "Is a physician's referral mandatory?",
-          a: "No, a doctor's referral is not mandatory for private physiotherapy consultations. Certified practitioners perform their own in-depth functional assessment.",
+          a: "No, a doctor's referral is not mandatory for private physiotherapy consultations. Practitioners perform an in-depth functional assessment.",
         },
         {
           q: "How does health insurance reimbursement work?",
-          a: "Following each session, an official receipt and medical statement code are provided, which you can easily submit to your insurance provider online.",
+          a: "In a live practice website, clear instructions for submitting receipts and statements or direct billing would appear here.",
         },
         {
-          q: "How do I access the practice and is there lift access?",
-          a: "Demonstration concept located in Riga. In a live clinic scenario, spacious lift access is provided for prams and persons with reduced mobility, alongside courtyard parking.",
+          q: "How do I access the practice?",
+          a: "Demonstration concept located in Riga. In a live clinic scenario, convenient access and parking instructions would be detailed here.",
         },
       ]
     : [
@@ -439,15 +380,15 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
         },
         {
           q: "Vai nepieciešams ārsta nosūtījums?",
-          a: "Nē, privātai fizioterapeita konsultācijai ārsta nosūtījums nav obligāts. Mūsu speciālistes ir sertificētas ārstniecības personas un pašas veic padziļinātu funkcionālo novērtējumu.",
+          a: "Nē, privātai fizioterapeita konsultācijai ārsta nosūtījums nav obligāts. Speciālistes pašas veic padziļinātu funkcionālo novērtējumu.",
         },
         {
           q: "Kā notiek norēķināšanās ar veselības apdrošināšanu?",
-          a: "Pēc katras vizītes mēs izsniedzam oficiālu čeku un ārstniecības personas izrakstu ar visiem nepieciešamajiem kodiem, ko Jūs iesniedzat savai apdrošināšanas kompānijai lietotnē vai e-pastā.",
+          a: "Reālā prakses vietnē šeit tiek sniegta skaidra instrukcija par čeku un izrakstu iesniegšanu apdrošinātājam vai tiešajiem norēķiniem.",
         },
         {
-          q: "Kā nokļūt praksē un vai ēkā pieejams lifts?",
-          a: "Demonstrācijas koncepts Rīgā. Reālā prakses scenārijā tiek nodrošināts ērts un plašs lifts bērnu ratiņiem un personām ar kustību ierobežojumiem, kā arī bezmaksas autostāvvieta.",
+          q: "Kā nokļūt praksē?",
+          a: "Demonstrācijas koncepts Rīgā. Reālā prakses scenārijā šeit tiktu norādīta precīza piekļuves un stāvvietas informācija.",
         },
       ];
 
@@ -1671,10 +1612,10 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                   : "Ērtu sporta vai brīvā laika apģērbu (t-kreklu un legingus/šortus), kas neierobežo kustības."}
               </p>
               <p>
-                📍 <strong>{isEn ? "Location & access:" : "Ieeja & transports:"}</strong>{" "}
+                📍 <strong>{isEn ? "Location & access:" : "Atrašanās vieta:"}</strong>{" "}
                 {isEn
-                  ? "Demonstration practice in Riga · Convenient lift access and free parking."
-                  : "Rīga · demonstrācijas prakse (ērts lifts ratiņiem un bezmaksas stāvvieta)."}
+                  ? "Riga · demonstration location (convenient access)"
+                  : "Rīga · demonstrācijas lokācija (ērta piekļuve)"}
               </p>
             </div>
             <a
@@ -1689,19 +1630,19 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
       </section>
 
       {/* ============================================================ */}
-      {/* 6. PRACTITIONER TRIPTYCH (NO CARDS / NO SHADOWS)             */}
+      {/* 6. PRACTITIONER TRIPTYCH (NO FAKE DEGREES / GENERIC FOCUS)   */}
       {/* ============================================================ */}
       <section id="specialistes" className="py-20 sm:py-28 lg:py-36 bg-[#FFF9F4] border-t border-black/[0.06]">
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
           
           <div className="max-w-3xl mb-12 sm:mb-16">
             <h2 className="text-3xl sm:text-5xl font-medium text-[#24302D] leading-tight">
-              {isEn ? "Certified practitioners you can place your trust in" : "Sertificētas ārstniecības personas, kurām var uzticēties"}
+              {isEn ? "Physiotherapy Roles & Focus Areas" : "Fizioterapijas lomas un virzieni"}
             </h2>
             <p className="mt-4 text-lg sm:text-xl text-[#4A5D57]">
               {isEn
-                ? "Each specialist has dedicated clinical expertise and genuine care for patients (concept personas)."
-                : "Katrai mūsu speciālistei ir sava padziļinātā specializācija un patiesa mīlestība pret savu darbu (koncepta personas)."}
+                ? "Concept team profiles and key focus areas (demonstration personas)."
+                : "Koncepta komandas profili un galvenie prakses virzieni (demonstrācijas personāži)."}
             </p>
           </div>
 
@@ -1755,22 +1696,25 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
       </section>
 
       {/* ============================================================ */}
-      {/* 7. TRANSPARENCY: FLATTENED TYPOGRAPHIC PRICING               */}
+      {/* 7. TRANSPARENCY: DEMO PRICING & INSURANCE UX EXAMPLE         */}
       {/* ============================================================ */}
       <section id="cenas" className="py-20 sm:py-28 lg:py-36 bg-[#FFF7EF] border-t border-black/[0.06]">
         <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-12">
           <div>
-            <h2 className="text-3xl sm:text-5xl font-medium text-[#24302D]">
-              {isEn ? "Transparent service rates" : "Caurspīdīgas pakalpojumu cenas"}
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#D87967] block">
+              {isEn ? "Demonstration Pricing" : "Demonstrācijas cenas"}
+            </span>
+            <h2 className="mt-2 text-3xl sm:text-5xl font-medium text-[#24302D]">
+              {isEn ? "Example service rates" : "Piemēra pakalpojumu cenas"}
             </h2>
             <p className="mt-3 text-base sm:text-lg text-[#4A5D57]">
               {isEn
-                ? "All session materials (kinesiology taping, equipment) are included in the visit fee."
-                : "Visi nodarbībai nepieciešamie materiāli (kinezioloģiskā teipošana, inventārs) ir iekļauti vizītes cenā."}
+                ? "Concept pricing shown for demonstration only. All essential session materials are included."
+                : "Koncepta cenrādis paraugam. Visi nodarbībai nepieciešamie materiāli ir iekļauti vizītes cenā."}
             </p>
           </div>
 
-          {/* Flat Typographic Price Rows (No Outer Card Box, No Giant Shadow) */}
+          {/* Flat Typographic Price Rows — 4 Sample Services Maximum */}
           <div className="mt-12 space-y-2">
             {servicesList.map((srv) => (
               <div key={srv.id} className="border-b border-black/[0.08] py-6">
@@ -1787,55 +1731,27 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 </p>
               </div>
             ))}
-
-            {/* Course Pass Row */}
-            <div className="border-b border-black/[0.08] py-6">
-              <div className="flex items-baseline justify-between gap-4">
-                <span className="text-xl sm:text-2xl font-medium text-[#D87967]">
-                  {isEn ? "5-session course pass (save 25 €)" : "5 nodarbību kurss (abonements)"}
-                </span>
-                <span className="text-2xl sm:text-3xl font-bold text-[#D87967] whitespace-nowrap">
-                  200 €
-                </span>
-              </div>
-              <p className="mt-2 text-base text-[#4A5D57]">
-                {isEn ? "Valid for 3 months from purchase across all individual physiotherapy sessions." : "Derīgs 3 mēnešus no iegādes brīža visām individuālajām nodarbībām (ietaupījums 25 €)."}
-              </p>
-            </div>
           </div>
 
-          {/* Insurance Information Flat Strip */}
-          <div className="mt-12 pt-6">
-            <p className="text-base sm:text-lg font-semibold text-[#24302D]">
-              {isEn ? "Health insurance reimbursement (Demo example):" : "Apdrošināšanas atlīdzības saņemšana:"}
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2.5">
-              {Object.keys(insuranceCompanies).map((key) => (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => setSelectedInsurance(key)}
-                  className={`rounded-full px-5 py-2.5 text-sm sm:text-base font-medium transition-all min-h-[44px] flex items-center ${
-                    selectedInsurance === key
-                      ? "bg-[#24302D] text-white"
-                      : "bg-[#FFF9F4] text-[#4A5D57] border border-black/15 hover:border-black/30"
-                  }`}
-                >
-                  {insuranceCompanies[key].name}
-                </button>
-              ))}
-            </div>
+          <p className="mt-6 text-xs text-[#4A5D57]">
+            {isEn ? "Concept pricing shown for demonstration only." : "Cenas norādītas kā demonstrācijas paraugs."}
+          </p>
 
-            <div className="mt-5 text-base sm:text-[17px] text-[#24302D] leading-relaxed">
-              <p>
-                <strong>{insuranceCompanies[selectedInsurance].name}:</strong> {insuranceCompanies[selectedInsurance].coverage}. {insuranceCompanies[selectedInsurance].details}
-              </p>
-              <p className="mt-2 text-sm sm:text-base text-[#4A5D57]">
-                {isEn
-                  ? "Official receipts and medical statements are issued after each session for easy insurance claims."
-                  : "Pēc katras vizītes izsniedzam oficiālu čeku un ārstniecības personas izrakstu (forma 027/u)."}
-              </p>
-            </div>
+          {/* Insurance Information UX Example (No Fake Brand Partnerships) */}
+          <div className="mt-12 pt-8 border-t border-black/[0.08]">
+            <p className="text-sm font-bold uppercase tracking-wider text-[#D87967]">
+              {isEn ? "Insurance" : "Apdrošināšana"}
+            </p>
+            <h3 className="mt-2 text-xl sm:text-2xl font-medium text-[#24302D]">
+              {isEn
+                ? "“In a real project, this module would present the practice's insurance partners, direct billing workflows, and required claim documentation.”"
+                : "“Reālā projektā šeit varētu parādīt prakses sadarbības partnerus, atlīdzības procesu un nepieciešamos dokumentus.”"}
+            </h3>
+            <p className="mt-3 text-sm sm:text-base text-[#4A5D57] leading-relaxed">
+              {isEn
+                ? "This demonstrates what Saiteo would solve for patient clarity without fabricating fictional commercial relationships."
+                : "Šis demonstrē, kā Saiteo struktūrē apdrošināšanas informāciju pacientu ērtībai, neizdomājot fiktīvas komerciālās partnerības."}
+            </p>
           </div>
         </div>
       </section>
@@ -2367,13 +2283,31 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                   : "Uzdodiet savu jautājumu šeit vai uzrakstiet mums WhatsApp. Mūsu fizioterapeite iepazīsies ar Jūsu situāciju un ieteiks piemērotāko speciālisti un pirmo soli."}
               </p>
 
-              <div className="mt-8 space-y-2.5 border-t border-black/[0.08] pt-6 text-sm sm:text-base text-[#3D4F4A]">
+              <div className="mt-8 space-y-3 border-t border-black/[0.08] pt-6 text-sm sm:text-base text-[#3D4F4A]">
                 <p>
-                  📍 <strong>{isEn ? "Location:" : "Atrašanās vieta:"}</strong> {isEn ? "Riga · Speculative Design Concept" : "Rīga · Demonstrācijas koncepts"}
+                  📍 <strong>{isEn ? "Location:" : "Atrašanās vieta:"}</strong> {isEn ? "Riga · demonstration location" : "Rīga · demonstrācijas lokācija"}
                 </p>
                 <p>
-                  💡 <strong>{isEn ? "Design note:" : "Piezīme:"}</strong> {isEn ? "This form demonstrates patient intake UX without persisting sensitive data." : "Šī forma demonstrē pacientu pieteikšanās pieredzi bez sensitīvu datu saglabāšanas."}
+                  🕒 <strong>{isEn ? "Example hours:" : "Piemēra darba laiks:"}</strong> {isEn ? "Mon–Fri 08:30–19:30 (example)" : "P.–Pk. 08:30–19:30 (piemērs)"}
                 </p>
+
+                {/* Stylized Abstract Map Placeholder */}
+                <div className="mt-4 rounded-2xl border border-black/[0.08] bg-[#FFF9F4] p-4 flex items-center gap-4">
+                  <div className="h-12 w-12 rounded-xl bg-[#F8E9E3] flex items-center justify-center text-[#D87967] shrink-0">
+                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
+                      {isEn ? "Stylized Location Placeholder" : "Abstrakts lokācijas paraugs"}
+                    </p>
+                    <p className="text-xs text-[#4A5D57] mt-0.5">
+                      {isEn ? "Demonstration concept · No fictional street address or map pins" : "Demonstrācijas koncepts · Bez izdomātas ielas adreses vai koordinātēm"}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
