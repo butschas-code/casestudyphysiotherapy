@@ -3,11 +3,17 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 
 const easePremium = [0.22, 1, 0.36, 1] as const;
 
 export default function PhysiotherapyCallingCardPage() {
+  // Parallax on scroll for Hero
+  const { scrollY } = useScroll();
+  const heroImageY = useTransform(scrollY, [0, 800], [0, 80]);
+  const heroCardY = useTransform(scrollY, [0, 800], [0, 40]);
+  const heroOpacity = useTransform(scrollY, [0, 600], [1, 0.2]);
+
   // Situational Recognition State
   const [activeSituation, setActiveSituation] = useState<"spine" | "women" | "infant" | "injury">("spine");
 
@@ -38,7 +44,7 @@ export default function PhysiotherapyCallingCardPage() {
     {
       id: "elina",
       name: "Elīna Vītola",
-      role: "Vadošā fizioterapeite & prakses dibinātāja",
+      role: "Vadošā fizioterapeite & dibinātāja",
       experience: "12 gadu klīniskā pieredze",
       specialty: "Mugurkaula biomehānika, sieviešu veselība un pēcdzemdību aprūpe",
       education: "RSU Rehabilitācijas fakultāte · Starptautiskie DNS un Mulligan kursi",
@@ -223,11 +229,6 @@ export default function PhysiotherapyCallingCardPage() {
       style={{
         backgroundColor: "#FFF9F4",
         color: "#24302D",
-        backgroundImage: `
-          radial-gradient(circle at 15% 15%, rgba(216, 121, 103, 0.10), transparent 45%),
-          radial-gradient(circle at 85% 10%, rgba(159, 184, 166, 0.16), transparent 45%),
-          radial-gradient(circle at 50% 65%, rgba(244, 215, 208, 0.12), transparent 55%)
-        `,
       }}
       className="min-h-screen w-full font-sans antialiased selection:bg-[#D87967]/20 selection:text-[#24302D]"
     >
@@ -312,115 +313,238 @@ export default function PhysiotherapyCallingCardPage() {
         </div>
       </header>
 
-      {/* 1. RECOGNITION & SANCTUARY ARRIVAL (Hero) */}
-      <section id="top" className="relative pt-12 pb-20 lg:pt-20 lg:pb-28">
-        <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+      {/* ============================================================ */}
+      {/* FULL-WIDTH HUMAN-FIRST HERO (90–100svh DESKTOP) */}
+      {/* ============================================================ */}
+      <section
+        id="top"
+        style={{
+          minHeight: "calc(100svh - 85px)",
+          backgroundImage: `
+            radial-gradient(circle at 10% 15%, rgba(216, 121, 103, 0.14), transparent 45%),
+            radial-gradient(circle at 90% 12%, rgba(159, 184, 166, 0.20), transparent 45%),
+            radial-gradient(circle at 50% 70%, rgba(244, 215, 208, 0.15), transparent 55%)
+          `,
+        }}
+        className="relative flex items-center overflow-hidden py-16 lg:py-0 border-b border-[#24302D]/08"
+      >
+        <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
+          <div className="grid gap-12 lg:grid-cols-[1.12fr_0.88fr] lg:items-center">
+            
+            {/* LEFT: Main Message & Emotional Flow */}
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: easePremium }}
+              style={{ opacity: heroOpacity }}
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.12,
+                    delayChildren: 0.1,
+                  },
+                },
+              }}
+              className="z-10 flex flex-col justify-center"
             >
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#9FB8A6]/40 bg-[#9FB8A6]/15 px-3.5 py-1 text-xs font-medium text-[#24302D]">
-                <span>📍 Miera iela 24, Rīga</span>
-                <span className="opacity-40">•</span>
-                <span>Pieņemšana 2–3 dienu laikā</span>
-              </div>
+              {/* Context Line */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easePremium } },
+                }}
+                className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium tracking-wide text-[#5A6D67]"
+              >
+                <span>Fizioterapija</span>
+                <span className="text-[#D87967]">•</span>
+                <span>sievietēm</span>
+                <span className="text-[#D87967]">•</span>
+                <span>bērniem</span>
+                <span className="text-[#D87967]">•</span>
+                <span>rehabilitācijai</span>
+              </motion.div>
 
-              <h1 className="mt-5 font-sans text-4xl sm:text-5xl lg:text-[3.8rem] font-medium leading-[1.14] tracking-tight text-[#24302D]">
-                Ķermenis atceras visu.<br />
-                Mēs palīdzam tam atkal kustēties viegli un mierīgi.
-              </h1>
+              {/* Main Headline (Revealed by line with intentional break) */}
+              <motion.h1
+                variants={{
+                  hidden: { opacity: 0, y: 16 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: easePremium } },
+                }}
+                className="mt-5 font-sans text-4xl sm:text-5xl lg:text-[4.2rem] font-medium leading-[1.12] tracking-tight text-[#24302D]"
+              >
+                <span>Jūsu ķermenim nav jāpielāgojas terapijai.</span>
+                <span className="mt-2 block font-normal text-[#D87967]">
+                  Terapijai jāpielāgojas Jums.
+                </span>
+              </motion.h1>
 
-              <p className="mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-[#5A6D67]">
-                Privāta, rūpīga fizioterapijas prakse Rīgā. Mēs neaprobežojamies ar īslaicīgu masāžu vai formālu vingrošanu — mēs veltām laiku, lai saprastu Jūsu sāpju cēloni, sakārtotu kustību modeli un atgrieztu drošības sajūtu par savu ķermeni.
-              </p>
+              {/* Supporting Copy */}
+              <motion.p
+                variants={{
+                  hidden: { opacity: 0, y: 14 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: easePremium } },
+                }}
+                className="mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-[#5A6D67]"
+              >
+                Individuāla fizioterapija cilvēkiem dažādos dzīves posmos — no sāpēm un rehabilitācijas līdz grūtniecībai, pēcdzemdību atjaunošanai un bērna attīstībai.
+              </motion.p>
 
-              <div className="mt-9 flex flex-wrap items-center gap-4">
+              {/* Primary & Secondary Action Group */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 12 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easePremium } },
+                }}
+                className="mt-8 flex flex-wrap items-center gap-5"
+              >
                 <a
                   href="#pieraksts"
                   style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                  className="rounded-full px-7 py-3.5 text-sm font-semibold shadow-sm transition-all hover:bg-[#C26553] hover:shadow-md hover:-translate-y-0.5"
+                  className="rounded-full px-8 py-4 text-sm font-semibold shadow-sm transition-all hover:bg-[#C26553] hover:shadow-md hover:-translate-y-0.5"
                 >
-                  Izvēlēties brīvo laiku kalendārā (60 min)
+                  Pieteikt pirmo vizīti
                 </a>
                 <a
-                  href="https://wa.me/37120000000"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    borderColor: "rgba(36, 48, 45, 0.15)",
-                    backgroundColor: "#FFFFFF",
-                    color: "#24302D",
-                  }}
-                  className="inline-flex items-center gap-2 rounded-full border px-6 py-3.5 text-sm font-medium transition-colors hover:bg-[#F8E9E3]/50"
+                  href="#jautajums"
+                  className="text-xs sm:text-sm font-medium text-[#24302D] underline decoration-[#24302D]/30 underline-offset-4 transition-colors hover:text-[#D87967] hover:decoration-[#D87967]"
                 >
-                  <span>Jautāt WhatsApp</span>
+                  Neesmu pārliecināta, ko izvēlēties →
                 </a>
-              </div>
+              </motion.div>
 
-              <div
-                style={{ borderColor: "rgba(36, 48, 45, 0.08)" }}
-                className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 border-t pt-6 text-xs text-[#5A6D67]"
+              {/* Reassuring Microcopy */}
+              <motion.p
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: { opacity: 1, transition: { duration: 0.8, delay: 0.4 } },
+                }}
+                className="mt-5 text-xs text-[#5A6D67]"
               >
-                <div>
-                  <strong className="block text-[#24302D] font-semibold text-sm">60 minūtes</strong>
-                  <span className="text-[11px]">1-pret-1 darbs kabinetā</span>
-                </div>
-                <div>
-                  <strong className="block text-[#24302D] font-semibold text-sm">2–3 dienas</strong>
-                  <span className="text-[11px]">Ātra pieņemšana bez rindas</span>
-                </div>
-                <div>
-                  <strong className="block text-[#24302D] font-semibold text-sm">Apdrošināšana</strong>
-                  <span className="text-[11px]">Pieņemam visas polises</span>
-                </div>
-                <div>
-                  <strong className="block text-[#24302D] font-semibold text-sm">Ērta vide</strong>
-                  <span className="text-[11px]">Lifts & stāvvieta pagalmā</span>
-                </div>
-              </div>
+                Nav nepieciešams ārsta nosūtījums · palīdzēsim izvēlēties piemērotāko vizīti
+              </motion.p>
             </motion.div>
 
-            {/* Hero Daylight Visual */}
+            {/* RIGHT: Photography Composition with Grid-Breaking Layering & Floating Booking Card */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.98 }}
+              style={{ y: heroImageY }}
+              initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, ease: easePremium, delay: 0.1 }}
-              className="relative"
+              transition={{ duration: 1.1, ease: easePremium, delay: 0.2 }}
+              className="relative lg:translate-x-4"
             >
+              {/* Main Portrait Photography with Asymmetric Organic Radius */}
               <div
                 style={{
-                  borderRadius: "2.5rem 1.5rem 2.5rem 1.5rem",
-                  boxShadow: "0 20px 40px -15px rgba(216, 121, 103, 0.15)",
+                  borderRadius: "80px 20px 80px 20px",
+                  boxShadow: "0 25px 50px -18px rgba(216, 121, 103, 0.20)",
                 }}
-                className="relative h-[440px] sm:h-[480px] w-full overflow-hidden bg-[#F4D7D0]/30 border border-white/80"
+                className="relative h-[460px] sm:h-[540px] w-full overflow-hidden bg-[#F8E9E3] border border-white/90"
               >
                 <Image
                   src="/concept-physio/hero-treatment.jpg"
-                  alt="Mājīga un gaiša fizioterapijas nodarbība KUSTĪBA telpā"
+                  alt="Fizioterapeite Elīna Vītola saudzīgi vada pacienta kustību KUSTĪBA telpā"
                   fill
                   priority
-                  sizes="(max-width: 1024px) 100vw, 500px"
+                  sizes="(max-width: 1024px) 100vw, 540px"
+                  className="object-cover object-center"
+                />
+              </div>
+
+              {/* Secondary Detail Inset (Hands / Gentle Touch) */}
+              <div
+                style={{
+                  borderRadius: "2rem",
+                  boxShadow: "0 16px 32px -10px rgba(36, 48, 45, 0.12)",
+                }}
+                className="absolute -top-4 -left-6 hidden sm:block h-28 w-28 overflow-hidden border-2 border-white bg-white"
+              >
+                <Image
+                  src="/concept-physio/service-women.jpg"
+                  alt="Saudzīgais pieskāriens un aprūpe"
+                  fill
+                  sizes="112px"
                   className="object-cover"
                 />
               </div>
 
-              <div
-                style={{
-                  backgroundColor: "#FFFFFF",
-                  borderColor: "rgba(36, 48, 45, 0.08)",
-                  boxShadow: "0 12px 28px -8px rgba(36, 48, 45, 0.08)",
+              {/* FLOATING MINI BOOKING CARD (Real Healthcare Preview Overlapping Photography) */}
+              <motion.div
+                style={{ y: heroCardY }}
+                initial={{ opacity: 0, scale: 0.97, y: 20 }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  y: [0, -6, 0],
                 }}
-                className="absolute -bottom-6 -left-6 hidden sm:block max-w-[280px] rounded-3xl border p-5"
+                transition={{
+                  opacity: { duration: 0.7, delay: 0.6, ease: easePremium },
+                  scale: { duration: 0.7, delay: 0.6, ease: easePremium },
+                  y: { repeat: Infinity, duration: 6, ease: "easeInOut" },
+                }}
+                className="static sm:absolute -bottom-8 -right-2 sm:-right-4 mt-6 sm:mt-0 w-full sm:w-[310px] rounded-3xl bg-[#FFFFFF] p-5 border border-[#24302D]/08 shadow-xl"
               >
-                <p className="font-serif italic text-sm text-[#24302D]">
-                  “Sāpes nav jāpacieš — pareizi izvēlēta, saudzīga kustība atgriež ķermenim dabisko spēku.”
+                <div className="flex items-center justify-between border-b border-black/[0.06] pb-3">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-[#D87967]">
+                    Tuvākā vizīte
+                  </span>
+                  <span className="flex h-2 w-2 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#9FB8A6] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#9FB8A6]"></span>
+                  </span>
+                </div>
+
+                <div className="mt-3 flex items-center gap-3">
+                  <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-full border border-black/10 bg-[#F8E9E3]">
+                    <Image
+                      src="/concept-physio/practitioner-primary.jpg"
+                      alt="Elīna Vītola"
+                      fill
+                      sizes="40px"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                  <div>
+                    <p className="font-sans text-xs font-semibold text-[#24302D]">Elīna Vītola</p>
+                    <p className="text-[10px] text-[#5A6D67]">Fizioterapeite · Vadošā speciāliste</p>
+                  </div>
+                </div>
+
+                <p className="mt-3 text-xs font-medium text-[#24302D]">
+                  Otrdiena, 8. septembris
                 </p>
-                <p className="mt-2 text-[11px] font-medium text-[#5A6D67]">
-                  — Elīna Vītola, vadošā fizioterapeite
+
+                {/* 3 Available Time Chips */}
+                <div className="mt-2.5 flex items-center gap-1.5">
+                  {["10:30", "13:00", "16:30"].map((slot) => (
+                    <a
+                      key={slot}
+                      href="#pieraksts"
+                      onClick={() => {
+                        setSelectedDate("2026-09-08");
+                        setSelectedTime(slot);
+                        setSelectedSpecialist("elina");
+                      }}
+                      className="rounded-xl border border-black/10 bg-[#FFF9F4] px-2.5 py-1.5 font-mono text-xs font-medium text-[#24302D] transition-colors hover:border-[#D87967] hover:bg-[#D87967] hover:text-white"
+                    >
+                      {slot}
+                    </a>
+                  ))}
+                </div>
+
+                <div className="mt-3.5 flex items-center justify-between border-t border-black/[0.06] pt-3">
+                  <a
+                    href="#pieraksts"
+                    className="text-xs font-semibold text-[#D87967] hover:underline"
+                  >
+                    Skatīt visus laikus →
+                  </a>
+                </div>
+
+                <p className="mt-1.5 text-[10px] text-[#5A6D67]">
+                  Nezināt, ko rezervēt? Mēs palīdzēsim.
                 </p>
-              </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
@@ -1225,6 +1349,7 @@ export default function PhysiotherapyCallingCardPage() {
 
       {/* 9. DIRECT HUMAN QUESTION: For Undecided Patients */}
       <section
+        id="jautajums"
         style={{
           backgroundColor: "#F4D7D0",
           borderColor: "rgba(36, 48, 45, 0.08)",
