@@ -22,10 +22,6 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
 
   // Scroll Tracking
   const { scrollY } = useScroll();
-  const heroPhotoY = useTransform(scrollY, [0, 800], shouldReduceMotion ? [0, 0] : [0, 32]);
-  const heroDetailY = useTransform(scrollY, [0, 800], shouldReduceMotion ? [0, 0] : [0, 52]);
-  const heroBookingY = useTransform(scrollY, [0, 800], shouldReduceMotion ? [0, 0] : [0, 18]);
-  const heroTextOpacity = useTransform(scrollY, [0, 500], [1, 0.4]);
   const storyImageY = useTransform(scrollY, [700, 1600], shouldReduceMotion ? [0, 0] : [-15, 25]);
 
   // Header scroll state & mobile bottom bar visibility
@@ -633,217 +629,175 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
       </header>
 
       {/* ============================================================ */}
-      {/* 1. LAYERED ART-DIRECTED HERO COMPOSITION                     */}
+      {/* 1. FULL WIDTH HERO IMAGE WITH OVERLAID EDITORIAL TEXT        */}
       {/* ============================================================ */}
       <section
         id="top"
-        style={{
-          background: "radial-gradient(ellipse at 75% 30%, rgba(248, 233, 227, 0.75) 0%, rgba(255, 249, 244, 1) 75%)",
-        }}
-        className="relative min-h-[92svh] flex flex-col justify-between overflow-hidden pt-6 sm:pt-10 pb-16 lg:pb-20"
+        className="relative min-h-[92svh] lg:min-h-[96svh] w-full flex items-center overflow-hidden"
       >
-        {/* Subtle Ambient Radial Glows Behind Photograph */}
-        <div
-          className="pointer-events-none absolute right-[10%] top-[15%] h-[450px] w-[450px] rounded-full bg-[#D87967]/[0.09] blur-3xl"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute right-[35%] bottom-[18%] h-[380px] w-[380px] rounded-full bg-[#9FB8A6]/[0.14] blur-3xl"
-          aria-hidden="true"
-        />
+        {/* Full-bleed Background Photography */}
+        <div className="absolute inset-0 w-full h-full z-0">
+          <Image
+            src="/concept-physio/hero-warm-care.jpg"
+            alt={isEn ? "Calm, supportive physiotherapy care at KUSTĪBA" : "Mierīga un saudzīga fizioterapijas vide KUSTĪBA telpā"}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[center_35%] sm:object-[center_28%] lg:object-[72%_25%]"
+          />
 
-        {/* Main Grid Container */}
-        <div className="mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-12 my-auto">
-          <div className="grid lg:grid-cols-[1.05fr_0.95fr] items-center gap-10 lg:gap-12">
-            
-            {/* LEFT: Headline & Proof */}
-            <motion.div
-              style={{ opacity: heroTextOpacity }}
-              className="max-w-[680px] z-10"
+          {/* Atmospheric Layered Gradients — Preserves full photo while ensuring crisp, legible text */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#FFF9F4] via-[#FFF9F4]/60 to-transparent/20 lg:hidden" />
+          <div className="absolute inset-0 hidden lg:block bg-gradient-to-r from-[#FFF9F4] via-[#FFF9F4]/90 to-transparent/15 w-[75%]" />
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#FFF9F4] to-transparent pointer-events-none" />
+        </div>
+
+        {/* Overlaid Editorial Content Container */}
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-12 py-16 sm:py-24 lg:py-28 flex flex-col justify-between min-h-[85svh]">
+          
+          <div className="max-w-[680px] my-auto">
+            {/* Human Proof Line */}
+            <motion.p
+              custom={0}
+              initial="hidden"
+              animate="visible"
+              variants={revealLineVariants}
+              className="text-sm sm:text-base font-semibold tracking-wide text-[#D87967]"
             >
-              {/* Human Proof Line */}
-              <motion.p
-                custom={0}
-                initial="hidden"
-                animate="visible"
-                variants={revealLineVariants}
-                className="text-sm sm:text-base font-semibold tracking-wide text-[#D87967]"
-              >
+              {isEn
+                ? "Physiotherapy for people, not just symptoms."
+                : "Fizioterapija cilvēkiem, nevis tikai simptomiem."}
+            </motion.p>
+
+            {/* Headline Over Full-Width Image */}
+            <motion.h1
+              custom={1}
+              initial="hidden"
+              animate="visible"
+              variants={revealLineVariants}
+              className="mt-4 text-[clamp(2.8rem,4.8vw,5.2rem)] font-medium leading-[0.98] sm:leading-[1.02] tracking-tight text-[#24302D]"
+            >
+              <span>
                 {isEn
-                  ? "Physiotherapy for people, not just symptoms."
-                  : "Fizioterapija cilvēkiem, nevis tikai simptomiem."}
-              </motion.p>
-
-              {/* Headline */}
-              <motion.h1
-                custom={1}
-                initial="hidden"
-                animate="visible"
-                variants={revealLineVariants}
-                className="mt-4 text-[clamp(2.8rem,4.8vw,5.2rem)] font-medium leading-[0.98] sm:leading-[1.02] tracking-tight text-[#24302D]"
-              >
-                <span>
-                  {isEn
-                    ? "Your body shouldn't have to adapt to therapy."
-                    : "Jūsu ķermenim nav jāpielāgojas terapijai."}
-                </span>
-                <span className="mt-2.5 block font-normal text-[#D87967]">
-                  {isEn
-                    ? "Therapy should adapt to you."
-                    : "Terapijai jāpielāgojas Jums."}
-                </span>
-              </motion.h1>
-
-              {/* Subtitle */}
-              <motion.p
-                custom={2}
-                initial="hidden"
-                animate="visible"
-                variants={revealLineVariants}
-                className="mt-6 max-w-xl text-lg sm:text-xl leading-relaxed text-[#3D4F4A]"
-              >
+                  ? "Your body shouldn't have to adapt to therapy."
+                  : "Jūsu ķermenim nav jāpielāgojas terapijai."}
+              </span>
+              <span className="mt-2.5 block font-normal text-[#D87967]">
                 {isEn
-                  ? "Individual physical therapy tailored to life's transitions — from chronic pain and recovery to pregnancy, postpartum care, and baby's first milestones."
-                  : "Individuāla fizioterapija cilvēkiem dažādos dzīves posmos — no muguras sāpēm un atveseļošanās līdz grūtniecībai, pēcdzemdību mieram un mazuļa pirmajiem soļiem."}
-              </motion.p>
+                  ? "Therapy should adapt to you."
+                  : "Terapijai jāpielāgojas Jums."}
+              </span>
+            </motion.h1>
 
-              {/* CTA Buttons */}
-              <motion.div
-                custom={3}
-                initial="hidden"
-                animate="visible"
-                variants={revealLineVariants}
-                className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6"
-              >
-                <a
-                  href="#pieraksts"
-                  style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                  className="rounded-full px-8 py-4 text-center text-base font-semibold shadow-md transition-all hover:bg-[#C26553] hover:shadow-lg hover:-translate-y-0.5 min-h-[52px] flex items-center justify-center"
-                >
-                  {isEn ? "Book first visit" : "Pieteikt pirmo vizīti"}
-                </a>
-                <a
-                  href="#jautajums"
-                  className="text-center text-base font-medium text-[#24302D] underline decoration-[#24302D]/40 underline-offset-4 transition-colors hover:text-[#D87967] hover:decoration-[#D87967] py-2"
-                >
-                  {isEn ? "Not sure what to choose? →" : "Neesmu pārliecināta, ko izvēlēties →"}
-                </a>
-              </motion.div>
+            {/* Subtitle */}
+            <motion.p
+              custom={2}
+              initial="hidden"
+              animate="visible"
+              variants={revealLineVariants}
+              className="mt-6 max-w-xl text-lg sm:text-xl leading-relaxed text-[#3D4F4A]"
+            >
+              {isEn
+                ? "Individual physical therapy tailored to life's transitions — from chronic pain and recovery to pregnancy, postpartum care, and baby's first milestones."
+                : "Individuāla fizioterapija cilvēkiem dažādos dzīves posmos — no muguras sāpēm un atveseļošanās līdz grūtniecībai, pēcdzemdību mieram un mazuļa pirmajiem soļiem."}
+            </motion.p>
 
-              <motion.p
-                custom={4}
-                initial="hidden"
-                animate="visible"
-                variants={revealLineVariants}
-                className="mt-5 text-sm sm:text-base text-[#4A5D57]"
+            {/* Action Row */}
+            <motion.div
+              custom={3}
+              initial="hidden"
+              animate="visible"
+              variants={revealLineVariants}
+              className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6"
+            >
+              <a
+                href="#pieraksts"
+                style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
+                className="rounded-full px-8 py-4 text-center text-base font-semibold shadow-md transition-all hover:bg-[#C26553] hover:shadow-lg hover:-translate-y-0.5 min-h-[52px] flex items-center justify-center"
               >
-                {isEn
-                  ? "Independent design study · Demonstration concept"
-                  : "Neatkarīgs dizaina pētījums · Demonstrācijas koncepts"}
-              </motion.p>
+                {isEn ? "Book first visit →" : "Pieteikt pirmo vizīti →"}
+              </a>
+              <a
+                href="#jautajums"
+                className="text-center text-base font-medium text-[#24302D] underline decoration-[#24302D]/40 underline-offset-4 transition-colors hover:text-[#D87967] hover:decoration-[#D87967] py-2"
+              >
+                {isEn ? "Not sure what to choose? →" : "Neesmu pārliecināta, ko izvēlēties →"}
+              </a>
             </motion.div>
 
-            {/* RIGHT: Layered Spatial Photography + Secondary Detail + Bridging Booking Preview */}
-            <div className="relative w-full lg:w-[108%] lg:-mr-[8%] flex flex-col items-end">
-              
-              {/* Main Portrait Treatment Photo with Organic Curve on Inner Edge */}
-              <motion.div
-                style={{ y: heroPhotoY }}
-                initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: shouldReduceMotion ? 0.01 : 0.9, ease: easeOrganic }}
-                className="relative w-full h-[380px] sm:h-[480px] lg:h-[580px] xl:h-[620px] overflow-hidden rounded-3xl lg:rounded-l-[80px] xl:rounded-l-[110px] lg:rounded-r-none bg-[#F8E9E3]"
-              >
-                <Image
-                  src="/concept-physio/hero-warm-care.jpg"
-                  alt={isEn ? "Calm, supportive physiotherapy care" : "Mierīga un saudzīga fizioterapijas vide KUSTĪBA telpā"}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 55vw"
-                  className="object-cover object-[center_28%]"
-                />
-              </motion.div>
-
-              {/* Secondary Detail Image (Hands Guiding Movement / Tactile Vignette) */}
-              <motion.div
-                style={{ y: heroDetailY }}
-                initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
-                animate={{ opacity: 1, scale: 1, rotate: -2 }}
-                transition={{ duration: shouldReduceMotion ? 0.01 : 0.7, delay: shouldReduceMotion ? 0 : 0.15, ease: easeOrganic }}
-                className="hidden sm:block absolute -left-6 bottom-16 lg:-left-12 lg:bottom-20 z-20 w-[180px] h-[210px] lg:w-[210px] lg:h-[240px] rounded-2xl overflow-hidden border-2 border-white shadow-md bg-[#FFF9F4]"
-              >
-                <Image
-                  src="/concept-physio/hands-care.jpg"
-                  alt="Tactile therapeutic movement guidance"
-                  fill
-                  sizes="210px"
-                  className="object-cover object-center"
-                />
-              </motion.div>
-
-              {/* Booking Preview Bridging Card (Overlapping Lower Boundary) */}
-              <motion.div
-                style={{ y: heroBookingY }}
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: shouldReduceMotion ? 0.01 : 0.7, delay: shouldReduceMotion ? 0 : 0.25, ease: easeOrganic }}
-                className="relative z-30 w-full sm:w-[360px] -mt-16 sm:-mt-20 lg:-mt-24 self-center sm:self-end sm:mr-6 lg:mr-10 rounded-2xl bg-[#FFFFFF]/98 backdrop-blur-md p-6 border border-white shadow-[0_16px_36px_-12px_rgba(36,48,45,0.12)]"
-              >
-                <div className="flex items-center justify-between border-b border-black/[0.06] pb-3">
-                  <div>
-                    <span className="text-xs font-semibold uppercase tracking-wider text-[#4A5D57] block">
-                      {isEn ? "Next available session" : "Tuvākā brīvā vizīte"}
-                    </span>
-                    <span className="text-base font-bold text-[#24302D] mt-0.5 block">
-                      {isEn ? "Tuesday · 10:30" : "Otrdien · 10:30"}
-                    </span>
-                  </div>
-                  <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-full border border-black/10 bg-[#F8E9E3]">
-                    <Image
-                      src="/concept-physio/practitioner-primary.jpg"
-                      alt="Elīna Vītola"
-                      fill
-                      sizes="40px"
-                      className="object-cover object-top"
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-3 flex items-center justify-between text-xs text-[#4A5D57]">
-                  <span>{isEn ? "Elīna Vītola · Lead Physiotherapist" : "Elīna Vītola · Vadošā fizioterapeite"}</span>
-                </div>
-
-                {/* Available Time Chips */}
-                <div className="mt-3 grid grid-cols-3 gap-2">
-                  {["10:30", "13:00", "16:30"].map((slot) => (
-                    <a
-                      key={slot}
-                      href="#pieraksts"
-                      onClick={() => {
-                        setSelectedDayIndex(1);
-                        setSelectedTimeSlot(slot);
-                        setSelectedSpecialist("elina");
-                      }}
-                      className="rounded-xl border border-black/15 bg-[#FFF9F4] py-2.5 text-center text-sm font-semibold text-[#24302D] transition-colors hover:border-[#D87967] hover:bg-[#D87967] hover:text-white min-h-[42px] flex items-center justify-center"
-                    >
-                      {slot}
-                    </a>
-                  ))}
-                </div>
-
-                <div className="mt-3.5 flex items-center justify-between border-t border-black/[0.06] pt-2.5">
-                  <a
-                    href="#pieraksts"
-                    className="text-xs sm:text-sm font-semibold text-[#D87967] hover:underline"
-                  >
-                    {isEn ? "View calendar & all times →" : "Skatīt kalendāru un visus laikus →"}
-                  </a>
-                </div>
-              </motion.div>
-
-            </div>
-
+            <motion.p
+              custom={4}
+              initial="hidden"
+              animate="visible"
+              variants={revealLineVariants}
+              className="mt-5 text-sm sm:text-base text-[#4A5D57]"
+            >
+              {isEn
+                ? "Independent design study · Demonstration concept"
+                : "Neatkarīgs dizaina pētījums · Demonstrācijas koncepts"}
+            </motion.p>
           </div>
+
+          {/* Floating Next Available Booking Pill on Lower Right of Hero Image */}
+          <div className="mt-8 lg:mt-0 lg:self-end">
+            <motion.div
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: shouldReduceMotion ? 0.01 : 0.7, delay: shouldReduceMotion ? 0 : 0.3, ease: easeOrganic }}
+              className="w-full sm:w-[380px] rounded-2xl bg-white/95 backdrop-blur-md p-5 border border-white shadow-[0_16px_36px_-12px_rgba(36,48,45,0.14)]"
+            >
+              <div className="flex items-center justify-between border-b border-black/[0.06] pb-3">
+                <div>
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#4A5D57] block">
+                    {isEn ? "Next available session" : "Tuvākā brīvā vizīte"}
+                  </span>
+                  <span className="text-base font-bold text-[#24302D] mt-0.5 block">
+                    {isEn ? "Tuesday · 10:30" : "Otrdien · 10:30"}
+                  </span>
+                </div>
+                <div className="relative h-11 w-11 flex-shrink-0 overflow-hidden rounded-full border border-black/10 bg-[#F8E9E3]">
+                  <Image
+                    src="/concept-physio/practitioner-primary.jpg"
+                    alt="Elīna Vītola"
+                    fill
+                    sizes="44px"
+                    className="object-cover object-top"
+                  />
+                </div>
+              </div>
+
+              {/* Quick Time Slots */}
+              <div className="mt-3 grid grid-cols-3 gap-2">
+                {["10:30", "13:00", "16:30"].map((slot) => (
+                  <a
+                    key={slot}
+                    href="#pieraksts"
+                    onClick={() => {
+                      setSelectedDayIndex(1);
+                      setSelectedTimeSlot(slot);
+                      setSelectedSpecialist("elina");
+                    }}
+                    className="rounded-[12px] border border-black/15 bg-[#FFF9F4] py-2 text-center text-sm font-semibold text-[#24302D] transition-colors hover:border-[#D87967] hover:bg-[#D87967] hover:text-white min-h-[40px] flex items-center justify-center"
+                  >
+                    {slot}
+                  </a>
+                ))}
+              </div>
+
+              <div className="mt-3 flex items-center justify-between border-t border-black/[0.06] pt-2">
+                <span className="text-xs text-[#4A5D57]">
+                  {isEn ? "Elīna Vītola · Lead Physiotherapist" : "Elīna Vītola · Vadošā fizioterapeite"}
+                </span>
+                <a
+                  href="#pieraksts"
+                  className="text-xs font-semibold text-[#D87967] hover:underline"
+                >
+                  {isEn ? "Calendar →" : "Kalendārs →"}
+                </a>
+              </div>
+            </motion.div>
+          </div>
+
         </div>
       </section>
 
