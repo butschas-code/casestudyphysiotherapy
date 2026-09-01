@@ -222,51 +222,57 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
         },
       ];
 
-  const demoStories = isEn
+  const experienceScenarios = isEn
     ? [
         {
           id: 0,
-          quote: "“For the first time, I didn't feel like I was just following an exercise list. I understood what was happening in my body and why we did each specific movement.”",
-          situation: "Back pain relief following sedentary office work",
+          statement: "“Understanding what's happening.”",
+          supporting: "Not merely receiving an exercise checklist, but truly understanding why your body responds this way and what steps follow next.",
+          scenarioTag: "Clinical Clarity",
           image: "/concept-physio/service-movement.jpg",
-          imageAlt: "Natural movement guidance in open studio light",
+          imageAlt: "Therapeutic movement guidance and anatomical understanding",
         },
         {
           id: 1,
-          quote: "“After childbirth, it was hard to know what was normal and whether I could exercise again. The conversation alone brought enormous peace and a clear path forward.”",
-          situation: "Diastasis assessment and pelvic core stabilization",
-          image: "/concept-physio/service-women.jpg",
-          imageAlt: "Gentle physical therapy and women's health care",
+          statement: "“Feeling confident and safe to move.”",
+          supporting: "Especially after injury, pain, or childbirth, the feeling of safety is often just as crucial as the physical exercise itself.",
+          scenarioTag: "Emotional Safety",
+          image: "/concept-physio/hands-care.jpg",
+          imageAlt: "Gentle manual guidance and supportive touch",
         },
         {
           id: 2,
-          quote: "“We arrived anxious about our baby's motor progress, but the session was so calm and loving that all tension vanished. We gained everyday confidence.”",
-          situation: "Infant muscle tone balance & handling guidance for parents",
-          image: "/concept-physio/service-children.jpg",
-          imageAlt: "Supportive pediatric handling and development",
+          statement: "“Knowing exactly what to do at home.”",
+          supporting: "A few concrete, actionable steps are far more valuable than an overwhelming routine that never gets practiced.",
+          scenarioTag: "Practical Routine",
+          image: "/concept-physio/warm-guidance.jpg",
+          imageAlt: "Practical movement techniques for everyday life",
         },
       ]
     : [
         {
           id: 0,
-          quote: "“Pirmo reizi nejutos tā, it kā man būtu tikai jāizpilda vingrojumi. Es sapratu, kas notiek ar manu ķermeni un kāpēc mēs darām tieši to, ko darām.”",
-          situation: "Muguras sāpju atvieglošana pēc sēdoša darba",
+          statement: "“Saprast, kas notiek.”",
+          supporting: "Ne tikai saņemt vingrojumu sarakstu, bet saprast, kāpēc ķermenis reaģē tieši šādi un ko mēs darīsim tālāk.",
+          scenarioTag: "Skaidrība un izpratne",
           image: "/concept-physio/service-movement.jpg",
-          imageAlt: "Dabiska kustība un terapeita vadība telpā",
+          imageAlt: "Kustību skaidrojums un dziļāka ķermeņa izpratne",
         },
         {
           id: 1,
-          quote: "“Pēc dzemdībām man bija grūti saprast, kas ir normāli un vai drīkstu atkal sportot. Saruna pati par sevi jau deva milzīgu mieru un skaidru ceļu uz priekšu.”",
-          situation: "Diastāzes pārbaude un iegurņa stabilitātes atjaunošana",
-          image: "/concept-physio/service-women.jpg",
-          imageAlt: "Saudzīgs pieskāriens un sievietes veselības aprūpe",
+          statement: "“Justies droši kustēties.”",
+          supporting: "Īpaši pēc traumas, sāpēm vai dzemdībām drošības sajūta bieži ir tikpat svarīga kā pats vingrojums.",
+          scenarioTag: "Drošība kustībā",
+          image: "/concept-physio/hands-care.jpg",
+          imageAlt: "Saudzīga vadība un droša vide",
         },
         {
           id: 2,
-          quote: "“Mēs atnācām ar satraukumu par mazuļa motoriku, bet nodarbība noritēja tik mierīgā un mīlošā atmosfērā, ka viss satraukums izzuda. Mēs ieguvām drošību ikdienā.”",
-          situation: "Mazuļa muskuļu tonuss un hendlinga apmācība vecākiem",
-          image: "/concept-physio/service-children.jpg",
-          imageAlt: "Mazuļa dabiskā motorā attīstība un atbalsts",
+          statement: "“Zināt, ko darīt mājās.”",
+          supporting: "Daži konkrēti, izpildāmi soļi ir vērtīgāki par sarežģītu plānu, kas paliek neizmantots.",
+          scenarioTag: "Praktiski soļi mājās",
+          image: "/concept-physio/warm-guidance.jpg",
+          imageAlt: "Reāli izpildāmi paradumi mājas videi",
         },
       ];
 
@@ -393,7 +399,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
       ];
 
   const activeRec = recognitionItems[hoveredSituation] || recognitionItems[0];
-  const activeStory = demoStories[activeStoryIdx] || demoStories[0];
+  const activeStory = experienceScenarios[activeStoryIdx] || experienceScenarios[0];
   const currentSpecialistObj = specialists.find((s) => s.id === selectedSpecialist) || specialists[0];
   const currentServiceObj = servicesList.find((s) => s.id === selectedService) || servicesList[0];
   const currentDayObj = bookingDays[selectedDayIndex] || bookingDays[1];
@@ -1757,7 +1763,7 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
       </section>
 
       {/* ============================================================ */}
-      {/* 8. OPEN EDITORIAL PATIENT STORIES                            */}
+      {/* 8. PACIENTU PIEREDZES SCENĀRIJI — EMOTIONAL JOURNEY          */}
       {/* ============================================================ */}
       <section
         id="stasti"
@@ -1770,39 +1776,71 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
           
           {/* Header Narrative */}
           <div className="max-w-3xl mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-5xl font-medium text-[#24302D] leading-[1.18]">
-              <span>{isEn ? "Sometimes what helps most is hearing:" : "Dažreiz visvairāk palīdz dzirdēt:"}</span>
-              <span className="block font-normal text-[#D87967] mt-1">
-                {isEn ? "“I felt that way too.”" : "“Es arī tā jutos.”"}
-              </span>
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#D87967] block">
+              {isEn ? "Patient Experience Scenarios · Concept examples" : "Pacientu pieredzes scenāriji · Koncepta piemēri"}
+            </span>
+            <h2 className="mt-3 text-3xl sm:text-5xl font-medium text-[#24302D] leading-[1.18]">
+              {isEn
+                ? "What is essential for someone to feel after their first session?"
+                : "Kas cilvēkam ir svarīgi sajust pēc pirmās vizītes?"}
             </h2>
+            <p className="mt-4 text-base sm:text-lg text-[#4A5D57]">
+              {isEn
+                ? "Demonstrating Saiteo's understanding of the emotional patient journey without fabricated customer reviews."
+                : "Demonstrē Saiteo izpratni par pacienta emocionālo ceļu un pieredzes dizainu bez izdomātām atsauksmēm."}
+            </p>
           </div>
 
-          {/* Open Editorial Showcase (No Nested Cards) */}
+          {/* Scenario Tabs / Direct Selector */}
+          <div className="flex flex-wrap gap-3 mb-10">
+            {experienceScenarios.map((sc, i) => (
+              <button
+                key={sc.id}
+                type="button"
+                onClick={() => setActiveStoryIdx(i)}
+                className={`rounded-full px-5 py-2.5 text-sm sm:text-base font-semibold transition-all min-h-[44px] flex items-center ${
+                  activeStoryIdx === i
+                    ? "bg-[#24302D] text-white shadow-xs"
+                    : "bg-[#FFF7EF] text-[#4A5D57] border border-black/10 hover:border-black/30"
+                }`}
+              >
+                <span>{`0${i + 1}. `}</span>
+                <span className="ml-1.5">{sc.scenarioTag}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Open Editorial Showcase (No Nested Cards, No Fake Patient Reviews, No Stars) */}
           <AnimatePresence mode="wait">
             <motion.div
               key={activeStory.id}
-              initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: shouldReduceMotion ? 0 : -20 }}
-              transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, ease: easeOrganic }}
-              className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center"
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -15 }}
+              transition={{ duration: shouldReduceMotion ? 0.01 : 0.4, ease: easeOrganic }}
+              className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center"
             >
               <div>
-                <blockquote className="text-2xl sm:text-3xl lg:text-4xl leading-snug text-[#24302D] font-normal">
-                  {activeStory.quote}
-                </blockquote>
+                <h3 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-medium leading-[1.14] text-[#24302D]">
+                  {activeStory.statement}
+                </h3>
 
-                <p className="mt-6 text-base sm:text-[17px] font-medium text-[#D87967]">
-                  {activeStory.situation}
+                <p className="mt-6 text-lg sm:text-xl leading-relaxed text-[#3D4F4A]">
+                  {activeStory.supporting}
                 </p>
+
+                <div className="mt-8 border-t border-black/[0.08] pt-4">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
+                    {isEn ? "Design Insight & Journey Focus" : "UX dizaina un empātijas princips"}
+                  </span>
+                </div>
               </div>
 
               <div
                 style={{
-                  borderRadius: "2.5rem",
+                  borderRadius: "2.5rem 1.25rem 2.5rem 1.25rem",
                 }}
-                className="relative h-[260px] sm:h-[360px] w-full overflow-hidden bg-[#F8E9E3]"
+                className="relative h-[280px] sm:h-[380px] w-full overflow-hidden bg-[#F8E9E3] shadow-xs"
               >
                 <Image
                   src={activeStory.image}
@@ -1815,18 +1853,18 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
             </motion.div>
           </AnimatePresence>
 
-          {/* Controls */}
-          <div className="mt-10 flex items-center justify-between border-t border-black/[0.08] pt-6">
+          {/* Navigation Controls */}
+          <div className="mt-12 flex items-center justify-between border-t border-black/[0.08] pt-6">
             <div className="flex items-center gap-2.5">
-              {demoStories.map((story, i) => (
+              {experienceScenarios.map((sc, i) => (
                 <button
-                  key={story.id}
+                  key={sc.id}
                   type="button"
                   onClick={() => setActiveStoryIdx(i)}
-                  className={`h-3 rounded-full transition-all min-w-[12px] ${
-                    activeStoryIdx === i ? "w-8 bg-[#D87967]" : "w-3 bg-black/20 hover:bg-black/40"
+                  className={`h-2.5 rounded-full transition-all min-w-[10px] ${
+                    activeStoryIdx === i ? "w-8 bg-[#D87967]" : "w-2.5 bg-black/20 hover:bg-black/40"
                   }`}
-                  aria-label={`Story ${i + 1}`}
+                  aria-label={`Scenario ${i + 1}`}
                 />
               ))}
             </div>
@@ -1835,20 +1873,20 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
               <button
                 type="button"
                 onClick={() =>
-                  setActiveStoryIdx((prev) => (prev === 0 ? demoStories.length - 1 : prev - 1))
+                  setActiveStoryIdx((prev) => (prev === 0 ? experienceScenarios.length - 1 : prev - 1))
                 }
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-black/15 text-lg text-[#24302D] transition-colors hover:bg-[#24302D] hover:text-white"
-                aria-label="Previous story"
+                aria-label="Previous scenario"
               >
                 ←
               </button>
               <button
                 type="button"
                 onClick={() =>
-                  setActiveStoryIdx((prev) => (prev === demoStories.length - 1 ? 0 : prev + 1))
+                  setActiveStoryIdx((prev) => (prev === experienceScenarios.length - 1 ? 0 : prev + 1))
                 }
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-black/15 text-lg text-[#24302D] transition-colors hover:bg-[#24302D] hover:text-white"
-                aria-label="Next story"
+                aria-label="Next scenario"
               >
                 →
               </button>
