@@ -639,16 +639,16 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
         <div className="absolute inset-0 w-full h-full z-0">
           <Image
             src="/concept-physio/hero-warm-care.jpg"
-            alt={isEn ? "Calm, supportive physiotherapy care at KUSTĪBA" : "Mierīga un saudzīga fizioterapijas vide KUSTĪBA telpā"}
+            alt={isEn ? "Gentle physiotherapy assessment and posture care at KUSTĪBA" : "Mierīga un saudzīga fizioterapijas un stājas aprūpe KUSTĪBA telpā"}
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[center_35%] sm:object-[center_28%] lg:object-[72%_25%]"
+            className="object-cover object-[60%_center] sm:object-[70%_center] lg:object-[82%_center]"
           />
 
           {/* Atmospheric Layered Gradients — Preserves full photo while ensuring crisp, legible text */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#FFF9F4] via-[#FFF9F4]/60 to-transparent/20 lg:hidden" />
-          <div className="absolute inset-0 hidden lg:block bg-gradient-to-r from-[#FFF9F4] via-[#FFF9F4]/90 to-transparent/15 w-[75%]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#FFF9F4] via-[#FFF9F4]/70 to-transparent/20 lg:hidden" />
+          <div className="absolute inset-0 hidden lg:block bg-gradient-to-r from-[#FFF9F4] via-[#FFF9F4]/90 to-transparent/10 w-[70%]" />
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#FFF9F4] to-transparent pointer-events-none" />
         </div>
 
