@@ -14,6 +14,11 @@ export default function PhysiotherapyCallingCardPage() {
   const heroCardY = useTransform(scrollY, [0, 800], [0, 40]);
   const heroOpacity = useTransform(scrollY, [0, 600], [1, 0.2]);
 
+  // Header scroll state & mobile bottom bar visibility
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [showMobileBottomBar, setShowMobileBottomBar] = useState<boolean>(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+
   // Parallax for Therapist Story
   const storyImageY = useTransform(scrollY, [600, 1600], [-20, 30]);
 
@@ -50,11 +55,15 @@ export default function PhysiotherapyCallingCardPage() {
   // Insurance Calculator State
   const [selectedInsurance, setSelectedInsurance] = useState<string>("balta");
 
-  // Track active chapter on scroll
+  // Track header scroll and active chapter
   useEffect(() => {
     const handleScroll = () => {
+      const currentScroll = window.scrollY;
+      setIsScrolled(currentScroll > 60);
+      setShowMobileBottomBar(currentScroll > 520);
+
       const chapterIds = ["sapes", "grutnieciba", "pecdzemdibam", "berniem"];
-      const scrollPos = window.scrollY + 250;
+      const scrollPos = currentScroll + 250;
       for (const id of chapterIds) {
         const el = document.getElementById(id);
         if (el) {
@@ -366,61 +375,111 @@ export default function PhysiotherapyCallingCardPage() {
         </div>
       </div>
 
-      {/* Warm Ambient Header */}
+      {/* ============================================================ */}
+      {/* HUMAN-CENTERED HEADER (LIGHT/TRANSPARENT -> WARM ON SCROLL) */}
+      {/* ============================================================ */}
       <header
-        style={{ borderColor: "rgba(36, 48, 45, 0.07)" }}
-        className="sticky top-0 z-40 bg-[#FFF9F4]/90 backdrop-blur-md border-b"
+        style={{
+          backgroundColor: isScrolled ? "rgba(255, 249, 244, 0.94)" : "transparent",
+          borderColor: isScrolled ? "rgba(36, 48, 45, 0.08)" : "transparent",
+        }}
+        className={`sticky top-0 z-40 transition-all duration-300 border-b ${
+          isScrolled ? "backdrop-blur-xs py-3.5 shadow-2xs" : "py-5"
+        }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-12">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-12">
+          
+          {/* Left: Brand & Small Subtitle */}
           <Link href="#top" className="flex flex-col group">
-            <span className="font-sans text-2xl lg:text-3xl font-medium tracking-tight text-[#24302D]">
-              Kustība
+            <span className="font-sans text-2xl lg:text-[1.75rem] font-medium tracking-tight text-[#24302D]">
+              KUSTĪBA
             </span>
-            <span className="text-[11px] font-normal text-[#5A6D67] block">
-              Fizioterapijas, sieviešu veselības un bērnu attīstības telpa
+            <span className="text-[11px] font-normal text-[#5A6D67] block -mt-0.5">
+              fizioterapijas prakse
             </span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-[#5A6D67]">
+          {/* Center/Right Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-9 text-sm font-medium text-[#5A6D67]">
             <a href="#atpazisana" className="transition-colors hover:text-[#24302D]">
-              Kam mēs palīdzam
+              Kā varam palīdzēt
             </a>
             <a href="#elina" className="transition-colors hover:text-[#24302D]">
-              Par Elīnu
+              Elīna
             </a>
             <a href="#nodalas" className="transition-colors hover:text-[#24302D]">
-              Virzieni
+              Pakalpojumi
             </a>
             <a href="#vizite" className="transition-colors hover:text-[#24302D]">
               Pirmā vizīte
             </a>
-            <a href="#specialistes" className="transition-colors hover:text-[#24302D]">
-              Speciālistes
-            </a>
-            <a href="#cenas" className="transition-colors hover:text-[#24302D]">
-              Cenas
-            </a>
-            <a href="#stasti" className="transition-colors hover:text-[#24302D]">
-              Pieredze
-            </a>
           </nav>
 
+          {/* Right Desktop CTA & Mobile Menu Toggle */}
           <div className="flex items-center gap-4">
-            <a
-              href="tel:+37167000000"
-              className="hidden sm:inline-block text-xs font-medium text-[#5A6D67] hover:text-[#24302D]"
-            >
-              +371 67 000 000
-            </a>
             <a
               href="#pieraksts"
               style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-              className="rounded-full px-5 py-2.5 text-xs font-semibold shadow-sm transition-all hover:bg-[#C26553] hover:-translate-y-0.5"
+              className="hidden sm:inline-block rounded-full px-6 py-2.5 text-xs font-semibold shadow-xs transition-all hover:bg-[#C26553] hover:-translate-y-0.5"
             >
               Pieteikt vizīti
             </a>
+
+            {/* Mobile Hamburger Toggle */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden flex h-10 w-10 items-center justify-center rounded-full border border-black/10 text-[#24302D]"
+              aria-label="Izvēlne"
+            >
+              {mobileMenuOpen ? "✕" : "☰"}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Slide-down Menu Drawer */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden border-t border-black/[0.08] bg-[#FFF9F4] px-6 py-6 space-y-4">
+            <a
+              href="#atpazisana"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-base font-medium text-[#24302D]"
+            >
+              Kā varam palīdzēt
+            </a>
+            <a
+              href="#elina"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-base font-medium text-[#24302D]"
+            >
+              Elīna
+            </a>
+            <a
+              href="#nodalas"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-base font-medium text-[#24302D]"
+            >
+              Pakalpojumi
+            </a>
+            <a
+              href="#vizite"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-base font-medium text-[#24302D]"
+            >
+              Pirmā vizīte
+            </a>
+            <div className="pt-3 border-t border-black/[0.06]">
+              <a
+                href="#pieraksts"
+                onClick={() => setMobileMenuOpen(false)}
+                style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
+                className="block text-center rounded-full py-3 text-sm font-semibold"
+              >
+                Pieteikt vizīti →
+              </a>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* ============================================================ */}
@@ -2384,6 +2443,30 @@ export default function PhysiotherapyCallingCardPage() {
           </div>
         </div>
       </footer>
+
+      {/* ============================================================ */}
+      {/* MOBILE PERSISTENT BOTTOM BOOKING BAR (AFTER HERO SCROLL) */}
+      {/* ============================================================ */}
+      <AnimatePresence>
+        {showMobileBottomBar && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ duration: 0.35, ease: easePremium }}
+            className="sm:hidden fixed bottom-0 left-0 right-0 z-50 p-4 bg-[#FFF9F4]/95 backdrop-blur-md border-t border-black/10 shadow-2xl"
+          >
+            <a
+              href="#pieraksts"
+              style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
+              className="flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-sm font-semibold shadow-md active:scale-98"
+            >
+              <span>Pieteikt vizīti</span>
+              <span>→</span>
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
