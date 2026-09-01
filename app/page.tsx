@@ -14,8 +14,8 @@ export default function PhysiotherapyCallingCardPage() {
   const heroCardY = useTransform(scrollY, [0, 800], [0, 40]);
   const heroOpacity = useTransform(scrollY, [0, 600], [1, 0.2]);
 
-  // Situational Recognition State
-  const [activeSituation, setActiveSituation] = useState<"spine" | "women" | "infant" | "injury">("spine");
+  // Recognition / Situations State
+  const [hoveredSituation, setHoveredSituation] = useState<number>(0);
 
   // Booking State
   const [selectedSpecialist, setSelectedSpecialist] = useState<string>("elina");
@@ -40,11 +40,62 @@ export default function PhysiotherapyCallingCardPage() {
   // Insurance Calculator State
   const [selectedInsurance, setSelectedInsurance] = useState<string>("balta");
 
+  const recognitionItems = [
+    {
+      id: 0,
+      statement: "“Man sāp mugura vai kakls.”",
+      solution: "Sākam ar kustību un ikdienas paradumu izvērtēšanu, ne tikai sāpīgo vietu.",
+      specialist: "Elīna Vītola vai Marta Liepa",
+      image: "/concept-physio/service-rehab.jpg",
+      badge: "Pieaugušajiem · Sēdošs darbs",
+    },
+    {
+      id: 1,
+      statement: "“Pēc traumas ķermenis vairs nejūtas kā agrāk.”",
+      solution: "Izstrādājam soli pa solim virzītu atjaunošanās plānu, lai droši atgūtu spēku un kustību brīvību.",
+      specialist: "Marta Liepa",
+      image: "/concept-physio/service-movement.jpg",
+      badge: "Rehabilitācija · Saišu atjaunošana",
+    },
+    {
+      id: 2,
+      statement: "“Esmu stāvoklī un gribu kustēties droši.”",
+      solution: "Saudzīgi atslogojam muguru un iegurni, sagatavojot ķermeni vieglākām dzemdībām.",
+      specialist: "Elīna Vītola",
+      image: "/concept-physio/service-women.jpg",
+      badge: "Gaidību laika aprūpe",
+    },
+    {
+      id: 3,
+      statement: "“Pēc dzemdībām nejūtos savā ķermenī kā iepriekš.”",
+      solution: "Pārbaudām diastāzi, atjaunojam iegurņa pamatni un atgriežam stabilitātes sajūtu bez steigas.",
+      specialist: "Elīna Vītola",
+      image: "/concept-physio/service-women.jpg",
+      badge: "Pēcdzemdību atjaunošanās",
+    },
+    {
+      id: 4,
+      statement: "“Nezinu, vai mana mazuļa kustību attīstība ir tāda, kādai tai jābūt.”",
+      solution: "Mierīgi izvērtējam mazuļa motoriku un iemācām vecākiem pareizu hendlingu ikdienas aprūpē.",
+      specialist: "Anna Ozola",
+      image: "/concept-physio/service-children.jpg",
+      badge: "Zīdaiņiem no 1 mēneša",
+    },
+    {
+      id: 5,
+      statement: "“Mans bērns kustas citādi, un es gribu saprast, kā viņam palīdzēt.”",
+      solution: "Harmonizējam muskuļu tonusu un stāju caur rotaļīgu, bērnam draudzīgu pieeju bez asarām.",
+      specialist: "Anna Ozola",
+      image: "/concept-physio/service-children.jpg",
+      badge: "Bērnu stāja & hendlings",
+    },
+  ];
+
   const specialists = [
     {
       id: "elina",
       name: "Elīna Vītola",
-      role: "Vadošā fizioterapeite & dibinātāja",
+      role: "Vadošā fizioterapeite & prakses dibinātāja",
       experience: "12 gadu klīniskā pieredze",
       specialty: "Mugurkaula biomehānika, sieviešu veselība un pēcdzemdību aprūpe",
       education: "RSU Rehabilitācijas fakultāte · Starptautiskie DNS un Mulligan kursi",
@@ -75,49 +126,6 @@ export default function PhysiotherapyCallingCardPage() {
       personalNote: "“Mierīga, silta un mīloša vide nodarbībā ļauj mazulim atvērties kustībai dabiskā, priecīgā veidā — bez stresa un bez asarām.”",
     },
   ];
-
-  const situations = {
-    spine: {
-      tag: "Pieaugušajiem · Sēdošs darbs · Mugurkaula slodze",
-      title: "Muguras, kakla un locītavu sāpes",
-      subtitle: "Kad sēdošs darbs pie datora, diska trūce vai spranda stīvums no rīta traucē baudīt ikdienu.",
-      description: "Mēs neaprobežojamies ar īslaicīgu masāžu. Nodarbībā rūpīgi novērtējam mugurkaula mobilitāti, iegurņa stabilitāti un dziļo muskuļu koordināciju, lai novērstu sāpju patieso cēloni.",
-      timeline: "Atvieglojums parasti jūtams jau pēc 1.–2. nodarbības. Ilgstošam rezultātam: 3–5 nodarbības apvienojumā ar 5 minūšu ikdienas mājas rituālu.",
-      price: "50 € / 60 min (pirmreizēja padziļināta diagnostika un terapija)",
-      image: "/concept-physio/service-rehab.jpg",
-      specialistName: "Elīna Vītola vai Marta Liepa",
-    },
-    women: {
-      tag: "Gaidību laiks · Pēcdzemdību periods · Diastāze",
-      title: "Sievietes ķermeņa aprūpe pirms un pēc dzemdībām",
-      subtitle: "Maigs un zinātnisks atbalsts sievietes ķermenim pirms un pēc bērniņa nākšanas pasaulē.",
-      description: "Vēdera taisnā muskuļa šķirtnes (diastāzes) izvērtēšana, iegurņa pamatnes muskuļu saudzīga nostiprināšana, elpošanas modeļa korekcija un muguras jostas daļas atslogošana.",
-      timeline: "Pēcdzemdību pārbaudi ieteicams veikt no 6. nedēļas pēc dzemdībām. Vidēji nepieciešamas 3–4 vizītes stabilitātes atgūšanai.",
-      price: "50 € / 60 min",
-      image: "/concept-physio/service-women.jpg",
-      specialistName: "Elīna Vītola",
-    },
-    infant: {
-      tag: "Zīdaiņiem no 1 mēneša · Vecāku hendlings · Motorika",
-      title: "Zīdaiņu motorā attīstība & hendlings",
-      subtitle: "Praktiska un mierīga vecāku apmācība pareizā mazuļa ikdienas aprūpē.",
-      description: "Kā bērnu celt, turēt, nēsāt un ģērbt, lai dabiski veicinātu velšanos, rāpošanu un simetrisku kustību koordināciju. Siltā, rotaļīgā vidē bez stresa un asarām.",
-      timeline: "Parasti pietiek ar 1–2 praktiskām nodarbībām vecākiem, lai iegūtu drošību un mieru ikdienā.",
-      price: "40 € / 45 min",
-      image: "/concept-physio/service-children.jpg",
-      specialistName: "Anna Ozola",
-    },
-    injury: {
-      tag: "Pēc traumām · Operācijām · Saišu bojājumiem",
-      title: "Pēctraumu un pēcoperāciju rehabilitācija",
-      subtitle: "Mērķtiecīga kustību apjoma, spēka un stabilitātes atjaunošana.",
-      description: "Soli pa solim virzīts atjaunošanās protokols pēc locītavu traumām, saišu plīsumiem, meniska vai mugurkaula operācijām ar locītavu mobilizāciju un kinezioloģisko teipošanu.",
-      timeline: "Pakāpenisks 4–8 nodarbību kurss atbilstoši ārstējošā ārsta rekomendācijām.",
-      price: "50 € / 60 min",
-      image: "/concept-physio/service-movement.jpg",
-      specialistName: "Marta Liepa",
-    },
-  };
 
   const dates = [
     { value: "2026-09-02", day: "Trešd.", full: "Trešdiena, 2. septembris", slots: 5 },
@@ -197,7 +205,7 @@ export default function PhysiotherapyCallingCardPage() {
     },
   ];
 
-  const currentSituationObj = situations[activeSituation];
+  const activeRec = recognitionItems[hoveredSituation] || recognitionItems[0];
   const currentSpecialistObj = specialists.find((s) => s.id === selectedSpecialist) || specialists[0];
   const currentDateObj = dates.find((d) => d.value === selectedDate) || dates[0];
 
@@ -550,154 +558,152 @@ export default function PhysiotherapyCallingCardPage() {
         </div>
       </section>
 
-      {/* 2. RECOGNITION: "This sounds like my situation" (Care Pathways) */}
-      <section id="atpazisana" className="py-20 lg:py-28">
+      {/* ============================================================ */}
+      {/* PATIENT RECOGNITION SECTION — NOT A SERVICES GRID */}
+      {/* ============================================================ */}
+      <section
+        id="atpazisana"
+        style={{
+          backgroundColor: "#FFF9F4",
+          backgroundImage: `
+            radial-gradient(circle at 80% 20%, rgba(244, 215, 208, 0.20), transparent 50%),
+            radial-gradient(circle at 20% 80%, rgba(229, 236, 229, 0.30), transparent 50%)
+          `,
+        }}
+        className="py-24 lg:py-32 border-b border-[#24302D]/08"
+      >
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
+          
+          {/* Header Narrative */}
           <div className="max-w-3xl">
             <span className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
-              Kam mēs varam palīdzēt
+              Jūsu pašsajūta & pieredze
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-5xl font-medium text-[#24302D] leading-tight">
-              Ar kādu jautājumu Jūs pie mums vēršaties?
+              Varbūt Jūs atpazīstat sevi šeit.
             </h2>
-            <p className="mt-3 text-base text-[#5A6D67]">
-              Izvēlieties situāciju, lai uzzinātu, kā mēs varam Jums palīdzēt:
-            </p>
+            <div className="mt-4 text-base sm:text-lg leading-relaxed text-[#5A6D67] space-y-1">
+              <p>Cilvēki pie mums nenāk ar “pakalpojuma nosaukumu”.</p>
+              <p>Viņi nāk ar sāpēm, jautājumiem, pārmaiņām un vēlmi atkal justies labi savā ķermenī.</p>
+            </div>
           </div>
 
-          {/* Organic Situation Selector Tabs */}
-          <div className="mt-10 flex flex-wrap gap-2.5">
-            <button
-              type="button"
-              onClick={() => setActiveSituation("spine")}
-              className={`rounded-full px-6 py-3 text-xs font-semibold transition-all ${
-                activeSituation === "spine"
-                  ? "bg-[#24302D] text-[#FFF9F4] shadow-sm"
-                  : "bg-white text-[#5A6D67] hover:bg-[#F8E9E3]/40 border border-[#24302D]/08"
-              }`}
-            >
-              Mugura, kakls & locītavas
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveSituation("women")}
-              className={`rounded-full px-6 py-3 text-xs font-semibold transition-all ${
-                activeSituation === "women"
-                  ? "bg-[#24302D] text-[#FFF9F4] shadow-sm"
-                  : "bg-white text-[#5A6D67] hover:bg-[#F8E9E3]/40 border border-[#24302D]/08"
-              }`}
-            >
-              Sievietes veselība & pēcdzemdības
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveSituation("infant")}
-              className={`rounded-full px-6 py-3 text-xs font-semibold transition-all ${
-                activeSituation === "infant"
-                  ? "bg-[#24302D] text-[#FFF9F4] shadow-sm"
-                  : "bg-white text-[#5A6D67] hover:bg-[#F8E9E3]/40 border border-[#24302D]/08"
-              }`}
-            >
-              Zīdaiņu attīstība & hendlings
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveSituation("injury")}
-              className={`rounded-full px-6 py-3 text-xs font-semibold transition-all ${
-                activeSituation === "injury"
-                  ? "bg-[#24302D] text-[#FFF9F4] shadow-sm"
-                  : "bg-white text-[#5A6D67] hover:bg-[#F8E9E3]/40 border border-[#24302D]/08"
-              }`}
-            >
-              Pēctraumu rehabilitācija
-            </button>
-          </div>
-
-          {/* Active Situation Narrative */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeSituation}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.4, ease: easePremium }}
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderColor: "rgba(36, 48, 45, 0.08)",
-                boxShadow: "0 10px 30px -10px rgba(36, 48, 45, 0.06)",
-                borderRadius: "2rem",
-              }}
-              className="mt-8 border p-8 sm:p-12"
-            >
-              <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-                <div>
-                  <span className="text-xs font-semibold text-[#D87967]">
-                    {currentSituationObj.tag}
-                  </span>
-                  <h3 className="mt-2 font-sans text-3xl sm:text-4xl font-medium text-[#24302D]">
-                    {currentSituationObj.title}
-                  </h3>
-                  <p className="mt-2 text-base font-medium text-[#24302D]/80">
-                    {currentSituationObj.subtitle}
-                  </p>
-
-                  <p className="mt-4 text-sm sm:text-base leading-relaxed text-[#5A6D67]">
-                    {currentSituationObj.description}
-                  </p>
-
-                  <div
-                    style={{ backgroundColor: "#FFF9F4", borderColor: "rgba(36, 48, 45, 0.06)" }}
-                    className="mt-6 space-y-2.5 rounded-2xl p-5 border text-xs sm:text-sm text-[#24302D]"
+          {/* Flowing Editorial Grid (Varied Sizes & Interactive Image Anchor) */}
+          <div className="mt-14 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+            
+            {/* LEFT: 6 Flowing Patient Statements with Micro-Interactions */}
+            <div className="space-y-4">
+              {recognitionItems.map((item, idx) => {
+                const isHovered = hoveredSituation === idx;
+                return (
+                  <motion.div
+                    key={item.id}
+                    onMouseEnter={() => setHoveredSituation(idx)}
+                    onClick={() => setHoveredSituation(idx)}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: idx * 0.08, ease: easePremium }}
+                    style={{
+                      backgroundColor: isHovered ? "#FFFFFF" : "rgba(255, 255, 255, 0.6)",
+                      borderColor: isHovered ? "#D87967" : "rgba(36, 48, 45, 0.08)",
+                      boxShadow: isHovered
+                        ? "0 12px 28px -10px rgba(216, 121, 103, 0.18)"
+                        : "0 2px 8px rgba(36, 48, 45, 0.02)",
+                    }}
+                    className="group relative cursor-pointer rounded-2xl border p-5 sm:p-6 transition-all duration-300"
                   >
-                    <p>
-                      <strong>⏱️ Rezultātu dinamika:</strong> {currentSituationObj.timeline}
-                    </p>
-                    <p>
-                      <strong>👩‍⚕️ Vadošā speciāliste:</strong> {currentSituationObj.specialistName}
-                    </p>
-                  </div>
-
-                  <div
-                    style={{ borderColor: "rgba(36, 48, 45, 0.08)" }}
-                    className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t pt-6"
-                  >
-                    <div>
-                      <span className="font-sans text-2xl font-semibold text-[#24302D]">
-                        {currentSituationObj.price}
+                    <div className="flex items-center justify-between gap-2">
+                      <span
+                        className={`text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-colors ${
+                          isHovered ? "text-[#D87967]" : "text-[#5A6D67]"
+                        }`}
+                      >
+                        {item.badge}
                       </span>
-                      <span className="block text-xs text-[#5A6D67]">
-                        Visi materiāli un teipošana iekļauti vizītes cenā
-                      </span>
+                      {isHovered && (
+                        <span className="hidden sm:inline-block text-[11px] font-medium text-[#D87967]">
+                          Izvēlēts stāvoklis →
+                        </span>
+                      )}
                     </div>
-                    <a
-                      href="#pieraksts"
-                      style={{ backgroundColor: "#D87967", color: "#FFFFFF" }}
-                      className="rounded-full px-7 py-3 text-xs font-semibold shadow-xs hover:bg-[#C26553]"
-                    >
-                      Pieteikt šo vizīti →
-                    </a>
-                  </div>
-                </div>
 
-                <div
-                  style={{
-                    borderRadius: "1.5rem",
-                    overflow: "hidden",
-                    backgroundColor: "#F8E9E3",
-                  }}
-                  className="relative h-[360px] sm:h-[400px] w-full border border-black/[0.06]"
-                >
-                  <Image
-                    src={currentSituationObj.image}
-                    alt={currentSituationObj.title}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 500px"
-                    className="object-cover"
-                  />
+                    <h3
+                      className={`mt-2 font-sans text-lg sm:text-xl font-medium transition-colors ${
+                        isHovered ? "text-[#24302D]" : "text-[#24302D]/90"
+                      }`}
+                    >
+                      {item.statement}
+                    </h3>
+
+                    {/* Revealed Solution Line */}
+                    <div className="mt-3 flex items-start gap-2.5 border-t border-black/[0.04] pt-3 text-xs sm:text-sm leading-relaxed text-[#5A6D67]">
+                      <span className="text-[#D87967] font-semibold text-base leading-none mt-0.5">→</span>
+                      <p>{item.solution}</p>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            {/* RIGHT: Connected Anchor Photography Composition */}
+            <div className="sticky top-28 hidden lg:block">
+              <div
+                style={{
+                  borderRadius: "2.5rem 1.5rem 2.5rem 1.5rem",
+                  boxShadow: "0 20px 40px -15px rgba(36, 48, 45, 0.10)",
+                }}
+                className="relative h-[480px] w-full overflow-hidden bg-[#F8E9E3] border border-white"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeRec.id}
+                    initial={{ opacity: 0, scale: 1.04 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5, ease: easePremium }}
+                    className="absolute inset-0"
+                  >
+                    <Image
+                      src={activeRec.image}
+                      alt={activeRec.statement}
+                      fill
+                      sizes="500px"
+                      className="object-cover"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Floating Context Pill over Photo */}
+                <div className="absolute bottom-6 left-6 right-6 rounded-2xl bg-white/95 backdrop-blur-md p-4 border border-black/[0.06] shadow-md">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-[#D87967]">
+                    Speciāliste šajā virzienā
+                  </span>
+                  <p className="font-sans text-xs font-semibold text-[#24302D] mt-0.5">
+                    {activeRec.specialist}
+                  </p>
+                  <p className="text-[11px] text-[#5A6D67] mt-1">
+                    Individuāla pieeja Miera ielas praksē
+                  </p>
                 </div>
               </div>
-            </motion.div>
-          </AnimatePresence>
+            </div>
+          </div>
+
+          {/* Section Conclusion CTA */}
+          <div className="mt-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-[#24302D]/08 pt-8">
+            <div className="text-sm font-medium text-[#24302D]">
+              <span>Neredzat savu situāciju sarakstā? </span>
+              <span className="text-[#5A6D67]">Mūsu ārstes uzklausa un palīdz atrast pareizo virzienu.</span>
+            </div>
+            <a
+              href="#jautajums"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#D87967] hover:underline"
+            >
+              <span>Pastāstiet mums, kas notiek</span>
+              <span>→</span>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -708,7 +714,7 @@ export default function PhysiotherapyCallingCardPage() {
           backgroundColor: "#F8E9E3",
           borderColor: "rgba(36, 48, 45, 0.08)",
         }}
-        className="py-20 lg:py-28 border-y"
+        className="py-20 lg:py-28 border-b"
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
@@ -761,7 +767,7 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* 4. REASSURANCE: Specialist Team */}
-      <section id="specialistes" className="py-20 lg:py-28">
+      <section id="specialistes" className="py-20 lg:py-28 border-b border-[#24302D]/08">
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div className="max-w-3xl">
             <span className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
@@ -852,7 +858,7 @@ export default function PhysiotherapyCallingCardPage() {
           backgroundColor: "#E5ECE5",
           borderColor: "rgba(36, 48, 45, 0.08)",
         }}
-        className="py-20 lg:py-28 border-y"
+        className="py-20 lg:py-28 border-b"
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div className="max-w-3xl">
@@ -952,7 +958,7 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* 6. TRANSPARENCY: Pricing & Insurance Reimbursement */}
-      <section id="cenas" className="py-20 lg:py-28">
+      <section id="cenas" className="py-20 lg:py-28 border-b border-[#24302D]/08">
         <div className="mx-auto max-w-4xl px-6 lg:px-12">
           <div className="text-center">
             <span className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
@@ -1072,7 +1078,7 @@ export default function PhysiotherapyCallingCardPage() {
           backgroundColor: "#FFF7EF",
           borderColor: "rgba(36, 48, 45, 0.08)",
         }}
-        className="py-20 lg:py-28 border-y"
+        className="py-20 lg:py-28 border-b"
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div className="max-w-3xl">
@@ -1114,7 +1120,7 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* 8. ACTION: Interactive Online Booking Engine */}
-      <section id="pieraksts" className="py-20 lg:py-28">
+      <section id="pieraksts" className="py-20 lg:py-28 border-b border-[#24302D]/08">
         <div className="mx-auto max-w-5xl px-6 lg:px-12">
           <div className="text-center max-w-2xl mx-auto">
             <span className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
@@ -1354,7 +1360,7 @@ export default function PhysiotherapyCallingCardPage() {
           backgroundColor: "#F4D7D0",
           borderColor: "rgba(36, 48, 45, 0.08)",
         }}
-        className="py-20 lg:py-28 border-y"
+        className="py-20 lg:py-28 border-b"
       >
         <div className="mx-auto max-w-5xl px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-center">
