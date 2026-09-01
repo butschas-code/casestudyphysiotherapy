@@ -10,7 +10,6 @@ export default function PhysiotherapyConceptPage() {
   
   // Insurance calculator state
   const [selectedInsurance, setSelectedInsurance] = useState<string>("balta");
-  const [hasReferral, setHasReferral] = useState<boolean>(false);
 
   // Booking engine state
   const [specialist, setSpecialist] = useState<string>("elina");
@@ -691,8 +690,43 @@ export default function PhysiotherapyConceptPage() {
         </div>
       </section>
 
+      {/* Patient Recovery Stories */}
+      <section id="atsauksmes" className="py-20 lg:py-28 bg-[#F8FAF9] border-b border-black/[0.06]">
+        <div className="mx-auto max-w-7xl px-6 lg:px-12">
+          <div className="max-w-3xl">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#166534]">
+              Pacientu pieredze
+            </span>
+            <h2 className="mt-2 font-serif text-3xl sm:text-5xl font-normal text-[#0F1715]">
+              Cilvēki, kuri atguvuši kustību brīvību
+            </h2>
+            <p className="mt-3 text-base text-[#4B5854]">
+              Reāli stāsti par atveseļošanos, pašsajūtas uzlabošanu un atgriešanos pie aktīvas dzīves:
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-8 md:grid-cols-3">
+            {stories.map((story, i) => (
+              <div
+                key={i}
+                className="flex flex-col justify-between rounded-3xl border border-black/[0.08] bg-white p-8 shadow-xs"
+              >
+                <p className="font-serif text-base leading-relaxed italic text-[#0F1715]">
+                  “{story.text}”
+                </p>
+                <div className="mt-6 border-t border-black/[0.06] pt-4">
+                  <strong className="block text-sm font-semibold text-[#0F1715]">{story.name}</strong>
+                  <span className="text-xs text-[#166534] font-medium block mt-0.5">{story.condition}</span>
+                  <span className="text-[11px] text-[#4B5854] block">{story.role}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Interactive Online Booking Engine */}
-      <section id="pieraksts" className="py-20 lg:py-28 bg-[#F8FAF9] border-b border-black/[0.06]">
+      <section id="pieraksts" className="py-20 lg:py-28 bg-white border-b border-black/[0.06]">
         <div className="mx-auto max-w-5xl px-6 lg:px-12">
           <div className="text-center max-w-2xl mx-auto">
             <span className="text-xs font-semibold uppercase tracking-wider text-[#166534]">
