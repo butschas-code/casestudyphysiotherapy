@@ -14,6 +14,9 @@ export default function PhysiotherapyCallingCardPage() {
   const heroCardY = useTransform(scrollY, [0, 800], [0, 40]);
   const heroOpacity = useTransform(scrollY, [0, 600], [1, 0.2]);
 
+  // Parallax for Therapist Story
+  const storyImageY = useTransform(scrollY, [600, 1600], [-20, 30]);
+
   // Recognition / Situations State
   const [hoveredSituation, setHoveredSituation] = useState<number>(0);
 
@@ -289,8 +292,11 @@ export default function PhysiotherapyCallingCardPage() {
             <a href="#atpazisana" className="transition-colors hover:text-[#24302D]">
               Kam mēs palīdzam
             </a>
-            <a href="#arste" className="transition-colors hover:text-[#24302D]">
-              Par pieeju
+            <a href="#elina" className="transition-colors hover:text-[#24302D]">
+              Par Elīnu
+            </a>
+            <a href="#specialistes" className="transition-colors hover:text-[#24302D]">
+              Speciālistes
             </a>
             <a href="#vizite" className="transition-colors hover:text-[#24302D]">
               Vizītes gaita
@@ -322,7 +328,7 @@ export default function PhysiotherapyCallingCardPage() {
       </header>
 
       {/* ============================================================ */}
-      {/* FULL-WIDTH HUMAN-FIRST HERO (90–100svh DESKTOP) */}
+      {/* 1. FULL-WIDTH HUMAN-FIRST HERO (90–100svh DESKTOP) */}
       {/* ============================================================ */}
       <section
         id="top"
@@ -559,7 +565,7 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* ============================================================ */}
-      {/* PATIENT RECOGNITION SECTION — NOT A SERVICES GRID */}
+      {/* 2. PATIENT RECOGNITION SECTION — NOT A SERVICES GRID */}
       {/* ============================================================ */}
       <section
         id="atpazisana"
@@ -707,61 +713,175 @@ export default function PhysiotherapyCallingCardPage() {
         </div>
       </section>
 
-      {/* 3. HUMAN CONNECTION: Personal Monologue from Founder */}
+      {/* ============================================================ */}
+      {/* 3. THERAPIST STORY SECTION — EMOTIONAL CENTER OF PAGE */}
+      {/* ============================================================ */}
       <section
-        id="arste"
+        id="elina"
         style={{
-          backgroundColor: "#F8E9E3",
-          borderColor: "rgba(36, 48, 45, 0.08)",
+          backgroundColor: "#E5ECE5",
+          backgroundImage: `
+            radial-gradient(circle at 15% 20%, rgba(216, 121, 103, 0.08), transparent 40%),
+            radial-gradient(circle at 85% 80%, rgba(159, 184, 166, 0.25), transparent 45%)
+          `,
         }}
-        className="py-20 lg:py-28 border-b"
+        className="py-24 lg:py-32 border-b border-[#24302D]/08 overflow-hidden"
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-            <div
-              style={{
-                borderRadius: "2.5rem 1.5rem 2.5rem 1.5rem",
-                overflow: "hidden",
-                boxShadow: "0 16px 36px -12px rgba(216, 121, 103, 0.2)",
-              }}
-              className="relative h-[440px] sm:h-[500px] w-full bg-[#FFF9F4]"
+          <div className="grid gap-14 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+            
+            {/* LEFT: Candid, Natural Photography Composition with Detail Overlay */}
+            <motion.div
+              style={{ y: storyImageY }}
+              initial={{ opacity: 0, scale: 0.96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, ease: easePremium }}
+              className="relative"
             >
-              <Image
-                src="/concept-physio/practitioner-primary.jpg"
-                alt="Elīna Vītola, prakses vadītāja un vadošā fizioterapeite"
-                fill
-                sizes="(max-width: 1024px) 100vw, 450px"
-                className="object-cover object-top"
-              />
-            </div>
-
-            <div>
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
-                Cilvēks aiz prakses
-              </span>
-              <h2 className="mt-2 font-sans text-3xl sm:text-5xl font-medium text-[#24302D] leading-tight">
-                Mēs nesteidzinām. Mēs uzklausām un meklējam cēloni.
-              </h2>
-
-              <p className="mt-6 text-sm sm:text-base leading-relaxed text-[#5A6D67]">
-                Lielākā daļa cilvēku pie mums vēršas brīdī, kad muguras sāpes, spranda stīvums vai nogurums jau mēnešiem ir kļuvis par ikdienas fonu. Cilvēks bieži vien ir mēģinājis pretsāpju medikamentus vai vispārīgus vingrojumus no interneta, taču sāpes atgriežas.
-              </p>
-              <p className="mt-4 text-sm sm:text-base leading-relaxed text-[#5A6D67]">
-                Mūsu pieejas pamatā ir izpratne par ķermeni kā vienotu sistēmu. Mēs nesteidzamies uzreiz likt vingrot — mēs vispirms analizējam, kā Jūs elpojat, kā sēžat pie sava darba galda un kādas ikdienas kustības rada pārmērīgu slodzi.
-              </p>
-
-              <blockquote
-                style={{ borderLeftColor: "#D87967" }}
-                className="mt-8 border-l-2 pl-5"
+              {/* Main Candid Portrait (45% Width Scale, Relaxed In Treatment Room) */}
+              <div
+                style={{
+                  borderRadius: "80px 20px 80px 20px",
+                  boxShadow: "0 20px 45px -15px rgba(36, 48, 45, 0.15)",
+                }}
+                className="relative h-[480px] sm:h-[540px] w-full overflow-hidden bg-[#FFF9F4] border-2 border-white"
               >
-                <p className="font-serif italic text-base sm:text-lg text-[#24302D]">
-                  “Fizioterapija nav tikai vingrošana — tā ir atbrīvošanās no bailēm par savu ķermeni un atgriešanās pie kustību brīvības.”
+                <Image
+                  src="/concept-physio/practitioner-primary.jpg"
+                  alt="Elīna Vītola, fizioterapeite un kustību terapeite"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 480px"
+                  className="object-cover object-top"
+                />
+              </div>
+
+              {/* Second Small Image: Gentle Treatment / Hands Detail Overlapping Edge */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.3, ease: easePremium }}
+                style={{
+                  borderRadius: "1.75rem",
+                  boxShadow: "0 14px 30px -8px rgba(36, 48, 45, 0.16)",
+                }}
+                className="absolute -bottom-6 -right-4 hidden sm:block h-36 w-36 overflow-hidden border-4 border-white bg-white"
+              >
+                <Image
+                  src="/concept-physio/service-rehab.jpg"
+                  alt="Fizioterapijas pieskāriena un kustības detaļa"
+                  fill
+                  sizes="144px"
+                  className="object-cover"
+                />
+              </motion.div>
+            </motion.div>
+
+            {/* RIGHT: Intimate Monologue & Philosophy */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.12,
+                    delayChildren: 0.15,
+                  },
+                },
+              }}
+            >
+              {/* Small Label */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easePremium } },
+                }}
+                className="text-xs font-semibold uppercase tracking-widest text-[#D87967]"
+              >
+                IEPAZĪSTIET ELĪNU
+              </motion.div>
+
+              {/* Headline */}
+              <motion.h2
+                variants={{
+                  hidden: { opacity: 0, y: 14 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: easePremium } },
+                }}
+                className="mt-3 font-sans text-3xl sm:text-4xl lg:text-[2.9rem] font-medium leading-[1.18] tracking-tight text-[#24302D]"
+              >
+                “Vispirms es gribu saprast Jūsu stāstu.”
+              </motion.h2>
+
+              {/* Intimate Body Copy */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 12 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: easePremium } },
+                }}
+                className="mt-6 space-y-4 text-base sm:text-lg leading-relaxed text-[#4A5D57]"
+              >
+                <p>
+                  Katrs cilvēks kustas citādi — un katrs atnāk ar savu pieredzi, ikdienu un iemeslu, kāpēc ķermenis šobrīd prasa vairāk uzmanības.
                 </p>
-                <cite className="mt-2 block text-xs not-italic font-medium text-[#5A6D67]">
-                  — Elīna Vītola, vadošā fizioterapeite & dibinātāja
-                </cite>
-              </blockquote>
-            </div>
+                <p>
+                  Tāpēc pirmajā vizītē es nesteidzos pie “vingrojumu saraksta”. Vispirms mēs izrunājam, kas ir mainījies, ko Jūs vēlaties atgūt un kā ķermenis kustas kopumā.
+                </p>
+                <p className="font-medium text-[#24302D]">
+                  Tikai tad veidojam plānu, kas iederas Jūsu dzīvē.
+                </p>
+              </motion.div>
+
+              {/* Subtle Human Details Line */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: { opacity: 1, transition: { duration: 0.7, delay: 0.3 } },
+                }}
+                className="mt-8 border-t border-[#24302D]/12 pt-5 text-xs text-[#5A6D67] italic"
+              >
+                Kustība · darbs ar sievietēm · bērnu attīstība · rehabilitācija · laba kafija pēc garas pastaigas
+              </motion.div>
+
+              {/* Quiet Horizontal Credentials Strip (Not Badges) */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easePremium } },
+                }}
+                className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold uppercase tracking-wider text-[#24302D]"
+              >
+                <span>Fizioterapija</span>
+                <span className="text-[#D87967]">•</span>
+                <span>Kustību terapija</span>
+                <span className="text-[#D87967]">•</span>
+                <span>Sieviešu veselība</span>
+                <span className="text-[#D87967]">•</span>
+                <span>Darbs ar bērniem</span>
+                <span className="text-[#D87967]">•</span>
+                <span>Rehabilitācija</span>
+              </motion.div>
+
+              {/* Quiet CTA */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easePremium } },
+                }}
+                className="mt-9"
+              >
+                <a
+                  href="#vizite"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-[#D87967] hover:underline"
+                >
+                  <span>Iepazīt Elīnas pieeju</span>
+                  <span>→</span>
+                </a>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -855,14 +975,14 @@ export default function PhysiotherapyCallingCardPage() {
       <section
         id="vizite"
         style={{
-          backgroundColor: "#E5ECE5",
+          backgroundColor: "#FFF9F4",
           borderColor: "rgba(36, 48, 45, 0.08)",
         }}
         className="py-20 lg:py-28 border-b"
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div className="max-w-3xl">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#24302D]">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#D87967]">
               Vizītes gaita
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-5xl font-medium text-[#24302D] leading-tight">
