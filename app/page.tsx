@@ -616,6 +616,37 @@ export default function PhysiotherapyConceptPage() {
                     </div>
                   </div>
 
+                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
+                        Vizītes virziens
+                      </label>
+                      <select
+                        value={selectedServiceType}
+                        onChange={(e) => setSelectedServiceType(e.target.value)}
+                        style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FFFFFF", color: "#232D29" }}
+                        className="mt-1.5 w-full rounded-xl border px-4 py-2.5 text-sm focus:outline-hidden"
+                      >
+                        <option value="mugura">Muguras, kakla vai locītavu sāpes (50 €)</option>
+                        <option value="sieviete">Sieviešu veselība & pēcdzemdību aprūpe (50 €)</option>
+                        <option value="berns">Zīdaiņu attīstība & hendlings (40 €)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
+                        E-pasts (atgādinājuma saņemšanai)
+                      </label>
+                      <input
+                        type="email"
+                        value={patientEmail}
+                        onChange={(e) => setPatientEmail(e.target.value)}
+                        placeholder="anna@piemers.lv"
+                        style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FFFFFF", color: "#232D29" }}
+                        className="mt-1.5 w-full rounded-xl border px-4 py-2.5 text-sm focus:outline-hidden"
+                      />
+                    </div>
+                  </div>
+
                   <div className="mt-4">
                     <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
                       Vizītes mērķis vai sūdzības (pēc izvēles)
