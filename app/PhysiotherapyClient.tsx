@@ -467,32 +467,52 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
       </AnimatePresence>
 
       {/* ============================================================ */}
-      {/* EXPLICIT SAITEO SPECULATIVE CONCEPT RIBBON                  */}
+      {/* SAITEO CONCEPT FRAME — ELEGANT DEEP MUTED PETROL STRIP        */}
       {/* ============================================================ */}
       <div
-        style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
-        className="px-5 sm:px-8 py-2.5 text-sm flex flex-wrap items-center justify-between gap-3 border-b border-white/10"
+        style={{ backgroundColor: "#182421", color: "#FFF9F4" }}
+        className="h-10 px-5 sm:px-8 lg:px-12 flex items-center justify-between text-xs sm:text-sm border-b border-white/10 select-none z-50 relative"
       >
-        <div className="flex items-center gap-2.5">
-          <Link href={`/${locale}`} className="font-bold text-[#00C9A7] tracking-tight">
+        {/* DESKTOP LEFT */}
+        <div className="hidden sm:flex items-center gap-3">
+          <Link
+            href={`/${locale}`}
+            className="font-semibold tracking-tight text-white hover:text-[#D87967] transition-colors"
+          >
             saiteo
           </Link>
-          <span className="opacity-40">|</span>
-          <span className="rounded-md bg-white/15 px-2 py-0.5 text-xs font-semibold uppercase tracking-wider text-white">
-            {isEn ? "SAITEO CONCEPT STUDY" : "SAITEO KONCEPTA PĒTĪJUMS"}
-          </span>
-          <span className="opacity-85 text-xs sm:text-sm">
-            {isEn
-              ? "KUSTĪBA · fictional physiotherapy practice"
-              : "KUSTĪBA · demonstrācijas fizioterapijas prakse"}
+          <span className="h-3.5 w-[1px] bg-white/20" />
+          <span className="text-[#FFF9F4]/80">
+            {isEn ? "Independent concept · Physiotherapy" : "Neatkarīgs koncepts · Fizioterapija"}
           </span>
         </div>
-        <div className="flex items-center gap-4 text-sm">
+
+        {/* MOBILE LEFT */}
+        <div className="sm:hidden flex items-center gap-2 text-xs">
+          <Link
+            href={`/${locale}`}
+            className="font-semibold tracking-tight text-white"
+          >
+            saiteo
+          </Link>
+          <span className="text-white/40">·</span>
+          <span className="text-[#FFF9F4]/75">
+            {isEn ? "concept" : "koncepts"}
+          </span>
+        </div>
+
+        {/* RIGHT LINK */}
+        <div>
           <Link
             href={`/${locale}/case-studies/physiotherapy`}
-            className="opacity-90 hover:opacity-100 underline decoration-[#00C9A7] text-[#00C9A7] font-medium whitespace-nowrap"
+            className="group inline-flex items-center gap-1.5 text-xs sm:text-sm font-normal text-[#FFF9F4]/90 hover:text-white transition-colors"
           >
-            {isEn ? "Why we designed it this way →" : "Kāpēc mēs to tā izstrādājām →"}
+            <span className="group-hover:underline underline-offset-4 decoration-white/40">
+              {isEn ? "Behind the design" : "Behind the design"}
+            </span>
+            <span className="text-xs transition-transform duration-200 group-hover:translate-x-0.5">
+              →
+            </span>
           </Link>
         </div>
       </div>
