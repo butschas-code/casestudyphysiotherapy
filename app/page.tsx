@@ -25,7 +25,6 @@ export default function PhysiotherapyCallingCardPage() {
   const heroCardY = useTransform(scrollY, [0, 700], shouldReduceMotion ? [0, 0] : [0, 25]);
   const heroOpacity = useTransform(scrollY, [0, 500], [1, 0.3]);
   const storyImageY = useTransform(scrollY, [700, 1600], shouldReduceMotion ? [0, 0] : [-15, 25]);
-  const storyDetailY = useTransform(scrollY, [700, 1600], shouldReduceMotion ? [0, 0] : [10, -20]);
 
   // Header scroll state & mobile bottom bar visibility
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -575,23 +574,6 @@ export default function PhysiotherapyCallingCardPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[#FFF9F4]/20 via-transparent to-transparent pointer-events-none" />
             </div>
-
-            {/* Tactile Inset (Caring Hands Detail) */}
-            <div
-              style={{
-                borderRadius: "2rem",
-                boxShadow: "0 16px 36px -10px rgba(36, 48, 45, 0.18)",
-              }}
-              className="absolute top-10 left-[-40px] h-32 w-32 overflow-hidden border-4 border-white bg-white z-20"
-            >
-              <Image
-                src="/concept-physio/detail-hands.jpg"
-                alt="Saudzīgais pieskāriens un terapeitiskā aprūpe"
-                fill
-                sizes="128px"
-                className="object-cover"
-              />
-            </div>
           </motion.div>
         </div>
 
@@ -901,7 +883,7 @@ export default function PhysiotherapyCallingCardPage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 3. THERAPIST STORY SECTION */}
+      {/* 3. THERAPIST STORY SECTION (NO INSET PIP, CLEAN & HUMAN)     */}
       {/* ============================================================ */}
       <section
         id="elina"
@@ -915,9 +897,9 @@ export default function PhysiotherapyCallingCardPage() {
         className="py-16 sm:py-24 lg:py-32 border-b border-[#24302D]/08 overflow-hidden"
       >
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
-          <div className="grid gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+          <div className="grid gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
             
-            {/* LEFT: Candid Photography with Subtle Parallax */}
+            {/* LEFT: Clean Candid Portrait (No PiP, Beautiful Organic Framing) */}
             <motion.div
               style={{ y: storyImageY }}
               initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.97 }}
@@ -926,56 +908,32 @@ export default function PhysiotherapyCallingCardPage() {
               transition={{ duration: shouldReduceMotion ? 0.01 : 0.8, ease: easeOrganic }}
               className="relative"
             >
-              {/* Main Candid Portrait */}
               <div
                 style={{
-                  borderRadius: "50px 20px 50px 20px",
+                  borderRadius: "40px",
                   boxShadow: "0 20px 45px -15px rgba(36, 48, 45, 0.15)",
                 }}
-                className="relative h-[380px] sm:h-[480px] lg:h-[540px] w-full overflow-hidden bg-[#FFF9F4] border-2 border-white"
+                className="relative h-[400px] sm:h-[500px] lg:h-[560px] w-full overflow-hidden bg-[#FFF9F4] border-2 border-white"
               >
                 <Image
                   src="/concept-physio/practitioner-primary.jpg"
-                  alt="Elīna Vītola, fizioterapeite un kustību terapeite"
+                  alt="Elīna Vītola, fizioterapeite un KUSTĪBA dibinātāja"
                   fill
                   sizes="(max-width: 768px) 100vw, 480px"
                   className="object-cover object-top"
                 />
               </div>
-
-              {/* Second Small Image: Gentle Treatment Detail */}
-              <motion.div
-                style={{ y: storyDetailY }}
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: shouldReduceMotion ? 0.01 : 0.7, delay: 0.2, ease: easeOrganic }}
-                className="absolute -bottom-4 -right-2 hidden sm:block h-32 w-32 overflow-hidden rounded-3xl border-4 border-white bg-white shadow-lg"
-              >
-                <Image
-                  src="/concept-physio/detail-hands.jpg"
-                  alt="Fizioterapijas pieskāriena un kustības vadības detaļa"
-                  fill
-                  sizes="128px"
-                  className="object-cover"
-                />
-              </motion.div>
             </motion.div>
 
-            {/* RIGHT: Stable Intimate Monologue & Philosophy */}
+            {/* RIGHT: Intimate Monologue & Human Grounding */}
             <div>
-              {/* Small Label */}
-              <div className="text-xs font-semibold uppercase tracking-widest text-[#D87967]">
-                IEPAZĪSTIET ELĪNU
-              </div>
-
               {/* Headline */}
-              <h2 className="mt-2 font-sans text-3xl sm:text-4xl lg:text-[2.9rem] font-medium leading-[1.18] tracking-tight text-[#24302D]">
+              <h2 className="font-sans text-3xl sm:text-4xl lg:text-[2.9rem] font-medium leading-[1.18] tracking-tight text-[#24302D]">
                 “Vispirms es gribu saprast Jūsu stāstu.”
               </h2>
 
-              {/* Intimate Body Copy (17-18px readable) */}
-              <div className="mt-5 space-y-4 text-[17px] sm:text-lg leading-[1.65] text-[#4A5D57]">
+              {/* Intimate Body Copy */}
+              <div className="mt-6 space-y-4 text-[17px] sm:text-lg leading-[1.65] text-[#4A5D57]">
                 <p>
                   Katrs cilvēks kustas citādi — un katrs atnāk ar savu pieredzi, ikdienu un iemeslu, kāpēc ķermenis šobrīd prasa vairāk uzmanības.
                 </p>
@@ -987,24 +945,26 @@ export default function PhysiotherapyCallingCardPage() {
                 </p>
               </div>
 
-              {/* Subtle Human Details Line */}
-              <div className="mt-6 border-t border-[#24302D]/12 pt-4 text-xs text-[#5A6D67] italic">
-                Kustība · darbs ar sievietēm · bērnu attīstība · rehabilitācija · laba kafija pēc garas pastaigas
-              </div>
-
-              {/* Quiet Horizontal Specialty Description */}
-              <p className="mt-5 text-sm text-[#24302D] font-medium">
-                Fizioterapija, kustību terapija, sieviešu veselība un bērnu motorā attīstība.
+              {/* Dignified Practitioner Summary */}
+              <p className="mt-6 text-sm sm:text-base leading-relaxed text-[#24302D] font-medium border-t border-[#24302D]/10 pt-4">
+                Elīna Vītola ir KUSTĪBA dibinātāja un sertificēta fizioterapeite ar 12 gadu klīnisko pieredzi mugurkaula biomehānikā, sieviešu veselībā un pēcdzemdību aprūpē.
               </p>
 
-              {/* Quiet CTA */}
-              <div className="mt-7">
+              {/* Quiet Action Group */}
+              <div className="mt-8 flex flex-wrap items-center gap-5">
+                <a
+                  href="#pieraksts"
+                  onClick={() => { setSelectedSpecialist("elina"); changeBookingStep(3); }}
+                  style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
+                  className="rounded-full px-7 py-3.5 text-xs font-semibold hover:bg-[#D87967] transition-colors min-h-[44px] flex items-center justify-center"
+                >
+                  Pieteikt vizīti pie Elīnas →
+                </a>
                 <a
                   href="#nodalas"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-[#D87967] hover:underline py-2"
+                  className="text-xs font-medium text-[#5A6D67] hover:text-[#24302D] underline py-2"
                 >
-                  <span>Iepazīt prakses virzienus</span>
-                  <span>→</span>
+                  Iepazīt prakses virzienus
                 </a>
               </div>
             </div>
