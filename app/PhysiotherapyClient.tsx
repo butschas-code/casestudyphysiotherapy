@@ -1053,51 +1053,68 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
       </section>
 
       {/* ============================================================ */}
-      {/* 3. THERAPIST STORY SECTION                                  */}
+      {/* 3. ELĪNA STORY — THE EMOTIONAL CENTER                        */}
       {/* ============================================================ */}
       <section
         id="elina"
         style={{
           backgroundColor: "#E5ECE5",
         }}
-        className="py-20 sm:py-28 lg:py-36 overflow-hidden"
+        className="py-20 sm:py-28 lg:py-36 overflow-hidden relative"
       >
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
-          <div className="grid gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+          <div className="grid gap-12 lg:grid-cols-[0.38fr_0.62fr] lg:items-start">
             
-            {/* LEFT: Clean Candid Portrait */}
+            {/* LEFT (~38%): Portrait with Vertical Reveal */}
             <motion.div
-              style={{ y: storyImageY }}
-              initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.97 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: shouldReduceMotion ? 0.01 : 0.8, ease: easeOrganic }}
-              className="relative"
+              className="relative lg:sticky lg:top-28"
             >
               <div
                 style={{
-                  borderRadius: "2.5rem",
+                  borderRadius: "2.5rem 1.25rem 2.5rem 1.25rem",
                 }}
-                className="relative h-[400px] sm:h-[500px] lg:h-[560px] w-full overflow-hidden bg-[#FFF9F4]"
+                className="relative h-[420px] sm:h-[500px] lg:h-[580px] w-full overflow-hidden bg-[#FFF9F4] shadow-sm"
               >
                 <Image
                   src="/concept-physio/practitioner-primary.jpg"
                   alt={isEn ? "Elīna Vītola, Physiotherapist" : "Elīna Vītola, fizioterapeite"}
                   fill
-                  sizes="(max-width: 768px) 100vw, 480px"
+                  sizes="(max-width: 1024px) 100vw, 38vw"
                   className="object-cover object-top"
                 />
               </div>
+
+              <div className="mt-4 flex items-center justify-between text-xs text-[#4A5D57]">
+                <span>{isEn ? "Elīna Vītola · Concept Persona" : "Elīna Vītola · koncepta persona"}</span>
+                <span>{isEn ? "Riga Practice" : "Rīgas prakse"}</span>
+              </div>
             </motion.div>
 
-            {/* RIGHT: Intimate Monologue */}
-            <div>
-              <h2 className="text-3xl sm:text-4xl lg:text-[2.9rem] font-medium leading-[1.18] tracking-tight text-[#24302D]">
+            {/* RIGHT (~62%): Story, Intimate Strip, Experience Focus, & Secondary Action Photo */}
+            <div className="relative">
+              
+              {/* Personal Identity Tag */}
+              <div className="border-b border-black/[0.08] pb-4">
+                <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-[#D87967]">
+                  Elīna Vītola
+                </p>
+                <p className="text-base sm:text-lg font-medium text-[#4A5D57] mt-0.5">
+                  {isEn ? "physiotherapist · movement therapist (concept persona)" : "fizioterapeite · kustību terapeite (koncepta persona)"}
+                </p>
+              </div>
+
+              {/* Core Quote */}
+              <h2 className="mt-6 text-3xl sm:text-4xl lg:text-[3rem] font-medium leading-[1.12] tracking-tight text-[#24302D]">
                 {isEn
                   ? "“First, I want to understand your story.”"
                   : "“Vispirms es gribu saprast Jūsu stāstu.”"}
               </h2>
 
+              {/* Main Narrative */}
               <div className="mt-6 space-y-4 text-lg sm:text-xl leading-relaxed text-[#3D4F4A]">
                 {isEn ? (
                   <>
@@ -1126,28 +1143,89 @@ export function PhysiotherapyClient({ locale }: { locale: Locale }) {
                 )}
               </div>
 
-              <p className="mt-6 text-base sm:text-lg leading-relaxed text-[#24302D] font-medium border-t border-[#24302D]/10 pt-4">
-                {isEn
-                  ? "Elīna Vītola is a certified physiotherapist with 12 years of clinical focus on spinal biomechanics, women's health, and postpartum rehabilitation (concept persona)."
-                  : "Elīna Vītola ir sertificēta fizioterapeite ar 12 gadu klīnisko pieredzi mugurkaula biomehānikā, sieviešu veselībā un pēcdzemdību aprūpē (koncepta persona)."}
-              </p>
-
-              <div className="mt-8 flex flex-wrap items-center gap-6">
-                <a
-                  href="#pieraksts"
-                  onClick={() => { setSelectedSpecialist("elina"); changeBookingStep(3); }}
-                  style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
-                  className="rounded-full px-8 py-4 text-sm font-semibold hover:bg-[#D87967] transition-colors min-h-[48px] flex items-center justify-center"
-                >
-                  {isEn ? "Book with Elīna →" : "Pieteikt vizīti pie Elīnas →"}
-                </a>
-                <a
-                  href="#nodalas"
-                  className="text-base font-medium text-[#4A5D57] hover:text-[#24302D] underline py-2"
-                >
-                  {isEn ? "Explore focus areas" : "Iepazīt prakses virzienus"}
-                </a>
+              {/* Intimate Reflection Strip: "Kāpēc fizioterapija?" */}
+              <div
+                style={{
+                  backgroundColor: "rgba(255, 249, 244, 0.7)",
+                }}
+                className="mt-8 rounded-2xl p-6 sm:p-7 border border-black/[0.06]"
+              >
+                <p className="text-base font-semibold text-[#24302D]">
+                  {isEn ? "Why physiotherapy?" : "Kāpēc fizioterapija?"}
+                </p>
+                <p className="mt-2 text-base sm:text-lg italic leading-relaxed text-[#3D4F4A]">
+                  {isEn
+                    ? "“I have always been fascinated by the moment when someone begins trusting their body again. Not only when pain subsides, but when the confidence to move returns.”"
+                    : "“Man vienmēr interesējis brīdis, kad cilvēks atkal sāk uzticēties savam ķermenim. Ne tikai tas, ka sāpes mazinās, bet ka atgriežas drošība kustēties.”"}
+                </p>
+                <span className="mt-3 block text-xs text-[#4A5D57] opacity-80">
+                  {isEn ? "— Fictional concept reflection" : "— Fiktīvs demonstrācijas pārdomu fragments"}
+                </span>
               </div>
+
+              {/* Experience Focus Areas (No Fake Numeric Credentials) & Human Detail */}
+              <div className="mt-8 grid gap-6 sm:grid-cols-2 border-t border-black/[0.08] pt-6">
+                <div>
+                  <p className="text-sm font-semibold text-[#24302D] mb-2.5">
+                    {isEn ? "Focus areas (fictional concept):" : "Pieredzes virzieni (demonstrācijas koncepts):"}
+                  </p>
+                  <ul className="space-y-1.5 text-base text-[#4A5D57]">
+                    <li>{isEn ? "• Women's health" : "• Sieviešu veselība"}</li>
+                    <li>{isEn ? "• Spinal & joint rehabilitation" : "• Muguras un locītavu rehabilitācija"}</li>
+                    <li>{isEn ? "• Movement therapy" : "• Kustību terapija"}</li>
+                    <li>{isEn ? "• Postpartum recovery" : "• Pēcdzemdību atjaunošanās"}</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <p className="text-sm font-semibold text-[#24302D] mb-2.5">
+                    {isEn ? "Outside practice:" : "Ārpus prakses:"}
+                  </p>
+                  <p className="text-base text-[#4A5D57] leading-relaxed">
+                    {isEn
+                      ? "Long walks · open-water swimming · good coffee"
+                      : "Garas pastaigas · peldēšana · laba kafija"}
+                  </p>
+                  <span className="mt-2 block text-xs text-[#4A5D57] opacity-75">
+                    {isEn ? "Fictional persona personality profile" : "Fiktīvs personāža profils"}
+                  </span>
+                </div>
+              </div>
+
+              {/* Secondary Photograph of Elīna Working With Patient + CTAs */}
+              <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border-t border-black/[0.08] pt-6">
+                <div className="flex flex-wrap items-center gap-5">
+                  <a
+                    href="#pieraksts"
+                    onClick={() => { setSelectedSpecialist("elina"); changeBookingStep(3); }}
+                    style={{ backgroundColor: "#24302D", color: "#FFF9F4" }}
+                    className="rounded-full px-8 py-4 text-sm font-semibold hover:bg-[#D87967] transition-colors min-h-[48px] flex items-center justify-center shadow-xs"
+                  >
+                    {isEn ? "Book with Elīna →" : "Pieteikt vizīti pie Elīnas →"}
+                  </a>
+                  <a
+                    href="#nodalas"
+                    className="text-base font-medium text-[#4A5D57] hover:text-[#24302D] underline py-2"
+                  >
+                    {isEn ? "Explore focus areas" : "Iepazīt prakses virzienus"}
+                  </a>
+                </div>
+
+                {/* Secondary In-Practice Photo (Parallax 6%) */}
+                <motion.div
+                  style={{ y: storyImageY }}
+                  className="hidden sm:block relative w-[200px] h-[140px] lg:w-[220px] lg:h-[155px] rounded-2xl overflow-hidden border-2 border-white shadow-md bg-[#FFF9F4] shrink-0"
+                >
+                  <Image
+                    src="/concept-physio/warm-guidance.jpg"
+                    alt={isEn ? "Therapist at work with patient" : "Fizioterapeite darbā ar pacientu"}
+                    fill
+                    sizes="220px"
+                    className="object-cover object-center"
+                  />
+                </motion.div>
+              </div>
+
             </div>
           </div>
         </div>
