@@ -5,35 +5,83 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function PhysiotherapyConceptPage() {
-  const [selectedDay, setSelectedDay] = useState("Otrdiena, 2. septembris");
-  const [selectedTime, setSelectedTime] = useState("11:30");
-  const [selectedService, setSelectedService] = useState("rehab");
-  const [submitted, setSubmitted] = useState(false);
+  // Calendar state
+  const [selectedMonth] = useState("Septembris 2026");
+  const [selectedDate, setSelectedDate] = useState<number>(2);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>("11:30");
+  const [selectedSpecialist, setSelectedSpecialist] = useState<string>("elina");
+  const [selectedServiceType, setSelectedServiceType] = useState<string>("mugura");
+  const [bookingStep, setBookingStep] = useState<1 | 2 | 3>(1);
+
+  // Form states
+  const [patientName, setPatientName] = useState("");
+  const [patientPhone, setPatientPhone] = useState("");
+  const [patientEmail, setPatientEmail] = useState("");
+  const [patientNotes, setPatientNotes] = useState("");
+
+  // Contact form state
+  const [contactSubmitted, setContactSubmitted] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
-  const days = [
-    { label: "Pirmdiena", date: "1. sept.", full: "Pirmdiena, 1. septembris" },
-    { label: "Otrdiena", date: "2. sept.", full: "Otrdiena, 2. septembris" },
-    { label: "Trešdiena", date: "3. sept.", full: "Trešdiena, 3. septembris" },
-    { label: "Ceturtdiena", date: "4. sept.", full: "Ceturtdiena, 4. septembris" },
-    { label: "Piektdiena", date: "5. sept.", full: "Piektdiena, 5. septembris" },
+  const calendarDays = [
+    { dayNumber: 1, dayName: "P", fullDate: "Otrdiena, 1. septembris", slotsAvailable: 3 },
+    { dayNumber: 2, dayName: "O", fullDate: "Trešdiena, 2. septembris", slotsAvailable: 5, popular: true },
+    { dayNumber: 3, dayName: "T", fullDate: "Ceturtdiena, 3. septembris", slotsAvailable: 4 },
+    { dayNumber: 4, dayName: "C", fullDate: "Piektdiena, 4. septembris", slotsAvailable: 2 },
+    { dayNumber: 5, dayName: "P", fullDate: "Sestdiena, 5. septembris", slotsAvailable: 3 },
+    { dayNumber: 7, dayName: "P", fullDate: "Pirmdiena, 7. septembris", slotsAvailable: 6 },
+    { dayNumber: 8, dayName: "O", fullDate: "Otrdiena, 8. septembris", slotsAvailable: 4 },
   ];
 
-  const times = ["09:00", "10:30", "11:30", "14:00", "16:00", "17:30", "18:30"];
+  const timeSlots = {
+    morning: ["08:30", "09:45", "11:00", "11:30"],
+    afternoon: ["13:15", "14:30", "15:45", "16:30"],
+    evening: ["17:45", "18:30", "19:15"],
+  };
+
+  const specialists = [
+    {
+      id: "elina",
+      name: "Elīna Vītola",
+      role: "Vadošā fizioterapeite · Dibinātāja",
+      experience: "12 gadu klīniskā pieredze",
+      specialty: "Muguras sāpes, sieviešu veselība & diastāze",
+      avatar: "/concept-physio/practitioner-primary.jpg",
+      badge: "Pieejama rīt",
+    },
+    {
+      id: "marta",
+      name: "Marta Liepa",
+      role: "Sertificēta fizioterapeite",
+      experience: "8 gadu pieredze",
+      specialty: "Pēctraumu atjaunošana & sporta rehabilitācija",
+      avatar: "/concept-physio/practitioner-2.jpg",
+      badge: "Pieejama šodien",
+    },
+    {
+      id: "anna",
+      name: "Anna Ozola",
+      role: "Bērnu & zīdaiņu fizioterapeite",
+      experience: "7 gadu pieredze",
+      specialty: "Zīdaiņu motorā attīstība & hendlings",
+      avatar: "/concept-physio/practitioner-3.jpg",
+      badge: "Pieejama 3. septembrī",
+    },
+  ];
 
   const carePaths = [
     {
       id: "rehab",
       title: "Muguras, kakla un locītavu sāpes",
-      subtitle: "Pieaugušajiem · Sēdošs darbs · Pēctraumu atjaunošanās",
+      subtitle: "Pieaugušajiem · Sēdošs darbs · Pēctraumu atveseļošanās",
       image: "/concept-physio/service-rehab.jpg",
-      quote: "Kad ilgstošs sēdošs darbs, spranda stīvums vai akūtas muguras sāpes traucē ikdienas dzīvei.",
+      quote: "Kad muguras sāpes vai spranda stīvums traucē strādāt un baudīt dienu.",
       description:
-        "Mēs neaprobežojamies ar īslaicīgu masāžu. Nodarbībā rūpīgi pārbaudām mugurkaula mobilitāti, iegurņa stabilitāti un elpošanas modeli, lai novērstu sāpju patieso cēloni.",
+        "Mēs veltām laiku, lai rūpīgi pārbaudītu mugurkaula mobilitāti, iegurņa stabilitāti un elpošanas modeli. Terapija apvieno saudzīgu manuālu darbu ar mērķtiecīgiem vingrojumiem ilgstošam atvieglojumam.",
       points: [
         "Padziļināta primārā kustību un stājas diagnostika (60 min)",
         "Saudzīga manuālā terapija un sasprindzināto audu atbrīvošana",
-        "Mērķtiecīgi vingrojumi, ko viegli integrēt mājas vai darba ritmā",
+        "3 vienkārši vingrojumi mājas videi, kas aizņem 5 minūtes dienā",
       ],
       price: "50 € / 60 min",
     },
@@ -44,7 +92,7 @@ export default function PhysiotherapyConceptPage() {
       image: "/concept-physio/service-women.jpg",
       quote: "Mierīgs, zinātniski pamatots atbalsts sievietes ķermenim pirms un pēc bērniņa piedzimšanas.",
       description:
-        "Grūtniecības laikā palīdzam atslogot jostas daļu un sagatavot iegurni. Pēcdzemdību vizītē pārbaudām vēdera taisnā muskuļa diastāzi, iegurņa pamatni un atgriežam ķermenim spēku.",
+        "Grūtniecības laikā palīdzam atslogot muguru un sagatavot iegurni dzemdībām. Pēcdzemdību vizītē pārbaudām vēdera taisnā muskuļa diastāzi, iegurņa pamatni un atgriežam ķermenim spēku bez pārmērīgas slodzes.",
       points: [
         "Pēcdzemdību funkcionālā pārbaude no 6. nedēļas pēc dzemdībām",
         "Diastāzes (vēdera taisnā muskuļa šķirtnes) saudzīga korekcija",
@@ -69,55 +117,115 @@ export default function PhysiotherapyConceptPage() {
     },
   ];
 
-  const team = [
+  const patientStories = [
     {
-      name: "Elīna Vītola",
-      role: "Vadošā fizioterapeite · Prakses dibinātāja",
-      experience: "12 gadu klīniskā pieredze · Sertificēta fizioterapeite",
-      focus: "Sieviešu iegurņa veselība · Pēcdzemdību atjaunošanās · Holistiska kustību terapija",
-      image: "/concept-physio/practitioner-primary.jpg",
-      quote: "“Mans mērķis ir palīdzēt cilvēkam sajust savu ķermeni kā veselumu — bez bailēm no kustības un bez pastāvīgām sāpēm.”",
+      author: "Jānis Krūmiņš",
+      role: "IT projektu vadītājs (38 gadi)",
+      condition: "Hroniskas muguras jostas daļas sāpes",
+      text: "“Pēc 6 mēnešu nesekmīgiem mēģinājumiem vingrot pašam Elīna 1. vizītē parādīja, ka problēma bija manā elpošanā un sēdēšanas pozā. Pēc 3 nodarbībām sāpes pazuda, un es beidzot varu atkal brīvi skriet.”",
     },
     {
-      name: "Marta Liepa",
-      role: "Sertificēta fizioterapeite",
-      experience: "8 gadu pieredze · Pēctraumu un sporta rehabilitācija",
-      focus: "Akūtas muguras un kakla sāpes · Saišu un locītavu atjaunošanās · Kustību testi",
-      image: "/concept-physio/practitioner-2.jpg",
-      quote: "“Pareiza slodzes dozēšana un skaidra vingrojumu tehnika ļauj ātrāk atgriezties pie aktīvas ikdienas.”",
+      author: "Laura Bērziņa",
+      role: "Jaunā māmiņa (31 gads)",
+      condition: "Pēcdzemdību diastāze un iegurņa diskomforts",
+      text: "“Ļoti maiga, iejūtīga un profesionāla attieksme. Ieguvu skaidrus, drošus vingrojumus, ko viegli pildīt mājās, kamēr mazulis guļ. Sajūta, ka atkal kontrolēju savu ķermeni.”",
     },
     {
-      name: "Anna Ozola",
-      role: "Bērnu fizioterapeite · Hendlings",
-      experience: "7 gadu pieredze · Zīdaiņu un mazuļu motorā attīstība",
-      focus: "Zīdaiņu motorā diagnostika · Vecāku hendlinga apmācība · Mazuļu stāja",
-      image: "/concept-physio/practitioner-3.jpg",
-      quote: "“Mierīga, rotaļīga gaisotne nodarbībā ļauj bērnam atvērties kustībai dabiskā, drošā veidā.”",
+      author: "Kristaps un Madara",
+      role: "Vecāki 3 mēnešus vecam dēliņam",
+      condition: "Zīdaiņa plecu asimetrija un muskuļu sasprindzinājums",
+      text: "“Anna ar hendlinga nodarbību iemācīja mūs pareizi celt un turēt dēliņu. Mierīga gaisotne, bez asarām — pēc divām nedēļām mazulis sāka brīvi velties uz abām pusēm.”",
     },
   ];
 
   const faqs = [
     {
       q: "Kas man jāņem līdzi uz pirmo vizīti?",
-      a: "Ērts apģērbs, kas neierobežo kustības (t-krekls, mīkstas bikses vai legingi). Ja ir iepriekš veiktie izmeklējumi (rentgens, MRT, USG), ņemiet tos līdzi.",
+      a: "Ērts, mīksts apģērbs, kas neierobežo kustības (t-krekls, legingi vai mīkstas bikses). Ja Jums ir veikti iepriekšēji izmeklējumi (rentgens, magnētiskā rezonanse vai USG), ņemiet tos līdzi vai nosūtiet pirms vizītes.",
     },
     {
       q: "Vai vizītei nepieciešams ārsta nosūtījums?",
-      a: "Nē, privātai fizioterapeita konsultācijai ārsta nosūtījums nav obligāts. Mūsu speciālistes pašas veic pilnu funkcionālo novērtējumu un sastāda plānu.",
+      a: "Nē, privātai fizioterapeita konsultācijai ārsta nosūtījums nav obligāts. Mūsu speciālistes ir sertificētas ārstniecības personas un pašas veic pilnu funkcionālo novērtējumu.",
     },
     {
       q: "Vai pieņemat veselības apdrošināšanas polises?",
-      a: "Jā, mēs izsniedzam oficiālu čeku un ārstniecības personas izrakstu ar visiem kodiem, ko apmaksā Balta, BTA, Compensa, Ergo, Gjensidige u.c.",
+      a: "Jā, mēs sadarbojamies ar visām lielākajām apdrošināšanas kompānijām (Balta, BTA, Compensa, Ergo, Gjensidige u.c.). Pēc vizītes izsniedzam oficiālu čeku un atskaiti ar ārstniecības personas kodu.",
     },
     {
-      q: "Kā nokļūt praksē un vai pieejams lifts?",
-      a: "Atrodamies Miera ielā 24, klusā pagalma ēkas 2. stāvā. Ēkā ir ērts lifts — pie mums var ērti ierasties gan ar bērnu ratiņiem, gan personām ar kustību ierobežojumiem.",
+      q: "Kā nokļūt praksē un vai ēkā pieejams lifts?",
+      a: "Atrodamies Rīgā, Miera ielā 24 (klusā pagalma ēkā, 2. stāvā). Ēkā ir ērts, plašs lifts — pie mums var ērti ierasties gan ar bērnu ratiņiem, gan personām ar kustību ierobežojumiem.",
     },
   ];
 
+  // Schema.org MedicalBusiness JSON-LD
+  const schemaJsonLd = {
+    "@context": "https://schema.org",
+    "@type": ["Physiotherapy", "MedicalBusiness", "LocalBusiness"],
+    name: "KUSTĪBA — Fizioterapijas & Kustību Prakse",
+    description: "Specializēta fizioterapija, sieviešu veselība pēc dzemdībām un zīdaiņu hendlings Rīgā, Miera ielā 24.",
+    image: "https://saiteo.com/concept-physio/hero-treatment.jpg",
+    telephone: "+37167000000",
+    email: "sveiki@kustiba-demo.lv",
+    priceRange: "€40 - €60",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Miera iela 24",
+      addressLocality: "Rīga",
+      postalCode: "LV-1001",
+      addressCountry: "LV",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 56.9631,
+      longitude: 24.1352,
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "08:00",
+        closes: "20:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Saturday"],
+        opens: "09:00",
+        closes: "15:00",
+      },
+    ],
+    medicalSpecialty: [
+      "Physiotherapy",
+      "Obstetric",
+      "Pediatric",
+    ],
+    availableService: [
+      {
+        "@type": "MedicalProcedure",
+        name: "Primārā fizioterapeita konsultācija & kustību diagnostika",
+      },
+      {
+        "@type": "MedicalProcedure",
+        name: "Pēcdzemdību sieviešu veselība & diastāzes korekcija",
+      },
+      {
+        "@type": "MedicalProcedure",
+        name: "Zīdaiņu motorā attīstība & hendlings",
+      },
+    ],
+  };
+
+  const selectedDateObj = calendarDays.find((d) => d.dayNumber === selectedDate) || calendarDays[0];
+  const activeSpecialistObj = specialists.find((s) => s.id === selectedSpecialist) || specialists[0];
+
   return (
-    <div style={{ backgroundColor: "#FAF7F2", color: "#232D29" }} className="min-h-screen w-full font-sans antialiased">
-      {/* Top Persistent Saiteo Context Strip */}
+    <div style={{ backgroundColor: "#FAF7F2", color: "#232D29" }} className="min-h-screen w-full font-sans antialiased selection:bg-[#C86D51]/20">
+      {/* Structured Data (Schema.org JSON-LD) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaJsonLd) }}
+      />
+
+      {/* Top Persistent Saiteo Concept Context Bar */}
       <aside style={{ backgroundColor: "#2D3732", color: "#FAF7F2" }} className="sticky top-0 z-50 flex items-center justify-between border-b border-white/10 px-4 py-2 text-xs shadow-sm">
         <div className="flex items-center gap-2">
           <Link href="/" className="font-heading font-bold text-[#00C9A7]">
@@ -128,7 +236,7 @@ export default function PhysiotherapyConceptPage() {
             NEATKARĪGS KONCEPTS
           </span>
           <span className="hidden text-white/70 sm:inline">
-            Fizioterapijas prakses mājaslapas etalons
+            Fizioterapijas prakses mājaslapas & konversijas etalons
           </span>
         </div>
 
@@ -164,7 +272,8 @@ export default function PhysiotherapyConceptPage() {
             <a href="#stasts" className="transition-colors hover:text-[#232D29]">Par praksi</a>
             <a href="#virzieni" className="transition-colors hover:text-[#232D29]">Pakalpojumi</a>
             <a href="#specialisti" className="transition-colors hover:text-[#232D29]">Speciālisti</a>
-            <a href="#vizite" className="transition-colors hover:text-[#232D29]">Pirmā vizīte</a>
+            <a href="#pieraksts" className="transition-colors hover:text-[#232D29]">Pieraksts</a>
+            <a href="#atsauksmes" className="transition-colors hover:text-[#232D29]">Atsauksmes</a>
             <a href="#cenas" className="transition-colors hover:text-[#232D29]">Cenrādis</a>
             <a href="#kontakti" className="transition-colors hover:text-[#232D29]">Kontakti</a>
           </nav>
@@ -173,12 +282,12 @@ export default function PhysiotherapyConceptPage() {
             <a
               href="tel:+37167000000"
               style={{ color: "rgba(35, 45, 41, 0.75)" }}
-              className="hidden font-mono text-xs font-semibold sm:inline-block"
+              className="hidden font-mono text-xs font-semibold sm:inline-block hover:text-[#C86D51]"
             >
               +371 67 000 000
             </a>
             <a
-              href="#pieteikt"
+              href="#pieraksts"
               style={{ backgroundColor: "#232D29", color: "#FAF7F2" }}
               className="rounded-full px-5 py-2.5 text-xs font-bold shadow-xs transition-all hover:bg-[#384842]"
             >
@@ -188,7 +297,7 @@ export default function PhysiotherapyConceptPage() {
         </div>
       </header>
 
-      {/* Sunlit Warm Organic Hero (Zero Black, 100% Light & Warmth) */}
+      {/* Sunlit Warm Organic Hero */}
       <section id="top" style={{ backgroundColor: "#FAF7F2" }} className="relative overflow-hidden py-14 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
@@ -199,21 +308,21 @@ export default function PhysiotherapyConceptPage() {
               </div>
 
               <h1 style={{ color: "#232D29" }} className="mt-6 font-heading text-4xl font-extrabold leading-[1.12] tracking-tight sm:text-5xl lg:text-[3.4rem]">
-                Droša, mierīga vieta,<br />
-                kur atgūt kustību brīvību.
+                Atgūstiet kustību brīvību<br />
+                bez bailēm un sāpēm.
               </h1>
 
               <p style={{ color: "rgba(35, 45, 41, 0.78)" }} className="mt-6 max-w-xl text-base leading-relaxed sm:text-lg">
-                Fizioterapija un rehabilitācija pieaugušajiem, sievietēm gaidību un pēcdzemdību periodā, kā arī zīdaiņu attīstība. Rūpīga iedziļināšanās cēloņos — mājīgā vidē, bez steigas un bez virspusējiem šabloniem.
+                Fizioterapija un saudzīga rehabilitācija pieaugušajiem, sievietēm gaidību un pēcdzemdību periodā, kā arī zīdaiņu attīstība. Rūpīga iedziļināšanās cēloņos — mājīgā vidē, bez steigas un bez virspusējiem šabloniem.
               </p>
 
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
-                  href="#pieteikt"
+                  href="#pieraksts"
                   style={{ backgroundColor: "#C86D51", color: "#FFFFFF" }}
                   className="rounded-full px-7 py-3.5 text-sm font-bold shadow-md transition-transform hover:-translate-y-0.5 hover:bg-[#B85C42]"
                 >
-                  Pieteikt pirmo vizīti (60 min) →
+                  Izvēlēties brīvo laiku kalendārā ↓
                 </a>
                 <a
                   href="https://wa.me/37120000000"
@@ -273,8 +382,275 @@ export default function PhysiotherapyConceptPage() {
         </div>
       </section>
 
-      {/* Human Story & Philosophy ("Mūsu Filozofija") */}
-      <section id="stasts" style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
+      {/* Interactive Calendar Booking System */}
+      <section id="pieraksts" style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto">
+            <span style={{ color: "#C86D51" }} className="text-xs font-bold uppercase tracking-[0.18em]">
+              Tiešsaistes pieraksts
+            </span>
+            <h2 style={{ color: "#232D29" }} className="mt-2 font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">
+              Rezervējiet vizīti 60 sekundēs
+            </h2>
+            <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-3 text-sm sm:text-base">
+              Izvēlieties vēlamo speciālisti, datumu un pulksteņa laiku. Apstiprinājums uzreiz tiek nosūtīts uz Jūsu tālruni.
+            </p>
+          </div>
+
+          <div style={{ backgroundColor: "#FAF7F2", borderColor: "rgba(35, 45, 41, 0.1)" }} className="mt-12 rounded-3xl border p-6 sm:p-10 shadow-sm">
+            {bookingStep === 3 ? (
+              <div style={{ backgroundColor: "#EAE3D9" }} className="rounded-2xl p-8 text-center">
+                <span style={{ color: "#C86D51" }} className="text-5xl">✓</span>
+                <h3 style={{ color: "#232D29" }} className="mt-4 font-heading text-2xl font-bold">
+                  Vizīte veiksmīgi pieteikta!
+                </h3>
+                <p style={{ color: "rgba(35, 45, 41, 0.85)" }} className="mt-3 text-sm max-w-md mx-auto leading-relaxed">
+                  Paldies, <strong>{patientName || "cien. pacient"}</strong>! Gaidīsim Jūs <strong>{selectedDateObj.fullDate} plkst. {selectedTimeSlot}</strong> pie speciālistes <strong>{activeSpecialistObj.name}</strong>.
+                </p>
+                <div style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="mt-6 inline-block rounded-xl border p-4 text-xs text-left max-w-sm">
+                  <p>📍 <strong>Adrese:</strong> Rīga, Miera iela 24, 2. stāvs (pieejams lifts)</p>
+                  <p className="mt-1">📞 <strong>Tālrunis saziņai:</strong> +371 67 000 000</p>
+                  <p className="mt-1">🔔 Atgādinājuma SMS tiks nosūtīta 24h pirms vizītes.</p>
+                </div>
+                <div className="mt-8 flex flex-wrap justify-center gap-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setBookingStep(1);
+                      setPatientName("");
+                      setPatientPhone("");
+                    }}
+                    style={{ backgroundColor: "#232D29", color: "#FAF7F2" }}
+                    className="rounded-full px-6 py-2.5 text-xs font-bold"
+                  >
+                    Pieteikt vēl vienu vizīti
+                  </button>
+                  <a
+                    href="https://wa.me/37120000000"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ backgroundColor: "#C86D51", color: "#FFFFFF" }}
+                    className="rounded-full px-6 py-2.5 text-xs font-bold"
+                  >
+                    Sazināties WhatsApp
+                  </a>
+                </div>
+              </div>
+            ) : (
+              <div>
+                {/* Specialist Selection */}
+                <div>
+                  <label style={{ color: "#232D29" }} className="block text-xs font-bold uppercase tracking-wider">
+                    1. Izvēlieties speciālisti
+                  </label>
+                  <div className="mt-3 grid gap-3 sm:grid-cols-3">
+                    {specialists.map((spec) => (
+                      <button
+                        key={spec.id}
+                        type="button"
+                        onClick={() => setSelectedSpecialist(spec.id)}
+                        style={
+                          selectedSpecialist === spec.id
+                            ? { backgroundColor: "#FFFFFF", borderColor: "#C86D51", boxShadow: "0 4px 14px rgba(200, 109, 81, 0.15)" }
+                            : { backgroundColor: "#FAF7F2", borderColor: "rgba(35, 45, 41, 0.1)" }
+                        }
+                        className="flex items-center gap-3.5 rounded-2xl border p-3.5 text-left transition-all"
+                      >
+                        <div style={{ position: "relative", height: "48px", width: "48px", overflow: "hidden", borderRadius: "9999px", flexShrink: 0, backgroundColor: "#EAE3D9" }}>
+                          <Image
+                            src={spec.avatar}
+                            alt={spec.name}
+                            fill
+                            sizes="48px"
+                            className="object-cover"
+                          />
+                        </div>
+                        <div>
+                          <p style={{ color: "#232D29" }} className="font-heading text-xs font-bold">{spec.name}</p>
+                          <p style={{ color: "#6E8B82" }} className="text-[11px] font-medium">{spec.experience}</p>
+                          <span style={{ color: "#C86D51" }} className="text-[10px] font-bold block mt-0.5">● {spec.badge}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Calendar Day Picker */}
+                <div className="mt-8 border-t border-[#232D29]/08 pt-6">
+                  <div className="flex items-center justify-between">
+                    <label style={{ color: "#232D29" }} className="block text-xs font-bold uppercase tracking-wider">
+                      2. Izvēlieties datumu ({selectedMonth})
+                    </label>
+                    <span style={{ color: "#6E8B82" }} className="text-xs font-semibold">
+                      {selectedDateObj.fullDate}
+                    </span>
+                  </div>
+
+                  <div className="mt-3 grid grid-cols-4 sm:grid-cols-7 gap-2">
+                    {calendarDays.map((calDay) => (
+                      <button
+                        key={calDay.dayNumber}
+                        type="button"
+                        onClick={() => setSelectedDate(calDay.dayNumber)}
+                        style={
+                          selectedDate === calDay.dayNumber
+                            ? { backgroundColor: "#C86D51", color: "#FFFFFF", borderColor: "#C86D51" }
+                            : { backgroundColor: "#FFFFFF", color: "#232D29", borderColor: "rgba(35, 45, 41, 0.1)" }
+                        }
+                        className="rounded-2xl p-3 text-center border transition-all"
+                      >
+                        <p className="text-[11px] opacity-70 font-semibold">{calDay.dayName}</p>
+                        <p className="font-heading text-lg font-bold mt-0.5">{calDay.dayNumber}</p>
+                        <p className="text-[10px] mt-1 opacity-80">{calDay.slotsAvailable} laiki</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Time Slot Picker */}
+                <div className="mt-8 border-t border-[#232D29]/08 pt-6">
+                  <label style={{ color: "#232D29" }} className="block text-xs font-bold uppercase tracking-wider">
+                    3. Izvēlieties pulksteņa laiku
+                  </label>
+
+                  <div className="mt-3 space-y-3">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span style={{ color: "#6E8B82" }} className="text-xs font-semibold w-20">Rīts:</span>
+                      {timeSlots.morning.map((slot) => (
+                        <button
+                          key={slot}
+                          type="button"
+                          onClick={() => setSelectedTimeSlot(slot)}
+                          style={
+                            selectedTimeSlot === slot
+                              ? { backgroundColor: "#232D29", color: "#FAF7F2", borderColor: "#232D29" }
+                              : { backgroundColor: "#FFFFFF", color: "#232D29", borderColor: "rgba(35, 45, 41, 0.1)" }
+                          }
+                          className="rounded-xl border px-3.5 py-1.5 font-mono text-xs font-bold transition-all"
+                        >
+                          {slot}
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span style={{ color: "#6E8B82" }} className="text-xs font-semibold w-20">Diena:</span>
+                      {timeSlots.afternoon.map((slot) => (
+                        <button
+                          key={slot}
+                          type="button"
+                          onClick={() => setSelectedTimeSlot(slot)}
+                          style={
+                            selectedTimeSlot === slot
+                              ? { backgroundColor: "#232D29", color: "#FAF7F2", borderColor: "#232D29" }
+                              : { backgroundColor: "#FFFFFF", color: "#232D29", borderColor: "rgba(35, 45, 41, 0.1)" }
+                          }
+                          className="rounded-xl border px-3.5 py-1.5 font-mono text-xs font-bold transition-all"
+                        >
+                          {slot}
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span style={{ color: "#6E8B82" }} className="text-xs font-semibold w-20">Vakars:</span>
+                      {timeSlots.evening.map((slot) => (
+                        <button
+                          key={slot}
+                          type="button"
+                          onClick={() => setSelectedTimeSlot(slot)}
+                          style={
+                            selectedTimeSlot === slot
+                              ? { backgroundColor: "#232D29", color: "#FAF7F2", borderColor: "#232D29" }
+                              : { backgroundColor: "#FFFFFF", color: "#232D29", borderColor: "rgba(35, 45, 41, 0.1)" }
+                          }
+                          className="rounded-xl border px-3.5 py-1.5 font-mono text-xs font-bold transition-all"
+                        >
+                          {slot}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Patient Information Form */}
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setBookingStep(3);
+                  }}
+                  className="mt-8 border-t border-[#232D29]/08 pt-6"
+                >
+                  <label style={{ color: "#232D29" }} className="block text-xs font-bold uppercase tracking-wider mb-3">
+                    4. Jūsu kontaktinformācija
+                  </label>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
+                        Vārds, Uzvārds *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={patientName}
+                        onChange={(e) => setPatientName(e.target.value)}
+                        placeholder="Anna Bērziņa"
+                        style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FFFFFF", color: "#232D29" }}
+                        className="mt-1.5 w-full rounded-xl border px-4 py-2.5 text-sm focus:outline-hidden"
+                      />
+                    </div>
+                    <div>
+                      <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
+                        Tālruņa numurs *
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        value={patientPhone}
+                        onChange={(e) => setPatientPhone(e.target.value)}
+                        placeholder="+371 20 000 000"
+                        style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FFFFFF", color: "#232D29" }}
+                        className="mt-1.5 w-full rounded-xl border px-4 py-2.5 text-sm focus:outline-hidden"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mt-4">
+                    <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
+                      Vizītes mērķis vai sūdzības (pēc izvēles)
+                    </label>
+                    <input
+                      type="text"
+                      value={patientNotes}
+                      onChange={(e) => setPatientNotes(e.target.value)}
+                      placeholder="Piem., spranda stīvums pēc darba pie datora, pēcdzemdību pārbaude"
+                      style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FFFFFF", color: "#232D29" }}
+                      className="mt-1.5 w-full rounded-xl border px-4 py-2.5 text-sm focus:outline-hidden"
+                    />
+                  </div>
+
+                  <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
+                    <div className="text-xs text-[#232D29]/70">
+                      Izvēlēts: <strong>{selectedDateObj.fullDate} plkst. {selectedTimeSlot}</strong> ({activeSpecialistObj.name})
+                    </div>
+                    <button
+                      type="submit"
+                      style={{ backgroundColor: "#C86D51", color: "#FFFFFF" }}
+                      className="rounded-full px-8 py-3.5 text-sm font-bold shadow-md transition-transform hover:-translate-y-0.5 hover:bg-[#B85C42]"
+                    >
+                      Apstiprināt pierakstu →
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Human Philosophy Section ("Mūsu Filozofija") */}
+      <section id="stasts" style={{ backgroundColor: "#FAF7F2", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
             <div style={{ backgroundColor: "#F4EFEB", position: "relative", height: "420px", width: "100%", overflow: "hidden", borderRadius: "1.5rem" }} className="shadow-sm">
@@ -316,7 +692,7 @@ export default function PhysiotherapyConceptPage() {
         </div>
       </section>
 
-      {/* 3 Core Care Pathways (Warm Editorial Cards with Clear Daylight Images) */}
+      {/* 3 Core Care Pathways */}
       <section id="virzieni" style={{ backgroundColor: "#F4EFEB", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           <div className="max-w-xl">
@@ -369,8 +745,7 @@ export default function PhysiotherapyConceptPage() {
                       {path.price}
                     </span>
                     <a
-                      href="#pieteikt"
-                      onClick={() => setSelectedService(path.id)}
+                      href="#pieraksts"
                       style={{ backgroundColor: "#232D29", color: "#FAF7F2" }}
                       className="rounded-full px-6 py-2.5 text-xs font-bold transition-colors hover:bg-[#C86D51]"
                     >
@@ -394,7 +769,7 @@ export default function PhysiotherapyConceptPage() {
         </div>
       </section>
 
-      {/* Specialist Team (Warm Dignified Portraits) */}
+      {/* Specialist Team */}
       <section id="specialisti" style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           <div className="max-w-xl">
@@ -410,7 +785,7 @@ export default function PhysiotherapyConceptPage() {
           </div>
 
           <div className="mt-12 grid gap-8 md:grid-cols-3">
-            {team.map((person, idx) => (
+            {specialists.map((person, idx) => (
               <div
                 key={idx}
                 style={{ backgroundColor: "#FAF7F2", borderColor: "rgba(35, 45, 41, 0.08)" }}
@@ -419,7 +794,7 @@ export default function PhysiotherapyConceptPage() {
                 <div>
                   <div style={{ position: "relative", height: "300px", width: "100%", overflow: "hidden", borderRadius: "1rem", backgroundColor: "#EAE3D9" }}>
                     <Image
-                      src={person.image}
+                      src={person.avatar}
                       alt={person.name}
                       fill
                       sizes="(max-width: 768px) 100vw, 300px"
@@ -435,21 +810,18 @@ export default function PhysiotherapyConceptPage() {
                     {person.experience}
                   </p>
 
-                  <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-3 text-xs leading-relaxed italic">
-                    {person.quote}
-                  </p>
-
                   <div style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.06)", color: "#232D29" }} className="mt-4 rounded-xl border p-3.5 text-[11px] font-medium">
-                    ✦ {person.focus}
+                    ✦ {person.specialty}
                   </div>
                 </div>
 
                 <a
-                  href="#pieteikt"
+                  href="#pieraksts"
+                  onClick={() => setSelectedSpecialist(person.id)}
                   style={{ borderColor: "rgba(35, 45, 41, 0.2)", backgroundColor: "#FFFFFF", color: "#232D29" }}
                   className="mt-6 block text-center rounded-full border py-2.5 text-xs font-bold transition-colors hover:bg-[#232D29] hover:text-white"
                 >
-                  Pieteikt vizīti pie speciālistes →
+                  Izvēlēties laiku kalendārā →
                 </a>
               </div>
             ))}
@@ -457,63 +829,168 @@ export default function PhysiotherapyConceptPage() {
         </div>
       </section>
 
-      {/* First Visit Guide ("Ko sagaidīt pirmajā reizē?") */}
-      <section id="vizite" style={{ backgroundColor: "#EAE3D9", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
+      {/* Patient Stories & Real Condition Proof */}
+      <section id="atsauksmes" style={{ backgroundColor: "#EAE3D9", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
-          <div className="max-w-xl">
+          <div className="text-center max-w-2xl mx-auto">
             <span style={{ color: "#C86D51" }} className="text-xs font-bold uppercase tracking-[0.18em]">
-              Pirmā vizīte
+              Pacientu pieredze
             </span>
             <h2 style={{ color: "#232D29" }} className="mt-2 font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">
-              Ko sagaidīt pirmajā tikšanās reizē?
+              Cilvēki, kuri atguvuši ikdienas kustību prieku
             </h2>
-            <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-3 text-sm sm:text-base">
-              Ja nekad iepriekš neesat bijis pie fizioterapeita, lūk, kā norit pirmā 60 minūšu vizīte:
-            </p>
           </div>
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
-            <div style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="rounded-3xl border p-7 shadow-xs">
-              <span style={{ backgroundColor: "#FAF7F2", color: "#C86D51", borderColor: "rgba(35, 45, 41, 0.08)" }} className="flex h-10 w-10 items-center justify-center rounded-full font-heading text-sm font-bold border">
-                01
+            {patientStories.map((story, idx) => (
+              <div
+                key={idx}
+                style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }}
+                className="flex flex-col justify-between rounded-3xl border p-7 shadow-xs"
+              >
+                <div>
+                  <span style={{ color: "#C86D51" }} className="text-xs font-bold uppercase tracking-wider block">
+                    {story.condition}
+                  </span>
+                  <p style={{ color: "rgba(35, 45, 41, 0.85)" }} className="mt-4 text-xs sm:text-sm leading-relaxed italic">
+                    {story.text}
+                  </p>
+                </div>
+                <div style={{ borderColor: "rgba(35, 45, 41, 0.08)" }} className="mt-6 border-t pt-4">
+                  <strong style={{ color: "#232D29" }} className="block font-heading text-xs font-bold">
+                    {story.author}
+                  </strong>
+                  <span style={{ color: "#6E8B82" }} className="text-[11px]">
+                    {story.role}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Human Contact & Direct Question Form */}
+      <section id="jautajumi-forma" style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
+        <div className="mx-auto max-w-4xl px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:items-center">
+            <div>
+              <span style={{ color: "#C86D51" }} className="text-xs font-bold uppercase tracking-[0.18em]">
+                Saziņa un jautājumi
               </span>
-              <h3 style={{ color: "#232D29" }} className="mt-5 font-heading text-lg font-bold">
-                Mierīga saruna & kustību testi (20 min)
-              </h3>
-              <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-2 text-xs leading-relaxed">
-                Mēs uzklausām Jūsu sūdzības, izvērtējam stāju, locītavu kustīgumu, muskuļu tonusu un elpošanas paradumus.
+              <h2 style={{ color: "#232D29" }} className="mt-2 font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">
+                Neesat pārliecināti, ar ko sākt?
+              </h2>
+              <p style={{ color: "rgba(35, 45, 41, 0.78)" }} className="mt-4 text-sm leading-relaxed">
+                Uzdodiet savu jautājumu šeit vai atsūtiet izmeklējuma slēdzienu. Mūsu fizioterapeite iepazīsies ar Jūsu situāciju un ieteiks piemērotāko speciālisti un rīcības virzienu.
               </p>
+
+              <div style={{ borderColor: "rgba(35, 45, 41, 0.08)" }} className="mt-8 space-y-3 border-t pt-6 text-xs">
+                <p>📞 <strong>Tālrunis:</strong> <a href="tel:+37167000000" className="hover:underline font-bold text-[#C86D51]">+371 67 000 000</a></p>
+                <p>💬 <strong>WhatsApp ātrā saziņa:</strong> <a href="https://wa.me/37120000000" target="_blank" rel="noopener noreferrer" className="hover:underline font-bold text-[#C86D51]">+371 20 000 000</a></p>
+                <p>📍 <strong>Adrese:</strong> Miera iela 24, Rīga (2. stāvs, pieejams lifts)</p>
+              </div>
             </div>
 
-            <div style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="rounded-3xl border p-7 shadow-xs">
-              <span style={{ backgroundColor: "#FAF7F2", color: "#C86D51", borderColor: "rgba(35, 45, 41, 0.08)" }} className="flex h-10 w-10 items-center justify-center rounded-full font-heading text-sm font-bold border">
-                02
-              </span>
-              <h3 style={{ color: "#232D29" }} className="mt-5 font-heading text-lg font-bold">
-                Terapija & pareizās kustības sajūta (30 min)
-              </h3>
-              <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-2 text-xs leading-relaxed">
-                Saudzīgs manuālais darbs ar sasprindzinātajiem audiem un precīzi vingrojumi fizioterapeites vadībā.
-              </p>
-            </div>
+            {/* Warm Contact Form */}
+            <div style={{ backgroundColor: "#FAF7F2", borderColor: "rgba(35, 45, 41, 0.1)" }} className="rounded-3xl border p-6 sm:p-8 shadow-xs">
+              {contactSubmitted ? (
+                <div style={{ backgroundColor: "#EAE3D9" }} className="rounded-2xl p-6 text-center">
+                  <span style={{ color: "#C86D51" }} className="text-4xl">✓</span>
+                  <h3 style={{ color: "#232D29" }} className="mt-3 font-heading text-lg font-bold">
+                    Paldies par Jūsu ziņu!
+                  </h3>
+                  <p style={{ color: "rgba(35, 45, 41, 0.8)" }} className="mt-2 text-xs">
+                    Mūsu speciāliste atbildēs Jums darba laikā 15–30 minūšu laikā.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setContactSubmitted(false)}
+                    style={{ backgroundColor: "#232D29", color: "#FAF7F2" }}
+                    className="mt-4 rounded-full px-5 py-2 text-xs font-bold"
+                  >
+                    Nosūtīt vēl vienu ziņu
+                  </button>
+                </div>
+              ) : (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setContactSubmitted(true);
+                  }}
+                  className="space-y-4"
+                >
+                  <div>
+                    <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
+                      Jūsu vārds *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Anna"
+                      style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FFFFFF", color: "#232D29" }}
+                      className="mt-1 w-full rounded-xl border px-3.5 py-2 text-sm focus:outline-hidden"
+                    />
+                  </div>
 
-            <div style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="rounded-3xl border p-7 shadow-xs">
-              <span style={{ backgroundColor: "#FAF7F2", color: "#C86D51", borderColor: "rgba(35, 45, 41, 0.08)" }} className="flex h-10 w-10 items-center justify-center rounded-full font-heading text-sm font-bold border">
-                03
-              </span>
-              <h3 style={{ color: "#232D29" }} className="mt-5 font-heading text-lg font-bold">
-                Skaidrs mājas plāns 5 minūtēm dienā (10 min)
-              </h3>
-              <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-2 text-xs leading-relaxed">
-                Jūs saņemat 2–3 vienkāršus vingrojumus mājas videi, lai nostiprinātu sasniegto rezultātu ilgtermiņā.
-              </p>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
+                        Tālrunis / WhatsApp *
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        placeholder="+371 20 000 000"
+                        style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FFFFFF", color: "#232D29" }}
+                        className="mt-1 w-full rounded-xl border px-3.5 py-2 text-sm focus:outline-hidden"
+                      />
+                    </div>
+                    <div>
+                      <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
+                        E-pasts (pēc vēlēšanās)
+                      </label>
+                      <input
+                        type="email"
+                        placeholder="anna@piemers.lv"
+                        style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FFFFFF", color: "#232D29" }}
+                        className="mt-1 w-full rounded-xl border px-3.5 py-2 text-sm focus:outline-hidden"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
+                      Kas Jums sagādā vislielākās grūtības?
+                    </label>
+                    <textarea
+                      rows={3}
+                      required
+                      placeholder="Kas sāp, cik ilgi, vai ir bijusi trauma vai izmeklējumi?"
+                      style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FFFFFF", color: "#232D29" }}
+                      className="mt-1 w-full rounded-xl border px-3.5 py-2 text-sm focus:outline-hidden"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    style={{ backgroundColor: "#C86D51", color: "#FFFFFF" }}
+                    className="w-full rounded-full py-3 text-xs font-bold shadow-md transition-transform hover:-translate-y-0.5 hover:bg-[#B85C42]"
+                  >
+                    Nosūtīt jautājumu fizioterapeitei →
+                  </button>
+                  <p style={{ color: "rgba(35, 45, 41, 0.5)" }} className="text-[10px] text-center">
+                    Mēs cienām Jūsu privātumu. Dati netiek nodoti trešajām personām.
+                  </p>
+                </form>
+              )}
             </div>
           </div>
         </div>
       </section>
 
       {/* Transparent Pricing Table & Insurance */}
-      <section id="cenas" style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
+      <section id="cenas" style={{ backgroundColor: "#F4EFEB", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
         <div className="mx-auto max-w-4xl px-6 lg:px-8">
           <div className="text-center">
             <span style={{ color: "#C86D51" }} className="text-xs font-bold uppercase tracking-[0.18em]">
@@ -527,7 +1004,7 @@ export default function PhysiotherapyConceptPage() {
             </p>
           </div>
 
-          <div style={{ backgroundColor: "#FAF7F2", borderColor: "rgba(35, 45, 41, 0.1)" }} className="mt-10 overflow-hidden rounded-3xl border shadow-xs">
+          <div style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.1)" }} className="mt-10 overflow-hidden rounded-3xl border shadow-xs">
             <div style={{ borderColor: "rgba(35, 45, 41, 0.08)" }} className="divide-y text-sm">
               <div className="flex items-center justify-between p-5 sm:p-6">
                 <div>
@@ -561,7 +1038,7 @@ export default function PhysiotherapyConceptPage() {
                 <span style={{ color: "#232D29" }} className="font-mono text-base font-bold">40 €</span>
               </div>
 
-              <div style={{ backgroundColor: "#FFFFFF" }} className="flex items-center justify-between p-5 sm:p-6">
+              <div style={{ backgroundColor: "#FAF7F2" }} className="flex items-center justify-between p-5 sm:p-6">
                 <div>
                   <p style={{ color: "#C86D51" }} className="font-heading font-bold">5 nodarbību kurss (abonements)</p>
                   <p style={{ color: "rgba(35, 45, 41, 0.65)" }} className="text-xs">Derīgs 3 mēnešus no iegādes brīža (ietaupījums 25 €)</p>
@@ -571,201 +1048,8 @@ export default function PhysiotherapyConceptPage() {
             </div>
           </div>
 
-          <div style={{ backgroundColor: "#FAF7F2", borderColor: "rgba(35, 45, 41, 0.08)", color: "rgba(35, 45, 41, 0.8)" }} className="mt-8 rounded-2xl border p-5 text-center text-xs">
+          <div style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)", color: "rgba(35, 45, 41, 0.8)" }} className="mt-8 rounded-2xl border p-5 text-center text-xs">
             🛡️ <strong>Veselības apdrošināšana:</strong> Pēc vizītes izsniedzam čeku un ārstniecības personas izrakstu, ko pieņem <strong>Balta</strong>, <strong>BTA</strong>, <strong>Compensa</strong>, <strong>Ergo</strong>, <strong>Gjensidige</strong> un citas apdrošināšanas kompānijas.
-          </div>
-        </div>
-      </section>
-
-      {/* Warm Interactive Booking Card (Warm Linen & Sage, Zero Dark Pitch Black) */}
-      <section id="pieteikt" style={{ backgroundColor: "#F4EFEB", borderColor: "rgba(35, 45, 41, 0.08)" }} className="border-t py-16 sm:py-24">
-        <div className="mx-auto max-w-4xl px-6 lg:px-8">
-          <div className="text-center">
-            <span style={{ color: "#C86D51" }} className="text-xs font-bold uppercase tracking-[0.2em]">
-              Pieteikties vizītei
-            </span>
-            <h2 style={{ color: "#232D29" }} className="mt-3 font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">
-              Izvēlieties sev ērtāko laiku
-            </h2>
-            <p style={{ color: "rgba(35, 45, 41, 0.75)" }} className="mt-3 text-sm">
-              Aizpildiet pieteikumu vai rakstiet mums tieši WhatsApp — mēs atbildēsim 2 stundu laikā.
-            </p>
-          </div>
-
-          <div style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(35, 45, 41, 0.08)" }} className="mt-10 rounded-3xl border p-7 sm:p-10 shadow-sm">
-            {submitted ? (
-              <div style={{ backgroundColor: "#EAE3D9", borderColor: "rgba(35, 45, 41, 0.1)" }} className="rounded-2xl border p-8 text-center">
-                <span style={{ color: "#C86D51" }} className="text-4xl">✓</span>
-                <h3 style={{ color: "#232D29" }} className="mt-3 font-heading text-xl font-bold">
-                  Paldies! Jūsu pieteikums ir saņemts.
-                </h3>
-                <p style={{ color: "rgba(35, 45, 41, 0.8)" }} className="mt-2 text-sm">
-                  Mēs sazināsimies pa norādīto tālruni, lai apstiprinātu vizītes laiku: <strong>{selectedDay} plkst. {selectedTime}</strong>.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setSubmitted(false)}
-                  style={{ backgroundColor: "#232D29", color: "#FAF7F2" }}
-                  className="mt-6 rounded-full px-5 py-2 text-xs font-bold"
-                >
-                  Pieteikt citu laiku
-                </button>
-              </div>
-            ) : (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setSubmitted(true);
-                }}
-              >
-                {/* 1. Day Selector */}
-                <div>
-                  <label style={{ color: "#232D29" }} className="block text-xs font-bold uppercase tracking-wider">
-                    1. Izvēlieties vēlamo dienu
-                  </label>
-                  <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-5">
-                    {days.map((day) => (
-                      <button
-                        key={day.full}
-                        type="button"
-                        onClick={() => setSelectedDay(day.full)}
-                        style={
-                          selectedDay === day.full
-                            ? { backgroundColor: "#C86D51", color: "#FFFFFF", borderColor: "#C86D51" }
-                            : { backgroundColor: "#FAF7F2", color: "#232D29", borderColor: "rgba(35, 45, 41, 0.1)" }
-                        }
-                        className="rounded-2xl p-3 text-center border transition-all"
-                      >
-                        <p className="text-[11px] font-semibold">{day.label}</p>
-                        <p className="mt-0.5 font-heading text-xs font-bold">{day.date}</p>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 2. Time Selector */}
-                <div className="mt-6">
-                  <label style={{ color: "#232D29" }} className="block text-xs font-bold uppercase tracking-wider">
-                    2. Izvēlieties sākuma laiku
-                  </label>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {times.map((t) => (
-                      <button
-                        key={t}
-                        type="button"
-                        onClick={() => setSelectedTime(t)}
-                        style={
-                          selectedTime === t
-                            ? { backgroundColor: "#232D29", color: "#FAF7F2", borderColor: "#232D29" }
-                            : { backgroundColor: "#FAF7F2", color: "#232D29", borderColor: "rgba(35, 45, 41, 0.1)" }
-                        }
-                        className="rounded-xl px-4 py-2 font-mono text-xs font-bold transition-all border"
-                      >
-                        {t}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 3. Patient Details Form */}
-                <div style={{ borderColor: "rgba(35, 45, 41, 0.08)" }} className="mt-8 border-t pt-6">
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
-                        Vārds, Uzvārds *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="Anna Bērziņa"
-                        style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FAF7F2", color: "#232D29" }}
-                        className="mt-1.5 w-full rounded-xl border px-4 py-2.5 text-sm placeholder:text-[#232D29]/40 focus:outline-hidden"
-                      />
-                    </div>
-                    <div>
-                      <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
-                        Tālruņa numurs *
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        placeholder="+371 20 000 000"
-                        style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FAF7F2", color: "#232D29" }}
-                        className="mt-1.5 w-full rounded-xl border px-4 py-2.5 text-sm placeholder:text-[#232D29]/40 focus:outline-hidden"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
-                        Pakalpojuma virziens
-                      </label>
-                      <select
-                        value={selectedService}
-                        onChange={(e) => setSelectedService(e.target.value)}
-                        style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FAF7F2", color: "#232D29" }}
-                        className="mt-1.5 w-full rounded-xl border px-4 py-2.5 text-sm focus:outline-hidden"
-                      >
-                        <option value="rehab">Muguras, kakla vai locītavu sāpes</option>
-                        <option value="women">Sieviešu veselība & pēcdzemdības</option>
-                        <option value="children">Zīdaiņu motorā attīstība & hendlings</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
-                        Vēlamā speciāliste (pēc izvēles)
-                      </label>
-                      <select
-                        style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FAF7F2", color: "#232D29" }}
-                        className="mt-1.5 w-full rounded-xl border px-4 py-2.5 text-sm focus:outline-hidden"
-                      >
-                        <option value="">Jebkura pieejamā speciāliste</option>
-                        <option value="elina">Elīna Vītola (vadošā fizioterapeite)</option>
-                        <option value="marta">Marta Liepa (muguras sāpes, sports)</option>
-                        <option value="anna">Anna Ozola (bērni, hendlings)</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="mt-4">
-                    <label style={{ color: "#232D29" }} className="block text-xs font-semibold">
-                      Īss situācijas apraksts (kas sāp, cik ilgi?)
-                    </label>
-                    <textarea
-                      rows={3}
-                      placeholder="Kas Jums rada diskomfortu, vai ir bijusi trauma vai izmeklējumi?"
-                      style={{ borderColor: "rgba(35, 45, 41, 0.15)", backgroundColor: "#FAF7F2", color: "#232D29" }}
-                      className="mt-1.5 w-full rounded-xl border px-4 py-2.5 text-sm placeholder:text-[#232D29]/40 focus:outline-hidden"
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-8 flex flex-wrap items-center gap-4">
-                  <button
-                    type="submit"
-                    style={{ backgroundColor: "#C86D51", color: "#FFFFFF" }}
-                    className="rounded-full px-8 py-3.5 text-sm font-bold shadow-lg transition-transform hover:-translate-y-0.5 hover:bg-[#B85C42]"
-                  >
-                    Pieteikt vizīti ({selectedDay.split(",")[0]}, {selectedTime})
-                  </button>
-                  <a
-                    href="https://wa.me/37120000000"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ borderColor: "rgba(35, 45, 41, 0.2)", backgroundColor: "#FFFFFF", color: "#232D29" }}
-                    className="inline-flex items-center gap-2 rounded-full border px-6 py-3.5 text-sm font-semibold transition-colors hover:bg-[#FAF7F2]"
-                  >
-                    <span>💬</span>
-                    <span>Rakstīt WhatsApp</span>
-                  </a>
-                </div>
-
-                <p style={{ color: "rgba(35, 45, 41, 0.5)" }} className="mt-4 text-[11px]">
-                  Demo koncepts: forma simulē pierakstu. Dati netiek saglabāti vai nodoti trešajām personām.
-                </p>
-              </form>
-            )}
           </div>
         </div>
       </section>
