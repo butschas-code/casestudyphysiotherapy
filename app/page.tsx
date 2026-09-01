@@ -1300,26 +1300,19 @@ export default function PhysiotherapyCallingCardPage() {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-8 md:grid-cols-3">
+          <div className="mt-12 grid gap-10 sm:gap-12 md:grid-cols-3">
             {specialists.map((person) => (
               <div
                 key={person.id}
-                style={{
-                  backgroundColor: "#FFFFFF",
-                  borderColor: "rgba(36, 48, 45, 0.08)",
-                  boxShadow: "0 10px 25px -8px rgba(36, 48, 45, 0.05)",
-                  borderRadius: "1.75rem",
-                }}
-                className="flex flex-col justify-between border p-6 sm:p-7 transition-shadow hover:shadow-md"
+                className="flex flex-col justify-between"
               >
                 <div>
                   <div
                     style={{
-                      borderRadius: "1.25rem",
-                      overflow: "hidden",
-                      backgroundColor: "#F8E9E3",
+                      borderRadius: "2rem",
+                      boxShadow: "0 16px 36px -12px rgba(36, 48, 45, 0.12)",
                     }}
-                    className="relative h-[280px] sm:h-[340px] w-full border border-black/[0.04]"
+                    className="relative h-[340px] sm:h-[400px] w-full overflow-hidden bg-[#F8E9E3] border border-white"
                   >
                     <Image
                       src={person.image}
@@ -1330,33 +1323,29 @@ export default function PhysiotherapyCallingCardPage() {
                     />
                   </div>
 
-                  <h3 className="mt-5 font-sans text-2xl font-medium text-[#24302D]">
+                  <h3 className="mt-6 font-sans text-2xl sm:text-3xl font-medium text-[#24302D]">
                     {person.name}
                   </h3>
-                  <p className="text-xs font-semibold text-[#D87967] mt-0.5">{person.role}</p>
-                  <p className="text-[11px] text-[#5A6D67] mt-0.5">{person.experience}</p>
-
-                  <p className="mt-3 text-xs leading-relaxed text-[#5A6D67]">
-                    {person.specialty}
+                  
+                  <p className="mt-1 text-sm sm:text-base font-medium text-[#D87967]">
+                    {person.role}
                   </p>
 
-                  <blockquote className="mt-4 border-t border-black/[0.06] pt-3 text-xs italic text-[#24302D]/80 font-serif">
-                    {person.personalNote}
-                  </blockquote>
+                  <p className="mt-3 text-[15px] sm:text-base leading-relaxed text-[#5A6D67]">
+                    {person.specialty}
+                  </p>
                 </div>
 
-                <a
-                  href="#pieraksts"
-                  onClick={() => { setSelectedSpecialist(person.id); changeBookingStep(3); }}
-                  style={{
-                    borderColor: "rgba(36, 48, 45, 0.15)",
-                    backgroundColor: "#FFF9F4",
-                    color: "#24302D",
-                  }}
-                  className="mt-6 block text-center rounded-full border py-3 text-xs font-semibold transition-colors hover:bg-[#24302D] hover:text-[#FFF9F4] min-h-[44px] flex items-center justify-center"
-                >
-                  Izvēlēties laiku pie {person.name.split(" ")[0]}s →
-                </a>
+                <div className="mt-6 pt-4 border-t border-black/[0.08]">
+                  <a
+                    href="#pieraksts"
+                    onClick={() => { setSelectedSpecialist(person.id); changeBookingStep(3); }}
+                    className="inline-flex items-center gap-2 text-sm sm:text-base font-semibold text-[#24302D] hover:text-[#D87967] transition-colors py-2"
+                  >
+                    <span>Pieteikt vizīti pie {person.name.split(" ")[0]}s</span>
+                    <span>→</span>
+                  </a>
+                </div>
               </div>
             ))}
           </div>
